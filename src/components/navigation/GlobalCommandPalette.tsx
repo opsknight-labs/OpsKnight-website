@@ -30,7 +30,7 @@ const STATIC_QUICK_LINKS: SearchItem[] = [
   { title: "PagerDuty Drop-in Ingest Adapter", href: "/compare/pagerduty", category: "Compare", keywords: "events api v2 drop in migration alertmanager" },
   { title: "Opsgenie Sunset Migration Guide", href: "/compare/opsgenie", category: "Compare", keywords: "atlassian opsgenie deprecation escalation routes" },
   { title: "Grafana OnCall OSS Migration Guide", href: "/compare/grafana-oncall", category: "Compare", keywords: "grafana labs archived contact points" },
-  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v1.3 v1.2 updates release notes" },
+  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v1.4 v1.3 updates release notes" },
   { title: "Brand Assets & Guidelines", href: "/brand", category: "Resources", keywords: "logos icons colors typography svg png" },
   { title: "Use Cases & Architecture", href: "/use-cases", category: "Product", keywords: "on-prem enterprise self hosted privacy" },
   { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license apache-2.0" },
@@ -85,7 +85,7 @@ export function GlobalCommandPalette() {
   useEffect(() => {
     const fetchDocIndex = async () => {
       try {
-        const res = await fetch(`/api/docs/v1.3/search`);
+        const res = await fetch(`/api/docs/v1.4/search`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.results)) {

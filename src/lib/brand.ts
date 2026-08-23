@@ -5,7 +5,7 @@
 import { latestDocsHref } from "@/lib/docs/paths";
 
 /** Bump this when you ship. Footer/about use it. Docs URLs use latestDocsHref, not this. */
-const PRODUCT_VERSION = "1.3.1";
+const PRODUCT_VERSION = "1.4.0";
 
 export const BRAND = {
   name: "OpsKnight",
@@ -18,7 +18,7 @@ export const BRAND = {
   domain: "opsknight.com",
   integrationCount: 27,
   integrationCountLabel: "27",
-  stack: "Next.js 15, React 19, Prisma, Postgres, Docker Compose / Helm",
+  stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm",
 
   status: "Accepting Contributions",
   statusMessage: `v${PRODUCT_VERSION}`,

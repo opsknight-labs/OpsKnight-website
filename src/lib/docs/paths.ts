@@ -2,8 +2,8 @@
  * Docs URLs. Marketing always uses DOCS_CHANNEL ("latest").
  * Cloudflare maps /docs/latest/ to the newest content/docs/v* folder
  * when the website builds (see scripts/generate-redirects.mjs).
- * Add docs/v1.4 in the app; after docs-sync + site build, latest follows.
- * Do not pin /docs/v1.3/ in marketing pages.
+ * Add the next versioned docs tree in the app; after docs-sync + site build,
+ * latest follows. Do not pin a numbered docs version in marketing pages.
  */
 export const DOCS_CHANNEL = "latest";
 

@@ -1,9 +1,9 @@
 import { BRAND } from "@/lib/brand";
 
 /**
- * Compare matrix for OpsKnight v1.3.1 vs common on-call products.
+ * Compare matrix for OpsKnight v1.4.0 vs common on-call products.
  *
- * As of 20 Aug 2026. OpsKnight cells: v1.3.1 app + docs/v1.3.
+ * As of 23 Aug 2026. OpsKnight cells: v1.4.0 app + docs/v1.4.
  * Other cells: vendor documentation and public pricing pages cited in
  * COMPARE_SOURCE_LINKS — not placeholders, not a paid feature audit of every plan.
  */
@@ -19,7 +19,7 @@ export type CompareVendorId =
 
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "20 Aug 2026";
+export const COMPARE_AS_OF = "23 Aug 2026";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;
@@ -312,7 +312,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Inbound monitoring webhooks",
-        source: `OpsKnight docs v1.3 catalog: ${BRAND.integrationCountLabel} native parsers. Others: vendor directories — counts change; we do not copy a marketing number we did not count.`,
+        source: `OpsKnight docs v1.4 catalog: ${BRAND.integrationCountLabel} native parsers. Others: vendor directories — counts change; we do not copy a marketing number we did not count.`,
         values: {
           opsknight: `${BRAND.integrationCountLabel} native parsers + generic JSON`,
           pagerduty: "Events API v2 + large integration directory",
@@ -338,7 +338,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Jira Cloud",
-        source: "OpsKnight v1.3 bi-directional sync. Vendor Jira integration guides.",
+        source: "OpsKnight v1.4 bi-directional sync. Vendor Jira integration guides.",
         values: {
           opsknight: "Bi-directional issue sync",
           pagerduty: "Bidirectional Jira Cloud extension (status + notes mapping)",
@@ -363,7 +363,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "SSO",
-        source: "OpsKnight v1.3: OIDC only, no SAML. Vendor SSO docs.",
+        source: "OpsKnight v1.4: OIDC only, no SAML. Vendor SSO docs.",
         values: {
           opsknight: "OIDC (Okta, Google, Microsoft, Auth0, generic). No SAML",
           pagerduty: "SAML 2.0 IdP; Google OAuth; OIDC for private status pages",
@@ -402,7 +402,7 @@ export const OPKNIGHT_GAPS = [
   },
   {
     item: "SAML SSO",
-    detail: "SSO in v1.3.1 is OIDC only.",
+    detail: "SSO in v1.4.0 is OIDC only.",
   },
   {
     item: "OpsKnight-hosted cloud",
