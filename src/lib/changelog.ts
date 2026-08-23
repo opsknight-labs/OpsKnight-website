@@ -32,9 +32,48 @@ export const CHANGE_KIND_LABEL: Record<ChangeKind, string> = {
 
 export const releases: ReleaseItem[] = [
   {
+    version: "v1.4.0",
+    slug: "v1.4.0",
+    badge: "Latest",
+    date: "August 23, 2026",
+    summary:
+      "A safer release foundation with reliable delayed paging, an administrator Health Center, hardened upgrades, complete versioned docs, and multi-architecture stable images.",
+    dockerTag: "ghcr.io/opsknight-labs/opsknight:1.4.0",
+    githubReleaseUrl:
+      "https://github.com/opsknight-labs/OpsKnight/releases/tag/v1.4.0",
+    categories: [
+      {
+        type: "fixed",
+        title: "Paging reliability",
+        items: [
+          "Delayed escalation steps retain their configured delay instead of paging the fallback team immediately.",
+          "Orphaned escalations recover through one atomic processing claim.",
+          "Fallback delivery no longer duplicates service notifications.",
+        ],
+      },
+      {
+        type: "added",
+        title: "Operational confidence",
+        items: [
+          "The administrator Health Center consolidates supported database, scheduler, worker, paging, provider, integration, URL, encryption, and version signals.",
+          "The release contract validates installation, upgrades, migration failure, restore, incident delivery, deployment rendering, and documentation coverage.",
+          "Stable images publish for linux/amd64 and linux/arm64; the continuously updated test image remains amd64-only.",
+        ],
+      },
+      {
+        type: "security",
+        title: "Release hardening",
+        items: [
+          "Disabled accounts cannot be reactivated through OIDC linking.",
+          "First-administrator bootstrap is serialized and public readiness errors are redacted.",
+          "Next.js, Auth.js, Nodemailer, and vulnerable transitive dependencies are updated to patched releases.",
+        ],
+      },
+    ],
+  },
+  {
     version: "v1.3.1",
     slug: "v1.3.1",
-    badge: "Latest",
     date: "August 18, 2026",
     summary:
       "Six more inbound alert sources, signed webhooks, and the official GHCR image — so you can pull a tagged build instead of assembling from source.",
@@ -67,7 +106,7 @@ export const releases: ReleaseItem[] = [
         type: "added",
         title: "Run it from a tagged image",
         items: [
-          "Public image at ghcr.io/opsknight-labs/opsknight:1.3.1 (linux/amd64 and arm64).",
+          "Public image at ghcr.io/opsknight-labs/opsknight:1.3.1 (linux/amd64).",
         ],
       },
     ],
