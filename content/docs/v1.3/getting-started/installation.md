@@ -43,8 +43,11 @@ Edit `.env` and set the required values:
 # Required
 DATABASE_URL=postgresql://opsknight:your_password@postgres:5432/opsknight_db
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key-here  # openssl rand -base64 32
-ENCRYPTION_KEY=your-encryption-key    # openssl rand -hex 32
+NEXTAUTH_SECRET=your-secret-key-here  # Generate with: openssl rand -base64 32
+
+# Optional - Configure via UI
+# Optional - Configure via UI
+# (No additional env vars required)
 ```
 
 > **Note:** In production, set `NEXTAUTH_URL` to your public domain (HTTPS).

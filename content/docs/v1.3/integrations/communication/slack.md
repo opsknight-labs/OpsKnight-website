@@ -8,6 +8,8 @@ description: Send interactive incident notifications to Slack with acknowledge a
 
 The Slack integration brings incident management directly into your team's workspace. Receive rich notifications, acknowledge incidents without leaving Slack, and keep everyone informed with real-time updates.
 
+<!-- placeholder:slack-integration-overview -->
+<!-- Add: Screenshot of a Slack incident notification with action buttons -->
 
 ---
 
@@ -104,6 +106,8 @@ Before setting up Slack integration:
    - **Workspace**: Select your workspace
 5. Click **Create App**
 
+<!-- placeholder:create-slack-app -->
+<!-- Add: Screenshot of Slack app creation dialog -->
 
 ### App Credentials
 
@@ -230,6 +234,8 @@ After installation, copy the **Bot User OAuth Token** (starts with `xoxb-`).
 3. Select a test channel
 4. Send a test message
 
+<!-- placeholder:slack-config-form -->
+<!-- Add: Screenshot of OpsKnight Slack configuration form -->
 
 ---
 

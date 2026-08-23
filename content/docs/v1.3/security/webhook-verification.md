@@ -26,7 +26,7 @@ sequenceDiagram
     Provider->>Middleware: POST /api/integrations/:type (Payload + Headers)
     Middleware->>Security: 1. Extract Integration Key (Bearer, Token, x-key, Query)
     Security-->>Middleware: Integration Key Validated (Constant-time check)
-    
+
     alt Secret Configured
         Middleware->>Security: 2. Verify Cryptographic Signature (HMAC-SHA256, HMAC-SHA1)
         Security-->>Middleware: Signature Validated
