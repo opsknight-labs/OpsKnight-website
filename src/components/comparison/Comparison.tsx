@@ -3,16 +3,16 @@ import { ArrowRight } from "lucide-react";
 
 const facts = [
   {
-    title: "You operate it",
-    body: "Self-hosted. There is no OpsKnight cloud and no per-seat software fee. You pay compute, SMS, and Slack.",
+    title: "You operate Community",
+    body: "The Community data plane is self-hosted in your environment. Enterprise modules or hosted offerings can be packaged separately.",
   },
   {
     title: "Paging is text, chat, and push",
-    body: "Email, SMS (Twilio or SNS), Slack, WhatsApp, webhooks. No native voice calls.",
+    body: "Email, SMS (Twilio or SNS), Slack, WhatsApp, webhooks. No native voice calls in the current Community capability set.",
   },
   {
-    title: "One status page per install",
-    body: "Public or private, optional custom domain. Not unlimited separate sites per team.",
+    title: "One Community status page per install",
+    body: "Public or private, optional custom domain. Additional status-page capabilities can be packaged separately in future offerings.",
   },
   {
     title: "Events API v2 ingest",
@@ -29,7 +29,7 @@ export function Comparison() {
             Versus the usual stack
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
-            Same job as the paid on-call products. You operate the software.
+            Incident response on infrastructure you operate.
           </h2>
         </div>
 
@@ -47,7 +47,7 @@ export function Comparison() {
             href="/compare"
             className="inline-flex items-center gap-2 text-sm font-medium text-[#d21a1b] hover:underline"
           >
-            Full matrix and a cost sketch (your invoice rates)
+            Full capability matrix
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
