@@ -4,14 +4,22 @@
 
 import { latestDocsHref } from "@/lib/docs/paths";
 
-/** Bump this when you ship. Footer/about use it. Docs URLs use latestDocsHref, not this. */
-const PRODUCT_VERSION = "1.4.0";
-const STABLE_LICENSE = "Apache-2.0";
-const DEVELOPMENT_LICENSE = "AGPL-3.0-only";
+/**
+ * The public website tracks the active v1.5 Community development line.
+ * Historical release metadata is kept separately so older Apache releases are
+ * described accurately without leaking the legacy license into current copy.
+ */
+const PRODUCT_VERSION = "1.5";
+const PRODUCT_LICENSE = "AGPL-3.0-only";
+const LEGACY_STABLE_VERSION = "1.4.0";
+const LEGACY_STABLE_LICENSE = "Apache-2.0";
 
 export const BRAND = {
   name: "OpsKnight",
   version: PRODUCT_VERSION,
+  releaseLabel: `v${PRODUCT_VERSION} development`,
+  legacyVersion: LEGACY_STABLE_VERSION,
+  legacyLicense: LEGACY_STABLE_LICENSE,
   tagline: "Self-hosted on-call & incident response",
   description:
     "Self-hosted incident command center: on-call rotations, paging, Slack war rooms, status pages, and MTTA/MTTR — on your infrastructure.",
@@ -23,7 +31,7 @@ export const BRAND = {
   stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm",
 
   status: "Accepting Contributions",
-  statusMessage: `v${PRODUCT_VERSION}`,
+  statusMessage: `v${PRODUCT_VERSION} development`,
 
   links: {
     github: "https://github.com/opsknight-labs/OpsKnight",
@@ -36,10 +44,12 @@ export const BRAND = {
     releases: "https://github.com/opsknight-labs/OpsKnight/releases",
     contributing:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/CONTRIBUTING.md",
-    // Current stable release (v1.4.x) remains under the license shipped with that release.
-    license: "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
-    // The main development line / next major release adopts AGPL-3.0-only once the transition lands.
+    // Current v1.5 Community development line.
+    license: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    // Backward-compatible alias for pages that still use the development key.
     developmentLicense: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    // Historical v1.4 release license; do not use for current product marketing.
+    legacyLicense: "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
     licenseTransition:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE-TRANSITION.md",
     trademarks: "https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md",
@@ -58,7 +68,7 @@ export const BRAND = {
   seo: {
     title: "OpsKnight | Self-hosted on-call & incident response",
     description:
-      "Self-hosted incident command center for on-call, paging, Slack war rooms, status pages, and SLA analytics. Unlimited users. Current stable v1.4: Apache-2.0; next major development line: AGPL-3.0-only. PagerDuty Events API v2 ingest adapter.",
+      "OpsKnight v1.5 Community is self-hosted incident command for on-call, paging, Slack war rooms, status pages, and SLA analytics under AGPL-3.0-only. v1.4 and earlier releases retain their original Apache-2.0 terms.",
     keywords: [
       "incident management",
       "on-call",
@@ -76,42 +86,21 @@ export const BRAND = {
     ],
   },
 
-  /** License of the currently published stable product version above. */
-  license: STABLE_LICENSE,
-  licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0",
-  /** License selected for the main development line / next major release. */
-  developmentLicense: DEVELOPMENT_LICENSE,
+  /** License of the active v1.5 Community development line. */
+  license: PRODUCT_LICENSE,
+  licenseUrl: "https://www.gnu.org/licenses/agpl-3.0.html",
+  /** Kept as an alias while older website components are migrated. */
+  developmentLicense: PRODUCT_LICENSE,
   developmentLicenseUrl: "https://www.gnu.org/licenses/agpl-3.0.html",
+  legacyLicenseUrl: "https://www.apache.org/licenses/LICENSE-2.0",
 
   deploy: {
     secretsNote:
       "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose configuration starts both PostgreSQL and OpsKnight automatically.",
-    compose: `curl -sL https://raw.githubusercontent.com/opsknight-labs/OpsKnight/main/docker-compose.yml > docker-compose.yml
-docker compose up -d`,
-    docker: `# 1. Run PostgreSQL database container
-docker run -d --name opsknight-db \\
-  -e POSTGRES_DB=opsknight_db \\
-  -e POSTGRES_USER=opsknight \\
-  -e POSTGRES_PASSWORD=opsknight_secure_password \\
-  -v opsknight_postgres_data:/var/lib/postgresql/data \\
-  postgres:15-alpine
-
-# 2. Run OpsKnight container connected to database
-docker run -d --name opsknight-app -p 3000:3000 \\
-  -e DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\
-  -e NEXTAUTH_URL="http://localhost:3000" \\
-  -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
-  -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
-  --link opsknight-db \\
-  ghcr.io/opsknight-labs/opsknight:latest`,
-    helm: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
-helm install opsknight ./helm/opsknight \\
-  --namespace opsknight \\
-  --create-namespace`,
-    kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight/k8s
-kubectl apply -k .`,
+    compose: `curl -sL https://raw.githubusercontent.com/opsknight-labs/OpsKnight/main/docker-compose.yml > docker-compose.yml\ndocker compose up -d`,
+    docker: `# 1. Run PostgreSQL database container\ndocker run -d --name opsknight-db \\\\\n  -e POSTGRES_DB=opsknight_db \\\\\n  -e POSTGRES_USER=opsknight \\\\\n  -e POSTGRES_PASSWORD=opsknight_secure_password \\\\\n  -v opsknight_postgres_data:/var/lib/postgresql/data \\\\\n  postgres:15-alpine\n\n# 2. Run OpsKnight container connected to database\ndocker run -d --name opsknight-app -p 3000:3000 \\\\\n  -e DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\\\\n  -e NEXTAUTH_URL="http://localhost:3000" \\\\\n  -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\\\\n  -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\\\\n  --link opsknight-db \\\\\n  ghcr.io/opsknight-labs/opsknight:latest`,
+    helm: `git clone https://github.com/opsknight-labs/OpsKnight.git\ncd OpsKnight\nhelm install opsknight ./helm/opsknight \\\\\n  --namespace opsknight \\\\\n  --create-namespace`,
+    kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git\ncd OpsKnight/k8s\nkubectl apply -k .`,
   },
 
   authors: [
