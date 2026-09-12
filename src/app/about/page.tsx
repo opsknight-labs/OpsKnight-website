@@ -20,9 +20,9 @@ const TOC_SECTIONS = [
 ];
 
 const ABOUT_SPECS = [
-  { label: "Stable License", value: BRAND.license },
-  { label: "Next Major", value: BRAND.developmentLicense },
-  { label: "Current Version", value: BRAND.version },
+  { label: "Community License", value: BRAND.license },
+  { label: "Current Line", value: BRAND.releaseLabel },
+  { label: `Legacy v${BRAND.legacyVersion}`, value: BRAND.legacyLicense },
   { label: "Deployment", value: "100% Self-Hosted" },
   { label: "Supported Ingests", value: BRAND.integrationCountLabel },
 ];
@@ -34,13 +34,13 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-              About · {BRAND.version} · {BRAND.license}
+              About · {BRAND.releaseLabel} · {BRAND.license}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.12]">
               About {BRAND.name}
             </h1>
             <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              OpsKnight is a self-hosted incident command center and on-call platform. It exists because per-seat on-call SaaS gets prohibitively expensive as engineering teams scale, and because incident data belongs on the infrastructure you operate.
+              OpsKnight is a self-hosted incident command center and on-call platform for teams that want control of their incident data, deployment model, and operational workflow.
             </p>
           </div>
         </div>
@@ -65,34 +65,37 @@ export default function AboutPage() {
                   SRE, DevOps, and platform teams that already run Postgres, Docker, or Kubernetes. Teams with strict compliance requirements (HIPAA, SOC 2, GDPR, Financial) that cannot place real-time incident timelines and architecture metadata in a multi-tenant vendor cloud.
                 </p>
                 <p className="mt-2">
-                  Teams that would rather operate a resilient on-call pager than meter developer seats. Includes {BRAND.integrationCountLabel} inbound parsers, Slack war room bots, status pages, local accounts, and OIDC enterprise SSO.
+                  Teams that want a self-hosted Community foundation with a clear path for separately licensed Enterprise capabilities. The Community application includes {BRAND.integrationCountLabel} inbound parsers, Slack war room bots, status pages, local accounts, and supported SSO capabilities according to the release documentation.
                 </p>
               </div>
 
               <div id="who-it-is-not-for" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Who it is not for</h2>
                 <p className="mt-3">
-                  Anyone who needs a hosted SaaS cloud, native voice phone calls, or SAML in this release (local accounts and OIDC single sign-on are supported).
+                  Anyone who needs a fully managed hosted service today or capabilities not listed in the current release documentation.
                 </p>
                 <p className="mt-2">
-                  Anyone looking for a PagerDuty or Opsgenie clone — our Events API v2 is an inbound ingest adapter designed to make migration seamless. Change your webhook destination URL and test immediately.
+                  Anyone looking for a PagerDuty or Opsgenie clone — our Events API v2 is an inbound ingest adapter designed to make migration straightforward. Change your webhook destination URL and test immediately.
                 </p>
               </div>
 
               <div id="mission" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Mission</h2>
                 <p className="mt-3">
-                  Make modern on-call, paging, war rooms, status pages, and postmortems freely available to engineering teams that can run Docker Compose or Helm while keeping Community software and its licensing transparent.
+                  Make modern on-call, paging, war rooms, status pages, and postmortems available to engineering teams that can run Docker Compose or Helm while keeping Community licensing, commercial boundaries, and deployment ownership explicit.
                 </p>
               </div>
 
               <div id="license" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">License &amp; Open Source</h2>
                 <p className="mt-3">
-                  The published v{BRAND.version} release remains licensed under {BRAND.license}. The current development line for the next major Community release is intended to ship under {BRAND.developmentLicense}. Source code for the Community application is openly available on GitHub.
+                  The active v{BRAND.version} Community development line is licensed under {BRAND.license}. Source code for the Community application is openly available on GitHub, and the license shipped with each artifact controls that artifact.
                 </p>
                 <p className="mt-2">
-                  If OpsKnight introduces separately licensed Enterprise modules, hosted services, support, or other commercial offerings, they will be identified separately rather than silently changing the license of already published Community artifacts. See the{" "}
+                  Published v{BRAND.legacyVersion} and earlier releases keep the {BRAND.legacyLicense} terms that accompanied them. The v1.5 transition does not retroactively remove those rights.
+                </p>
+                <p className="mt-2">
+                  Separately licensed Enterprise modules, hosted services, support, or other commercial offerings may be introduced without changing the license of already published Community artifacts. See the{" "}
                   <a
                     href={BRAND.links.licenseTransition}
                     className="text-[#d21a1b] font-medium hover:underline"
