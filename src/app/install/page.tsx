@@ -8,7 +8,7 @@ import { latestDocsHref } from "@/lib/docs/paths";
 
 const title = "Install OpsKnight";
 const description =
-  "Deploy OpsKnight with Docker Compose, Helm, Kustomize, Cloud Run, ECS, or Linux Systemd. $0 license, 100% self-hosted on your infrastructure.";
+  `Deploy OpsKnight v${BRAND.version} Community with Docker Compose, Helm, Kustomize, Cloud Run, ECS, or Linux Systemd. ${BRAND.license}, self-hosted on your infrastructure.`;
 
 export const metadata: Metadata = {
   title,
@@ -23,32 +23,31 @@ const TOC_SECTIONS = [
   { id: "kubernetes-helm", title: "Kubernetes (Helm Chart)" },
   { id: "other-topologies", title: "Other Supported Topologies" },
   { id: "hardware-sizing", title: "Hardware Sizing Matrix" },
-  { id: "what-this-is-not", title: "What this is not" },
+  { id: "what-this-is-not", title: "Community boundary" },
 ];
 
 const INSTALL_SPECS = [
   { label: "Min Compute", value: "1 vCPU · 1 GB RAM" },
   { label: "Database", value: "PostgreSQL 14+" },
   { label: "Default Port", value: "3000 (HTTP)" },
-  { label: "License", value: "Apache-2.0 ($0)" },
+  { label: "License", value: BRAND.license },
   { label: "External Telemetry", value: "None (0 beacons)" },
 ];
 
 export default function InstallPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Header */}
       <section className="border-b border-slate-200 pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-              Install · {BRAND.version} · {BRAND.license}
+              Install · {BRAND.releaseLabel} · {BRAND.license}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.12]">
               Run it on machines you already operate.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              OpsKnight is self-hosted. Compose is the shortest path. Helm is the
+              OpsKnight Community is self-hosted. Compose is the shortest path. Helm is the
               production path. After boot, open port 3000 and create the first admin
               on <span className="font-mono text-sm">/setup</span>. Full steps live
               in the docs — this page is the operational checklist.
@@ -57,15 +56,10 @@ export default function InstallPage() {
         </div>
       </section>
 
-      {/* Main Checklist Layout with Sticky Right Rail */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            
-            {/* Main Content Column */}
             <article className="min-w-0 space-y-12 max-w-3xl">
-              
-              {/* Prerequisites */}
               <div id="prerequisites" className="scroll-mt-28">
                 <h2 className="text-xl font-semibold text-[#111827]">Prerequisites</h2>
                 <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#4b5563]">
@@ -84,7 +78,6 @@ export default function InstallPage() {
                 </div>
               </div>
 
-              {/* Docker Compose */}
               <div id="docker-compose" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Docker Compose (Recommended Starter)</h2>
                 <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
@@ -113,7 +106,6 @@ docker compose up -d`}
                 </p>
               </div>
 
-              {/* Helm */}
               <div id="kubernetes-helm" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Kubernetes (Helm Chart)</h2>
                 <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
@@ -123,9 +115,7 @@ docker compose up -d`}
                   label="helm"
                   value={`helm repo add opsknight https://charts.opsknight.com
 helm repo update
-helm upgrade --install opsknight opsknight/opsknight \\
-  --namespace opsknight \\
-  --create-namespace`}
+helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --create-namespace`}
                 />
                 <p className="mt-3">
                   <Link
@@ -137,7 +127,6 @@ helm upgrade --install opsknight opsknight/opsknight \\
                 </p>
               </div>
 
-              {/* Other Topologies */}
               <div id="other-topologies" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Other Supported Topologies</h2>
                 <ul className="mt-4 space-y-3 text-sm text-[#4b5563]">
@@ -171,7 +160,6 @@ helm upgrade --install opsknight opsknight/opsknight \\
                 </ul>
               </div>
 
-              {/* Infrastructure Sizing */}
               <div id="hardware-sizing" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Hardware Sizing Matrix</h2>
                 <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
@@ -201,7 +189,7 @@ helm upgrade --install opsknight opsknight/opsknight \\
                         <td className="px-4 py-2.5 text-slate-600 font-sans">2x Replicas + Managed DB</td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Enterprise</td>
+                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Enterprise scale</td>
                         <td className="px-4 py-2.5 text-slate-500">100k+ / mo</td>
                         <td className="px-4 py-2.5 text-slate-700">4+ vCPU · 4–8 GB</td>
                         <td className="px-4 py-2.5 text-slate-600 font-sans">Kubernetes (HPA) + PgBouncer</td>
@@ -211,11 +199,13 @@ helm upgrade --install opsknight opsknight/opsknight \\
                 </div>
               </div>
 
-              {/* What this is not */}
               <div id="what-this-is-not" className="scroll-mt-28 rounded-[14px] border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-[#111827]">What this is not</h2>
+                <h2 className="text-lg font-semibold text-[#111827]">Community and commercial boundary</h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  There is no OpsKnight Cloud signup or hosted user seat meter. Native voice phone calls and SAML are not in this release (local accounts and OIDC single sign-on are supported). After installation, the canonical reference is the{" "}
+                  This page installs the self-hosted OpsKnight Community application under {BRAND.license}.
+                  Separately licensed Enterprise modules, support, or hosted offerings may be documented and
+                  packaged independently. Check the current release documentation for exact Community feature
+                  availability and limits. The canonical installation reference is the{" "}
                   <Link href={latestDocsHref("getting-started/installation")} className="font-medium text-[#111827] underline">
                     installation guide
                   </Link>
@@ -237,10 +227,8 @@ helm upgrade --install opsknight opsknight/opsknight \\
                   Security &amp; hardening architecture →
                 </Link>
               </div>
-
             </article>
 
-            {/* Sticky Right Rail on Large Screens */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 pl-4 border-l border-slate-200/80">
                 <PageToc
@@ -253,7 +241,6 @@ helm upgrade --install opsknight opsknight/opsknight \\
                 />
               </div>
             </aside>
-
           </div>
         </div>
       </section>

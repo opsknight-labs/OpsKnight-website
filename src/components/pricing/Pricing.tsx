@@ -5,12 +5,12 @@ import { ArrowRight, Check } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 
 const features = [
-  "Everyone on the team can use it — no per-person software fee",
-  "Schedules, paging, Slack rooms, status page, write-ups",
+  "Self-hosted Community incident response and on-call",
+  "Schedules, paging, Slack rooms, status page, and write-ups",
   `${BRAND.integrationCountLabel} inbound monitoring parsers`,
   "Install on a phone from the browser",
   "Jira Cloud sync",
-  `${BRAND.license} — you host it`,
+  `${BRAND.license} Community source — you host it`,
 ];
 
 export function Pricing() {
@@ -19,14 +19,15 @@ export function Pricing() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-            Pricing
+            Community
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
-            One plan. Self-hosted. $0 software.
+            Self-hosted Community. Clear commercial boundaries.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            There is no hosted Enterprise Cloud. You run OpsKnight. You pay for
-            your own compute.
+            The v1.5 Community line is {BRAND.license}. Separately licensed Enterprise modules,
+            support, or hosted services may be offered independently without changing the rights
+            attached to published Community releases.
           </p>
         </div>
 
@@ -34,10 +35,10 @@ export function Pricing() {
           <div className="grid lg:grid-cols-[minmax(16rem,0.9fr)_minmax(0,1.4fr)]">
             <div className="flex flex-col justify-between border-b border-slate-200 p-7 lg:border-b-0 lg:border-r md:p-8">
               <div>
-                <p className="font-mono text-[11px] text-slate-400">Self-hosted</p>
-                <p className="mt-3 font-mono text-5xl font-semibold tracking-tight text-[#111827]">$0</p>
+                <p className="font-mono text-[11px] text-slate-400">Community · self-hosted</p>
+                <p className="mt-3 text-3xl font-semibold tracking-tight text-[#111827]">Open source</p>
                 <p className="mt-2 text-sm text-[#4b5563]">
-                  Full features · {BRAND.license} · your VPC
+                  Community edition · {BRAND.license} · your infrastructure
                 </p>
               </div>
               <div className="mt-8 flex flex-col gap-3">
@@ -45,14 +46,14 @@ export function Pricing() {
                   href="/install"
                   className="inline-flex h-11 items-center justify-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
                 >
-                  Install
+                  Install Community
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
                 <Link
                   href="/compare"
                   className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
                 >
-                  Compare cost vs the usual SaaS on-call stack
+                  Compare deployment and capabilities
                 </Link>
               </div>
             </div>

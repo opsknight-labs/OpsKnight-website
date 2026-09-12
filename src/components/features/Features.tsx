@@ -61,8 +61,8 @@ export function Features() {
             The night, in one install.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            {BRAND.license}. You host it. You still pay compute, SMS, and Slack.
-            There is no OpsKnight cloud and no per-seat software fee.
+            {BRAND.license} Community software. You host it and control the data plane.
+            Separately licensed Enterprise or hosted offerings can add commercial capabilities without changing rights to published Community releases.
           </p>
         </div>
 

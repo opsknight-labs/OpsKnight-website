@@ -35,9 +35,9 @@ const BRAND_SPECS = [
   { label: "Shield Red", value: "#d21a1b" },
   { label: "Night Chrome", value: "#0f172a" },
   { label: "Canvas", value: "#f8fafc" },
-  { label: "Stable Software", value: BRAND.license },
-  { label: "Next Major", value: BRAND.developmentLicense },
-  { label: "Version", value: BRAND.version },
+  { label: "Community Software", value: BRAND.license },
+  { label: "Current Line", value: BRAND.releaseLabel },
+  { label: `Legacy v${BRAND.legacyVersion}`, value: BRAND.legacyLicense },
 ];
 
 export default function BrandPage() {
@@ -57,7 +57,7 @@ export default function BrandPage() {
               />
             </div>
             <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-400">
-              Brand · {BRAND.version}
+              Brand · {BRAND.releaseLabel}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
               Night chrome. Shield red.
@@ -157,11 +157,12 @@ export default function BrandPage() {
               <div id="assets" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Download Brand Assets</h2>
                 <p className="mt-3 text-sm text-[#4b5563]">
-                  Software and brand rights are separate. The published v{BRAND.version}
-                  software release remains {BRAND.license}; the next major Community
-                  development line is intended to use {BRAND.developmentLicense}. Neither
-                  software license grants permission to present a fork, derivative product,
-                  or hosted service as the official OpsKnight product. See the{" "}
+                  Software and brand rights are separate. The active v{BRAND.version} Community
+                  development line uses {BRAND.license}; published v{BRAND.legacyVersion} and
+                  earlier releases retain the licenses shipped with those artifacts, including
+                  {" "}{BRAND.legacyLicense} where applicable. Neither software license grants
+                  permission to present a fork, derivative product, or hosted service as the
+                  official OpsKnight product. See the{" "}
                   <a
                     href={BRAND.links.trademarks}
                     className="text-[#d21a1b] hover:underline"

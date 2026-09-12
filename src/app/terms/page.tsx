@@ -3,7 +3,7 @@ import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: `Terms for the ${BRAND.name} website and the licensing boundary between stable releases and the current development line.`,
+  description: `Terms for the ${BRAND.name} website and the licensing boundary between v1.5 Community and historical releases.`,
 };
 
 export default function TermsPage() {
@@ -21,42 +21,39 @@ export default function TermsPage() {
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
-            Published stable release
+            OpsKnight v1.5 Community
           </h2>
           <p>
-            The currently published stable release, OpsKnight v{BRAND.version},
-            remains licensed under{" "}
+            The active OpsKnight v{BRAND.version} Community development line is
+            distributed under{" "}
             <a
               href={BRAND.links.license}
               className="text-[#d21a1b] hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {BRAND.license}
-            </a>
-            . A release, tag, container image, chart, or source archive keeps the
-            license that accompanied that artifact; a later change on the
-            development branch does not retroactively change those rights.
+              GNU Affero General Public License version 3 only
+            </a>{" "}
+            ({BRAND.license}). The AGPL includes obligations for modified versions
+            used for remote network interaction, including the corresponding-source
+            requirement in section 13.
+          </p>
+          <p>
+            Separately licensed Enterprise modules, hosted services, support, or
+            other commercial offerings may have their own terms. Those offerings do
+            not silently change the license attached to an already published
+            Community artifact.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
-            Current development line
+            Historical releases
           </h2>
           <p>
-            The current development line for the next major Community release is
-            intended to be distributed under{" "}
-            <a
-              href={BRAND.links.developmentLicense}
-              className="text-[#d21a1b] hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GNU Affero General Public License version 3 only
-            </a>{" "}
-            ({BRAND.developmentLicense}) once the application license transition
-            is merged and released. The AGPL includes obligations for modified
-            versions used for remote network interaction, including the
-            corresponding-source requirement in section 13.
+            OpsKnight v{BRAND.legacyVersion} and earlier published releases retain
+            the licenses that accompanied those artifacts, including {BRAND.legacyLicense}
+            where applicable. The v1.5 transition does not retroactively revoke or
+            replace those rights. A release, tag, container image, chart, or source
+            archive keeps the license that accompanied that artifact.
           </p>
           <p>
             The repository{" "}
@@ -68,9 +65,9 @@ export default function TermsPage() {
             >
               license-transition notice
             </a>{" "}
-            explains the historical boundary and release requirements. The
-            applicable license text shipped with a particular software artifact
-            controls its software grant.
+            explains the release boundary in more detail. The applicable license
+            text shipped with a particular software artifact controls its software
+            grant.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
@@ -97,18 +94,17 @@ export default function TermsPage() {
           </h2>
           <p>
             The marketing site is provided as-is. There is no support SLA. This
-            website repository is not made available under the OpsKnight
-            Community software license merely because it describes the Community
-            product. Trademarks of other companies, including PagerDuty, Slack,
-            and Grafana, belong to their owners. OpsKnight is not affiliated with
-            them; names and marks appear only to identify products we compare or
-            interoperate with.
+            website repository is not made available under the OpsKnight Community
+            software license merely because it describes the Community product.
+            Trademarks of other companies, including PagerDuty, Slack, and Grafana,
+            belong to their owners. OpsKnight is not affiliated with them; names and
+            marks appear only to identify products we compare or interoperate with.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">Changes</h2>
           <p>
-            We may update these terms. Material changes will be dated at the top
-            of this page.
+            We may update these terms. Material changes will be dated at the top of
+            this page.
           </p>
         </div>
       </div>
