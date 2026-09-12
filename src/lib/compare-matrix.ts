@@ -1,11 +1,11 @@
 import { BRAND } from "@/lib/brand";
 
 /**
- * Compare matrix for OpsKnight v1.4.0 vs common on-call products.
+ * Comparison matrix for OpsKnight and common on-call products.
  *
- * As of 23 Aug 2026. OpsKnight cells: v1.4.0 app + docs/v1.4.
- * Other cells: vendor documentation and public pricing pages cited in
- * COMPARE_SOURCE_LINKS — not placeholders, not a paid feature audit of every plan.
+ * OpsKnight feature cells are grounded primarily in the last published v1.4.0
+ * application/docs unless a row explicitly describes the v1.5 development line.
+ * License/current-line metadata reflects the active v1.5 Community transition.
  */
 
 export type CompareVendorId =
@@ -19,7 +19,7 @@ export type CompareVendorId =
 
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "23 Aug 2026";
+export const COMPARE_AS_OF = "13 Sep 2026";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;
@@ -83,9 +83,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Deployment",
-        source: "OpsKnight: Compose/Helm. Others: vendor product model as of Aug 2026.",
+        source: "OpsKnight: Compose/Helm. Others: vendor product model as of Sep 2026.",
         values: {
-          opsknight: "Self-hosted (your VPC)",
+          opsknight: "Self-hosted Community (your VPC)",
           pagerduty: "Vendor SaaS",
           incidentio: "Vendor SaaS (GCP)",
           opsgenie: "Vendor SaaS (Atlassian Cloud)",
@@ -96,9 +96,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Software license",
-        source: "OpsKnight LICENSE Apache-2.0. Grafana OnCall OSS was AGPLv3; that repo is archived.",
+        source: `OpsKnight v1.5 Community: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
         values: {
-          opsknight: "Apache-2.0",
+          opsknight: `${BRAND.license} (v1.5 Community)`,
           pagerduty: "Proprietary",
           incidentio: "Proprietary",
           opsgenie: "Proprietary",
@@ -108,22 +108,22 @@ export const COMPARE_SECTIONS: CompareSection[] = [
         },
       },
       {
-        feature: "User pricing model",
-        source: "Public list pages as of 20 Aug 2026.",
+        feature: "Commercial model",
+        source: "OpsKnight Community and commercial offerings have separate licensing boundaries. Vendor pricing references should be confirmed on vendor sites.",
         values: {
-          opsknight: "$0 software; unlimited users in the product",
-          pagerduty: "Professional $25/user/mo or $21 annual (pagerduty.com/pricing). Business/Enterprise not extracted as a single number here; add-ons extra",
-          incidentio: "Per seat: Responder + optional On-call. Team from $15/user/mo annual; On-call +$10. Pro $25 + $20 On-call",
-          opsgenie: "No new sales. Existing per-user Cloud. Features moving to JSM. Support ends 5 Apr 2027",
-          squadcast: "Per user. Pro from $15/user/mo annual; Premium from $24 (squadcast.com/pricing)",
-          splunk: "Public starting SKU $5/user/mo annual, up to 10 seats; larger is sales",
-          grafana: "Cloud IRM: $19/mo platform includes 3 active users, then $20/extra (IRM product page)",
+          opsknight: "Self-hosted Community; Enterprise/hosted capabilities may be packaged separately",
+          pagerduty: "Professional $25/user/mo or $21 annual; Business/Enterprise and add-ons vary",
+          incidentio: "Per-seat responder/on-call plans; packaging varies by tier",
+          opsgenie: "No new sales; capabilities moving to Jira Service Management",
+          squadcast: "Per-user commercial plans",
+          splunk: "Commercial Splunk On-Call plans",
+          grafana: "Grafana Cloud IRM commercial usage/user pricing",
         },
       },
       {
         feature: "Incident data location",
         values: {
-          opsknight: "Your Postgres / VPC",
+          opsknight: "Your Postgres / VPC for Community self-hosting",
           pagerduty: "PagerDuty cloud",
           incidentio: "Vendor cloud",
           opsgenie: "Atlassian cloud",
@@ -133,16 +133,16 @@ export const COMPARE_SECTIONS: CompareSection[] = [
         },
       },
       {
-        feature: "Product standing (Aug 2026)",
-        source: "Atlassian Opsgenie migration page; Grafana OnCall OSS docs archive date 24 Mar 2026.",
+        feature: "Product standing (Sep 2026)",
+        source: "OpsKnight v1.5 is the active development line; v1.4.0 remains the last published Apache-era stable release. Atlassian Opsgenie and Grafana status from their public migration/archive pages.",
         values: {
-          opsknight: `Ships ${BRAND.version}`,
+          opsknight: `${BRAND.releaseLabel}; v${BRAND.legacyVersion} remains historical stable`,
           pagerduty: "Actively sold",
           incidentio: "Actively sold",
           opsgenie: "Standalone: no new purchases; EOL 5 Apr 2027 → Jira Service Management",
           squadcast: "Actively sold (SolarWinds Incident Response)",
           splunk: "Actively sold",
-          grafana: "OnCall OSS archived 24 Mar 2026 (Cloud Connection for SMS/push/voice ended). Current: Grafana Cloud IRM",
+          grafana: "OnCall OSS archived 24 Mar 2026. Current: Grafana Cloud IRM",
         },
       },
     ],
@@ -196,22 +196,22 @@ export const COMPARE_SECTIONS: CompareSection[] = [
           pagerduty: "Push, phone, SMS, email, Slack; WhatsApp in Early Access",
           incidentio: "Mobile app, phone, SMS, Slack, email, WhatsApp (WhatsApp not on Basic)",
           opsgenie: "Push, email, SMS, voice (plan caps); Slack and Teams apps",
-          squadcast: "Push, email, SMS, voice (SMS/voice caps on Pro; unlimited Premium+)",
+          squadcast: "Push, email, SMS, voice (plan-dependent)",
           splunk: "Push, SMS, phone, email; WhatsApp available in paging policy",
           grafana: "IRM: mobile push, Slack, Teams, Telegram, SMS, phone, email",
         },
       },
       {
         feature: "Native voice / phone calls",
-        source: "OpsKnight has no VOICE channel. Others: notification/contact docs.",
+        source: "OpsKnight Community baseline has no VOICE channel. Others: notification/contact docs.",
         values: {
           opsknight: false,
           pagerduty: "Yes — phone contact method",
           incidentio: "Yes — phone escalations; live call routing on Pro/Enterprise",
-          opsgenie: "Yes — voice (not on Free; unlimited Standard/Enterprise historically)",
+          opsgenie: "Yes — voice on historical paid plans",
           squadcast: "Yes — phone calls",
-          splunk: "Yes — phone paging (ack/resolve via keypad)",
-          grafana: "Yes on Cloud IRM. OSS Cloud Connection for calls ended 24 Mar 2026",
+          splunk: "Yes — phone paging",
+          grafana: "Yes on Cloud IRM",
         },
       },
       {
@@ -224,85 +224,85 @@ export const COMPARE_SECTIONS: CompareSection[] = [
           opsgenie: "Slack app: bidirectional alert actions",
           squadcast: "Slack app: war rooms; ack/reassign/resolve; postmortems from channel",
           splunk: "Slack app: cards to ack/reroute/resolve/snooze; channel mapping",
-          grafana: "IRM Slack app: notifications and incident ChatOps (successor to OnCall Slack)",
+          grafana: "IRM Slack app: notifications and incident ChatOps",
         },
       },
       {
         feature: "Microsoft Teams ChatOps",
-        source: "OpsKnight: outgoing webhook formatter only. Others: published Teams apps.",
+        source: "OpsKnight published v1.4 baseline: outgoing webhook formatter only. Current development may evolve; verify v1.5 docs before release. Others: published Teams apps.",
         values: {
-          opsknight: "Outgoing webhook payload only — no Teams app",
+          opsknight: "Published baseline: outgoing webhook payload only",
           pagerduty: "Native Teams app: channel cards, ack/resolve, service mapping",
           incidentio: "Native Teams app (Pro/Enterprise): dedicated channel, lifecycle in Teams",
           opsgenie: "Teams V2 integration: ack/close/snooze from channel",
           squadcast: "Native Teams app: incident channels; ack/reassign/resolve",
-          splunk: "VictorOps Teams app: bi-directional ack/resolve/snooze; optional per-incident channels",
-          grafana: "IRM Teams app: alert cards + incident bot (threads, tasks, notes)",
+          splunk: "VictorOps Teams app: bi-directional ack/resolve/snooze",
+          grafana: "IRM Teams app: alert cards + incident bot",
         },
       },
       {
         feature: "Video bridge on incident",
-        source: "OpsKnight: Jitsi generator + Zoom/Meet URL templates. Vendor collab docs.",
+        source: "OpsKnight: Jitsi generator + Zoom/Meet URL templates. Vendor collaboration docs.",
         values: {
           opsknight: "Jitsi; Zoom/Meet via URL template",
           pagerduty: "Zoom integration + stored conference bridges from Slack",
           incidentio: "Workflows can create Zoom; call transcription in product",
-          opsgenie: "Zoom / conference integrations in directory (not a built-in Jitsi)",
-          squadcast: "Incident communication channels (Zoom/Meet/Jitsi as configured)",
+          opsgenie: "Zoom / conference integrations in directory",
+          squadcast: "Incident communication channels as configured",
           splunk: "War-room automation (bring your conference tool)",
-          grafana: "IRM `incident talk` — find an online discussion place",
+          grafana: "IRM incident collaboration tools",
         },
       },
       {
         feature: "Postmortems + action items",
         source: "OpsKnight Postmortem + ActionItem models. Vendor PIR docs.",
         values: {
-          opsknight: "You write from the timeline; no model-generated report",
+          opsknight: "Timeline-based postmortems and action items",
           pagerduty: "Post-incident review / timeline tools (plus add-on AI products)",
           incidentio: "Post-incident process + AI draft from timeline (plan-dependent)",
-          opsgenie: "Incident notes; typical PIR in Confluence / JSM, not a first-class Opsgenie writer",
-          squadcast: "Postmortem templates and action items (deeper on Premium+)",
+          opsgenie: "Incident notes; typical PIR in Confluence / JSM",
+          squadcast: "Postmortem templates and action items",
           splunk: "Post-incident reviews in the product",
           grafana: "Cloud IRM can auto-create PIR documents",
         },
       },
       {
         feature: "Status page",
-        source: "OpsKnight: one page per install. PD Status Pages overview. incident.io status-pages docs. Atlassian Statuspage is a separate SKU.",
+        source: "OpsKnight published Community baseline: one page per install. Other vendors: status-page product docs.",
         values: {
-          opsknight: "Included: one public/private page, custom domain, subscribers",
+          opsknight: "Community baseline: one public/private page with custom domain and subscribers",
           pagerduty: "Internal / external / private Status Pages (plan-gated; custom domain on external)",
-          incidentio: "Included: public, internal, customer pages (counts by plan); custom domain",
-          opsgenie: "Not a full status product — pair with Atlassian Statuspage (separate)",
-          squadcast: "Status pages included from Premium (public/private; not a Pro-line item)",
+          incidentio: "Public, internal, customer pages (counts by plan); custom domain",
+          opsgenie: "Pair with Atlassian Statuspage (separate product)",
+          squadcast: "Status pages on applicable paid plans",
           splunk: "No first-party customer status page; use a third-party page",
-          grafana: "No IRM-native public status page; Statuspage / Grafana Cloud status integrations",
+          grafana: "No IRM-native public status page; third-party integrations",
         },
       },
       {
         feature: "MTTA / MTTR / SLA",
-        source: "OpsKnight SLADefinition. PD Analytics API. Others: reporting products.",
+        source: "OpsKnight SLA definitions/analytics. Other vendors: reporting products.",
         values: {
           opsknight: "MTTA/MTTR and SLA definitions in-app",
-          pagerduty: "Analytics API and Insights (MTTA/MTTR; daily rollup)",
+          pagerduty: "Analytics API and Insights",
           incidentio: "Insights / trends in the product",
           opsgenie: "Reporting on paid plans",
-          squadcast: "Analytics; SLO tracker on Premium+",
+          squadcast: "Analytics; SLO features on higher plans",
           splunk: "MTTA/MTTR reports in product",
           grafana: "IRM reporting inside Grafana Cloud",
         },
       },
       {
         feature: "Mobile",
-        source: "OpsKnight: PWA only. Vendor App Store / Play apps.",
+        source: "OpsKnight: installable PWA. Vendor App Store / Play apps.",
         values: {
-          opsknight: "Installable PWA (push, biometrics). No App Store listing",
+          opsknight: "Installable PWA with push; no App Store listing",
           pagerduty: "iOS and Android apps",
-          incidentio: "iOS and Android apps (On-call seat for paging on mobile)",
+          incidentio: "iOS and Android apps",
           opsgenie: "iOS and Android apps",
           squadcast: "iOS and Android apps",
           splunk: "iOS and Android apps",
-          grafana: "Grafana IRM iOS and Android (Cloud). OSS push relay ended 24 Mar 2026",
+          grafana: "Grafana IRM iOS and Android",
         },
       },
     ],
@@ -312,41 +312,41 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Inbound monitoring webhooks",
-        source: `OpsKnight docs v1.4 catalog: ${BRAND.integrationCountLabel} native parsers. Others: vendor directories — counts change; we do not copy a marketing number we did not count.`,
+        source: `OpsKnight published docs catalog: ${BRAND.integrationCountLabel} native parsers. Other vendors: integration directories.`,
         values: {
           opsknight: `${BRAND.integrationCountLabel} native parsers + generic JSON`,
           pagerduty: "Events API v2 + large integration directory",
-          incidentio: "Alert sources catalog (Datadog, Grafana, etc.)",
-          opsgenie: "Large integration directory (historically 200+ listed)",
-          squadcast: "Service webhooks + integration directory (own payload, not PD v2)",
+          incidentio: "Alert sources catalog",
+          opsgenie: "Large historical integration directory",
+          squadcast: "Service webhooks + integration directory",
           splunk: "REST + third-party integrations",
           grafana: "Alertmanager, Grafana Alerting, webhooks, IRM integration catalog",
         },
       },
       {
         feature: "PagerDuty Events API v2 ingest",
-        source: "OpsKnight docs: POST /api/integrations/pagerduty/v2/enqueue. PD: events.pagerduty.com/v2/enqueue. Others ingest their own formats or run a migrator.",
+        source: "OpsKnight docs: POST /api/integrations/pagerduty/v2/enqueue. PagerDuty: events.pagerduty.com/v2/enqueue.",
         values: {
-          opsknight: "Yes — ingest adapter (routing_key payload). Not a PD clone",
+          opsknight: "Yes — ingest adapter (routing_key payload). Not a PagerDuty clone",
           pagerduty: "Native Events API v2",
-          incidentio: "No Events API v2 ingest adapter. Can sit alongside PD or replace it",
-          opsgenie: "Own API / migrators — not Events API v2 ingest",
-          squadcast: "Migrator tool; incoming webhooks use Squadcast JSON, not PD enqueue",
-          splunk: "Own REST / integrations — not Events API v2 ingest",
-          grafana: "Migrators from PD exist; IRM ingest is not PD /v2/enqueue",
+          incidentio: "No direct Events API v2 ingest adapter",
+          opsgenie: "Own API / migrators",
+          squadcast: "Migrator/tooling and native webhooks",
+          splunk: "Own REST / integrations",
+          grafana: "Migration tooling; IRM ingest is not PD /v2/enqueue",
         },
       },
       {
         feature: "Jira Cloud",
-        source: "OpsKnight v1.4 bi-directional sync. Vendor Jira integration guides.",
+        source: "OpsKnight published integration and vendor Jira integration guides.",
         values: {
           opsknight: "Bi-directional issue sync",
-          pagerduty: "Bidirectional Jira Cloud extension (status + notes mapping)",
-          incidentio: "Follow-ups export + optional incident tickets; status sync is limited (docs)",
-          opsgenie: "Built-in Jira / JSM (same Atlassian family)",
+          pagerduty: "Bidirectional Jira Cloud extension",
+          incidentio: "Follow-ups export + incident/Jira workflows",
+          opsgenie: "Built-in Jira / JSM ecosystem",
           squadcast: "Bidirectional Jira Cloud extension",
-          splunk: "Jira Cloud / Server add-ons and webhooks",
-          grafana: "Jira in IRM ITSM integrations (issue workflows)",
+          splunk: "Jira add-ons and webhooks",
+          grafana: "Jira in IRM ITSM integrations",
         },
       },
       {
@@ -363,26 +363,26 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "SSO",
-        source: "OpsKnight v1.4: OIDC only, no SAML. Vendor SSO docs.",
+        source: "OpsKnight v1.4 published baseline includes OIDC. v1.5 Community/Enterprise packaging should be read from the v1.5 release documentation when published. Vendor SSO docs for other products.",
         values: {
-          opsknight: "OIDC (Okta, Google, Microsoft, Auth0, generic). No SAML",
+          opsknight: "Published baseline: OIDC; v1.5 packaging may distinguish Community and Enterprise capabilities",
           pagerduty: "SAML 2.0 IdP; Google OAuth; OIDC for private status pages",
-          incidentio: "Slack SSO on all plans; SAML on newer Pro + Enterprise; SCIM on Enterprise",
-          opsgenie: "SSO/SAML on Standard and Enterprise (legacy packaging)",
+          incidentio: "Slack SSO; SAML/SCIM on applicable plans",
+          opsgenie: "SSO/SAML on historical paid plans",
           squadcast: "SAML 2.0",
           splunk: "SAML 2.0 and SCIM 2.0",
-          grafana: "Grafana Cloud auth (SAML/SSO on Cloud plans)",
+          grafana: "Grafana Cloud auth; enterprise SSO by plan",
         },
       },
       {
         feature: "RBAC + audit log",
-        source: "OpsKnight USER/ADMIN/RESPONDER + AuditLog. Others: documented admin controls.",
+        source: "OpsKnight roles + AuditLog. Other vendors: documented admin controls.",
         values: {
-          opsknight: "Roles + audit log",
-          pagerduty: "Base roles + audit / analytics (plan-dependent)",
+          opsknight: "Roles + audit log; advanced governance can be packaged separately",
+          pagerduty: "Roles + audit / analytics (plan-dependent)",
           incidentio: "Roles; custom RBAC + audit logs on Enterprise",
           opsgenie: "Roles + audit on paid plans",
-          squadcast: "RBAC; stakeholder roles on Premium+",
+          squadcast: "RBAC; advanced roles on higher plans",
           splunk: "Team admin roles + org SSO",
           grafana: "Grafana Cloud roles + IRM permissions",
         },
@@ -394,54 +394,54 @@ export const COMPARE_SECTIONS: CompareSection[] = [
 export const OPKNIGHT_GAPS = [
   {
     item: "Native voice / phone paging",
-    detail: "Channels are email, SMS (Twilio or SNS), push, Slack, WhatsApp, and webhooks.",
+    detail: "Published Community channels include email, SMS, push, Slack, WhatsApp, and webhooks; verify v1.5 docs for the final release capability set.",
   },
   {
-    item: "Native Microsoft Teams app",
-    detail: "Teams can receive a formatted outgoing webhook; there is no Teams ChatOps product.",
+    item: "Microsoft Teams depth",
+    detail: "The published baseline is outgoing webhook integration; Teams ChatOps is an area of active product development.",
   },
   {
-    item: "SAML SSO",
-    detail: "SSO in v1.4.0 is OIDC only.",
+    item: "Enterprise identity packaging",
+    detail: "The published baseline includes OIDC. Advanced SSO/SCIM/governance can be separated into Enterprise packaging for v1.5 and later.",
   },
   {
     item: "OpsKnight-hosted cloud",
-    detail: "There is no paid Enterprise Cloud. You operate the container.",
+    detail: "A managed OpsKnight Cloud service is not currently offered; Community is self-hosted.",
   },
   {
     item: "Multiple independent status pages per team",
-    detail: "A status page with custom domain and privacy modes ships today. Multi-page/team custom domains is on the public roadmap.",
+    detail: "The published Community baseline has one status page per install. Additional pages are a natural future commercial capability.",
   },
   {
     item: "AI alert correlation / auto postmortems",
-    detail: "Listed as upcoming on ROADMAP.md. Postmortems are authored from the incident timeline, not generated by a model.",
+    detail: "Postmortems are currently authored from the incident timeline rather than generated automatically.",
   },
 ];
 
 export const HONEST_BLURB: Record<string, { title: string; body: string }> = {
   pagerduty: {
     title: "PagerDuty",
-    body: "Vendor-hosted incident and on-call, sold per user with plan add-ons. Native voice, Slack/Teams apps, Status Pages, and Events API v2. OpsKnight is software you host: same Events API v2 payload shape at your URL, no per-seat meter, no native voice.",
+    body: "Vendor-hosted incident and on-call with commercial plans and add-ons. Native voice, Slack/Teams apps, Status Pages, and Events API v2. OpsKnight Community is self-hosted and supports the Events API v2 payload shape at your URL; commercial OpsKnight capabilities can be packaged separately.",
   },
   incidentio: {
     title: "incident.io",
-    body: "Vendor-hosted response that runs in Slack or Microsoft Teams, with included status pages and per-seat Responder/On-call pricing. OpsKnight is not a hosted incident.io clone: you operate it, paging is text/chat/push, Teams is webhook-only.",
+    body: "Vendor-hosted response that runs in Slack or Microsoft Teams, with status pages and commercial responder/on-call packaging. OpsKnight Community is self-hosted; verify v1.5 documentation for the exact Community and Enterprise capability boundary.",
   },
   opsgenie: {
     title: "Opsgenie",
-    body: "Atlassian’s standalone Opsgenie is closed to new purchases. Support ends 5 April 2027; alerting/on-call is moving into Jira Service Management. Status for customers is typically Atlassian Statuspage, a separate product. OpsKnight is independent software you host.",
+    body: "Atlassian’s standalone Opsgenie is closed to new purchases. Support ends 5 April 2027; alerting/on-call is moving into Jira Service Management. OpsKnight is independent self-hosted Community software with separately defined commercial boundaries.",
   },
   squadcast: {
     title: "Squadcast",
-    body: "SolarWinds Incident Response (Squadcast): per-user SaaS with voice, Slack/Teams apps, and status pages from Premium. Incoming alerts use Squadcast webhooks, not PagerDuty Events API v2 ingest. OpsKnight is self-hosted with no seat meter.",
+    body: "SolarWinds Incident Response (Squadcast) is commercial SaaS with voice, Slack/Teams apps, and status-page capabilities by plan. OpsKnight Community is self-hosted and its v1.5 Community source is licensed under AGPL-3.0-only.",
   },
   splunk: {
     title: "Splunk On-Call",
-    body: "Formerly VictorOps. Vendor-hosted on-call with phone/SMS/push and Slack/Teams apps. No first-party customer status page. OpsKnight is a separate Apache-2.0 stack you run, not a Splunk add-on.",
+    body: `Formerly VictorOps. Vendor-hosted on-call with phone/SMS/push and Slack/Teams apps. OpsKnight Community is a separate ${BRAND.license} self-hosted stack, not a Splunk add-on.`,
   },
   grafana: {
     title: "Grafana Cloud IRM",
-    body: "Grafana OnCall OSS was archived on 24 March 2026; Cloud Connection for OSS SMS, push, and voice ended that day. The current Grafana product is Cloud IRM (paid after a small free user allotment). OpsKnight remains Apache-2.0 self-hosted on-call + incidents + one status page in one app.",
+    body: `Grafana OnCall OSS was archived on 24 March 2026. The current Grafana product is Cloud IRM. OpsKnight v1.5 Community is ${BRAND.license} self-hosted incident response; published v${BRAND.legacyVersion} artifacts retain their historical license.`,
   },
 };
 
@@ -466,4 +466,4 @@ export function vendorIdFromCompareSlug(slug: string): CompareVendorId | null {
   }
 }
 
-export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight column: v${BRAND.version} application and docs. Other columns: vendor documentation and public pricing pages listed below — not a contract, not every add-on SKU, and not list prices we invent. Confirm packaging on each vendor’s site before you buy.`;
+export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight feature cells are grounded primarily in the published v${BRAND.legacyVersion} application/docs unless otherwise stated; v${BRAND.version} is the active Community development line and uses ${BRAND.license}. Vendor columns summarize public documentation and packaging, not a contract. Confirm current vendor pricing and OpsKnight v1.5 release packaging before making a purchasing decision.`;
