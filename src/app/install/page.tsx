@@ -115,9 +115,7 @@ docker compose up -d`}
                   label="helm"
                   value={`helm repo add opsknight https://charts.opsknight.com
 helm repo update
-helm upgrade --install opsknight opsknight/opsknight \
-  --namespace opsknight \
-  --create-namespace`}
+helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --create-namespace`}
                 />
                 <p className="mt-3">
                   <Link
