@@ -35,7 +35,7 @@ const BRAND_SPECS = [
   { label: "Shield Red", value: "#d21a1b" },
   { label: "Night Chrome", value: "#0f172a" },
   { label: "Canvas", value: "#f8fafc" },
-  { label: "License", value: "Apache-2.0" },
+  { label: "Software License", value: BRAND.license },
   { label: "Version", value: BRAND.version },
 ];
 
@@ -105,7 +105,7 @@ export default function BrandPage() {
                   </div>
                   <div className="flex items-center gap-4 rounded-[14px] border border-slate-200 bg-white p-6">
                     <Image
-                      src={BRAND.assets.logo}
+                      src={BRAND.assets.logoSvg}
                       alt=""
                       width={40}
                       height={40}
@@ -165,7 +165,20 @@ export default function BrandPage() {
               <div id="assets" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Download Brand Assets</h2>
                 <p className="mt-3 text-sm text-[#4b5563]">
-                  All SVG and PNG assets are packaged under the Apache-2.0 license:
+                  The OpsKnight software is licensed under {BRAND.license}. The
+                  OpsKnight name, logos, and brand assets are separate from the
+                  software license and may not be used to imply that a fork,
+                  derivative product, or hosted service is official or endorsed.
+                  See the{" "}
+                  <a
+                    href="https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md"
+                    className="text-[#d21a1b] hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    trademark policy
+                  </a>{" "}
+                  for details.
                 </p>
                 <div className="mt-4">
                   <CopyBlock
