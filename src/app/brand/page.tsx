@@ -35,14 +35,14 @@ const BRAND_SPECS = [
   { label: "Shield Red", value: "#d21a1b" },
   { label: "Night Chrome", value: "#0f172a" },
   { label: "Canvas", value: "#f8fafc" },
-  { label: "License", value: "Apache-2.0" },
+  { label: "Stable Software", value: BRAND.license },
+  { label: "Next Major", value: BRAND.developmentLicense },
   { label: "Version", value: BRAND.version },
 ];
 
 export default function BrandPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Header */}
       <section className="border-b border-slate-200 bg-[#0f172a] pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -70,15 +70,10 @@ export default function BrandPage() {
         </div>
       </section>
 
-      {/* Main Content Layout with Sticky Right Rail */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            
-            {/* Main Content Column */}
             <article className="min-w-0 space-y-14 max-w-3xl">
-              
-              {/* Logo */}
               <div id="logo" className="scroll-mt-28">
                 <h2 className="text-xl font-semibold text-[#111827]">Logo</h2>
                 <p className="mt-3 text-[#4b5563]">
@@ -105,7 +100,7 @@ export default function BrandPage() {
                   </div>
                   <div className="flex items-center gap-4 rounded-[14px] border border-slate-200 bg-white p-6">
                     <Image
-                      src={BRAND.assets.logo}
+                      src={BRAND.assets.logoSvg}
                       alt=""
                       width={40}
                       height={40}
@@ -122,7 +117,6 @@ export default function BrandPage() {
                 </div>
               </div>
 
-              {/* Color System */}
               <div id="color" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Color System</h2>
                 <p className="mt-3 text-sm text-[#4b5563]">
@@ -142,7 +136,6 @@ export default function BrandPage() {
                 </div>
               </div>
 
-              {/* Writing About OpsKnight */}
               <div id="writing" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Writing about the product</h2>
                 <div className="mt-6 space-y-4 text-sm text-[#4b5563]">
@@ -161,11 +154,23 @@ export default function BrandPage() {
                 </div>
               </div>
 
-              {/* Download Assets */}
               <div id="assets" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Download Brand Assets</h2>
                 <p className="mt-3 text-sm text-[#4b5563]">
-                  All SVG and PNG assets are packaged under the Apache-2.0 license:
+                  Software and brand rights are separate. The published v{BRAND.version}
+                  software release remains {BRAND.license}; the next major Community
+                  development line is intended to use {BRAND.developmentLicense}. Neither
+                  software license grants permission to present a fork, derivative product,
+                  or hosted service as the official OpsKnight product. See the{" "}
+                  <a
+                    href={BRAND.links.trademarks}
+                    className="text-[#d21a1b] hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    trademark policy
+                  </a>{" "}
+                  for details.
                 </p>
                 <div className="mt-4">
                   <CopyBlock
@@ -175,10 +180,8 @@ curl -O https://opsknight.com/assets/logo-mark.png`}
                   />
                 </div>
               </div>
-
             </article>
 
-            {/* Sticky Right Rail */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 pl-4 border-l border-slate-200/80">
                 <PageToc
@@ -191,7 +194,6 @@ curl -O https://opsknight.com/assets/logo-mark.png`}
                 />
               </div>
             </aside>
-
           </div>
         </div>
       </section>

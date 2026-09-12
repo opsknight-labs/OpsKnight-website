@@ -6,6 +6,8 @@ import { latestDocsHref } from "@/lib/docs/paths";
 
 /** Bump this when you ship. Footer/about use it. Docs URLs use latestDocsHref, not this. */
 const PRODUCT_VERSION = "1.4.0";
+const STABLE_LICENSE = "Apache-2.0";
+const DEVELOPMENT_LICENSE = "AGPL-3.0-only";
 
 export const BRAND = {
   name: "OpsKnight",
@@ -34,7 +36,13 @@ export const BRAND = {
     releases: "https://github.com/opsknight-labs/OpsKnight/releases",
     contributing:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/CONTRIBUTING.md",
-    license: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    // Current stable release (v1.4.x) remains under the license shipped with that release.
+    license: "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
+    // The main development line / next major release adopts AGPL-3.0-only once the transition lands.
+    developmentLicense: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    licenseTransition:
+      "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE-TRANSITION.md",
+    trademarks: "https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md",
     security: "https://github.com/opsknight-labs/OpsKnight/security",
     helmCharts: "https://github.com/opsknight-labs/helm-charts",
   },
@@ -50,7 +58,7 @@ export const BRAND = {
   seo: {
     title: "OpsKnight | Self-hosted on-call & incident response",
     description:
-      "Self-hosted incident command center for on-call, paging, Slack war rooms, status pages, and SLA analytics. Unlimited users. Apache-2.0. PagerDuty Events API v2 ingest adapter.",
+      "Self-hosted incident command center for on-call, paging, Slack war rooms, status pages, and SLA analytics. Unlimited users. Current stable v1.4: Apache-2.0; next major development line: AGPL-3.0-only. PagerDuty Events API v2 ingest adapter.",
     keywords: [
       "incident management",
       "on-call",
@@ -68,8 +76,12 @@ export const BRAND = {
     ],
   },
 
-  license: "Apache-2.0",
+  /** License of the currently published stable product version above. */
+  license: STABLE_LICENSE,
   licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0",
+  /** License selected for the main development line / next major release. */
+  developmentLicense: DEVELOPMENT_LICENSE,
+  developmentLicenseUrl: "https://www.gnu.org/licenses/agpl-3.0.html",
 
   deploy: {
     secretsNote:

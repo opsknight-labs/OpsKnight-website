@@ -20,17 +20,16 @@ const TOC_SECTIONS = [
 ];
 
 const ABOUT_SPECS = [
-  { label: "License", value: BRAND.license },
+  { label: "Stable License", value: BRAND.license },
+  { label: "Next Major", value: BRAND.developmentLicense },
   { label: "Current Version", value: BRAND.version },
   { label: "Deployment", value: "100% Self-Hosted" },
   { label: "Supported Ingests", value: BRAND.integrationCountLabel },
-  { label: "Cloud Pricing", value: "$0 (Free Forever)" },
 ];
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f8fafc]">
-      {/* Header */}
       <section className="border-b border-slate-200 pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -47,14 +46,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Main Content Layout with Sticky Right Rail */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            
-            {/* Main Content Column */}
             <article className="min-w-0 space-y-10 max-w-3xl text-sm leading-relaxed text-[#4b5563]">
-              
               <div id="overview" className="scroll-mt-28 space-y-4">
                 <p>
                   OpsKnight provides end-to-end alerting, paging, escalation policies, Slack ChatOps war rooms, public status pages, and postmortem incident timelines without third-party vendor lock-in.
@@ -87,14 +82,26 @@ export default function AboutPage() {
               <div id="mission" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Mission</h2>
                 <p className="mt-3">
-                  Make modern on-call, paging, war rooms, status pages, and postmortems freely available to any engineering team that can run Docker Compose or Helm — without a SaaS subscription tax.
+                  Make modern on-call, paging, war rooms, status pages, and postmortems freely available to engineering teams that can run Docker Compose or Helm while keeping Community software and its licensing transparent.
                 </p>
               </div>
 
               <div id="license" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">License &amp; Open Source</h2>
                 <p className="mt-3">
-                  OpsKnight is licensed under {BRAND.license}. Source code is openly available on GitHub. There is no hidden enterprise tier or artificial seat metering.
+                  The published v{BRAND.version} release remains licensed under {BRAND.license}. The current development line for the next major Community release is intended to ship under {BRAND.developmentLicense}. Source code for the Community application is openly available on GitHub.
+                </p>
+                <p className="mt-2">
+                  If OpsKnight introduces separately licensed Enterprise modules, hosted services, support, or other commercial offerings, they will be identified separately rather than silently changing the license of already published Community artifacts. See the{" "}
+                  <a
+                    href={BRAND.links.licenseTransition}
+                    className="text-[#d21a1b] font-medium hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    license transition notice
+                  </a>{" "}
+                  for the exact boundary.
                 </p>
               </div>
 
@@ -140,10 +147,8 @@ export default function AboutPage() {
                   Security Architecture
                 </Link>
               </div>
-
             </article>
 
-            {/* Sticky Right Rail */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 pl-4 border-l border-slate-200/80">
                 <PageToc
@@ -154,7 +159,6 @@ export default function AboutPage() {
                 />
               </div>
             </aside>
-
           </div>
         </div>
       </section>
