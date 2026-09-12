@@ -50,7 +50,7 @@ export const BRAND = {
   seo: {
     title: "OpsKnight | Self-hosted on-call & incident response",
     description:
-      "Self-hosted incident command center for on-call, paging, Slack war rooms, status pages, and SLA analytics. Unlimited users. Apache-2.0. PagerDuty Events API v2 ingest adapter.",
+      "Self-hosted incident command center for on-call, paging, Slack war rooms, status pages, and SLA analytics. Unlimited users. AGPL-3.0-only. PagerDuty Events API v2 ingest adapter.",
     keywords: [
       "incident management",
       "on-call",
@@ -68,8 +68,8 @@ export const BRAND = {
     ],
   },
 
-  license: "Apache-2.0",
-  licenseUrl: "https://www.apache.org/licenses/LICENSE-2.0",
+  license: "AGPL-3.0-only",
+  licenseUrl: "https://www.gnu.org/licenses/agpl-3.0.html",
 
   deploy: {
     secretsNote:
