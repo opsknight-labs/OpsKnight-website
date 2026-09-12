@@ -7,7 +7,7 @@ import { PageToc } from "@/components/common/PageToc";
 
 const title = "Use Cases";
 const description =
-  "When OpsKnight is a fit: keep incident data on your stack, eliminate per-seat pricing at scale, run Slack war rooms, and maintain complete audit compliance.";
+  "When OpsKnight is a fit: keep incident data on your stack, scale self-hosted operations, run Slack war rooms, and maintain complete audit visibility.";
 
 export const metadata: Metadata = {
   title,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const TOC_SECTIONS = [
   { id: "data-sovereignty", title: "VPC Data Sovereignty" },
-  { id: "flat-rate-scale", title: "Scale Without Per-Seat Taxes" },
+  { id: "flat-rate-scale", title: "Self-Hosted Scale" },
   { id: "slack-chatops", title: "Slack ChatOps & War Rooms" },
   { id: "escalation-routing", title: "Escalations & Rotations" },
   { id: "audit-compliance", title: "Compliance & Audit Readiness" },
@@ -27,42 +27,37 @@ const TOC_SECTIONS = [
 
 const SPEC_ITEMS = [
   { label: "Deployment", value: "Self-Hosted (Docker / Helm)" },
-  { label: "Seat Limits", value: "Unlimited (Zero cost per user)" },
+  { label: "Community License", value: BRAND.license },
   { label: "Incident Storage", value: "Local PostgreSQL (Your VPC)" },
   { label: "Telemetry", value: "Zero External Phone-Home" },
-  { label: "License", value: BRAND.license },
+  { label: "Current Line", value: BRAND.releaseLabel },
 ];
 
 export default function UseCasesPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Header */}
       <section className="border-b border-slate-200 bg-[#0f172a] pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-400">
-              Operational Scenarios · {BRAND.version}
+              Operational Scenarios · {BRAND.releaseLabel}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl sm:leading-[1.12]">
               Built for teams that already operate a stack.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
               These are real-world operational situations OpsKnight is built for.
-              No hosted cloud dependencies, no per-seat billing surprises, and no mandatory external SaaS lock-in.
+              Keep the Community data plane in your infrastructure, avoid mandatory external SaaS lock-in,
+              and keep Community and commercial capabilities explicitly separated.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Main Content Layout with Sticky Right Rail */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            
-            {/* Main Content Column */}
             <article className="min-w-0 space-y-16 max-w-3xl">
-              
-              {/* 1. VPC Data Sovereignty */}
               <div id="data-sovereignty" className="scroll-mt-28">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-[#d21a1b]">
@@ -75,23 +70,23 @@ export default function UseCasesPage() {
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
                   When production breaks, your incident logs, database stack traces, customer identifiers,
                   and postmortem root-cause notes frequently contain sensitive infrastructure details.
-                  Many regulated industries (fintech, healthcare, defense) are legally prohibited from streaming
-                  their internal outage timelines to a third-party SaaS cloud.
+                  Teams in regulated environments often need incident records to stay inside infrastructure
+                  they control rather than a third-party incident SaaS.
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                   <h3 className="text-sm font-semibold text-slate-900">How OpsKnight handles this:</h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>All rotations, incident records, and timelines live strictly in your internal PostgreSQL database.</span>
+                      <span>Rotations, incident records, and timelines live in your PostgreSQL database.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Zero outbound telemetry, zero marketing trackers, and zero phone-home pings.</span>
+                      <span>No mandatory product telemetry or marketing phone-home is required for the Community deployment.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Deployable in fully air-gapped VPCs with private container registries.</span>
+                      <span>Deploy with private container registries and infrastructure under your control.</span>
                     </li>
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
@@ -106,35 +101,34 @@ export default function UseCasesPage() {
                 </div>
               </div>
 
-              {/* 2. Scale Without Per-Seat Taxes */}
               <div id="flat-rate-scale" className="scroll-mt-28 border-t border-slate-200 pt-12">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-[#d21a1b]">
                     <Zap className="h-4 w-4" />
                   </div>
                   <h2 className="text-2xl font-semibold tracking-tight text-[#111827]">
-                    On-Call at Scale Without Per-Seat Taxes
+                    Self-Hosted On-Call at Scale
                   </h2>
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-                  Commercial on-call vendors charge $25 to $49 per user per month. As your engineering team
-                  grows from 20 to 200 developers, the monthly cost inflates rapidly simply to give engineers
-                  access to emergency rotation schedules.
+                  Vendor-hosted on-call products often scale commercially with seats and add-ons.
+                  OpsKnight Community gives teams a source-available-to-run, self-hosted foundation while
+                  leaving room for separately licensed Enterprise capabilities where organizations need more.
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                   <h3 className="text-sm font-semibold text-slate-900">How OpsKnight handles this:</h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Apache-2.0 open source license: invite 5 or 5,000 engineers at $0 subscription cost.</span>
+                      <span>{BRAND.license} Community source can be deployed on infrastructure your team operates.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Resource-efficient runtime: operates comfortably on 0.5 vCPU and 512MB RAM ($5/mo cloud compute).</span>
+                      <span>Scale the Community runtime from a small Compose installation to Kubernetes as operational demand grows.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>No tier locks: full access to escalation policies, webhooks, and ChatOps for every team member.</span>
+                      <span>Enterprise capabilities and commercial packaging can be offered separately without changing rights to already published Community releases.</span>
                     </li>
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
@@ -142,14 +136,13 @@ export default function UseCasesPage() {
                       href="/compare"
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
                     >
-                      Compare against Commercial SaaS
+                      Compare deployment and capabilities
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
                 </div>
               </div>
 
-              {/* 3. Slack ChatOps & War Rooms */}
               <div id="slack-chatops" className="scroll-mt-28 border-t border-slate-200 pt-12">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-[#d21a1b]">
@@ -168,15 +161,15 @@ export default function UseCasesPage() {
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Automatically provisions dedicated Slack incident channels (e.g. <code className="font-mono text-xs text-red-600">#inc-2026-payment-timeout</code>).</span>
+                      <span>Automatically provisions dedicated Slack incident channels (for example, <code className="font-mono text-xs text-red-600">#inc-2026-payment-timeout</code>).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Interactive message buttons allow 1-click Acknowledge, Assign, and Resolve directly inside Slack.</span>
+                      <span>Interactive message buttons allow acknowledge, assign, and resolve actions directly inside Slack.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Auto-injects conference bridge links (Zoom, Google Meet, or Jitsi) into the war room.</span>
+                      <span>Conference bridge links can be attached to the incident workflow.</span>
                     </li>
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
@@ -191,7 +184,6 @@ export default function UseCasesPage() {
                 </div>
               </div>
 
-              {/* 4. Escalations & Rotations */}
               <div id="escalation-routing" className="scroll-mt-28 border-t border-slate-200 pt-12">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-[#d21a1b]">
@@ -202,23 +194,23 @@ export default function UseCasesPage() {
                   </h2>
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-                  Complex microservice architectures require distinct ownership boundaries. The payment team
-                  needs different on-call handoffs than the infrastructure or security team.
+                  Complex service architectures require distinct ownership boundaries. Payment, infrastructure,
+                  security, and application teams can each need different on-call handoffs.
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                   <h3 className="text-sm font-semibold text-slate-900">How OpsKnight handles this:</h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Configurable multi-tier escalation policies with customizable step delays (e.g. 5m, 15m, 30m).</span>
+                      <span>Configurable multi-tier escalation policies with customizable step delays.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Multi-channel delivery: Twilio SMS, AWS SNS, Mobile Push, Slack, WhatsApp, and Webhooks.</span>
+                      <span>Multi-channel delivery through the providers enabled in your deployment.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Flexible rotation schedules supporting daily, weekly, and custom shift handoffs with timezone awareness.</span>
+                      <span>Rotation schedules with timezone-aware handoffs and overrides.</span>
                     </li>
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
@@ -233,7 +225,6 @@ export default function UseCasesPage() {
                 </div>
               </div>
 
-              {/* 5. Compliance & Audit Readiness */}
               <div id="audit-compliance" className="scroll-mt-28 border-t border-slate-200 pt-12">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-[#d21a1b]">
@@ -244,23 +235,23 @@ export default function UseCasesPage() {
                   </h2>
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-                  SOC 2, ISO 27001, and HIPAA audits mandate rigorous tracking of who was paged, when they acknowledged,
-                  what actions were performed, and full post-incident timeline logs.
+                  Audit and compliance programs often require teams to reconstruct who was paged, when an
+                  incident was acknowledged, and what operational actions were performed.
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                   <h3 className="text-sm font-semibold text-slate-900">How OpsKnight handles this:</h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Immutable audit trails documenting every state transition, ack timestamp, and escalation step.</span>
+                      <span>Audit trails capture incident state transitions and operational actions supported by the release.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>OIDC and SAML 2.0 Single Sign-On integration with Okta, Azure AD, and Keycloak.</span>
+                      <span>Authentication and SSO capabilities are documented per release and can be extended through separately licensed Enterprise functionality.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>AES-256-GCM envelope encryption protecting stored integration secrets and notification tokens.</span>
+                      <span>Stored integration secrets and notification credentials use the security controls documented for the current release.</span>
                     </li>
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
@@ -274,10 +265,8 @@ export default function UseCasesPage() {
                   </div>
                 </div>
               </div>
-
             </article>
 
-            {/* Sticky Right Rail (Page TOC + Specs + Actions) */}
             <aside className="hidden lg:block">
               <PageToc
                 sections={TOC_SECTIONS}
@@ -288,7 +277,6 @@ export default function UseCasesPage() {
                 docLinkLabel="Installation Documentation"
               />
             </aside>
-
           </div>
         </div>
       </section>
