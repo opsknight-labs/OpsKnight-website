@@ -30,10 +30,10 @@ const STATIC_QUICK_LINKS: SearchItem[] = [
   { title: "PagerDuty Drop-in Ingest Adapter", href: "/compare/pagerduty", category: "Compare", keywords: "events api v2 drop in migration alertmanager" },
   { title: "Opsgenie Sunset Migration Guide", href: "/compare/opsgenie", category: "Compare", keywords: "atlassian opsgenie deprecation escalation routes" },
   { title: "Grafana OnCall OSS Migration Guide", href: "/compare/grafana-oncall", category: "Compare", keywords: "grafana labs archived contact points" },
-  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v1.4 v1.3 updates release notes" },
+  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v1.5 v1.4 updates release notes" },
   { title: "Brand Assets & Guidelines", href: "/brand", category: "Resources", keywords: "logos icons colors typography svg png" },
   { title: "Use Cases & Architecture", href: "/use-cases", category: "Product", keywords: "on-prem enterprise self hosted privacy" },
-  { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license apache-2.0" },
+  { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license agpl-3.0-only community enterprise v1.5" },
   { title: "Community & Discussions", href: "/contact", category: "Company", keywords: "github issues questions discord" },
 ];
 
@@ -46,7 +46,6 @@ export function GlobalCommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Global Keyboard shortcut (Cmd/Ctrl + K) & custom event listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -71,7 +70,6 @@ export function GlobalCommandPalette() {
     };
   }, [isOpen]);
 
-  // Focus input when opened
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -81,7 +79,6 @@ export function GlobalCommandPalette() {
     }
   }, [isOpen]);
 
-  // Fetch documentation search index
   useEffect(() => {
     const fetchDocIndex = async () => {
       try {
@@ -168,7 +165,6 @@ export function GlobalCommandPalette() {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleListKeyDown}
       >
-        {/* Search Input Bar */}
         <div className="flex items-center gap-3 border-b border-slate-800 bg-slate-900/90 px-4 py-3.5">
           <Search className="h-4 w-4 shrink-0 text-slate-400" />
           <input
@@ -204,7 +200,6 @@ export function GlobalCommandPalette() {
           </kbd>
         </div>
 
-        {/* Results List */}
         <div
           id="search-results-list"
           role="listbox"
@@ -278,14 +273,13 @@ export function GlobalCommandPalette() {
           )}
         </div>
 
-        {/* Footer Navigation Hints */}
         <div className="flex items-center justify-between border-t border-slate-800 bg-slate-900/60 px-4 py-2 text-[11px] font-mono text-slate-400">
           <div className="flex items-center gap-3">
             <span>↑↓ Navigate</span>
             <span>↵ Open</span>
             <span>Esc Close</span>
           </div>
-          <span>v{BRAND.version}</span>
+          <span>{BRAND.releaseLabel}</span>
         </div>
       </div>
     </div>
