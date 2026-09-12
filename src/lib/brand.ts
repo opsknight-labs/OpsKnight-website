@@ -97,10 +97,32 @@ export const BRAND = {
   deploy: {
     secretsNote:
       "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose configuration starts both PostgreSQL and OpsKnight automatically.",
-    compose: `curl -sL https://raw.githubusercontent.com/opsknight-labs/OpsKnight/main/docker-compose.yml > docker-compose.yml\ndocker compose up -d`,
-    docker: `# 1. Run PostgreSQL database container\ndocker run -d --name opsknight-db \\\\\n  -e POSTGRES_DB=opsknight_db \\\\\n  -e POSTGRES_USER=opsknight \\\\\n  -e POSTGRES_PASSWORD=opsknight_secure_password \\\\\n  -v opsknight_postgres_data:/var/lib/postgresql/data \\\\\n  postgres:15-alpine\n\n# 2. Run OpsKnight container connected to database\ndocker run -d --name opsknight-app -p 3000:3000 \\\\\n  -e DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\\\\n  -e NEXTAUTH_URL="http://localhost:3000" \\\\\n  -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\\\\n  -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\\\\n  --link opsknight-db \\\\\n  ghcr.io/opsknight-labs/opsknight:latest`,
-    helm: `git clone https://github.com/opsknight-labs/OpsKnight.git\ncd OpsKnight\nhelm install opsknight ./helm/opsknight \\\\\n  --namespace opsknight \\\\\n  --create-namespace`,
-    kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git\ncd OpsKnight/k8s\nkubectl apply -k .`,
+    compose: `curl -sL https://raw.githubusercontent.com/opsknight-labs/OpsKnight/main/docker-compose.yml > docker-compose.yml
+docker compose up -d`,
+    docker: `# 1. Run PostgreSQL database container
+docker run -d --name opsknight-db \\
+  -e POSTGRES_DB=opsknight_db \\
+  -e POSTGRES_USER=opsknight \\
+  -e POSTGRES_PASSWORD=opsknight_secure_password \\
+  -v opsknight_postgres_data:/var/lib/postgresql/data \\
+  postgres:15-alpine
+
+# 2. Run OpsKnight container connected to database
+docker run -d --name opsknight-app -p 3000:3000 \\
+  -e DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\
+  -e NEXTAUTH_URL="http://localhost:3000" \\
+  -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
+  -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
+  --link opsknight-db \\
+  ghcr.io/opsknight-labs/opsknight:latest`,
+    helm: `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+helm install opsknight ./helm/opsknight \\
+  --namespace opsknight \\
+  --create-namespace`,
+    kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight/k8s
+kubectl apply -k .`,
   },
 
   authors: [
