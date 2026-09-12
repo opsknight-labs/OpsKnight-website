@@ -13,6 +13,7 @@ import {
   Code2,
 } from "lucide-react";
 import { latestDocsHref } from "@/lib/docs/paths";
+import { BRAND } from "@/lib/brand";
 
 type SnippetTab = "alertmanager" | "terraform" | "datadog" | "curl";
 
@@ -140,7 +141,6 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
     <div
       className={`overflow-hidden rounded-2xl border border-slate-800 bg-[#0f172a] text-slate-200 shadow-xl ${className}`}
     >
-      {/* Header */}
       <div className="border-b border-slate-800 bg-slate-900/90 px-5 py-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -172,9 +172,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
         </div>
       </div>
 
-      {/* Main Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12">
-        {/* Left: Provider Tabs & Explanation (5 cols) */}
         <div className="border-b border-slate-800 bg-slate-900/40 p-5 lg:col-span-5 lg:border-b-0 lg:border-r space-y-4">
           <p className="font-mono text-[11px] font-medium uppercase tracking-wider text-slate-400">
             Select Your Source Stack
@@ -232,7 +230,6 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
           </div>
         </div>
 
-        {/* Right: Code Viewer (7 cols) */}
         <div className="flex flex-col justify-between bg-[#020617] p-5 lg:col-span-7 space-y-3">
           <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span className="font-mono text-xs font-medium text-slate-400">
@@ -257,7 +254,6 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
             </button>
           </div>
 
-          {/* Syntax Code Container */}
           <pre className="flex-1 overflow-x-auto rounded-xl bg-slate-950 p-4 font-mono text-[11px] leading-relaxed text-emerald-300 max-h-[340px] custom-scrollbar">
             <code>{currentSnippet.code}</code>
           </pre>
@@ -268,12 +264,15 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
         </div>
       </div>
 
-      {/* Mandatory Legal & Trademark Disclaimer */}
       <div className="border-t border-slate-800 bg-slate-950/90 px-5 py-3 text-[11px] leading-relaxed text-slate-500">
         <div className="flex items-start gap-2">
           <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400" />
           <p>
-            <strong className="font-semibold text-slate-400">Trademark &amp; Compatibility Notice:</strong> PagerDuty® is a registered trademark of PagerDuty, Inc. OpsKnight is an independent open-source project licensed under Apache-2.0 and is not affiliated with, endorsed by, or sponsored by PagerDuty, Inc. Compatibility refers solely to an ingest adapter supporting the public Events API v2 JSON payload schema.
+            <strong className="font-semibold text-slate-400">Trademark &amp; Compatibility Notice:</strong>{" "}
+            PagerDuty® is a registered trademark of PagerDuty, Inc. OpsKnight Community is an independent
+            open-source project licensed under {BRAND.license} and is not affiliated with, endorsed by, or
+            sponsored by PagerDuty, Inc. Compatibility refers solely to an ingest adapter supporting the
+            public Events API v2 JSON payload schema.
           </p>
         </div>
       </div>
