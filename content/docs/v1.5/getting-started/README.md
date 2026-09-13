@@ -16,7 +16,7 @@ By the end, you will have:
 - one test incident that you acknowledge and resolve;
 - an optional Events API test using a real integration key.
 
-> Keep the first run simple. Notification providers, status pages, SSO, ChatOps, production monitoring integrations, and advanced deployment options can all be added after the core incident path works.
+> Keep the first run simple. Notification providers, status pages, SSO, ChatOps, production monitoring integrations, mobile/PWA onboarding, and advanced deployment options can all be added after the core incident path works.
 
 ## Before you begin
 
@@ -151,6 +151,7 @@ If the UI does not load or the health endpoint fails, use the [v1.4 Troubleshoot
 
 | Goal | Continue with |
 | --- | --- |
+| Set up responder phones, PWA install, push, and offline-response behavior | [Mobile & PWA](../mobile/) |
 | Page responders outside the browser | [v1.4 Notifications](/docs/v1.4/administration/notifications) |
 | Connect monitoring | [v1.4 Integrations](/docs/v1.4/integrations) |
 | Build a multi-person on-call rotation | [First Steps](./first-steps) |
@@ -168,4 +169,4 @@ If the UI does not load or the health endpoint fails, use the [v1.4 Troubleshoot
 - [ ] Reusing the same `dedup_key` for resolve updates the same incident.
 - [ ] `/api/health` reports the expected state.
 
-Once these checks pass, the core incident path is ready and you can layer on production integrations, notification providers, and operational controls.
+Once these checks pass, the core incident path is ready and you can layer on production integrations, notification providers, mobile responder devices, and operational controls.
