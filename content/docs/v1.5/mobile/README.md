@@ -73,6 +73,7 @@ Supported incident-list status actions use a durable IndexedDB queue with states
 PENDING → SENDING → SUCCEEDED
                     ↘ CONFLICT
                     ↘ AUTH_REQUIRED
+                    ↘ FORBIDDEN
                     ↘ FAILED
 ```
 
@@ -84,8 +85,10 @@ The queue is designed for unreliable mobile networks:
 - the exact same idempotency key is persisted for replay, because the server may already have committed the first attempt;
 - interrupted `SENDING` entries are recovered after a lease timeout instead of remaining stuck forever;
 - retryable failures use bounded backoff and honor `Retry-After` for rate limiting;
-- authorization failures and state conflicts stop automatic FIFO progression so later dependent actions do not leapfrog an unresolved action; and
-- after successful reauthentication, eligible `AUTH_REQUIRED` entries return to `PENDING` and re-enter the same ordered/idempotent replay path. `CONFLICT` and terminal `FAILED` entries are not revived automatically.
+- replay inspects the complete creation-ordered queue, so an earlier action that is backing off, actively sending, waiting for authentication, or in conflict blocks later dependent actions from leapfrogging it;
+- `401` becomes `AUTH_REQUIRED` and can resume after successful authentication;
+- `403` becomes terminal `FORBIDDEN` because signing in again cannot grant a permission the account does not have; and
+- after successful reauthentication, eligible `AUTH_REQUIRED` entries return to `PENDING` and re-enter the same ordered/idempotent replay path. `CONFLICT`, `FORBIDDEN`, and terminal `FAILED` entries are not revived automatically.
 
 After reconnecting, confirm the incident timeline before treating a queued response as complete.
 
@@ -113,6 +116,6 @@ The local mobile app-lock feature is an additional privacy screen. It does not r
 
 - [Mobile setup](./setup)
 - [PWA reliability and offline behavior](./reliability)
-- [Getting Started](../getting-started/README)
+- [Getting Started](../getting-started/)
 - [First Steps](../getting-started/first-steps)
 - [v1.4 notification-provider reference](/docs/v1.4/administration/notifications)
