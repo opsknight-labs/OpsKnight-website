@@ -82,6 +82,8 @@ Use a synthetic incident and briefly take the device offline.
 
 Also test the authentication-recovery path: allow a queued action to encounter an expired session, confirm it becomes **Sign-in required**, sign in successfully, and verify the operation re-enters the ordered replay path using its original command identity. Then test one conflict case by changing the incident on another browser before replay. A conflict must remain visible for manual resolution instead of being automatically revived after sign-in.
 
+Finally, test an authorization failure with an account that lacks the required incident permission. A `403` response must appear as **Not authorized** / `FORBIDDEN`, must not be treated as an expired login, and must not be retried merely because the user signs in again.
+
 ## 6. Test an application update
 
 When a new PWA service worker is available during a session, OpsKnight should display **OpsKnight update ready** rather than reloading the responder automatically.
@@ -101,7 +103,8 @@ For every browser/device combination you intend to support, record:
 - synthetic incident ID and trigger time;
 - push arrival and deep-link result;
 - notification acknowledgement result;
-- offline queue/reconnect and reauthentication result; and
+- offline queue/reconnect and reauthentication result;
+- authorization-failure result; and
 - update/reload result.
 
 Repeat the acceptance test after major OpsKnight upgrades, browser upgrades, certificate/proxy changes, or VAPID key rotation.
@@ -128,12 +131,16 @@ Check the service escalation policy, active schedule, responder notification pre
 
 The authenticated OpsKnight session is no longer valid. Sign in, open the incident, inspect its current status, and act from the latest server state. Eligible queued `AUTH_REQUIRED` operations are made pending again only after authenticated mobile state is restored.
 
+**Queued action says Not authorized**
+
+The authenticated account does not have permission for that operation. Signing in again does not revive a `FORBIDDEN` action. Open the incident with the correct authorized account or ask an administrator to review the responder's permissions.
+
 **Queued action remains unresolved**
 
 Open the mobile queue notice. Authentication-required and conflict states intentionally stop automatic dependent replay. Successful sign-in can resume eligible authentication-blocked operations; a conflict still requires the responder to inspect current server state and decide what to do.
 
 ## Next steps
 
-- Read [Mobile & PWA](./README).
+- Read [Mobile & PWA](./).
 - Read [PWA reliability and offline behavior](./reliability).
 - Complete the production workflow in [First Steps](../getting-started/first-steps).
