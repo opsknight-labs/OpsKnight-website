@@ -16,9 +16,11 @@ Start with [Mobile setup](./setup), then read [PWA reliability and offline behav
 
 Mobile and desktop use the same canonical sign-in page. `/m/login` exists only as a compatibility route for older bookmarks and installed PWAs; it renders the normal OpsKnight login implementation.
 
-For credential sign-in, **Remember me** is an explicit trust decision. OpsKnight does not silently extend a session because the browser looks like a phone. The standard credential session is bounded, and selecting **Remember me** opts the current browser into the longer responder-device session. OIDC sessions continue to follow the configured enterprise SSO session policy.
+For credential sign-in, ordinary browser sessions use the standard bounded session policy. When OpsKnight is running as an installed standalone PWA, the canonical login recognizes that explicit installation context as a trusted responder-device context and defaults the longer **Trusted responder device** session on. The control remains visible so the responder can turn it off on a shared or unmanaged device.
 
-A long-lived session helps an installed responder PWA remain useful for push-driven workflows, but it is still a security credential. Do not enable it on shared or unmanaged devices.
+This is not mobile user-agent detection: opening OpsKnight in a normal phone browser does not silently extend the session just because the browser looks mobile. The installed-PWA signal comes from standalone display mode (including the iOS Home Screen standalone mode). OIDC sessions continue to follow the configured enterprise SSO session policy.
+
+The trusted credential session is bounded to the configured long-lived responder window (90 days by default in v1.5). Logout, password/security revocation, user disablement, token-version invalidation, and normal session-expiry enforcement remain authoritative.
 
 ## Responsive behavior
 
@@ -30,7 +32,7 @@ The installed app starts at `/m` and provides shortcuts for:
 - on-call schedules; and
 - notifications.
 
-OpsKnight's browser CI covers representative Chromium/Android-style and WebKit/iPhone-style mobile viewports. Real-device acceptance testing is still required because installation, notification presentation, background execution, and operating-system permission behavior are platform controlled.
+OpsKnight's browser CI covers representative Chromium/Android-style and WebKit/iPhone-style mobile viewports. A separate production-PWA lane builds the application, starts the production server, verifies the generated service worker controls the app, verifies dynamic/authenticated routes stay out of CacheStorage, and proves an allowed static asset can be served through the worker offline. Real-device acceptance testing is still required because installation, notification presentation, background execution, and operating-system permission behavior are platform controlled.
 
 ## Core mobile routes
 
@@ -82,7 +84,8 @@ The queue is designed for unreliable mobile networks:
 - the exact same idempotency key is persisted for replay, because the server may already have committed the first attempt;
 - interrupted `SENDING` entries are recovered after a lease timeout instead of remaining stuck forever;
 - retryable failures use bounded backoff and honor `Retry-After` for rate limiting;
-- authorization failures and state conflicts stop automatic FIFO progression so later dependent actions do not leapfrog an unresolved action.
+- authorization failures and state conflicts stop automatic FIFO progression so later dependent actions do not leapfrog an unresolved action; and
+- after successful reauthentication, eligible `AUTH_REQUIRED` entries return to `PENDING` and re-enter the same ordered/idempotent replay path. `CONFLICT` and terminal `FAILED` entries are not revived automatically.
 
 After reconnecting, confirm the incident timeline before treating a queued response as complete.
 
@@ -98,7 +101,8 @@ Treat an installed OpsKnight PWA like any other authenticated operations applica
 
 - use a device passcode or biometric screen lock;
 - do not share an authenticated installation between responders;
-- use **Remember me** only on a trusted device;
+- keep **Trusted responder device** enabled only on a device you control;
+- turn the trusted-device option off when signing in on a shared or unmanaged installation;
 - sign out before transferring or retiring a device;
 - clear site data when decommissioning the installation; and
 - use MDM, device encryption, and remote wipe where your organization requires them.
