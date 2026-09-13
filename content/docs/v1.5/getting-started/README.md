@@ -151,7 +151,7 @@ If the UI does not load or the health endpoint fails, use the [v1.4 Troubleshoot
 
 | Goal | Continue with |
 | --- | --- |
-| Set up responder phones, PWA install, push, and offline-response behavior | [Mobile & PWA](../mobile/README) |
+| Set up responder phones, PWA install, push, and offline-response behavior | [Mobile & PWA](../mobile/) |
 | Page responders outside the browser | [v1.4 Notifications](/docs/v1.4/administration/notifications) |
 | Connect monitoring | [v1.4 Integrations](/docs/v1.4/integrations) |
 | Build a multi-person on-call rotation | [First Steps](./first-steps) |
