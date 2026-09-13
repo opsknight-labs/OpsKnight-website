@@ -30,7 +30,9 @@ https://YOUR_OPSKNIGHT_HOST/m
 
 Sign in using the same OpsKnight account or OIDC provider used on desktop. `/m/login` is only a compatibility entry point; the actual login UI and policy are shared with the normal `/login` route.
 
-If you use credential authentication, choose **Remember me** only on a trusted responder device. OpsKnight does not automatically extend a session merely because the request comes from a mobile user agent.
+In an ordinary browser, credential sign-in uses the standard bounded session unless you explicitly choose **Remember me**. After OpsKnight is installed and launched in standalone PWA mode, the same login automatically recognizes that installation as a responder-device context and defaults **Trusted responder device** on. That credential session can remain valid for up to 90 days by default. The option remains visible—turn it off before signing in on a shared or unmanaged device.
+
+This behavior is based on installed standalone PWA state, not a mobile user agent. OIDC sign-in continues to follow the workspace's configured enterprise SSO session policy.
 
 ## 2. Install the PWA
 
@@ -40,7 +42,7 @@ Add OpsKnight to the Home Screen, then launch the installed web app before enabl
 
 ### Android
 
-Open `/m` in a Chromium-based browser and use **Install app** or **Add to Home Screen** when offered.
+Open `/m` in a Chromium-based browser and use **Install app** or **Add to Home Screen** when offered. Launch OpsKnight from the installed icon before validating the trusted responder-device session behavior.
 
 ### Desktop
 
@@ -78,7 +80,7 @@ Use a synthetic incident and briefly take the device offline.
 4. Use **Retry** if the queue does not synchronize immediately.
 5. Open the incident and confirm the server timeline before considering the response complete.
 
-Also test one conflict case by changing the incident on another browser before replay. OpsKnight should surface a conflict instead of silently overwriting newer incident state.
+Also test the authentication-recovery path: allow a queued action to encounter an expired session, confirm it becomes **Sign-in required**, sign in successfully, and verify the operation re-enters the ordered replay path using its original command identity. Then test one conflict case by changing the incident on another browser before replay. A conflict must remain visible for manual resolution instead of being automatically revived after sign-in.
 
 ## 6. Test an application update
 
@@ -94,11 +96,12 @@ For every browser/device combination you intend to support, record:
 - browser and version;
 - portrait and landscape result;
 - installation result;
+- trusted responder-device session result;
 - notification permission result;
 - synthetic incident ID and trigger time;
 - push arrival and deep-link result;
 - notification acknowledgement result;
-- offline queue/reconnect result; and
+- offline queue/reconnect and reauthentication result; and
 - update/reload result.
 
 Repeat the acceptance test after major OpsKnight upgrades, browser upgrades, certificate/proxy changes, or VAPID key rotation.
@@ -108,6 +111,10 @@ Repeat the acceptance test after major OpsKnight upgrades, browser upgrades, cer
 **No install option**
 
 Verify HTTPS, the manifest, the generated service worker, and the browser's own install requirements. Development builds and deployments with `DISABLE_PWA=true` intentionally do not provide the production PWA flow.
+
+**Trusted responder device is not selected**
+
+Confirm that OpsKnight was launched from the installed standalone PWA rather than a normal browser tab. A phone user agent alone does not enable the longer session.
 
 **No notification prompt**
 
@@ -119,11 +126,11 @@ Check the service escalation policy, active schedule, responder notification pre
 
 **Acknowledge opens sign-in**
 
-The authenticated OpsKnight session is no longer valid. Sign in, open the incident, inspect its current status, and act from the latest server state.
+The authenticated OpsKnight session is no longer valid. Sign in, open the incident, inspect its current status, and act from the latest server state. Eligible queued `AUTH_REQUIRED` operations are made pending again only after authenticated mobile state is restored.
 
 **Queued action remains unresolved**
 
-Open the mobile queue notice. Authentication-required and conflict states intentionally stop automatic dependent replay. Resolve the blocking condition, then confirm the incident timeline.
+Open the mobile queue notice. Authentication-required and conflict states intentionally stop automatic dependent replay. Successful sign-in can resume eligible authentication-blocked operations; a conflict still requires the responder to inspect current server state and decide what to do.
 
 ## Next steps
 
