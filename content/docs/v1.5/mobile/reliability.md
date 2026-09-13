@@ -29,8 +29,9 @@ The user-facing states are intentionally different:
 - **Committed** — OpsKnight received an authoritative successful server response.
 - **Queued** — the browser stored an operation that still needs server confirmation.
 - **Conflict** — the server state no longer matches the state the action expected.
-- **Sign-in required** — the current authentication state cannot authorize replay.
-- **Failed** — the queued request reached a terminal non-retryable failure.
+- **Sign-in required** — the current authentication state cannot authorize replay because authentication is missing or expired.
+- **Not authorized** — the authenticated account does not have permission for the operation; this is terminal and signing in again does not retry it.
+- **Failed** — the queued request reached another terminal non-retryable failure.
 
 The mobile UI should not permanently display a queued status mutation as if the incident were already changed on the server.
 
@@ -65,9 +66,11 @@ OpsKnight can reject the stale transition as a conflict rather than overwriting 
 
 The queue is processed in creation order. This matters because responder commands can depend on previous state transitions.
 
-If an earlier item enters `CONFLICT` or `AUTH_REQUIRED`, OpsKnight stops automatic progression instead of allowing later commands to leapfrog a state that was never established.
+Replay inspects the complete creation-ordered queue before deciding what can run. The first non-terminal operation owns progression. If it is still backing off after a retryable response, actively `SENDING`, in `AUTH_REQUIRED`, or in `CONFLICT`, replay stops. Later operations cannot leapfrog it. This prevents a later `RESOLVE`, for example, from reaching the server while an earlier `ACKNOWLEDGE` is delayed or unresolved.
 
-When a responder successfully signs in again and the authenticated mobile shell is restored, eligible `AUTH_REQUIRED` entries are moved back to `PENDING`. They keep their original idempotency key, expected state, body, and creation order, then pass through the same normal replay loop. `CONFLICT` and terminal `FAILED` entries are not reset by authentication recovery.
+When a responder successfully signs in again and the authenticated mobile shell is restored, eligible `AUTH_REQUIRED` entries are moved back to `PENDING`. They keep their original idempotency key, expected state, body, and creation order, then pass through the same normal replay loop.
+
+`403` authorization failures are different from `401` authentication failures. They become terminal `FORBIDDEN` entries because reauthentication cannot grant an account a permission it does not possess. `CONFLICT`, `FORBIDDEN`, and terminal `FAILED` entries are not reset by authentication recovery.
 
 ## Retry policy
 
@@ -93,7 +96,7 @@ For a supported **Acknowledge** action:
 - the request has a stable idempotency key derived from the notification delivery identity;
 - the known incident state is used as an expected-state condition when possible;
 - `401` sends the responder through sign-in;
-- `403` is reported as unauthorized;
+- `403` is reported as unauthorized and is not treated as an authentication-retry case;
 - `409` is reported as a state conflict; and
 - a transport failure can be persisted for later replay using the same idempotency key.
 
@@ -139,8 +142,10 @@ Before declaring the PWA production-ready for a responder group:
 - [ ] Push deep links stay on the OpsKnight origin.
 - [ ] A notification acknowledgement produces one server lifecycle change even after a retry.
 - [ ] Offline incident actions are visibly queued, not shown as committed.
+- [ ] A delayed or blocked earlier queue operation prevents later dependent operations from leapfrogging it.
 - [ ] Reconnect replay succeeds on representative Android and iPhone devices.
 - [ ] `AUTH_REQUIRED` actions resume safely after successful sign-in with the original idempotency key.
+- [ ] `FORBIDDEN` actions remain terminal and are not revived by sign-in.
 - [ ] Conflicts remain blocked for responder review after reauthentication.
 - [ ] A production-build browser test exercises the generated service worker rather than only `next dev`.
 - [ ] A worker update waits for responder approval before activation.
@@ -148,6 +153,6 @@ Before declaring the PWA production-ready for a responder group:
 
 ## Related topics
 
-- [Mobile & PWA](./README)
+- [Mobile & PWA](./)
 - [Mobile setup](./setup)
 - [First Steps](../getting-started/first-steps)
