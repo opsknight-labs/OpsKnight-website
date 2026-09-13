@@ -7,7 +7,7 @@ import { latestDocsHref } from "@/lib/docs/paths";
 
 const title = "Security & Hardening";
 const description =
-  "Cryptographic envelope encryption (AES-256-CBC), timing-safe webhook verification, OIDC SSO, and VPC network isolation in OpsKnight.";
+  "Authenticated AES-256-GCM envelope encryption for new protected secrets, timing-safe webhook verification, OIDC SSO, and self-hosted network control in OpsKnight.";
 
 export const metadata: Metadata = {
   title,
@@ -17,22 +17,80 @@ export const metadata: Metadata = {
 };
 
 const ENCRYPTED_FIELDS = [
-  { provider: "Jira Cloud", fields: "apiToken, webhookSecret", purpose: "Two-way issue synchronization" },
-  { provider: "SSO / OIDC", fields: "clientSecret", purpose: "OAuth2/OIDC client secrets" },
-  { provider: "Slack ChatOps", fields: "botToken, signingSecret, clientSecret", purpose: "War room bot & interactive actions" },
-  { provider: "Twilio", fields: "authToken, whatsappAuthToken", purpose: "SMS & WhatsApp paging keys" },
-  { provider: "AWS SNS / SES", fields: "secretAccessKey", purpose: "High-volume delivery credentials" },
-  { provider: "Email (Resend / SendGrid / SMTP)", fields: "apiKey, password", purpose: "Incident reports & status updates" },
-  { provider: "Web Push", fields: "vapidPrivateKey", purpose: "Browser push notification keys" },
+  {
+    provider: "Jira Cloud",
+    fields: "apiToken, webhookSecret",
+    purpose: "Two-way issue synchronization",
+  },
+  {
+    provider: "SSO / OIDC",
+    fields: "clientSecret",
+    purpose: "OAuth2/OIDC client secrets",
+  },
+  {
+    provider: "Slack ChatOps",
+    fields: "botToken, signingSecret, clientSecret",
+    purpose: "War room bot & interactive actions",
+  },
+  {
+    provider: "Twilio",
+    fields: "authToken, whatsappAuthToken",
+    purpose: "SMS & WhatsApp paging keys",
+  },
+  {
+    provider: "AWS SNS / SES",
+    fields: "secretAccessKey",
+    purpose: "High-volume delivery credentials",
+  },
+  {
+    provider: "Email (Resend / SendGrid / SMTP)",
+    fields: "apiKey, password",
+    purpose: "Incident reports & status updates",
+  },
+  {
+    provider: "Web Push",
+    fields: "vapidPrivateKey",
+    purpose: "Browser push notification keys",
+  },
 ];
 
 const SIGNATURE_PROVIDERS = [
-  { name: "GitHub", header: "x-hub-signature-256", algorithm: "HMAC-SHA256", format: "sha256=<hex_digest>" },
-  { name: "Slack ChatOps", header: "x-slack-signature", algorithm: "HMAC-SHA256", format: "v0=<hex_digest> (with timestamp)" },
-  { name: "Sentry", header: "sentry-hook-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
-  { name: "Grafana", header: "x-grafana-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
-  { name: "GitLab", header: "x-gitlab-token", algorithm: "Constant-time token", format: "<secret_token>" },
-  { name: "Generic Webhooks", header: "x-signature / x-webhook-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
+  {
+    name: "GitHub",
+    header: "x-hub-signature-256",
+    algorithm: "HMAC-SHA256",
+    format: "sha256=<hex_digest>",
+  },
+  {
+    name: "Slack ChatOps",
+    header: "x-slack-signature",
+    algorithm: "HMAC-SHA256",
+    format: "v0=<hex_digest> (with timestamp)",
+  },
+  {
+    name: "Sentry",
+    header: "sentry-hook-signature",
+    algorithm: "HMAC-SHA256",
+    format: "<hex_digest>",
+  },
+  {
+    name: "Grafana",
+    header: "x-grafana-signature",
+    algorithm: "HMAC-SHA256",
+    format: "<hex_digest>",
+  },
+  {
+    name: "GitLab",
+    header: "x-gitlab-token",
+    algorithm: "Constant-time token",
+    format: "<secret_token>",
+  },
+  {
+    name: "Generic Webhooks",
+    header: "x-signature / x-webhook-signature",
+    algorithm: "HMAC-SHA256",
+    format: "<hex_digest>",
+  },
 ];
 
 const TOC_SECTIONS = [
@@ -44,7 +102,7 @@ const TOC_SECTIONS = [
 ];
 
 const SECURITY_SPECS = [
-  { label: "Storage Cipher", value: "AES-256-CBC (V2)" },
+  { label: "New Secret Writes", value: "AES-256-GCM (V3)" },
   { label: "Master Key", value: "256-bit Hex (Env)" },
   { label: "Ingest Verification", value: "HMAC-SHA256 (Constant-time)" },
   { label: "Anti-Replay Window", value: "300 seconds" },
@@ -66,7 +124,12 @@ export default function SecurityPage() {
               Incident data and credentials stay on your network.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              OpsKnight operates on a fail-closed, zero-trust security model. There is no external cloud, no telemetry beacons, and no vendor phone-home. Operational credentials are encrypted at rest with AES-256-CBC envelope encryption, and inbound alert webhooks are authenticated with constant-time cryptographic verification.
+              OpsKnight is self-hosted and does not require an
+              OpsKnight-operated SaaS control plane. New protected credential
+              writes use authenticated AES-256-GCM envelope encryption, while
+              legacy AES-CBC ciphertext remains readable during migration.
+              Inbound alert webhooks support constant-time cryptographic
+              verification.
             </p>
           </div>
         </div>
@@ -76,32 +139,51 @@ export default function SecurityPage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            
             {/* Main Content Column */}
             <article className="min-w-0 space-y-12 max-w-3xl">
-              
               {/* 1. Envelope Encryption */}
               <div id="envelope-encryption" className="scroll-mt-28">
                 <h2 className="text-xl font-semibold text-[#111827]">
-                  Two-Tier Envelope Encryption (AES-256-CBC)
+                  Authenticated Envelope Encryption (AES-256-GCM)
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  Credentials entered into the Web Console (Slack bot tokens, SMTP passwords, Twilio keys, OIDC client secrets) are encrypted before touching PostgreSQL. OpsKnight uses a two-tier Envelope Encryption model (V2):
+                  Supported credentials entered into the Web Console (including
+                  Slack bot tokens, SMTP passwords, Twilio keys, and OIDC client
+                  secrets) are encrypted before storage. New values use the
+                  authenticated V3 envelope format:
                 </p>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#4b5563]">
                   <li>
-                    The master key is configured strictly through the <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code> environment variable (never stored in the database).
+                    Configure an ordered{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      ENCRYPTION_KEYS
+                    </code>{" "}
+                    keyring for controlled rotation, or the legacy single{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      ENCRYPTION_KEY
+                    </code>{" "}
+                    variable. Keep production keys outside the database.
                   </li>
                   <li>
-                    Each secret is encrypted with a unique, dynamically generated Data Encryption Key (DEK).
+                    Each secret uses a random Data Encryption Key (DEK).
+                    AES-256-GCM authenticates both the protected value and the
+                    encrypted DEK with key-ID-bound associated data.
                   </li>
                   <li>
-                    Ciphertext is stored as <code className="font-mono text-xs text-[#111827]">v2:&lt;dekIv&gt;:&lt;encryptedDek&gt;:&lt;payloadIv&gt;:&lt;encryptedPayload&gt;</code>.
+                    New ciphertext is stored as{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      v3:&lt;keyId&gt;:&lt;dekIv&gt;:&lt;encryptedDek&gt;:&lt;dekTag&gt;:&lt;payloadIv&gt;:&lt;encryptedPayload&gt;:&lt;payloadTag&gt;
+                    </code>
+                    . Existing V1/V2 AES-CBC values remain readable; do not
+                    remove their keys until migration and backup recovery are
+                    verified.
                   </li>
                 </ul>
 
                 <div className="mt-6">
-                  <p className="mb-2 text-xs font-medium text-slate-700">Generate a 32-byte (256-bit) master encryption key:</p>
+                  <p className="mb-2 text-xs font-medium text-slate-700">
+                    Generate a 32-byte (256-bit) master encryption key:
+                  </p>
                   <CopyBlock label="bash" value="openssl rand -hex 32" />
                 </div>
 
@@ -123,9 +205,15 @@ export default function SecurityPage() {
                       <tbody className="divide-y divide-slate-100 font-mono text-slate-700">
                         {ENCRYPTED_FIELDS.map((item) => (
                           <tr key={item.provider}>
-                            <td className="px-4 py-2.5 font-sans font-medium text-slate-900">{item.provider}</td>
-                            <td className="px-4 py-2.5 text-[#d21a1b]">{item.fields}</td>
-                            <td className="px-4 py-2.5 font-sans text-slate-500">{item.purpose}</td>
+                            <td className="px-4 py-2.5 font-sans font-medium text-slate-900">
+                              {item.provider}
+                            </td>
+                            <td className="px-4 py-2.5 text-[#d21a1b]">
+                              {item.fields}
+                            </td>
+                            <td className="px-4 py-2.5 font-sans text-slate-500">
+                              {item.purpose}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -143,19 +231,39 @@ export default function SecurityPage() {
               </div>
 
               {/* 2. Webhook Verification */}
-              <div id="webhook-verification" className="scroll-mt-28 border-t border-slate-200 pt-10">
+              <div
+                id="webhook-verification"
+                className="scroll-mt-28 border-t border-slate-200 pt-10"
+              >
                 <h2 className="text-xl font-semibold text-[#111827]">
                   Inbound Webhook Verification &amp; Anti-Replay
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  Every inbound monitoring integration route enforces cryptographic authentication before payloads reach incident business logic:
+                  Supported inbound monitoring integrations validate configured
+                  signatures or secret tokens before accepted payloads reach
+                  incident-processing logic:
                 </p>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#4b5563]">
                   <li>
-                    <strong>Timing-Safe Equality</strong>: Secret tokens and signatures are evaluated using <code className="font-mono text-xs text-[#111827]">crypto.timingSafeEqual</code> with dummy buffer evaluation on length mismatches to eliminate timing side-channel leaks.
+                    <strong>Timing-Safe Equality</strong>: Secret tokens and
+                    signatures are evaluated using{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      crypto.timingSafeEqual
+                    </code>{" "}
+                    with dummy buffer evaluation on length mismatches to
+                    eliminate timing side-channel leaks.
                   </li>
                   <li>
-                    <strong>Outbound Anti-Replay</strong>: Outbound notifications bind signatures to Unix timestamps (<code className="font-mono text-xs text-[#111827]">X-OpsKnight-Timestamp</code> + <code className="font-mono text-xs text-[#111827]">X-OpsKnight-Signature</code>) with a strict 300-second expiration window.
+                    <strong>Outbound Anti-Replay</strong>: Outbound
+                    notifications bind signatures to Unix timestamps (
+                    <code className="font-mono text-xs text-[#111827]">
+                      X-OpsKnight-Timestamp
+                    </code>{" "}
+                    +{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      X-OpsKnight-Signature
+                    </code>
+                    ) with a strict 300-second expiration window.
                   </li>
                 </ul>
 
@@ -177,9 +285,15 @@ export default function SecurityPage() {
                       <tbody className="divide-y divide-slate-100 font-mono text-slate-700">
                         {SIGNATURE_PROVIDERS.map((p) => (
                           <tr key={p.name}>
-                            <td className="px-4 py-2.5 font-sans font-medium text-slate-900">{p.name}</td>
-                            <td className="px-4 py-2.5 text-slate-600">{p.header}</td>
-                            <td className="px-4 py-2.5 text-slate-600">{p.algorithm}</td>
+                            <td className="px-4 py-2.5 font-sans font-medium text-slate-900">
+                              {p.name}
+                            </td>
+                            <td className="px-4 py-2.5 text-slate-600">
+                              {p.header}
+                            </td>
+                            <td className="px-4 py-2.5 text-slate-600">
+                              {p.algorithm}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -197,22 +311,67 @@ export default function SecurityPage() {
               </div>
 
               {/* 3. Identity, SSO & RBAC */}
-              <div id="identity-sso" className="scroll-mt-28 border-t border-slate-200 pt-10">
+              <div
+                id="identity-sso"
+                className="scroll-mt-28 border-t border-slate-200 pt-10"
+              >
                 <h2 className="text-xl font-semibold text-[#111827]">
                   Identity, OIDC SSO &amp; Role Governance
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  OpsKnight supports local accounts and OpenID Connect (OIDC) single sign-on with Google Workspace, Okta, Azure AD, Keycloak, and Authentik.
+                  OpsKnight supports local accounts and OpenID Connect (OIDC)
+                  single sign-on with Google Workspace, Okta, Azure AD,
+                  Keycloak, and Authentik.
                 </p>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#4b5563]">
                   <li>
-                    <strong>Workspace Roles</strong>: <code className="font-mono text-xs text-[#111827]">USER</code> (scoped to assigned teams/services), <code className="font-mono text-xs text-[#111827]">RESPONDER</code> (global response), and <code className="font-mono text-xs text-[#111827]">ADMIN</code> (system settings and user governance).
+                    <strong>Workspace Roles</strong>:{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      USER
+                    </code>{" "}
+                    (scoped operations),{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      RESPONDER
+                    </code>{" "}
+                    (global response),{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      AUDITOR
+                    </code>{" "}
+                    (organization-wide read access to defined evidence), and{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      ADMIN
+                    </code>{" "}
+                    (system settings and user governance).
                   </li>
                   <li>
-                    <strong>Team Roles</strong>: Independent team-level classification (<code className="font-mono text-xs text-[#111827]">MEMBER</code>, <code className="font-mono text-xs text-[#111827]">ADMIN</code>, <code className="font-mono text-xs text-[#111827]">OWNER</code>) with last-owner demotion protection.
+                    <strong>Team Roles</strong>: Independent team-level
+                    classification (
+                    <code className="font-mono text-xs text-[#111827]">
+                      MEMBER
+                    </code>
+                    ,{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      ADMIN
+                    </code>
+                    ,{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      OWNER
+                    </code>
+                    ) with last-owner demotion protection.
                   </li>
                   <li>
-                    <strong>Auto-Provisioning &amp; Allowlisting</strong>: Restrict sign-in to verified corporate email domains.
+                    <strong>Auto-Provisioning &amp; Allowlisting</strong>:
+                    Restrict sign-in to verified corporate email domains.
+                  </li>
+                  <li>
+                    <strong>MFA</strong>: OpsKnight does not provide a native
+                    server-verified second factor. Enforce MFA through the
+                    configured OIDC provider or a trusted access proxy.
+                  </li>
+                  <li>
+                    <strong>SCIM</strong>: The current lifecycle API supports
+                    Users, not Groups. SCIM deprovisioning disables access but
+                    is not a complete personal-data erasure workflow.
                   </li>
                 </ul>
                 <p className="mt-3">
@@ -226,31 +385,62 @@ export default function SecurityPage() {
               </div>
 
               {/* 4. Production Network Isolation */}
-              <div id="network-isolation" className="scroll-mt-28 border-t border-slate-200 pt-10">
+              <div
+                id="network-isolation"
+                className="scroll-mt-28 border-t border-slate-200 pt-10"
+              >
                 <h2 className="text-xl font-semibold text-[#111827]">
                   VPC Network Isolation &amp; Zero Telemetry
                 </h2>
                 <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#4b5563]">
                   <li>
-                    <strong>Zero External Telemetry</strong>: No Google Analytics, no PostHog, no Sentry phone-home, no tracking pixels. All logs and audit trails remain in your PostgreSQL database.
+                    <strong>No built-in analytics beacon</strong>: OpsKnight
+                    does not require an OpsKnight-hosted telemetry service.
+                    Operators choose and control any monitoring, log shipping,
+                    delivery providers, identity providers, and integrations
+                    they configure.
                   </li>
                   <li>
-                    <strong>Database Isolation</strong>: Keep PostgreSQL (port 5432) on private internal container networks or VPC security groups.
+                    <strong>Database Isolation</strong>: Keep PostgreSQL (port
+                    5432) on private internal container networks or VPC security
+                    groups.
                   </li>
                   <li>
-                    <strong>TLS Reverse Proxying</strong>: Always terminate TLS at Nginx, Caddy, or an Ingress Controller and forward <code className="font-mono text-xs text-[#111827]">X-Forwarded-Proto</code> and <code className="font-mono text-xs text-[#111827]">X-Forwarded-Host</code>.
+                    <strong>TLS Reverse Proxying</strong>: Always terminate TLS
+                    at Nginx, Caddy, or an Ingress Controller and forward{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      X-Forwarded-Proto
+                    </code>{" "}
+                    and{" "}
+                    <code className="font-mono text-xs text-[#111827]">
+                      X-Forwarded-Host
+                    </code>
+                    .
                   </li>
                   <li>
-                    <strong>Non-Root Containers</strong>: Container images run as unprivileged users, compatible with Kubernetes restricted pod security standards.
+                    <strong>Non-Root Containers</strong>: Container images run
+                    as unprivileged users, compatible with Kubernetes restricted
+                    pod security standards.
                   </li>
                 </ul>
               </div>
 
               {/* 5. What this is not */}
-              <div id="what-this-is-not" className="scroll-mt-28 rounded-[14px] border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-[#111827]">What this is not</h2>
+              <div
+                id="what-this-is-not"
+                className="scroll-mt-28 rounded-[14px] border border-slate-200 bg-white p-6"
+              >
+                <h2 className="text-lg font-semibold text-[#111827]">
+                  What this is not
+                </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  There is no hosted SaaS cloud holding your encryption keys. If you lose your <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>, encrypted secrets cannot be recovered. Always store backups of your environment secrets in a dedicated secrets manager (AWS Secrets Manager, HashiCorp Vault, GCP Secret Manager).
+                  There is no OpsKnight-hosted SaaS cloud holding your
+                  encryption keys. Losing every key needed by current ciphertext
+                  and backups makes protected secrets unrecoverable. Store the
+                  complete keyring and deployment secrets in a dedicated secrets
+                  manager, separately from database backups. These product
+                  capabilities do not certify a deployment as CRA/GDPR
+                  compliant, SOC 2 attested, or ISO certified.
                 </p>
               </div>
 
@@ -268,7 +458,6 @@ export default function SecurityPage() {
                   Full security documentation
                 </Link>
               </div>
-
             </article>
 
             {/* Sticky Right Rail on Large Screens */}
@@ -284,7 +473,6 @@ export default function SecurityPage() {
                 />
               </div>
             </aside>
-
           </div>
         </div>
       </section>
