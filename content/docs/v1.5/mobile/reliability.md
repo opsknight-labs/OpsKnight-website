@@ -67,6 +67,8 @@ The queue is processed in creation order. This matters because responder command
 
 If an earlier item enters `CONFLICT` or `AUTH_REQUIRED`, OpsKnight stops automatic progression instead of allowing later commands to leapfrog a state that was never established.
 
+When a responder successfully signs in again and the authenticated mobile shell is restored, eligible `AUTH_REQUIRED` entries are moved back to `PENDING`. They keep their original idempotency key, expected state, body, and creation order, then pass through the same normal replay loop. `CONFLICT` and terminal `FAILED` entries are not reset by authentication recovery.
+
 ## Retry policy
 
 Transient failures remain retryable. The queue uses bounded exponential backoff and honors `Retry-After` for rate limiting.
@@ -77,7 +79,7 @@ A queued request is marked `SENDING` while an attempt is active. If a browser or
 
 Browsers do not provide identical background-execution capabilities. OpsKnight can replay through Background Sync where supported, but foreground recovery remains important.
 
-The mobile coordinator also reacts when the browser comes online and exposes queue status to the responder. An online **Retry** action is available when pending items remain.
+The mobile coordinator also reacts when the browser comes online and exposes queue status to the responder. An online **Retry** action is available when pending items remain. Re-entering the authenticated mobile shell also resumes eligible authentication-blocked entries.
 
 Never base an incident-response process on the assumption that a mobile operating system will wake a background web app at a particular time.
 
@@ -96,6 +98,14 @@ For a supported **Acknowledge** action:
 - a transport failure can be persisted for later replay using the same idempotency key.
 
 Unknown future push-contract versions are display-only for action purposes. The worker opens the incident instead of executing action semantics it does not understand.
+
+## Trusted installed-PWA sessions
+
+OpsKnight does not infer trust from a mobile user agent. A normal browser uses the standard credential-session policy unless the user explicitly selects **Remember me**.
+
+When the canonical login is running inside an installed standalone PWA, OpsKnight recognizes that explicit application context and defaults **Trusted responder device** on for credential sign-in. The responder can turn it off before authenticating. The trusted responder session is bounded to the configured long-lived credential window (90 days by default in v1.5), while logout and server-side revocation controls remain authoritative.
+
+OIDC sessions continue to follow enterprise SSO policy rather than using the credential trusted-device duration.
 
 ## Safe PWA updates
 
@@ -123,13 +133,16 @@ Before declaring the PWA production-ready for a responder group:
 
 - [ ] Authenticated pages and APIs are not served from a stale service-worker runtime cache.
 - [ ] Login is shared with the desktop authentication implementation.
-- [ ] Remember-me trust is explicit rather than user-agent based.
+- [ ] Installed standalone PWAs default to the trusted responder credential policy without using mobile user-agent detection.
+- [ ] The trusted-device control remains visible and can be disabled on a shared device.
 - [ ] Push permission is requested from an explicit user action.
 - [ ] Push deep links stay on the OpsKnight origin.
 - [ ] A notification acknowledgement produces one server lifecycle change even after a retry.
 - [ ] Offline incident actions are visibly queued, not shown as committed.
 - [ ] Reconnect replay succeeds on representative Android and iPhone devices.
-- [ ] Authentication-required and conflict states are visible to the responder.
+- [ ] `AUTH_REQUIRED` actions resume safely after successful sign-in with the original idempotency key.
+- [ ] Conflicts remain blocked for responder review after reauthentication.
+- [ ] A production-build browser test exercises the generated service worker rather than only `next dev`.
 - [ ] A worker update waits for responder approval before activation.
 - [ ] Portrait and landscape layouts have no blocking horizontal overflow.
 
