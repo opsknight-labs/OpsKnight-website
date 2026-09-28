@@ -6,7 +6,7 @@ product_area: authorization
 audience: [developer, operator, administrator]
 verification:
   level: source
-  verified_at: 2026-09-27
+  verified_at: 2026-09-28
   evidence:
     - src/lib/authorization.ts
 ---
@@ -62,6 +62,18 @@ resource scope remain authoritative.
 - `service.read.all`
 - `service.read.scoped`
 - `user.read.all`
+
+## Authorization actions
+
+- `event.create`
+- `incident.acknowledge`
+- `incident.create`
+- `incident.escalate`
+- `incident.manage`
+- `incident.note`
+- `incident.read`
+- `schedule.read`
+- `service.read`
 
 ## API scopes
 
