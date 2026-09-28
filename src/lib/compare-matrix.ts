@@ -394,11 +394,11 @@ export const COMPARE_SECTIONS: CompareSection[] = [
 export const OPKNIGHT_GAPS = [
   {
     item: "Native voice / phone paging",
-    detail: "Published Community channels include email, SMS, push, Slack, WhatsApp, and webhooks; verify v1.5 docs for the final release capability set.",
+    detail: "The current OpsKnight runtime supports Twilio voice paging for triggered incidents, including signed gather/status callbacks and durable delivery operations.",
   },
   {
     item: "Microsoft Teams depth",
-    detail: "The published baseline is outgoing webhook integration; Teams ChatOps is an area of active product development.",
+    detail: "The current runtime supports Teams service destinations, Adaptive Card actions, and incident war rooms; consult the versioned documentation for setup requirements.",
   },
   {
     item: "Enterprise identity packaging",

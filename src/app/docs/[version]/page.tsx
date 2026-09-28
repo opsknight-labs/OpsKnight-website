@@ -70,6 +70,15 @@ const TASK_CARDS = [
   },
 ];
 
+const V2_TASK_CARDS = [
+  { title: "Install OpsKnight", description: "Production prerequisites, Compose, Kubernetes, and first boot.", slug: ["start", "production-install"] },
+  { title: "Route notifications", description: "Email, SMS, voice, push, Slack, Teams, WhatsApp, and webhooks.", slug: ["guides", "notifications", "configure-routing"] },
+  { title: "Respond to incidents", description: "Create, acknowledge, assign, escalate, and resolve.", slug: ["concepts", "incident-response"] },
+  { title: "ChatOps war rooms", description: "Coordinate incidents in Slack or Microsoft Teams.", slug: ["guides", "chatops", "create-war-room"] },
+  { title: "Publish status", description: "Publish scoped service state and incident updates.", slug: ["guides", "status-pages", "publish-update"] },
+  { title: "API reference", description: "Discovered endpoints, methods, and support boundaries.", slug: ["reference", "api"] },
+];
+
 export default async function DocsIndexPage({
   params,
 }: {
@@ -80,7 +89,10 @@ export default async function DocsIndexPage({
   if (!doc) notFound();
   const sidebar = getSidebar(version);
 
-  const cards = TASK_CARDS.filter((card) => getDocFilePath(version, card.slug));
+  const isV2 = version.startsWith("v2");
+  const cards = (isV2 ? V2_TASK_CARDS : TASK_CARDS).filter((card) => getDocFilePath(version, card.slug));
+  const installHref = isV2 ? "start/production-install" : "getting-started/installation";
+  const apiHref = isV2 ? "reference/api" : "api";
   const editUrl = `${BRAND.links.github}/blob/main/docs/${version}/README.md`;
 
   return (
@@ -99,14 +111,14 @@ export default async function DocsIndexPage({
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            href={`/docs/${version}/getting-started/installation/`}
+            href={`/docs/${version}/${installHref}/`}
             className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-[#d21a1b] px-5 text-sm font-semibold text-white hover:bg-[#b41516]"
           >
             <Rocket className="h-4 w-4" />
             Install
           </Link>
           <Link
-            href={`/docs/${version}/api/`}
+            href={`/docs/${version}/${apiHref}/`}
             className="inline-flex h-11 items-center gap-2 rounded-[12px] border border-slate-200 bg-white px-5 text-sm font-medium text-slate-800 hover:bg-slate-50"
           >
             <Code2 className="h-4 w-4" />
