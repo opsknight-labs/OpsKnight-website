@@ -71,12 +71,17 @@ const TASK_CARDS = [
 ];
 
 const V2_TASK_CARDS = [
-  { title: "Install OpsKnight", description: "Production prerequisites, Compose, Kubernetes, and first boot.", slug: ["start", "production-install"] },
-  { title: "Route notifications", description: "Email, SMS, voice, push, Slack, Teams, WhatsApp, and webhooks.", slug: ["guides", "notifications", "configure-routing"] },
-  { title: "Respond to incidents", description: "Create, acknowledge, assign, escalate, and resolve.", slug: ["concepts", "incident-response"] },
-  { title: "ChatOps war rooms", description: "Coordinate incidents in Slack or Microsoft Teams.", slug: ["guides", "chatops", "create-war-room"] },
-  { title: "Publish status", description: "Publish scoped service state and incident updates.", slug: ["guides", "status-pages", "publish-update"] },
-  { title: "API reference", description: "Discovered endpoints, methods, and support boundaries.", slug: ["reference", "api"] },
+  { title: "Install OpsKnight", description: "Start with Docker Compose or prepare a production deployment.", slug: ["start", "quickstart"] },
+  { title: "Configure on-call", description: "Create schedules, rotations, and responder coverage.", slug: ["start", "configure-on-call"] },
+  { title: "Configure escalation", description: "Route an unacknowledged incident through responder tiers.", slug: ["guides", "escalation", "configure-policy"] },
+  { title: "Receive alerts", description: "Connect monitoring, cloud, uptime, and webhook sources.", slug: ["integrations"] },
+  { title: "Connect Slack", description: "Authorize Slack, choose service channels, and use incident actions.", slug: ["integrations", "communication", "slack"] },
+  { title: "Configure Microsoft Teams", description: "Connect the bot, destinations, Adaptive Cards, and war rooms.", slug: ["integrations", "communication", "microsoft-teams"] },
+  { title: "Connect Jira", description: "Link Jira, map services, and configure synchronized webhooks.", slug: ["integrations", "issue-tracking", "jira"] },
+  { title: "Use the Incident API", description: "Authenticate, create, read, and update incidents programmatically.", slug: ["reference", "api", "incidents"] },
+  { title: "Deploy production HA", description: "Choose Kubernetes or split runtime roles and scale safely.", slug: ["operate", "deploy", "split-runtime"] },
+  { title: "Fix notification delivery", description: "Trace intent creation, queues, provider attempts, retries, and failures.", slug: ["troubleshooting", "notifications", "not-delivered"] },
+  { title: "Upgrade OpsKnight", description: "Back up, migrate, validate, and roll back safely.", slug: ["operate", "upgrades", "upgrade"] },
 ];
 
 export default async function DocsIndexPage({
