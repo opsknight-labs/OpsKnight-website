@@ -205,12 +205,12 @@ Sets the polling interval while the general queue is idle.
 - Allowed values: not statically complete
 - Secret: yes
 - Runtime roles: web or integrated runtime
-- Deployment support: runtime
+- Deployment support: manifest
 - Apply behavior: restart required
 - Deprecated: no
 - Extraction confidence: incomplete
 - Static default: not displayed
-- Sources: `src/lib/api-keys.ts`
+- Sources: `deploy/compose/docker-compose.split.yml`, `deploy/compose/docker-compose.yml`, `src/lib/api-keys.ts`
 
 ## `APP_HOST_ALIASES`
 
@@ -657,7 +657,7 @@ Sets the polling interval while the general queue is idle.
 - Apply behavior: restart required
 - Deprecated: no
 - Extraction confidence: derived
-- Static default: `5`
+- Static default: `15`, `5`
 - Sources: `deploy/compose/docker-compose.split.yml`, `deploy/kubernetes/kustomize/profiles/split/runtime-deployments.yaml`, `deploy/swarm/docker-stack.yml`, `src/lib/prisma.ts`
 
 ## `DATABASE_POOL_SIZE_GENERAL_WORKER`
@@ -1934,6 +1934,20 @@ Sets the polling interval while the general queue is idle.
 - Static default: `ghcr.io/opsknight-labs/opsknight:1.4.0-hotfix`, `ghcr.io/opsknight-labs/opsknight:latest`
 - Sources: `deploy/compose/docker-compose.split.yml`, `deploy/compose/docker-compose.yml`, `deploy/swarm/docker-stack.integrated.yml`, `deploy/swarm/docker-stack.yml`
 
+## `OPSKNIGHT_LOAD_TEST_ALLOW_HOSTS`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: runtime
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: incomplete
+- Static default: none discovered
+- Sources: `src/lib/network-security.ts`
+
 ## `OPSKNIGHT_NEXTAUTH_SECRET_SECRET`
 
 - Type: string
@@ -2030,7 +2044,7 @@ Sets the polling interval while the general queue is idle.
 - Deprecated: no
 - Extraction confidence: derived
 - Static default: `always`
-- Sources: `deploy/compose/docker-compose.split.yml`
+- Sources: `deploy/compose/docker-compose.split.yml`, `deploy/compose/docker-compose.yml`
 
 ## `OPSKNIGHT_SCHEDULER_PROFILE`
 
@@ -2073,6 +2087,62 @@ Sets the polling interval while the general queue is idle.
 - Extraction confidence: incomplete
 - Static default: none discovered
 - Sources: `deploy/kubernetes/helm/opsknight/templates/deployment.yaml`, `deploy/kubernetes/helm/opsknight/templates/split-deployments.yaml`
+
+## `OPSKNIGHT_TX_MAX_ATTEMPTS`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: runtime
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: incomplete
+- Static default: none discovered
+- Sources: `src/lib/db-utils.ts`
+
+## `OPSKNIGHT_TX_MAX_ATTEMPTS_HIGH_LOAD`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: runtime
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: incomplete
+- Static default: none discovered
+- Sources: `src/lib/db-utils.ts`
+
+## `OPSKNIGHT_TX_MAX_WAIT_MS`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: runtime
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: incomplete
+- Static default: none discovered
+- Sources: `src/lib/db-utils.ts`
+
+## `OPSKNIGHT_TX_TIMEOUT_MS`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: runtime
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: incomplete
+- Static default: none discovered
+- Sources: `src/lib/db-utils.ts`
 
 ## `OPSKNIGHT_WEB_DATABASE_URL_SECRET`
 
@@ -2127,7 +2197,7 @@ Sets the polling interval while the general queue is idle.
 - Apply behavior: restart required
 - Deprecated: no
 - Extraction confidence: derived
-- Static default: `50`
+- Static default: `100`
 - Sources: `deploy/compose/docker-compose.split.yml`
 
 ## `OPSKNIGHT_WORKER_BATCH_SIZE_PROJECTOR`
@@ -2183,7 +2253,7 @@ Sets the polling interval while the general queue is idle.
 - Apply behavior: restart required
 - Deprecated: no
 - Extraction confidence: derived
-- Static default: `100`
+- Static default: `50`
 - Sources: `deploy/compose/docker-compose.split.yml`
 
 ## `OPSKNIGHT_WORKER_BUSY_POLL_MS_PROJECTOR`
@@ -2239,7 +2309,7 @@ Sets the polling interval while the general queue is idle.
 - Apply behavior: restart required
 - Deprecated: no
 - Extraction confidence: derived
-- Static default: `10`
+- Static default: `15`
 - Sources: `deploy/compose/docker-compose.split.yml`
 
 ## `OPSKNIGHT_WORKER_CONCURRENCY_PROJECTOR`
@@ -3445,6 +3515,20 @@ Sets the polling interval while the general queue is idle.
 - Extraction confidence: derived
 - Static default: `2`
 - Sources: `deploy/swarm/docker-stack.yml`
+
+## `SWARM_REPLICAS_PGBOUNCER`
+
+- Type: string
+- Required: conditional or optional; inspect cited source
+- Allowed values: not statically complete
+- Secret: no
+- Runtime roles: web or integrated runtime
+- Deployment support: manifest
+- Apply behavior: restart required
+- Deprecated: no
+- Extraction confidence: derived
+- Static default: `2`
+- Sources: `deploy/swarm/docker-stack.pgbouncer.yml`
 
 ## `SWARM_REPLICAS_SCHEDULER`
 

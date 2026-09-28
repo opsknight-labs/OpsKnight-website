@@ -19,23 +19,23 @@ source. Public documentation is generated from public, administrator, and
 operator contracts; internal nodes remain classified without becoming public
 API promises.
 
-- Total classified nodes: 1094
+- Total classified nodes: 1098
 - Unclassified nodes: 0
-- Evidence-backed generated claims: 1539
+- Evidence-backed generated claims: 1541
 - Unsupported generated claims: 0
-- Supported product nodes: 564
-- Documented supported nodes: 564
+- Supported product nodes: 570
+- Documented supported nodes: 570
 - Undocumented supported nodes: 0
 - Unresolved semantic contracts: 0
 
 - `api`: 219
 - `api-scope`: 7
 - `authorization-action`: 9
-- `configuration`: 248
+- `configuration`: 254
 - `deployment-topology`: 4
 - `enum`: 73
 - `integration`: 28
-- `limit`: 226
+- `limit`: 224
 - `model`: 120
 - `notification-provider`: 9
 - `permission`: 37
@@ -46,8 +46,8 @@ API promises.
 ## Classification totals
 
 - `ADMIN_FEATURE`: 83
-- `INTERNAL_IMPLEMENTATION`: 530
-- `OPERATOR_FEATURE`: 277
+- `INTERNAL_IMPLEMENTATION`: 528
+- `OPERATOR_FEATURE`: 283
 - `PUBLIC_API`: 47
 - `PUBLIC_FEATURE`: 157
 
