@@ -48,7 +48,7 @@ export function SlackChatOps() {
   };
 
   return (
-    <section id="chatops" className="py-24 bg-slate-950 text-slate-200 border-t border-white/5 relative overflow-hidden font-sans">
+    <section id="chatops" className="py-24 bg-[#0f172a] text-slate-200 border-t border-white/5 relative overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

@@ -101,7 +101,7 @@ docker compose up -d`}
                 </p>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("operate/deploy/compose/integrated")}
+                    href={latestDocsHref("operate/deploy/docker-compose/integrated")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Docker Compose deployment guide →
@@ -145,7 +145,7 @@ docker stack deploy -c deploy/swarm/docker-stack.integrated.yml opsknight`}
                 />
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("operate/deploy/compose/split")}
+                    href={latestDocsHref("operate/deploy/docker-compose/split")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Split runtime architecture &amp; worker tuning →
@@ -199,7 +199,7 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                     <span className="font-bold text-[#111827]">· Cloud &amp; Serverless Containers:</span>
                     <span>
                       Deploy to AWS ECS / Fargate with RDS PostgreSQL, or GCP Cloud Run with Cloud SQL.{" "}
-                      <Link href={latestDocsHref("operate/deploy/compose/integrated")} className="font-medium text-[#d21a1b] hover:underline">
+                      <Link href={latestDocsHref("operate/deploy/docker-compose/integrated")} className="font-medium text-[#d21a1b] hover:underline">
                         Cloud container deployment
                       </Link>
                     </span>

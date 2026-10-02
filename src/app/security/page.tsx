@@ -138,7 +138,7 @@ export default function SecurityPage() {
                 </div>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("security/encryption")}
+                    href={latestDocsHref("operate/security/hardening")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Envelope encryption &amp; key rotation docs →
@@ -224,7 +224,7 @@ export default function SecurityPage() {
                 </ul>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("operate/security/sso-oidc")}
+                    href={latestDocsHref("guides/identity/configure-oidc")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     OIDC SSO &amp; SCIM configuration guide →

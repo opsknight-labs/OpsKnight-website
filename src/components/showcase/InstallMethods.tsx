@@ -56,7 +56,7 @@ export function InstallMethods() {
             <div
               role="tablist"
               aria-label="Deployment methods"
-              className="flex flex-wrap items-center gap-1 rounded-xl border border-slate-800 bg-[#020617] p-1"
+              className="flex flex-wrap items-center gap-1 rounded-xl border border-slate-800 bg-[#0f172a] p-1"
             >
               {TABS.map((tab) => (
                 <button
@@ -126,7 +126,7 @@ export function InstallMethods() {
             Install page
           </Link>
           {" · "}
-          <Link href={latestDocsHref("getting-started/installation")} className="font-medium text-[#d21a1b] hover:underline">
+          <Link href={latestDocsHref("start/production-install")} className="font-medium text-[#d21a1b] hover:underline">
             Docs
           </Link>
           {" · "}

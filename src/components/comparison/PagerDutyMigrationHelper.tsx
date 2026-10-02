@@ -163,7 +163,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
           </div>
 
           <Link
-            href={latestDocsHref("integrations/custom/pagerduty-emulation")}
+            href={latestDocsHref("integrations/webhooks/pagerduty")}
             className="inline-flex items-center gap-1 font-mono text-xs font-semibold text-[#d21a1b] hover:underline"
           >
             <span>Ingest adapter docs</span>
@@ -210,7 +210,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
             })}
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-[#020617] p-3.5 text-xs text-slate-300 space-y-2">
+          <div className="rounded-xl border border-slate-800 bg-[#0f172a] p-3.5 text-xs text-slate-300 space-y-2">
             <p className="font-semibold text-white flex items-center gap-1.5">
               <span>Why zero-code migration?</span>
             </p>
@@ -230,7 +230,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
           </div>
         </div>
 
-        <div className="flex flex-col justify-between bg-[#020617] p-5 lg:col-span-7 space-y-3">
+        <div className="flex flex-col justify-between bg-[#0f172a] p-5 lg:col-span-7 space-y-3">
           <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <span className="font-mono text-xs font-medium text-slate-400">
               {currentSnippet.filename}
@@ -254,7 +254,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
             </button>
           </div>
 
-          <pre className="flex-1 overflow-x-auto rounded-xl bg-slate-950 p-4 font-mono text-[11px] leading-relaxed text-emerald-300 max-h-[340px] custom-scrollbar">
+          <pre className="flex-1 overflow-x-auto rounded-xl bg-[#0b1120] p-4 font-mono text-[11px] leading-relaxed text-emerald-300 max-h-[340px] custom-scrollbar">
             <code>{currentSnippet.code}</code>
           </pre>
 
@@ -264,7 +264,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
         </div>
       </div>
 
-      <div className="border-t border-slate-800 bg-slate-950/90 px-5 py-3 text-[11px] leading-relaxed text-slate-500">
+      <div className="border-t border-slate-800 bg-[#0f172a] px-5 py-3 text-[11px] leading-relaxed text-slate-500">
         <div className="flex items-start gap-2">
           <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400" />
           <p>

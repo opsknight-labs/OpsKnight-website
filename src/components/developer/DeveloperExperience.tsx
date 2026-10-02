@@ -14,36 +14,43 @@ const codeSnippets: Record<string, string> = {
   compose: `version: '3.8'
 services:
   opsknight:
-    image: ghcr.io/opsknight-labs/opsknight:latest
+    image: ghcr.io/opsknight-labs/opsknight:2.0.0
     restart: always
     ports:
       - "3000:3000"
     environment:
       - DATABASE_URL=postgresql://user:pass@postgres:5432/opsknight
       - NEXTAUTH_SECRET=your-random-secret-key
-      - NEXTAUTH_URL=http://localhost:3000`,
+      - NEXTAUTH_URL=http://localhost:3000
+      - ENCRYPTION_KEY=64-character-hex-encryption-key`,
   run: `docker run -d \\
   --name opsknight \\
   -p 3000:3000 \\
   -e DATABASE_URL="postgresql://user:pass@host:5432/opsknight" \\
   -e NEXTAUTH_SECRET="generate-a-secure-secret-here" \\
   -e NEXTAUTH_URL="http://localhost:3000" \\
-  ghcr.io/opsknight-labs/opsknight:latest`,
-  helm: `helm repo add opsknight https://opsknight-labs.github.io/helm-charts
+  -e ENCRYPTION_KEY="64-character-hex-encryption-key" \\
+  ghcr.io/opsknight-labs/opsknight:2.0.0`,
+  helm: `helm repo add opsknight https://charts.opsknight.com
 helm repo update
 helm install opsknight opsknight/opsknight \\
   --set database.url="postgresql://user:pass@postgres:5432/opsknight" \\
-  --set app.secret="your-secure-secret"`,
+  --set app.secret="your-secure-secret" \\
+  --set app.encryptionKey="64-character-hex-encryption-key"`,
   env: `# Core Application Configuration
 DATABASE_URL="postgresql://user:password@localhost:5432/opsknight?schema=public"
 NEXTAUTH_URL="https://opsknight.yourdomain.com"
 NEXTAUTH_SECRET="openssl-rand-base64-32"
+ENCRYPTION_KEY="openssl-rand-hex-32"
 
-# Optional Multi-Channel Providers
+# Multi-Channel ChatOps & Telephony
 SLACK_BOT_TOKEN="xoxb-your-slack-bot-token"
 SLACK_SIGNING_SECRET="your-slack-signing-secret"
-SMTP_SERVER="smtp.resend.com"
-SMTP_PORT=587`,
+TEAMS_BOT_APP_ID="your-azure-app-id"
+TEAMS_BOT_APP_PASSWORD="your-azure-app-password"
+TWILIO_ACCOUNT_SID="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+TWILIO_AUTH_TOKEN="your-twilio-auth-token"
+TWILIO_FROM_NUMBER="+15550199"`,
 };
 
 export function DeveloperExperience() {
@@ -57,7 +64,7 @@ export function DeveloperExperience() {
   };
 
   return (
-    <section className="bg-slate-950 py-24 px-6 md:px-12 lg:px-24 border-t border-white/5">
+    <section className="bg-[#0f172a] py-24 px-6 md:px-12 lg:px-24 border-t border-white/5">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold mb-6">

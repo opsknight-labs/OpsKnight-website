@@ -81,7 +81,7 @@ ENCRYPTION_KEY="${encryptionKey}"`;
 
         {/* Action Controls & Mode Switcher */}
         <div className="flex items-center gap-1.5">
-          <div className="flex items-center rounded-md border border-slate-800 bg-[#020617] p-0.5 font-mono text-[10px]">
+          <div className="flex items-center rounded-md border border-slate-800 bg-[#0b1120] p-0.5 font-mono text-[10px]">
             <button
               type="button"
               onClick={() => setMode("generator")}
@@ -146,7 +146,7 @@ ENCRYPTION_KEY="${encryptionKey}"`;
         {mode === "generator" ? (
           <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
             {/* NEXTAUTH_SECRET Card */}
-            <div className="rounded-lg border border-slate-800/80 bg-[#020617] p-2.5">
+            <div className="rounded-lg border border-slate-800/80 bg-[#0b1120] p-2.5">
               <div className="mb-1 flex items-center justify-between">
                 <span className="flex items-center gap-1 font-mono text-[11px] font-medium text-slate-300">
                   <ShieldCheck className="h-3 w-3 text-slate-400" />
@@ -176,7 +176,7 @@ ENCRYPTION_KEY="${encryptionKey}"`;
             </div>
 
             {/* ENCRYPTION_KEY Card */}
-            <div className="rounded-lg border border-slate-800/80 bg-[#020617] p-2.5">
+            <div className="rounded-lg border border-slate-800/80 bg-[#0b1120] p-2.5">
               <div className="mb-1 flex items-center justify-between">
                 <span className="flex items-center gap-1 font-mono text-[11px] font-medium text-slate-300">
                   <Key className="h-3 w-3 text-slate-400" />
@@ -207,7 +207,7 @@ ENCRYPTION_KEY="${encryptionKey}"`;
           </div>
         ) : (
           <div>
-            <div className="flex items-center justify-between rounded-lg border border-slate-800/80 bg-[#020617] p-2.5 font-mono text-xs">
+            <div className="flex items-center justify-between rounded-lg border border-slate-800/80 bg-[#0b1120] p-2.5 font-mono text-xs">
               <div className="flex min-w-0 items-center gap-2 overflow-x-auto">
                 <Terminal className="h-3.5 w-3.5 shrink-0 text-[#d21a1b]" />
                 <code className="text-slate-200 text-[11px] whitespace-nowrap">

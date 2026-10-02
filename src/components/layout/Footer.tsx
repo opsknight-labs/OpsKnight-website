@@ -17,7 +17,7 @@ const footerLinks = {
     { label: "Install", href: "/install" },
     { label: "Security & Hardening", href: "/security" },
     { label: "Documentation", href: BRAND.links.docs },
-    { label: "Quickstart", href: latestDocsHref("getting-started") },
+    { label: "Quickstart", href: latestDocsHref("start/quickstart") },
     { label: "Helm charts", href: BRAND.links.helmCharts },
     { label: "Brand", href: "/brand" },
   ],

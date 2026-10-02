@@ -82,7 +82,7 @@ export function GlobalCommandPalette() {
   useEffect(() => {
     const fetchDocIndex = async () => {
       try {
-        const res = await fetch(`/api/docs/v1.4/search`);
+        const res = await fetch(`/api/docs/${BRAND.releaseLabel}/search`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.results)) {

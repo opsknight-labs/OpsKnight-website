@@ -95,7 +95,7 @@ const TOUR_TABS: TourTab[] = [
     notes: [
       "Ownership and the policy that pages",
       "Inbound integrations hang off the service",
-      "One public or private status page per install (v3)",
+      "One public or private status page per install",
     ],
   },
 ];

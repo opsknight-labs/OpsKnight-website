@@ -52,7 +52,7 @@ export default function AboutPage() {
             <article className="min-w-0 space-y-10 max-w-3xl text-sm leading-relaxed text-[#4b5563]">
               <div id="overview" className="scroll-mt-28 space-y-4">
                 <p>
-                  OpsKnight provides end-to-end alerting, paging, escalation policies, Slack ChatOps war rooms, public status pages, and postmortem incident timelines without third-party vendor lock-in.
+                  OpsKnight provides end-to-end alerting, voice &amp; mobile paging, escalation policies, Slack &amp; Microsoft Teams ChatOps war rooms, public status pages, and postmortem incident timelines without third-party vendor lock-in.
                 </p>
                 <p>
                   OpsKnight is purpose-built self-hosted incident command. It is not a clone of anyone else’s proprietary cloud product.
@@ -65,7 +65,7 @@ export default function AboutPage() {
                   SRE, DevOps, and platform teams that already run Postgres, Docker, or Kubernetes. Teams with strict compliance requirements (HIPAA, SOC 2, GDPR, Financial) that cannot place real-time incident timelines and architecture metadata in a multi-tenant vendor cloud.
                 </p>
                 <p className="mt-2">
-                  Teams that want a self-hosted Community foundation with a clear path for separately licensed Enterprise capabilities. The Community application includes {BRAND.integrationCountLabel} inbound parsers, Slack war room bots, status pages, local accounts, and supported SSO capabilities according to the release documentation.
+                  Teams that want a self-hosted Community foundation with a clear path for separately licensed Enterprise capabilities. The Community application includes {BRAND.integrationCountLabel} inbound parsers, Slack and Microsoft Teams war room bots, status pages, local accounts, and supported SSO capabilities according to the release documentation.
                 </p>
               </div>
 
@@ -92,7 +92,7 @@ export default function AboutPage() {
                   The active v{BRAND.version} Community development line is licensed under {BRAND.license}. Source code for the Community application is openly available on GitHub, and the license shipped with each artifact controls that artifact.
                 </p>
                 <p className="mt-2">
-                  Published v{BRAND.legacyVersion} and earlier releases keep the {BRAND.legacyLicense} terms that accompanied them. The v1.5 transition does not retroactively remove those rights.
+                  Published v{BRAND.legacyVersion} and earlier releases keep the {BRAND.legacyLicense} terms that accompanied them. The v2.0.0 transition does not retroactively remove those rights.
                 </p>
                 <p className="mt-2">
                   Separately licensed Enterprise modules, hosted services, support, or other commercial offerings may be introduced without changing the license of already published Community artifacts. See the{" "}
@@ -157,7 +157,7 @@ export default function AboutPage() {
                 <PageToc
                   sections={TOC_SECTIONS}
                   specs={ABOUT_SPECS}
-                  docLink={latestDocsHref("getting-started")}
+                  docLink={latestDocsHref("start/quickstart")}
                   docLinkLabel="Getting Started Docs"
                 />
               </div>

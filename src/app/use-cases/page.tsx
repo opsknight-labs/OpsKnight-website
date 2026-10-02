@@ -174,7 +174,7 @@ export default function UseCasesPage() {
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
                     <Link
-                      href={latestDocsHref("integrations/communication/slack-chatops")}
+                      href={latestDocsHref("integrations/communication/slack")}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
                     >
                       View Slack ChatOps Documentation
@@ -215,7 +215,7 @@ export default function UseCasesPage() {
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
                     <Link
-                      href={latestDocsHref("core-concepts/escalation-policies")}
+                      href={latestDocsHref("concepts/escalation-policies")}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
                     >
                       View Escalation Policies Guide
@@ -231,7 +231,7 @@ export default function UseCasesPage() {
                     <FileCheck className="h-4 w-4" />
                   </div>
                   <h2 className="text-2xl font-semibold tracking-tight text-[#111827]">
-                    Compliance & Enterprise Audit Readiness
+                    Compliance &amp; Enterprise Audit Readiness
                   </h2>
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
@@ -256,7 +256,7 @@ export default function UseCasesPage() {
                   </ul>
                   <div className="mt-5 border-t border-slate-100 pt-4">
                     <Link
-                      href={latestDocsHref("security")}
+                      href={latestDocsHref("operate/security/hardening")}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
                     >
                       Read Full Security Architecture
@@ -273,7 +273,7 @@ export default function UseCasesPage() {
                 specs={SPEC_ITEMS}
                 quickCommand="docker compose up -d"
                 quickCommandLabel="Test locally with Compose"
-                docLink={latestDocsHref("getting-started")}
+                docLink={latestDocsHref("start/quickstart")}
                 docLinkLabel="Installation Documentation"
               />
             </aside>

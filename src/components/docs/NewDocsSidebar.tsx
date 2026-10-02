@@ -9,6 +9,7 @@ import {
   ChevronDown,
   Code2,
   ExternalLink,
+  HelpCircle,
   Lightbulb,
   Plug,
   Rocket,
@@ -38,15 +39,27 @@ import { BrandLockup } from "@/components/brand/BrandLockup";
 import type { DocsVersion } from "@/lib/docs/types";
 
 const SECTION_ICONS: Record<string, React.ElementType> = {
+  // v1.x root sections
   "getting-started": Rocket,
   "core-concepts": Lightbulb,
   administration: Settings,
-  integrations: Plug,
-  api: Code2,
   deployment: Server,
-  security: Shield,
   architecture: Boxes,
   mobile: Smartphone,
+
+  // v2.x root sections
+  start: Rocket,
+  concepts: Lightbulb,
+  guides: BookOpen,
+  operate: Server,
+  reference: Code2,
+  troubleshooting: HelpCircle,
+  develop: Boxes,
+
+  // Common sections
+  integrations: Plug,
+  api: Code2,
+  security: Shield,
 };
 
 function getSectionKeyFromHref(href?: string) {

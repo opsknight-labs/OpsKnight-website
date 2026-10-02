@@ -72,7 +72,7 @@ export default function IntegrationsPage() {
 
             {/* Code Snippet Box */}
             <div className="lg:col-span-6">
-              <div className="rounded-2xl bg-slate-950 border border-slate-800 p-5 font-mono text-xs text-slate-300 shadow-2xl space-y-2">
+              <div className="rounded-2xl bg-[#0f172a] border border-slate-800 p-5 font-mono text-xs text-slate-300 shadow-2xl space-y-2">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-[11px] text-slate-400">
                   <span>POST /api/webhooks/custom</span>
                   <span className="text-emerald-400 font-bold">200 OK</span>
