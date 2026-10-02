@@ -36,8 +36,16 @@ function buildIndex(version: string) {
             content.split("\n").find(line => line.startsWith("# "))?.replace(/^#\s+/, "") ||
             path.basename(filePath).replace(/\.mdx?$/, "");
         const text = stripMarkdown(content);
+        const description = typeof data.description === "string" ? data.description : "";
+        const keywords = Array.isArray(data.keywords)
+            ? data.keywords.filter((value): value is string => typeof value === "string")
+            : [];
+        const headings = content
+            .split("\n")
+            .filter(line => /^#{2,4}\s+/.test(line))
+            .map(line => line.replace(/^#{2,4}\s+/, "").replace(/[`*_]/g, "").trim());
         const href = `/docs/${version}${slug.length ? `/${slug.join("/")}` : ""}/`.replace(/\/{2,}/g, "/");
-        entries.push({ title, href, text });
+        entries.push({ title, href, description, keywords, headings, text });
     }
 
     return entries;

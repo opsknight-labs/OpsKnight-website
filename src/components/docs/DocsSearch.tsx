@@ -18,6 +18,9 @@ type SearchResult = {
 type SearchIndexEntry = {
   title: string;
   href: string;
+  description?: string;
+  keywords?: string[];
+  headings?: string[];
   text: string;
 };
 
@@ -68,10 +71,13 @@ export function DocsSearch({ version, className }: { version: string, className?
   const fuse = useMemo(() => {
     return new Fuse(fullIndex, {
       keys: [
-        { name: "title", weight: 0.7 },
-        { name: "text", weight: 0.3 },
+        { name: "title", weight: 0.4 },
+        { name: "keywords", weight: 0.3 },
+        { name: "headings", weight: 0.15 },
+        { name: "description", weight: 0.1 },
+        { name: "text", weight: 0.05 },
       ],
-      threshold: 0.3, // Fuzzy match threshold
+      threshold: 0.35,
       includeMatches: true,
       minMatchCharLength: 2,
     });
