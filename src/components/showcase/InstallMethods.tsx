@@ -7,13 +7,14 @@ import { BRAND } from "@/lib/brand";
 import { latestDocsHref } from "@/lib/docs/paths";
 import { SecretsGenerator } from "@/components/showcase/SecretsGenerator";
 
-type DeployTab = "compose" | "docker" | "helm" | "kustomize";
+type DeployTab = "compose" | "docker" | "helm" | "kustomize" | "swarm";
 
 const TABS: { id: DeployTab; label: string }[] = [
   { id: "compose", label: "Compose" },
   { id: "docker", label: "Docker" },
   { id: "helm", label: "Helm" },
   { id: "kustomize", label: "Kustomize" },
+  { id: "swarm", label: "Swarm" },
 ];
 
 export function InstallMethods() {
@@ -25,6 +26,7 @@ export function InstallMethods() {
     docker: BRAND.deploy.docker,
     helm: BRAND.deploy.helm,
     kustomize: BRAND.deploy.kustomize,
+    swarm: BRAND.deploy.swarm,
   };
 
   const handleCopy = () => {
@@ -44,7 +46,7 @@ export function InstallMethods() {
             Run it where your systems already live.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            Compose, Docker, Helm, or Kustomize. Postgres, {`NEXTAUTH_SECRET`}, and{" "}
+            Compose, Docker, Helm, Kustomize, or Swarm. Postgres, {`NEXTAUTH_SECRET`}, and{" "}
             {`ENCRYPTION_KEY`} are required. There is no hosted cloud.
           </p>
         </div>

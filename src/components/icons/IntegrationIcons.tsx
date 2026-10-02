@@ -66,9 +66,13 @@ export const integrationIcons = {
     uptimekuma: <BrandMark src="/integrations/uptimekuma.svg" alt="Uptime Kuma" />,
 
     slack: <BrandMark src="/integrations/slack.svg" alt="Slack" />,
+    teams: <BrandMark src="/integrations/teams.svg" alt="Microsoft Teams" />,
+    msteams: <BrandMark src="/integrations/teams.svg" alt="Microsoft Teams" />,
     jira: <BrandMark src="/integrations/jira.svg" alt="Jira Cloud" />,
     whatsapp: <BrandMark src="/integrations/whatsapp.svg" alt="WhatsApp" />,
     pagerduty: <BrandMark src="/integrations/pagerduty.svg" alt="PagerDuty" />,
+    manageengine: <BrandMark src="/integrations/manageengine.svg" alt="ManageEngine" />,
+    voice: <BrandMark src="/integrations/twilio.svg" alt="Twilio Voice Paging" />,
 
     kubernetes: <BrandMark src="/integrations/kubernetes.svg" alt="Kubernetes" />,
     postgres: <BrandMark src="/integrations/postgres.svg" alt="PostgreSQL" />,

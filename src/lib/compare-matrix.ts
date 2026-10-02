@@ -3,9 +3,8 @@ import { BRAND } from "@/lib/brand";
 /**
  * Comparison matrix for OpsKnight and common on-call products.
  *
- * OpsKnight feature cells are grounded primarily in the last published v1.4.0
- * application/docs unless a row explicitly describes the v1.5 development line.
- * License/current-line metadata reflects the active v1.5 Community transition.
+ * OpsKnight feature cells reflect the v2.0.0 stable release (2026-10-02).
+ * License metadata reflects AGPL-3.0-only; v1.4.0 and earlier retain Apache-2.0.
  */
 
 export type CompareVendorId =
@@ -19,7 +18,7 @@ export type CompareVendorId =
 
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "13 Sep 2026";
+export const COMPARE_AS_OF = "2 Oct 2026";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;
@@ -83,9 +82,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Deployment",
-        source: "OpsKnight: Compose/Helm. Others: vendor product model as of Sep 2026.",
+        source: "OpsKnight: Compose, Swarm, Helm, Kustomize. Others: vendor product model as of Oct 2026.",
         values: {
-          opsknight: "Self-hosted Community (your VPC)",
+          opsknight: "Self-hosted: Compose, Swarm, Helm, Kustomize (your VPC)",
           pagerduty: "Vendor SaaS",
           incidentio: "Vendor SaaS (GCP)",
           opsgenie: "Vendor SaaS (Atlassian Cloud)",
@@ -96,9 +95,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Software license",
-        source: `OpsKnight v1.5 Community: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
+        source: `OpsKnight v2.0.0: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
         values: {
-          opsknight: `${BRAND.license} (v1.5 Community)`,
+          opsknight: `${BRAND.license} (v2.0.0)`,
           pagerduty: "Proprietary",
           incidentio: "Proprietary",
           opsgenie: "Proprietary",
@@ -133,10 +132,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
         },
       },
       {
-        feature: "Product standing (Sep 2026)",
-        source: "OpsKnight v1.5 is the active development line; v1.4.0 remains the last published Apache-era stable release. Atlassian Opsgenie and Grafana status from their public migration/archive pages.",
+        feature: "Product standing (Oct 2026)",
+        source: "OpsKnight v2.0.0 is the active stable release (AGPL-3.0-only); v1.4.0 remains historical Apache-era stable. Atlassian Opsgenie and Grafana status from their public migration/archive pages.",
         values: {
-          opsknight: `${BRAND.releaseLabel}; v${BRAND.legacyVersion} remains historical stable`,
+          opsknight: "v2.0.0 stable; v1.4.0 historical Apache release",
           pagerduty: "Actively sold",
           incidentio: "Actively sold",
           opsgenie: "Standalone: no new purchases; EOL 5 Apr 2027 → Jira Service Management",
@@ -192,7 +191,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
         feature: "Outbound paging channels",
         source: "OpsKnight NotificationChannel enum + docs. Vendor contact-method docs.",
         values: {
-          opsknight: "Email, SMS (Twilio or AWS SNS), push, Slack, WhatsApp (Twilio), webhook. No voice",
+          opsknight: "Email, SMS (Twilio/SNS), push, Slack, Teams, WhatsApp, voice paging (Twilio), webhook (v2.0.0)",
           pagerduty: "Push, phone, SMS, email, Slack; WhatsApp in Early Access",
           incidentio: "Mobile app, phone, SMS, Slack, email, WhatsApp (WhatsApp not on Basic)",
           opsgenie: "Push, email, SMS, voice (plan caps); Slack and Teams apps",
@@ -203,9 +202,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Native voice / phone calls",
-        source: "OpsKnight Community baseline has no VOICE channel. Others: notification/contact docs.",
+        source: "OpsKnight v2.0.0 adds Twilio VOICE channel for triggered-incident paging with responder ack input. Others: notification/contact docs.",
         values: {
-          opsknight: false,
+          opsknight: "Twilio voice paging on incident trigger with responder ack input (v2.0.0)",
           pagerduty: "Yes — phone contact method",
           incidentio: "Yes — phone escalations; live call routing on Pro/Enterprise",
           opsgenie: "Yes — voice on historical paid plans",
@@ -229,9 +228,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Microsoft Teams ChatOps",
-        source: "OpsKnight published v1.4 baseline: outgoing webhook formatter only. Current development may evolve; verify v1.5 docs before release. Others: published Teams apps.",
+        source: "OpsKnight v2.0.0: native Teams app via Entra + Azure Bot — war rooms, Adaptive Cards, ack/resolve from channel, identity linking, meeting collaboration. Others: published Teams apps.",
         values: {
-          opsknight: "Published baseline: outgoing webhook payload only",
+          opsknight: "Native Teams app: war rooms, Adaptive Cards, ack/resolve, identity linking (v2.0.0)",
           pagerduty: "Native Teams app: channel cards, ack/resolve, service mapping",
           incidentio: "Native Teams app (Pro/Enterprise): dedicated channel, lifecycle in Teams",
           opsgenie: "Teams V2 integration: ack/close/snooze from channel",
@@ -363,9 +362,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "SSO",
-        source: "OpsKnight v1.4 published baseline includes OIDC. v1.5 Community/Enterprise packaging should be read from the v1.5 release documentation when published. Vendor SSO docs for other products.",
+        source: "OpsKnight v2.0.0: OIDC with PKCE, JIT provisioning, claim-to-role mapping, and SCIM 2.0 user provisioning. Vendor SSO docs for other products.",
         values: {
-          opsknight: "Published baseline: OIDC; v1.5 packaging may distinguish Community and Enterprise capabilities",
+          opsknight: "OIDC (PKCE, JIT, claim-to-role) + SCIM 2.0 provisioning (v2.0.0)",
           pagerduty: "SAML 2.0 IdP; Google OAuth; OIDC for private status pages",
           incidentio: "Slack SSO; SAML/SCIM on applicable plans",
           opsgenie: "SSO/SAML on historical paid plans",
@@ -393,28 +392,20 @@ export const COMPARE_SECTIONS: CompareSection[] = [
 
 export const OPKNIGHT_GAPS = [
   {
-    item: "Native voice / phone paging",
-    detail: "Published Community channels include email, SMS, push, Slack, WhatsApp, and webhooks; verify v1.5 docs for the final release capability set.",
-  },
-  {
-    item: "Microsoft Teams depth",
-    detail: "The published baseline is outgoing webhook integration; Teams ChatOps is an area of active product development.",
-  },
-  {
-    item: "Enterprise identity packaging",
-    detail: "The published baseline includes OIDC. Advanced SSO/SCIM/governance can be separated into Enterprise packaging for v1.5 and later.",
-  },
-  {
-    item: "OpsKnight-hosted cloud",
-    detail: "A managed OpsKnight Cloud service is not currently offered; Community is self-hosted.",
+    item: "Voice paging scope",
+    detail: "v2.0.0 adds Twilio voice paging on incident trigger. Voice fires on the initial triggered-incident paging step only — not on every subsequent state change.",
   },
   {
     item: "Multiple independent status pages per team",
-    detail: "The published Community baseline has one status page per install. Additional pages are a natural future commercial capability.",
+    detail: "The v2.0.0 baseline has one status page per install. Additional pages are a natural future commercial capability.",
   },
   {
     item: "AI alert correlation / auto postmortems",
     detail: "Postmortems are currently authored from the incident timeline rather than generated automatically.",
+  },
+  {
+    item: "OpsKnight-hosted cloud",
+    detail: "A managed OpsKnight Cloud service is not currently offered; v2.0.0 is self-hosted.",
   },
 ];
 
@@ -425,23 +416,23 @@ export const HONEST_BLURB: Record<string, { title: string; body: string }> = {
   },
   incidentio: {
     title: "incident.io",
-    body: "Vendor-hosted response that runs in Slack or Microsoft Teams, with status pages and commercial responder/on-call packaging. OpsKnight Community is self-hosted; verify v1.5 documentation for the exact Community and Enterprise capability boundary.",
+    body: "Vendor-hosted response that runs in Slack or Microsoft Teams, with status pages and commercial responder/on-call packaging. OpsKnight v2.0.0 is self-hosted with native Slack and Teams war rooms under AGPL-3.0-only.",
   },
   opsgenie: {
     title: "Opsgenie",
-    body: "Atlassian’s standalone Opsgenie is closed to new purchases. Support ends 5 April 2027; alerting/on-call is moving into Jira Service Management. OpsKnight is independent self-hosted Community software with separately defined commercial boundaries.",
+    body: "Atlassian's standalone Opsgenie is closed to new purchases. Support ends 5 April 2027; alerting/on-call is moving into Jira Service Management. OpsKnight is independent self-hosted software under AGPL-3.0-only.",
   },
   squadcast: {
     title: "Squadcast",
-    body: "SolarWinds Incident Response (Squadcast) is commercial SaaS with voice, Slack/Teams apps, and status-page capabilities by plan. OpsKnight Community is self-hosted and its v1.5 Community source is licensed under AGPL-3.0-only.",
+    body: "SolarWinds Incident Response (Squadcast) is commercial SaaS with voice, Slack/Teams apps, and status-page capabilities by plan. OpsKnight v2.0.0 is self-hosted and licensed under AGPL-3.0-only.",
   },
   splunk: {
     title: "Splunk On-Call",
-    body: `Formerly VictorOps. Vendor-hosted on-call with phone/SMS/push and Slack/Teams apps. OpsKnight Community is a separate ${BRAND.license} self-hosted stack, not a Splunk add-on.`,
+    body: `Formerly VictorOps. Vendor-hosted on-call with phone/SMS/push and Slack/Teams apps. OpsKnight v2.0.0 is a separate ${BRAND.license} self-hosted stack, not a Splunk add-on.`,
   },
   grafana: {
     title: "Grafana Cloud IRM",
-    body: `Grafana OnCall OSS was archived on 24 March 2026. The current Grafana product is Cloud IRM. OpsKnight v1.5 Community is ${BRAND.license} self-hosted incident response; published v${BRAND.legacyVersion} artifacts retain their historical license.`,
+    body: `Grafana OnCall OSS was archived on 24 March 2026. The current Grafana product is Cloud IRM. OpsKnight v${BRAND.version} is ${BRAND.license} self-hosted incident response; published v${BRAND.legacyVersion} artifacts retain their historical ${BRAND.legacyLicense} license.`,
   },
 };
 
@@ -466,4 +457,5 @@ export function vendorIdFromCompareSlug(slug: string): CompareVendorId | null {
   }
 }
 
-export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight feature cells are grounded primarily in the published v${BRAND.legacyVersion} application/docs unless otherwise stated; v${BRAND.version} is the active Community development line and uses ${BRAND.license}. Vendor columns summarize public documentation and packaging, not a contract. Confirm current vendor pricing and OpsKnight v1.5 release packaging before making a purchasing decision.`;
+export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight feature cells reflect the v${BRAND.version} stable release (${BRAND.license}); v${BRAND.legacyVersion} and earlier artifacts retain their historical ${BRAND.legacyLicense} terms. Vendor columns summarize public documentation and packaging, not a contract. Confirm current vendor pricing before making a purchasing decision.`;
+

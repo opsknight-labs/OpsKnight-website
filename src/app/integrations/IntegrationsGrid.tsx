@@ -52,6 +52,23 @@ const allIntegrations: IntegrationItem[] = [
     }
   },
   {
+    id: 'manageengine',
+    name: 'ManageEngine OpManager',
+    category: 'APM & Observability',
+    iconKey: 'manageengine',
+    desc: 'Native inbound parser for ManageEngine OpManager alerts and alarms with severity mapping and automatic recovery.',
+    docPath: latestDocsHref('integrations/monitoring/manageengine'),
+    protocol: 'HMAC Webhook',
+    webhookSlug: 'manageengine',
+    samplePayload: {
+      alarm_id: 'ALARM-10824',
+      entity: 'Server-DB-Primary',
+      severity: 'CRITICAL',
+      message: 'Disk utilization exceeded 95% on /dev/sda1',
+      timestamp: '2026-10-02T12:00:00Z'
+    }
+  },
+  {
     id: 'newrelic',
     name: 'New Relic',
     category: 'APM & Observability',
@@ -499,6 +516,41 @@ const allIntegrations: IntegrationItem[] = [
         severity: 'critical',
         source: 'prod-k8s'
       }
+    }
+  },
+  {
+    id: 'teams',
+    name: 'Microsoft Teams ChatOps',
+    category: 'ChatOps & Collaboration',
+    iconKey: 'teams',
+    desc: 'Native Teams app with Entra ID authentication, Azure Bot service, incident Adaptive Cards, and dedicated war room channels.',
+    docPath: latestDocsHref('integrations/communication/microsoft-teams'),
+    protocol: 'Entra App + Azure Bot',
+    webhookSlug: 'msteams-bot',
+    samplePayload: {
+      type: 'message',
+      text: 'Incident INC-8492 triggered: High memory consumption on order-service',
+      channelData: {
+        teamsChannelId: '19:meeting_chat@thread.v2',
+        serviceId: 'srv-prod-orders'
+      }
+    }
+  },
+  {
+    id: 'twilio-voice',
+    name: 'Twilio Voice Paging',
+    category: 'ChatOps & Collaboration',
+    iconKey: 'voice',
+    desc: 'Triggered-incident voice phone calls with responder acknowledgment input (press 1 to ack) and signed callbacks.',
+    docPath: latestDocsHref('integrations/communication/voice'),
+    protocol: 'Voice Call / Callback Webhook',
+    webhookSlug: 'twilio-voice',
+    samplePayload: {
+      CallSid: 'CA1234567890abcdef',
+      From: '+15550199',
+      To: '+15550100',
+      Digits: '1',
+      CallStatus: 'completed'
     }
   }
 ];

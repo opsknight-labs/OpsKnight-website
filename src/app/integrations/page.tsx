@@ -62,7 +62,7 @@ export default function IntegrationsPage() {
 
               <div className="pt-2">
                 <Link
-                  href={latestDocsHref("integrations/custom/webhooks")}
+                  href={latestDocsHref("integrations/webhooks/webhook")}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#d21a1b] hover:bg-[#b41516] text-white text-xs font-bold transition-all shadow-md shadow-red-700/20"
                 >
                   Read Custom Webhook Documentation

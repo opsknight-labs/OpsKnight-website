@@ -5,19 +5,19 @@
 import { latestDocsHref } from "@/lib/docs/paths";
 
 /**
- * The public website tracks the active v1.5 Community development line.
- * Historical release metadata is kept separately so older Apache releases are
- * described accurately without leaking the legacy license into current copy.
+ * v2.0.0 is the first stable AGPL release.
+ * v1.4.0 and earlier retain their historical Apache-2.0 license.
  */
-const PRODUCT_VERSION = "1.5";
+const PRODUCT_VERSION = "2.0.0";
 const PRODUCT_LICENSE = "AGPL-3.0-only";
 const LEGACY_STABLE_VERSION = "1.4.0";
 const LEGACY_STABLE_LICENSE = "Apache-2.0";
 
+
 export const BRAND = {
   name: "OpsKnight",
   version: PRODUCT_VERSION,
-  releaseLabel: `v${PRODUCT_VERSION} development`,
+  releaseLabel: `v${PRODUCT_VERSION}`,
   legacyVersion: LEGACY_STABLE_VERSION,
   legacyLicense: LEGACY_STABLE_LICENSE,
   tagline: "Self-hosted on-call & incident response",
@@ -26,12 +26,12 @@ export const BRAND = {
   fullDescription:
     "OpsKnight is a self-hosted incident command center — an alternative to PagerDuty, incident.io, Opsgenie, Squadcast, Splunk On-Call, and Grafana Cloud IRM.",
   domain: "opsknight.com",
-  integrationCount: 27,
-  integrationCountLabel: "27",
-  stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm",
+  integrationCount: 28,
+  integrationCountLabel: "28",
+  stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm / Swarm",
 
-  status: "Accepting Contributions",
-  statusMessage: `v${PRODUCT_VERSION} development`,
+  status: "Stable",
+  statusMessage: `v${PRODUCT_VERSION} stable`,
 
   links: {
     github: "https://github.com/opsknight-labs/OpsKnight",
@@ -44,11 +44,11 @@ export const BRAND = {
     releases: "https://github.com/opsknight-labs/OpsKnight/releases",
     contributing:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/CONTRIBUTING.md",
-    // Current v1.5 Community development line.
+    // v2.0.0 stable release license.
     license: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
     // Backward-compatible alias for pages that still use the development key.
     developmentLicense: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
-    // Historical v1.4 release license; do not use for current product marketing.
+    // Historical v1.4 release license (Apache-2.0); do not use for current product marketing.
     legacyLicense: "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
     licenseTransition:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE-TRANSITION.md",
@@ -61,14 +61,15 @@ export const BRAND = {
     logo: "/logo-mark.png",
     logoSvg: "/logo.svg",
     banner: "/banner.png",
-    dashboard: "/dashboard-command-center.png",
+    /** Updated to v2.0.0 UI screenshot */
+    dashboard: "/v2-incidents-list.png",
     dashboardWide: "/dashboard-command-center-1200.jpg",
   },
 
   seo: {
     title: "OpsKnight | Self-hosted on-call & incident response",
     description:
-      "OpsKnight v1.5 Community is self-hosted incident command for on-call, paging, Slack war rooms, status pages, and SLA analytics under AGPL-3.0-only. v1.4 and earlier releases retain their original Apache-2.0 terms.",
+      "OpsKnight v2.0.0 is self-hosted incident command for on-call, paging, Slack & Teams war rooms, status pages, and SLA analytics under AGPL-3.0-only. v1.4 and earlier releases retain their original Apache-2.0 terms.",
     keywords: [
       "incident management",
       "on-call",
@@ -80,13 +81,14 @@ export const BRAND = {
       "incident.io alternative",
       "Opsgenie alternative",
       "Squadcast alternative",
+      "Microsoft Teams ChatOps",
       "incident response",
       "alerting",
       "self-hosted",
     ],
   },
 
-  /** License of the active v1.5 Community development line. */
+  /** License of the v2.0.0 stable release (AGPL-3.0-only). */
   license: PRODUCT_LICENSE,
   licenseUrl: "https://www.gnu.org/licenses/agpl-3.0.html",
   /** Kept as an alias while older website components are migrated. */
@@ -96,8 +98,11 @@ export const BRAND = {
 
   deploy: {
     secretsNote:
-      "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose configuration starts both PostgreSQL and OpsKnight automatically.",
-    compose: `curl -sL https://raw.githubusercontent.com/opsknight-labs/OpsKnight/main/docker-compose.yml > docker-compose.yml
+      "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose starts both PostgreSQL and OpsKnight automatically. For split runtime or Swarm deployments, see the deployment docs.",
+    compose: `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+cp env.example .env
+# Set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
 docker compose up -d`,
     docker: `# 1. Run PostgreSQL database container
 docker run -d --name opsknight-db \\
@@ -114,15 +119,32 @@ docker run -d --name opsknight-app -p 3000:3000 \\
   -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
   -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
   --link opsknight-db \\
-  ghcr.io/opsknight-labs/opsknight:latest`,
-    helm: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
-helm install opsknight ./helm/opsknight \\
+  ghcr.io/opsknight-labs/opsknight:2.0.0`,
+    helm: `helm repo add opsknight https://charts.opsknight.com
+helm repo update
+helm upgrade --install opsknight opsknight/opsknight \\
   --namespace opsknight \\
   --create-namespace`,
     kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight/k8s
-kubectl apply -k .`,
+cd OpsKnight
+kubectl apply -k deploy/kubernetes/kustomize/profiles/integrated/`,
+    swarm: `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+# Initialize swarm (skip if already initialized)
+docker swarm init
+# Deploy integrated stack with Raft secrets
+docker stack deploy \\
+  -c deploy/swarm/docker-stack.integrated.yml \\
+  opsknight`,
+    split: `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+cp env.example .env
+# Set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
+# Deploy Web + Scheduler + Workers + Status Projector as independent services
+docker compose \\
+  -f deploy/compose/docker-compose.yml \\
+  -f deploy/compose/docker-compose.split.yml \\
+  up -d`,
   },
 
   authors: [

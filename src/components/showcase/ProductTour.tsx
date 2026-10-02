@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Activity, Calendar, MessageSquare, ShieldCheck, BarChart3, Check } from "lucide-react";
+import { Activity, Calendar, MessageSquare, ShieldCheck, BarChart3, Check, Users2 } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 import { latestDocsHref } from "@/lib/docs/paths";
 
@@ -20,7 +20,7 @@ const TOUR_TABS: TourTab[] = [
   {
     id: "incidents",
     name: "Incidents",
-    image: "/incident-list-v2.png",
+    image: "/v2-incidents-list.png",
     heading: "One list for what is open.",
     description:
       "Incoming webhooks become incidents. You acknowledge, assign, and resolve. Related alerts can share a fingerprint so one person is not paged for every downstream symptom.",
@@ -28,13 +28,13 @@ const TOUR_TABS: TourTab[] = [
       "Open, acknowledged, and resolved in one place",
       "Filter by service, urgency, and who is assigned",
       "Write the postmortem from the timeline — OpsKnight does not invent a report",
-      "Ack from a phone by installing the site; same login as desktop",
+      "Ack from a phone by installing the PWA; same login as desktop",
     ],
   },
   {
     id: "schedules",
     name: "Schedules",
-    image: "/schedule-main.png",
+    image: "/v2-on-call-schedules.png",
     heading: "Who is covering this week.",
     description:
       "Rotations, timezones, and last-minute swaps. When something fires, the active layer is who gets the first message.",
@@ -48,39 +48,54 @@ const TOUR_TABS: TourTab[] = [
     id: "slack",
     name: "Slack rooms",
     image: "/slack-chatops.png",
-    heading: "A channel for that incident.",
+    heading: "A dedicated channel for that incident.",
     description:
-      "From v1.2, OpsKnight can open a Slack channel, invite the people on call, and let you acknowledge or resolve from the message. Optional Jitsi, Zoom, or Meet link. Not native voice paging.",
+      "From 2.0, OpsKnight opens a dedicated Slack channel, invites the people on call, and lets you acknowledge or resolve from the message. Up to 3 Slack destinations per service.",
     notes: [
       "Channel named for the incident",
       "Ack, assign, and resolve from Slack",
-      "ChatOps is in this version of the docs — older installs may only have incoming Slack webhooks",
+      "Up to 3 Slack destinations per service",
+      "Participant sync and optional video bridge",
+    ],
+  },
+  {
+    id: "teams",
+    name: "MS Teams",
+    image: "/v2-teams-chatops-war-room.png",
+    heading: "A Teams war room for that incident.",
+    description:
+      "From 2.0, OpsKnight opens a Microsoft Teams war room, sends Adaptive Cards with ack/resolve actions, links user identities, and syncs participant membership.",
+    notes: [
+      "Entra app + Azure Bot installation",
+      "Adaptive Cards with interactive incident actions",
+      "War rooms with participant synchronization",
+      "Up to 3 Teams destinations per service",
     ],
   },
   {
     id: "escalation",
     name: "Escalation",
-    image: latestDocsHref("assets/escalation-policies.png"),
+    image: "/v2-escalation-policies.png",
     heading: "If they miss it, the next person is paged.",
     description:
-      "Steps with delays. Email, SMS, push, Slack, WhatsApp, or a webhook. No phone calls from OpsKnight itself.",
+      "Steps with delays. Email, SMS, voice paging (Twilio trigger-only), push, Slack, Teams, WhatsApp, or a webhook.",
     notes: [
       "You set the wait before the next step",
-      "SMS is Twilio or AWS SNS",
-      "Teams and Google Chat are outgoing webhook formats, not ChatOps",
+      "SMS via Twilio or AWS SNS; Voice via Twilio",
+      "Incident SLA policies and support-hours conditions",
     ],
   },
   {
     id: "services",
     name: "Services",
-    image: "/service-directory.png",
+    image: "/v2-services.png",
     heading: "What you page for.",
     description:
       "Each service has an escalation policy and the integrations that create incidents. Status for customers is one page you configure — not unlimited separate sites.",
     notes: [
       "Ownership and the policy that pages",
       "Inbound integrations hang off the service",
-      "One public or private status page per install — not unlimited sites per team",
+      "One public or private status page per install (v3)",
     ],
   },
 ];
@@ -100,7 +115,7 @@ export function ProductTour() {
             Screens from a real install.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            Same sequence as the night: list, schedule, Slack, policy, service. Status is one page. Ack from a phone is the site on the home screen — no extra app-store product.
+            Same sequence as the night: list, schedule, Slack & Teams, policy, service. Status is one page. Ack from a phone is the PWA on the home screen — no extra app-store product.
           </p>
         </div>
 
@@ -117,9 +132,11 @@ export function ProductTour() {
                   ? Calendar
                   : tab.id === "slack"
                     ? MessageSquare
-                    : tab.id === "escalation"
-                      ? ShieldCheck
-                      : BarChart3;
+                    : tab.id === "teams"
+                      ? Users2
+                      : tab.id === "escalation"
+                        ? ShieldCheck
+                        : BarChart3;
             const isActive = activeTab === tab.id;
             return (
               <button

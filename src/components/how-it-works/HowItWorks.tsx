@@ -18,13 +18,13 @@ const steps = [
     n: "03",
     icon: Siren,
     title: "Someone is paged",
-    body: "The active rotation gets SMS, email, Slack, WhatsApp, or a push notification. If they miss it, the policy moves on.",
+    body: "The active rotation gets SMS, voice paging, email, Slack, Teams, WhatsApp, or push. If they miss it, the policy moves on.",
   },
   {
     n: "04",
     icon: MessageSquare,
     title: "The team gathers",
-    body: "A Slack channel is opened for that incident. Optional video link. Work stays on one timeline.",
+    body: "A Slack or Microsoft Teams war room is opened for that incident. Optional video link. Work stays on one timeline.",
   },
   {
     n: "05",

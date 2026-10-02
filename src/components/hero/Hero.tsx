@@ -34,10 +34,10 @@ export function Hero() {
             </h1>
 
             <p className="max-w-xl text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              When production breaks, OpsKnight messages whoever is on call, opens a Slack room, and gives customers a status page. Afterward you write what happened. One product. Your machines.
+              When production breaks, OpsKnight messages whoever is on call, opens a Slack or Microsoft Teams war room, and gives customers a status page. Afterward you write what happened. One product. Your machines.
             </p>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-500">
-              Built for teams that already run Postgres and would rather operate a pager than pay per seat. Not a hosted cloud, and not native voice calls.
+              Built for teams that already run Postgres and would rather operate a pager than pay per seat. Not a hosted cloud. Voice paging is trigger-only (Twilio).
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -75,7 +75,7 @@ export function Hero() {
               {[
                 { label: "License", value: BRAND.license },
                 { label: "Parsers", value: BRAND.integrationCountLabel },
-                { label: "Deploy", value: "Compose / Helm" },
+                { label: "Deploy", value: "Compose / Helm / Swarm" },
                 { label: "Hosting", value: "Your VPC" },
               ].map((item) => (
                 <div key={item.label}>

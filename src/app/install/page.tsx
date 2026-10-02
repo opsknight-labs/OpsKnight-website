@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 const TOC_SECTIONS = [
   { id: "prerequisites", title: "Prerequisites & Secrets" },
   { id: "docker-compose", title: "Docker Compose Starter" },
+  { id: "docker-swarm", title: "Docker Swarm (HA)" },
+  { id: "split-runtime", title: "Split Runtime (v2.0)" },
   { id: "kubernetes-helm", title: "Kubernetes (Helm Chart)" },
   { id: "other-topologies", title: "Other Supported Topologies" },
   { id: "hardware-sizing", title: "Hardware Sizing Matrix" },
@@ -31,6 +33,7 @@ const INSTALL_SPECS = [
   { label: "Database", value: "PostgreSQL 14+" },
   { label: "Default Port", value: "3000 (HTTP)" },
   { label: "License", value: BRAND.license },
+  { label: "Runtime", value: "Integrated or Split" },
   { label: "External Telemetry", value: "None (0 beacons)" },
 ];
 
@@ -98,10 +101,54 @@ docker compose up -d`}
                 </p>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("deployment/docker")}
+                    href={latestDocsHref("operate/deploy/compose/integrated")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Docker Compose deployment guide →
+                  </Link>
+                </p>
+              </div>
+
+              <div id="docker-swarm" className="scroll-mt-28 border-t border-slate-200 pt-10">
+                <h2 className="text-xl font-semibold text-[#111827]">Docker Swarm (High-Availability)</h2>
+                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
+                  New in 2.0. Native multi-node Swarm deployment with Raft-encrypted secrets, rolling zero-downtime updates, and direct-database lifecycle management:
+                </p>
+                <CopyBlock
+                  label="swarm"
+                  value={`git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+docker swarm init
+docker stack deploy -c deploy/swarm/docker-stack.integrated.yml opsknight`}
+                />
+                <p className="mt-3">
+                  <Link
+                    href={latestDocsHref("operate/deploy/swarm-operations")}
+                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
+                  >
+                    Docker Swarm operations &amp; secrets guide →
+                  </Link>
+                </p>
+              </div>
+
+              <div id="split-runtime" className="scroll-mt-28 border-t border-slate-200 pt-10">
+                <h2 className="text-xl font-semibold text-[#111827]">Split Production Runtime (v2.0)</h2>
+                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
+                  For high-throughput installations, OpsKnight separates Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector into independently scalable containers:
+                </p>
+                <CopyBlock
+                  label="split-compose"
+                  value={`docker compose \\
+  -f deploy/compose/docker-compose.yml \\
+  -f deploy/compose/docker-compose.split.yml \\
+  up -d`}
+                />
+                <p className="mt-3">
+                  <Link
+                    href={latestDocsHref("operate/deploy/compose/split")}
+                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
+                  >
+                    Split runtime architecture &amp; worker tuning →
                   </Link>
                 </p>
               </div>
@@ -119,7 +166,7 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                 />
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("deployment/helm")}
+                    href={latestDocsHref("operate/deploy/helm-operations")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Helm configuration &amp; values.yaml guide →
@@ -134,8 +181,17 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                     <span className="font-bold text-[#111827]">· Kustomize &amp; GitOps:</span>
                     <span>
                       Declarative base and overlay manifests designed for ArgoCD and Flux pipelines.{" "}
-                      <Link href={latestDocsHref("deployment/kustomize")} className="font-medium text-[#d21a1b] hover:underline">
+                      <Link href={latestDocsHref("operate/deploy/kustomize-operations")} className="font-medium text-[#d21a1b] hover:underline">
                         Kustomize guide
+                      </Link>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-[#111827]">· PgBouncer &amp; External Postgres:</span>
+                    <span>
+                      Connection-pool overlays (`docker-compose.pgbouncer.yml`) for high concurrency.{" "}
+                      <Link href={latestDocsHref("operate/capacity/choose-deployment")} className="font-medium text-[#d21a1b] hover:underline">
+                        Capacity &amp; deployment guide
                       </Link>
                     </span>
                   </li>
@@ -143,17 +199,8 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                     <span className="font-bold text-[#111827]">· Cloud &amp; Serverless Containers:</span>
                     <span>
                       Deploy to AWS ECS / Fargate with RDS PostgreSQL, or GCP Cloud Run with Cloud SQL.{" "}
-                      <Link href={latestDocsHref("deployment/docker")} className="font-medium text-[#d21a1b] hover:underline">
-                        Cloud deployment guide
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Linux Systemd / Bare Metal:</span>
-                    <span>
-                      Run as a native Node 20 LTS daemon service behind an Nginx or Caddy TLS reverse proxy.{" "}
-                      <Link href={latestDocsHref("getting-started/installation")} className="font-medium text-[#d21a1b] hover:underline">
-                        Installation walkthrough
+                      <Link href={latestDocsHref("operate/deploy/compose/integrated")} className="font-medium text-[#d21a1b] hover:underline">
+                        Cloud container deployment
                       </Link>
                     </span>
                   </li>
@@ -180,19 +227,19 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                         <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Starter / Eval</td>
                         <td className="px-4 py-2.5 text-slate-500">&lt; 10k / mo</td>
                         <td className="px-4 py-2.5 text-slate-700">1 vCPU · 1 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Docker Compose ($5 VPS)</td>
+                        <td className="px-4 py-2.5 text-slate-600 font-sans">Integrated Compose ($5 VPS)</td>
                       </tr>
                       <tr className="bg-slate-50/40">
                         <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Team / Growth</td>
                         <td className="px-4 py-2.5 text-slate-500">10k – 100k / mo</td>
                         <td className="px-4 py-2.5 text-slate-700">2 vCPU · 2 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">2x Replicas + Managed DB</td>
+                        <td className="px-4 py-2.5 text-slate-600 font-sans">Split Compose or Docker Swarm</td>
                       </tr>
                       <tr>
                         <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Enterprise scale</td>
                         <td className="px-4 py-2.5 text-slate-500">100k+ / mo</td>
                         <td className="px-4 py-2.5 text-slate-700">4+ vCPU · 4–8 GB</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Kubernetes (HPA) + PgBouncer</td>
+                        <td className="px-4 py-2.5 text-slate-600 font-sans">Helm / Kustomize Split + PgBouncer</td>
                       </tr>
                     </tbody>
                   </table>
@@ -206,8 +253,8 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                   Separately licensed Enterprise modules, support, or hosted offerings may be documented and
                   packaged independently. Check the current release documentation for exact Community feature
                   availability and limits. The canonical installation reference is the{" "}
-                  <Link href={latestDocsHref("getting-started/installation")} className="font-medium text-[#111827] underline">
-                    installation guide
+                  <Link href={latestDocsHref("start/quickstart")} className="font-medium text-[#111827] underline">
+                    quickstart guide
                   </Link>
                   .
                 </p>
@@ -215,7 +262,7 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
 
               <div className="flex flex-wrap items-center gap-4 pt-4">
                 <Link
-                  href={latestDocsHref("getting-started")}
+                  href={latestDocsHref("start/quickstart")}
                   className="inline-flex h-11 items-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
                 >
                   Getting Started Docs
@@ -236,7 +283,7 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                   specs={INSTALL_SPECS}
                   quickCommand="docker compose up -d"
                   quickCommandLabel="Quick Launch"
-                  docLink={latestDocsHref("deployment")}
+                  docLink={latestDocsHref("operate/deploy/compose/integrated")}
                   docLinkLabel="Deployment Docs Hub"
                 />
               </div>

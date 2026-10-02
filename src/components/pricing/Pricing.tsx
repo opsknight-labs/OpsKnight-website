@@ -5,12 +5,13 @@ import { ArrowRight, Check } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 
 const features = [
-  "Self-hosted Community incident response and on-call",
-  "Schedules, paging, Slack rooms, status page, and write-ups",
+  "Self-hosted incident response and on-call under AGPL-3.0-only",
+  "Schedules, paging, Slack & Teams war rooms, status page, postmortems",
   `${BRAND.integrationCountLabel} inbound monitoring parsers`,
-  "Install on a phone from the browser",
-  "Jira Cloud sync",
-  `${BRAND.license} Community source — you host it`,
+  "Voice paging (Twilio trigger-only), SMS, WhatsApp, push",
+  "Split runtime: Web, Scheduler, Worker, and Projector roles",
+  "Jira Cloud sync, SCIM 2.0, Auditor role, compliance ops",
+  `${BRAND.license} — you host it`,
 ];
 
 export function Pricing() {
@@ -25,9 +26,9 @@ export function Pricing() {
             Self-hosted Community. Clear commercial boundaries.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            The v1.5 Community line is {BRAND.license}. Separately licensed Enterprise modules,
+            The v2.0.0 release is {BRAND.license}. Separately licensed Enterprise modules,
             support, or hosted services may be offered independently without changing the rights
-            attached to published Community releases.
+            attached to published releases.
           </p>
         </div>
 

@@ -20,7 +20,9 @@ const ENCRYPTED_FIELDS = [
   { provider: "Jira Cloud", fields: "apiToken, webhookSecret", purpose: "Two-way issue synchronization" },
   { provider: "SSO / OIDC", fields: "clientSecret", purpose: "OAuth2/OIDC client secrets" },
   { provider: "Slack ChatOps", fields: "botToken, signingSecret, clientSecret", purpose: "War room bot & interactive actions" },
-  { provider: "Twilio", fields: "authToken, whatsappAuthToken", purpose: "SMS & WhatsApp paging keys" },
+  { provider: "Microsoft Teams", fields: "botToken, clientSecret, tenantId", purpose: "Teams war room bot & interactive actions" },
+  { provider: "SCIM 2.0", fields: "token (hashed/salted)", purpose: "SCIM directory synchronization token" },
+  { provider: "Twilio", fields: "authToken, whatsappAuthToken", purpose: "SMS, WhatsApp & voice paging keys" },
   { provider: "AWS SNS / SES", fields: "secretAccessKey", purpose: "High-volume delivery credentials" },
   { provider: "Email (Resend / SendGrid / SMTP)", fields: "apiKey, password", purpose: "Incident reports & status updates" },
   { provider: "Web Push", fields: "vapidPrivateKey", purpose: "Browser push notification keys" },
@@ -29,6 +31,8 @@ const ENCRYPTED_FIELDS = [
 const SIGNATURE_PROVIDERS = [
   { name: "GitHub", header: "x-hub-signature-256", algorithm: "HMAC-SHA256", format: "sha256=<hex_digest>" },
   { name: "Slack ChatOps", header: "x-slack-signature", algorithm: "HMAC-SHA256", format: "v0=<hex_digest> (with timestamp)" },
+  { name: "Microsoft Teams", header: "x-ms-client-principal / HMAC", algorithm: "Azure Bot signed payloads", format: "Bot Framework token" },
+  { name: "ManageEngine", header: "x-opsknight-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
   { name: "Sentry", header: "sentry-hook-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
   { name: "Grafana", header: "x-grafana-signature", algorithm: "HMAC-SHA256", format: "<hex_digest>" },
   { name: "GitLab", header: "x-gitlab-token", algorithm: "Constant-time token", format: "<secret_token>" },
@@ -48,7 +52,7 @@ const SECURITY_SPECS = [
   { label: "Master Key", value: "256-bit Hex (Env)" },
   { label: "Ingest Verification", value: "HMAC-SHA256 (Constant-time)" },
   { label: "Anti-Replay Window", value: "300 seconds" },
-  { label: "Identity", value: "OIDC SSO + RBAC" },
+  { label: "Identity", value: "OIDC SSO + SCIM 2.0 + RBAC (incl. Auditor)" },
   { label: "External Telemetry", value: "None (0 beacons)" },
 ];
 
@@ -188,7 +192,7 @@ export default function SecurityPage() {
                 </div>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("security/webhook-verification")}
+                    href={latestDocsHref("operate/security/hardening")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
                     Webhook signature verification docs →
@@ -206,21 +210,24 @@ export default function SecurityPage() {
                 </p>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#4b5563]">
                   <li>
-                    <strong>Workspace Roles</strong>: <code className="font-mono text-xs text-[#111827]">USER</code> (scoped to assigned teams/services), <code className="font-mono text-xs text-[#111827]">RESPONDER</code> (global response), and <code className="font-mono text-xs text-[#111827]">ADMIN</code> (system settings and user governance).
+                    <strong>Workspace Roles</strong>: <code className="font-mono text-xs text-[#111827]">USER</code> (scoped to assigned teams/services), <code className="font-mono text-xs text-[#111827]">RESPONDER</code> (global response), <code className="font-mono text-xs text-[#111827]">AUDITOR</code> (read-oriented compliance &amp; session registry inspection), and <code className="font-mono text-xs text-[#111827]">ADMIN</code> (system settings and user governance).
+                  </li>
+                  <li>
+                    <strong>SCIM 2.0 Provisioning</strong>: Inbound Users &amp; Groups synchronization with bearer token rotation, PATCH operations, and auto-deprovisioning.
                   </li>
                   <li>
                     <strong>Team Roles</strong>: Independent team-level classification (<code className="font-mono text-xs text-[#111827]">MEMBER</code>, <code className="font-mono text-xs text-[#111827]">ADMIN</code>, <code className="font-mono text-xs text-[#111827]">OWNER</code>) with last-owner demotion protection.
                   </li>
                   <li>
-                    <strong>Auto-Provisioning &amp; Allowlisting</strong>: Restrict sign-in to verified corporate email domains.
+                    <strong>Auto-Provisioning &amp; Allowlisting</strong>: Restrict sign-in to verified corporate email domains and map OIDC claims to workspace roles.
                   </li>
                 </ul>
                 <p className="mt-3">
                   <Link
-                    href={latestDocsHref("security/oidc-setup")}
+                    href={latestDocsHref("operate/security/sso-oidc")}
                     className="text-sm font-semibold text-[#d21a1b] hover:underline"
                   >
-                    OIDC SSO configuration guide →
+                    OIDC SSO &amp; SCIM configuration guide →
                   </Link>
                 </p>
               </div>
@@ -262,7 +269,7 @@ export default function SecurityPage() {
                   Deploy OpsKnight
                 </Link>
                 <Link
-                  href={latestDocsHref("security")}
+                  href={latestDocsHref("operate/security/hardening")}
                   className="text-sm font-semibold text-[#d21a1b] hover:underline"
                 >
                   Full security documentation
@@ -279,7 +286,7 @@ export default function SecurityPage() {
                   specs={SECURITY_SPECS}
                   quickCommand="openssl rand -hex 32"
                   quickCommandLabel="Keygen 1-Liner"
-                  docLink={latestDocsHref("security")}
+                  docLink={latestDocsHref("operate/security/hardening")}
                   docLinkLabel="Security Reference Docs"
                 />
               </div>

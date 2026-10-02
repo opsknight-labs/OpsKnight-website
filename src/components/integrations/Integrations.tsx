@@ -7,16 +7,16 @@ import { integrationIcons } from "@/components/icons/IntegrationIcons";
 import { ArrowRight } from "lucide-react";
 
 const logos = [
-  { name: "Datadog", icon: integrationIcons.datadog, href: latestDocsHref("integrations/apm-monitoring/datadog") },
-  { name: "Prometheus", icon: integrationIcons.prometheus, href: latestDocsHref("integrations/metrics-alerting/prometheus") },
-  { name: "Grafana", icon: integrationIcons.grafana, href: latestDocsHref("integrations/apm-monitoring/grafana") },
-  { name: "Sentry", icon: integrationIcons.sentry, href: latestDocsHref("integrations/apm-monitoring/sentry") },
-  { name: "CloudWatch", icon: integrationIcons.cloudwatch, href: latestDocsHref("integrations/cloud/aws-cloudwatch") },
-  { name: "New Relic", icon: integrationIcons.newrelic, href: latestDocsHref("integrations/apm-monitoring/new-relic") },
+  { name: "Datadog", icon: integrationIcons.datadog, href: latestDocsHref("integrations/monitoring/datadog") },
+  { name: "Prometheus", icon: integrationIcons.prometheus, href: latestDocsHref("integrations/monitoring/prometheus") },
+  { name: "Grafana", icon: integrationIcons.grafana, href: latestDocsHref("integrations/monitoring/grafana") },
+  { name: "Microsoft Teams", icon: integrationIcons.teams, href: latestDocsHref("integrations/communication/microsoft-teams") },
   { name: "Slack", icon: integrationIcons.slack, href: latestDocsHref("integrations/communication/slack") },
-  { name: "PagerDuty Events API v2", icon: integrationIcons.pagerduty, href: latestDocsHref("integrations/custom/pagerduty-emulation") },
+  { name: "ManageEngine", icon: integrationIcons.manageengine, href: latestDocsHref("integrations/monitoring/manageengine") },
+  { name: "Sentry", icon: integrationIcons.sentry, href: latestDocsHref("integrations/monitoring/sentry") },
+  { name: "CloudWatch", icon: integrationIcons.cloudwatch, href: latestDocsHref("integrations/cloud/cloudwatch") },
   { name: "Jira Cloud", icon: integrationIcons.jira, href: latestDocsHref("integrations/issue-tracking/jira") },
-  { name: "GitHub", icon: integrationIcons.github, href: latestDocsHref("integrations/ci-cd/github") },
+  { name: "PagerDuty Adapter", icon: integrationIcons.pagerduty, href: latestDocsHref("integrations/webhooks/pagerduty") },
 ];
 
 export function Integrations() {
