@@ -192,9 +192,9 @@ export const FEATURES = [
     icon: "Calendar",
   },
   {
-    title: "Escalations & paging",
-    description: "SMS, email, push, Slack, and WhatsApp on your policies.",
-    icon: "GitBranch",
+    title: "Voice calls & escalations",
+    description: "Automated voice phone calls, SMS, push, Slack, Teams, and WhatsApp on your policies.",
+    icon: "PhoneCall",
   },
   {
     title: "Status pages",

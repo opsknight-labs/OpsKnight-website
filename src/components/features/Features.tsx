@@ -3,11 +3,12 @@ import {
   AlertTriangle,
   BarChart3,
   Calendar,
-  GitBranch,
   Globe,
+  PhoneCall,
   Smartphone,
 } from "lucide-react";
 import { BRAND } from "@/lib/brand";
+import { latestDocsHref } from "@/lib/docs/paths";
 
 const items = [
   {
@@ -24,9 +25,10 @@ const items = [
   },
   {
     n: "03",
-    icon: GitBranch,
-    title: "Escalation and paging",
-    body: "Email, SMS, voice paging (Twilio trigger-only), Slack, Microsoft Teams, WhatsApp, push, or webhooks. If they miss it, the policy moves on.",
+    icon: PhoneCall,
+    title: "Voice calls & paging",
+    body: "Automated phone voice calls with DTMF keypress acknowledgment (press 1 to ack), SMS via Twilio or AWS SNS, push, Slack, Microsoft Teams, and WhatsApp.",
+    href: latestDocsHref("integrations/communication/voice"),
   },
   {
     n: "04",

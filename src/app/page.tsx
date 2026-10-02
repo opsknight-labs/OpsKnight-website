@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { ProductTour } from "@/components/showcase/ProductTour";
+import { VoiceCallingSpotlight } from "@/components/voice/VoiceCallingSpotlight";
 import { Features } from "@/components/features/Features";
 import { InstallMethods } from "@/components/showcase/InstallMethods";
 import { Integrations } from "@/components/integrations/Integrations";
@@ -37,6 +38,7 @@ export default function Home() {
       <Hero />
       <HowItWorks />
       <ProductTour />
+      <VoiceCallingSpotlight />
       <Features />
       <InstallMethods />
       <Integrations />

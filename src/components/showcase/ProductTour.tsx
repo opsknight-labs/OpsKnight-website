@@ -74,14 +74,15 @@ const TOUR_TABS: TourTab[] = [
   },
   {
     id: "escalation",
-    name: "Escalation",
+    name: "Voice & Escalation",
     image: "/v2-escalation-policies.png",
     heading: "If they miss it, the next person is paged.",
     description:
-      "Steps with delays. Email, SMS, voice paging (Twilio trigger-only), push, Slack, Teams, WhatsApp, or a webhook.",
+      "Automated phone voice calls with DTMF keypress acknowledgment (press 1 to ack), SMS via Twilio or AWS SNS, push, Slack, Teams, WhatsApp, email, or a webhook.",
     notes: [
-      "You set the wait before the next step",
-      "SMS via Twilio or AWS SNS; Voice via Twilio",
+      "Automated phone calls with keypress acknowledgment (press 1 to ack)",
+      "You set the wait delay before the next escalation step",
+      "SMS via Twilio or AWS SNS; Voice calls via Twilio",
       "Incident SLA policies and support-hours conditions",
     ],
   },

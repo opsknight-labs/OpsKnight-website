@@ -25,19 +25,20 @@ export function Hero() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14">
           <div>
-            <p className="mb-5 font-mono text-xs font-medium tracking-wide text-slate-500 sm:text-[13px]">
-              {BRAND.name} {BRAND.version} · {BRAND.license} · you run it
-            </p>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-600">
+              <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+              <span>Voice Calls · Teams &amp; Slack War Rooms · {BRAND.name} {BRAND.version}</span>
+            </div>
 
             <h1 className="mb-6 max-w-xl text-3xl font-bold leading-[1.12] tracking-tight text-[#111827] sm:text-5xl lg:text-[3.25rem]">
               The 2am page should live on your servers — not in a SaaS you rent per person.
             </h1>
 
             <p className="max-w-xl text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              When production breaks, OpsKnight messages whoever is on call, opens a Slack or Microsoft Teams war room, and gives customers a status page. Afterward you write what happened. One product. Your machines.
+              When production breaks, OpsKnight places automated voice calls, sends SMS &amp; push alerts to whoever is on call, opens Slack or Microsoft Teams war rooms, and gives customers a live status page. Afterward you write what happened. One product. Your machines.
             </p>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-500">
-              Built for teams that already run Postgres and would rather operate a pager than pay per seat. Not a hosted cloud. Voice paging is trigger-only (Twilio).
+              Built for teams that already run Postgres and would rather operate an incident command center than pay per seat. Direct wholesale Twilio voice &amp; SMS. Zero external phone-home.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -74,9 +75,9 @@ export function Hero() {
             <dl className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {[
                 { label: "License", value: BRAND.license },
-                { label: "Parsers", value: BRAND.integrationCountLabel },
+                { label: "Paging", value: "Voice · SMS · Push" },
+                { label: "Parsers", value: `${BRAND.integrationCountLabel} Ingests` },
                 { label: "Deploy", value: "Compose / Helm / Swarm" },
-                { label: "Hosting", value: "Your VPC" },
               ].map((item) => (
                 <div key={item.label}>
                   <dt className="font-mono text-[10px] uppercase tracking-wide text-slate-400">{item.label}</dt>
