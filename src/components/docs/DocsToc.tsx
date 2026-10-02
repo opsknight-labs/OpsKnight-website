@@ -188,6 +188,7 @@ export function DocsToc({
                   ref={isActive ? activeLinkRef : undefined}
                   href={`#${item.id}`}
                   onClick={(e) => handleClick(e, item.id)}
+                  title={item.text}
                   className={`-ml-px block border-l-2 py-1.5 text-left transition-colors ${
                     isDeepItem
                       ? "pl-7 text-[11px]"
@@ -200,7 +201,7 @@ export function DocsToc({
                       : "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-900"
                   }`}
                 >
-                  <span className="line-clamp-2 leading-snug">{item.text}</span>
+                  <span className="leading-snug break-words">{item.text}</span>
                 </Link>
               </li>
             );

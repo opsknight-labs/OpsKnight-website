@@ -112,8 +112,9 @@ function NavLink({
               ref={isDirectActive ? activeRef : undefined}
               href={item.href}
               onClick={() => setIsOpen(true)}
+              title={item.title}
               className={cn(
-                "flex-1 truncate px-2 py-1.5 text-[12px] font-medium transition-colors text-left",
+                "flex-1 px-2 py-1.5 text-[12.5px] font-medium transition-colors text-left leading-snug break-words",
                 isDirectActive
                   ? "text-white font-bold"
                   : containsActive
@@ -124,7 +125,10 @@ function NavLink({
               {item.title}
             </Link>
           ) : (
-            <span className="flex-1 truncate px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-slate-500">
+            <span
+              title={item.title}
+              className="flex-1 px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-slate-500 leading-snug break-words"
+            >
               {item.title}
             </span>
           )}
@@ -162,7 +166,9 @@ function NavLink({
 
   if (!item.href) {
     return (
-      <span className="block px-2 py-1.5 text-[13px] text-slate-500">{item.title}</span>
+      <span className="block px-2 py-1.5 text-[12.5px] text-slate-500 leading-snug break-words">
+        {item.title}
+      </span>
     );
   }
 
@@ -171,8 +177,9 @@ function NavLink({
     <Link
       ref={active ? activeRef : undefined}
       href={item.href}
+      title={item.title}
       className={cn(
-        "block rounded-md border-l-2 px-2 py-1.5 text-[13px] leading-snug transition-colors",
+        "block rounded-md border-l-2 px-2 py-1.5 text-[12.5px] leading-snug transition-colors break-words",
         nested ? "ml-0" : "ml-1",
         active
           ? "border-[#d21a1b] bg-white/10 text-white font-medium"
@@ -218,6 +225,7 @@ function CollapsibleSection({
             ref={isDirectActive ? activeRef : undefined}
             href={item.href}
             onClick={() => setIsOpen(true)}
+            title={item.title}
             className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left"
           >
             <Icon
@@ -232,7 +240,7 @@ function CollapsibleSection({
             />
             <span
               className={cn(
-                "min-w-0 flex-1 truncate text-[12px] font-semibold tracking-wide transition-colors",
+                "min-w-0 flex-1 text-[12.5px] font-semibold tracking-wide transition-colors leading-snug break-words",
                 isDirectActive
                   ? "text-white font-bold"
                   : containsActive
@@ -244,7 +252,7 @@ function CollapsibleSection({
             </span>
           </Link>
         ) : (
-          <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left">
+          <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left" title={item.title}>
             <Icon
               className={cn(
                 "h-4 w-4 shrink-0",
@@ -253,7 +261,7 @@ function CollapsibleSection({
             />
             <span
               className={cn(
-                "min-w-0 flex-1 truncate text-[12px] font-semibold tracking-wide",
+                "min-w-0 flex-1 text-[12.5px] font-semibold tracking-wide leading-snug break-words",
                 containsActive ? "text-white" : "text-slate-300"
               )}
             >

@@ -101,7 +101,7 @@ export default async function DocsPage({
   ];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_16rem]">
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:grid-cols-[minmax(0,1fr)_18.5rem]">
       <article className="space-y-6 min-w-0">
         {/* Article Header */}
         <div className="overflow-hidden rounded-[14px] border border-slate-200 bg-white">
