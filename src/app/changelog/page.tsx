@@ -4,7 +4,7 @@ import { ChangelogView } from "@/components/changelog/ChangelogView";
 export const metadata: Metadata = {
   title: "Changelog",
   description:
-    "What shipped in each OpsKnight release — new integrations, Slack rooms, security, and tagged GHCR images.",
+    "What shipped in each OpsKnight release — new integrations, Slack & Teams war rooms, voice paging, security, and tagged GHCR images.",
 };
 
 export default function ChangelogPage() {

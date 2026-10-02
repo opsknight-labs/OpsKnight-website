@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { 
   Headphones, 
   Bell, 
@@ -47,19 +48,19 @@ export function SlackChatOps() {
   };
 
   return (
-    <section id="chatops" className="py-24 bg-slate-950 text-slate-200 border-t border-white/5 relative overflow-hidden font-sans">
+    <section id="chatops" className="py-24 bg-[#0f172a] text-slate-200 border-t border-white/5 relative overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold mb-4">
-            Native Slack Incident War Rooms
+            Slack & Microsoft Teams War Rooms
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-            Automated Slack War Rooms & ChatOps.
+            Automated Slack & Teams War Rooms.
           </h2>
           <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Every critical alert automatically spins up a dedicated Slack channel, invites on-call responders, attaches WebRTC video bridges, and syncs 1-click triage actions bi-directionally.
+            Every critical alert automatically spins up a dedicated channel — in Slack or Microsoft Teams — invites on-call responders, attaches video bridges, sends Adaptive Cards with 1-click triage actions, and syncs status bi-directionally.
           </p>
         </div>
 
@@ -347,6 +348,39 @@ export function SlackChatOps() {
             </div>
           </div>
 
+        </div>
+
+        {/* Microsoft Teams Showcase Panel */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-indigo-400">New in 2.0.0</span>
+              <h3 className="text-xl font-bold text-white mt-1">Native Microsoft Teams ChatOps</h3>
+            </div>
+            <span className="text-xs text-slate-400 font-mono">Entra App + Azure Bot</span>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <div className="rounded-xl border border-white/10 bg-[#1e293b] p-3 overflow-hidden shadow-xl">
+              <p className="text-[11px] font-mono text-slate-400 mb-2 font-medium">Adaptive Card · Interactive Actions</p>
+              <Image
+                src="/v2-teams-incident-card.png"
+                alt="OpsKnight Microsoft Teams incident Adaptive Card with triage actions"
+                width={902}
+                height={866}
+                className="w-full h-auto rounded-lg border border-white/5"
+              />
+            </div>
+            <div className="rounded-xl border border-white/10 bg-[#1e293b] p-3 overflow-hidden shadow-xl">
+              <p className="text-[11px] font-mono text-slate-400 mb-2 font-medium">War Room Channel · Member Sync</p>
+              <Image
+                src="/v2-teams-chatops-war-room.png"
+                alt="OpsKnight Microsoft Teams dedicated incident war room"
+                width={2164}
+                height={1462}
+                className="w-full h-auto rounded-lg border border-white/5"
+              />
+            </div>
+          </div>
         </div>
 
       </div>

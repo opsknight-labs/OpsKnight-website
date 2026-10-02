@@ -1,4 +1,4 @@
-import { Radio, Siren, MessageSquare, FileCheck, Layers } from "lucide-react";
+import { Radio, PhoneCall, MessageSquare, FileCheck, Layers } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 
 const steps = [
@@ -16,15 +16,15 @@ const steps = [
   },
   {
     n: "03",
-    icon: Siren,
-    title: "Someone is paged",
-    body: "The active rotation gets SMS, email, Slack, WhatsApp, or a push notification. If they miss it, the policy moves on.",
+    icon: PhoneCall,
+    title: "Voice call & paging",
+    body: "The active rotation gets direct automated voice phone calls with keypress ack, plus SMS, push, Slack, Teams, and WhatsApp.",
   },
   {
     n: "04",
     icon: MessageSquare,
     title: "The team gathers",
-    body: "A Slack channel is opened for that incident. Optional video link. Work stays on one timeline.",
+    body: "A Slack or Microsoft Teams war room is opened for that incident. Optional video link. Work stays on one timeline.",
   },
   {
     n: "05",

@@ -70,6 +70,20 @@ const TASK_CARDS = [
   },
 ];
 
+const V2_TASK_CARDS = [
+  { title: "Install OpsKnight", description: "Start with Docker Compose or prepare a production deployment.", slug: ["start", "quickstart"] },
+  { title: "Configure on-call", description: "Create schedules, rotations, and responder coverage.", slug: ["start", "configure-on-call"] },
+  { title: "Configure escalation", description: "Route an unacknowledged incident through responder tiers.", slug: ["guides", "escalation", "configure-policy"] },
+  { title: "Receive alerts", description: "Connect monitoring, cloud, uptime, and webhook sources.", slug: ["integrations"] },
+  { title: "Connect Slack", description: "Authorize Slack, choose service channels, and use incident actions.", slug: ["integrations", "communication", "slack"] },
+  { title: "Configure Microsoft Teams", description: "Connect the bot, destinations, Adaptive Cards, and war rooms.", slug: ["integrations", "communication", "microsoft-teams"] },
+  { title: "Connect Jira", description: "Link Jira, map services, and configure synchronized webhooks.", slug: ["integrations", "issue-tracking", "jira"] },
+  { title: "Use the Incident API", description: "Authenticate, create, read, and update incidents programmatically.", slug: ["reference", "api", "incidents"] },
+  { title: "Deploy production HA", description: "Choose Kubernetes or split runtime roles and scale safely.", slug: ["operate", "deploy", "split-runtime"] },
+  { title: "Fix notification delivery", description: "Trace intent creation, queues, provider attempts, retries, and failures.", slug: ["troubleshooting", "notifications", "not-delivered"] },
+  { title: "Upgrade OpsKnight", description: "Back up, migrate, validate, and roll back safely.", slug: ["operate", "upgrades", "upgrade"] },
+];
+
 export default async function DocsIndexPage({
   params,
 }: {
@@ -80,7 +94,10 @@ export default async function DocsIndexPage({
   if (!doc) notFound();
   const sidebar = getSidebar(version);
 
-  const cards = TASK_CARDS.filter((card) => getDocFilePath(version, card.slug));
+  const isV2 = version.startsWith("v2");
+  const cards = (isV2 ? V2_TASK_CARDS : TASK_CARDS).filter((card) => getDocFilePath(version, card.slug));
+  const installHref = isV2 ? "start/production-install" : "getting-started/installation";
+  const apiHref = isV2 ? "reference/api" : "api";
   const editUrl = `${BRAND.links.github}/blob/main/docs/${version}/README.md`;
 
   return (
@@ -99,14 +116,14 @@ export default async function DocsIndexPage({
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            href={`/docs/${version}/getting-started/installation/`}
+            href={`/docs/${version}/${installHref}/`}
             className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-[#d21a1b] px-5 text-sm font-semibold text-white hover:bg-[#b41516]"
           >
             <Rocket className="h-4 w-4" />
             Install
           </Link>
           <Link
-            href={`/docs/${version}/api/`}
+            href={`/docs/${version}/${apiHref}/`}
             className="inline-flex h-11 items-center gap-2 rounded-[12px] border border-slate-200 bg-white px-5 text-sm font-medium text-slate-800 hover:bg-slate-50"
           >
             <Code2 className="h-4 w-4" />
@@ -153,7 +170,7 @@ export default async function DocsIndexPage({
         </div>
       </section>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:grid-cols-[minmax(0,1fr)_18.5rem]">
         <article className="min-w-0 rounded-[14px] border border-slate-200 bg-white p-8">
           <h2 className="mb-6 border-b border-slate-200 pb-4 text-xl font-semibold text-[#111827]">
             This version
@@ -161,7 +178,10 @@ export default async function DocsIndexPage({
           <DocsArticleBody html={doc.html} />
         </article>
         <aside className="hidden lg:block">
-          <div className="sticky top-20 pl-2">
+          <div
+            className="sticky top-20 pl-2 max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar"
+            data-toc-container
+          >
             <DocsToc headings={doc.headings} editUrl={editUrl} />
           </div>
         </aside>

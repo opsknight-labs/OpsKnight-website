@@ -32,9 +32,60 @@ export const CHANGE_KIND_LABEL: Record<ChangeKind, string> = {
 
 export const releases: ReleaseItem[] = [
   {
+    version: "v2.0.0",
+    slug: "v2.0.0",
+    badge: "Latest",
+    date: "October 2, 2026",
+    summary:
+      "A major milestone release introducing split production runtimes, Microsoft Teams ChatOps, Twilio voice paging, incident response policy engine, SCIM 2.0 provisioning, Docker Swarm HA, ManageEngine ingestion, and a durable notification delivery control plane.",
+    dockerTag: "ghcr.io/opsknight-labs/opsknight:2.0.0",
+    githubReleaseUrl:
+      "https://github.com/opsknight-labs/OpsKnight/releases/tag/v2.0.0",
+    categories: [
+      {
+        type: "added",
+        title: "Runtime & High Availability",
+        items: [
+          "Split production runtime: independently scalable Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector processes.",
+          "Docker Swarm deployment stacks (integrated and split) with Raft secrets, zero-downtime topology switching, and direct-database lifecycle.",
+          "PgBouncer pooling overlays and certified sizing profiles (Small, Medium, Large, Storm).",
+        ],
+      },
+      {
+        type: "added",
+        title: "ChatOps & Paging",
+        items: [
+          "Native Microsoft Teams ChatOps: Entra/Azure Bot integration, Adaptive Cards, incident war rooms, identity linking, and up to 3 Teams destinations per service.",
+          "Twilio voice paging (VOICE channel) for triggered-incident escalation with responder acknowledgement input and signed webhook callbacks.",
+          "Up to 3 Slack channel destinations per service with improved war room participant sync.",
+        ],
+      },
+      {
+        type: "added",
+        title: "Enterprise Governance & Delivery Control",
+        items: [
+          "Incident response policy engine: versioned SLA policies, classification, and support-hours rules at workspace and service scope.",
+          "SCIM 2.0 provisioning: Users, Groups, discovery endpoints, team membership, and bearer token rotation.",
+          "Auditor role with session registry (browser, OS, device, activity tracking, and instant revoke controls).",
+          "Durable notification delivery control plane: logical intents, traffic classes, admission/defer behavior, and operator evidence ledgers.",
+          "Native ManageEngine OpManager webhook parser joining the certified 28-contract inbound catalog.",
+        ],
+      },
+      {
+        type: "changed",
+        title: "Core Platform Rebuilds",
+        items: [
+          "Status Page V3 with custom themes, announcements, subscriber verify/unsubscribe, API tokens, and snapshot exports.",
+          "Responder-grade installable mobile PWA with per-device Web Push registration and iOS recovery flows.",
+          "Custom dashboard templates, configurable widgets, live refresh, PDF export, and fullscreen NOC mode.",
+          "First stable release distributed under AGPL-3.0-only; historical v1.4.0 and earlier artifacts retain Apache-2.0.",
+        ],
+      },
+    ],
+  },
+  {
     version: "v1.4.0",
     slug: "v1.4.0",
-    badge: "Latest",
     date: "August 23, 2026",
     summary:
       "A safer release foundation with reliable delayed paging, an administrator Health Center, hardened upgrades, complete versioned docs, and multi-architecture stable images.",

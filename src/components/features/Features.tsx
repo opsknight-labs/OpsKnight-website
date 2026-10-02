@@ -3,11 +3,12 @@ import {
   AlertTriangle,
   BarChart3,
   Calendar,
-  GitBranch,
   Globe,
+  PhoneCall,
   Smartphone,
 } from "lucide-react";
 import { BRAND } from "@/lib/brand";
+import { latestDocsHref } from "@/lib/docs/paths";
 
 const items = [
   {
@@ -24,9 +25,10 @@ const items = [
   },
   {
     n: "03",
-    icon: GitBranch,
-    title: "Escalation and paging",
-    body: "Email, SMS (Twilio or SNS), Slack, WhatsApp, push, or a webhook. If they miss it, the policy moves on. No native voice calls.",
+    icon: PhoneCall,
+    title: "Voice calls & paging",
+    body: "Automated phone voice calls with DTMF keypress acknowledgment (press 1 to ack), SMS via Twilio or AWS SNS, push, Slack, Microsoft Teams, and WhatsApp.",
+    href: latestDocsHref("integrations/communication/voice"),
   },
   {
     n: "04",
@@ -38,14 +40,14 @@ const items = [
   {
     n: "05",
     icon: BarChart3,
-    title: "Analytics and SLA",
-    body: "MTTA, MTTR, and compliance on your Postgres. You read the numbers; OpsKnight does not invent a postmortem.",
+    title: "SLA engine & analytics",
+    body: "Versioned SLA policies, support-hours rules, MTTA, and MTTR on your Postgres. You read the numbers; OpsKnight does not invent a postmortem.",
   },
   {
     n: "06",
     icon: Smartphone,
     title: "Ack from a phone",
-    body: "Install the site on the home screen. Same login as desktop. Not a separate app-store product.",
+    body: "Installable responder PWA with Web Push and per-device tokens. Same login as desktop. Not a separate app-store product.",
   },
 ];
 

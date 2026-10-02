@@ -30,10 +30,10 @@ const STATIC_QUICK_LINKS: SearchItem[] = [
   { title: "PagerDuty Drop-in Ingest Adapter", href: "/compare/pagerduty", category: "Compare", keywords: "events api v2 drop in migration alertmanager" },
   { title: "Opsgenie Sunset Migration Guide", href: "/compare/opsgenie", category: "Compare", keywords: "atlassian opsgenie deprecation escalation routes" },
   { title: "Grafana OnCall OSS Migration Guide", href: "/compare/grafana-oncall", category: "Compare", keywords: "grafana labs archived contact points" },
-  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v1.5 v1.4 updates release notes" },
+  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v2.0.0 v1.4 updates release notes" },
   { title: "Brand Assets & Guidelines", href: "/brand", category: "Resources", keywords: "logos icons colors typography svg png" },
   { title: "Use Cases & Architecture", href: "/use-cases", category: "Product", keywords: "on-prem enterprise self hosted privacy" },
-  { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license agpl-3.0-only community enterprise v1.5" },
+  { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license agpl-3.0-only community enterprise v2.0.0" },
   { title: "Community & Discussions", href: "/contact", category: "Company", keywords: "github issues questions discord" },
 ];
 
@@ -82,7 +82,7 @@ export function GlobalCommandPalette() {
   useEffect(() => {
     const fetchDocIndex = async () => {
       try {
-        const res = await fetch(`/api/docs/v1.4/search`);
+        const res = await fetch(`/api/docs/${BRAND.releaseLabel}/search`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.results)) {

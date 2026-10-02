@@ -1,41 +1,122 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ListFilter } from "lucide-react";
 import type { TocItem } from "@/components/docs/DocsToc";
 
 export function DocsMobileToc({ headings }: { headings: TocItem[] }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeText, setActiveText] = useState<string>("");
+  const [activeText, setActiveText] = useState<string>(headings[0]?.text || "");
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Manual wheel/touch event immediately cancels click-scrolling lock
+  useEffect(() => {
+    const handleManualScroll = () => {
+      if (isClickScrollingRef.current) {
+        isClickScrollingRef.current = false;
+        if (clickTimeoutRef.current) {
+          clearTimeout(clickTimeoutRef.current);
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleManualScroll, { passive: true });
+    window.addEventListener("touchstart", handleManualScroll, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", handleManualScroll);
+      window.removeEventListener("touchstart", handleManualScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (!headings.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const found = headings.find((h) => h.id === entry.target.id);
-            if (found) setActiveText(found.text);
-          }
-        });
-      },
-      { rootMargin: "-90px 0px -75% 0px", threshold: 0 }
-    );
-    headings.forEach((heading) => {
-      const element = document.getElementById(heading.id);
-      if (element) observer.observe(element);
-    });
-    return () => observer.disconnect();
+
+    let ticking = false;
+
+    const updateActiveHeading = () => {
+      if (isClickScrollingRef.current) {
+        ticking = false;
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (scrollY + viewportHeight >= docHeight - 60) {
+        setActiveText(headings[headings.length - 1].text);
+        ticking = false;
+        return;
+      }
+
+      const firstEl = document.getElementById(headings[0].id);
+      if (firstEl && scrollY < firstEl.offsetTop - 120) {
+        setActiveText(headings[0].text);
+        ticking = false;
+        return;
+      }
+
+      const targetOffset = 110;
+      let currentText = headings[0].text;
+
+      for (let i = 0; i < headings.length; i++) {
+        const el = document.getElementById(headings[i].id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= targetOffset) {
+          currentText = headings[i].text;
+        } else {
+          break;
+        }
+      }
+
+      setActiveText(currentText);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveHeading);
+        ticking = true;
+      }
+    };
+
+    updateActiveHeading();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
   }, [headings]);
 
   const handleSelect = (id: string) => {
     setIsOpen(false);
     const element = document.getElementById(id);
     if (!element) return;
+
+    const found = headings.find((h) => h.id === id);
+    if (found) {
+      setActiveText(found.text);
+    }
+    isClickScrollingRef.current = true;
+
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+
     const offsetPosition =
       element.getBoundingClientRect().top + window.scrollY - 90;
-    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    window.scrollTo({ top: Math.max(0, offsetPosition), behavior: "smooth" });
     window.history.pushState(null, "", `#${id}`);
+
+    clickTimeoutRef.current = setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 1000);
   };
 
   if (!headings.length) return null;

@@ -40,7 +40,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'datadog',
     desc: 'Sync monitor alerts, metric anomalies, and synthesized events from Datadog monitors.',
-    docPath: latestDocsHref('integrations/apm-monitoring/datadog'),
+    docPath: latestDocsHref('integrations/monitoring/datadog'),
     protocol: 'HMAC-SHA256 Webhook',
     webhookSlug: 'datadog',
     samplePayload: {
@@ -52,12 +52,29 @@ const allIntegrations: IntegrationItem[] = [
     }
   },
   {
+    id: 'manageengine',
+    name: 'ManageEngine OpManager',
+    category: 'APM & Observability',
+    iconKey: 'manageengine',
+    desc: 'Native inbound parser for ManageEngine OpManager alerts and alarms with severity mapping and automatic recovery.',
+    docPath: latestDocsHref('integrations/monitoring/manageengine'),
+    protocol: 'HMAC Webhook',
+    webhookSlug: 'manageengine',
+    samplePayload: {
+      alarm_id: 'ALARM-10824',
+      entity: 'Server-DB-Primary',
+      severity: 'CRITICAL',
+      message: 'Disk utilization exceeded 95% on /dev/sda1',
+      timestamp: '2026-10-02T12:00:00Z'
+    }
+  },
+  {
     id: 'newrelic',
     name: 'New Relic',
     category: 'APM & Observability',
     iconKey: 'newrelic',
     desc: 'Route New Relic APM policy violations, NRQL condition alerts, and Golden Signal breaches.',
-    docPath: latestDocsHref('integrations/apm-monitoring/new-relic'),
+    docPath: latestDocsHref('integrations/monitoring/newrelic'),
     protocol: 'JSON Webhook',
     webhookSlug: 'newrelic',
     samplePayload: {
@@ -73,7 +90,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'dynatrace',
     desc: 'Ingest Davis AI root cause notifications and multi-component failure clusters.',
-    docPath: latestDocsHref('integrations/apm-monitoring/dynatrace'),
+    docPath: latestDocsHref('integrations/monitoring/dynatrace'),
     protocol: 'REST Webhook',
     webhookSlug: 'dynatrace',
     samplePayload: {
@@ -89,7 +106,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'appdynamics',
     desc: 'Forward business transaction health violations and infrastructure event triggers.',
-    docPath: latestDocsHref('integrations/apm-monitoring/appdynamics'),
+    docPath: latestDocsHref('integrations/monitoring/appdynamics'),
     protocol: 'HTTP Post',
     webhookSlug: 'appdynamics',
     samplePayload: {
@@ -104,7 +121,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'honeycomb',
     desc: 'Trigger high-urgency alerts from Honeycomb BubbleUp triggers and distributed SLO burn rates.',
-    docPath: latestDocsHref('integrations/apm-monitoring/honeycomb'),
+    docPath: latestDocsHref('integrations/monitoring/honeycomb'),
     protocol: 'JSON Trigger',
     webhookSlug: 'honeycomb',
     samplePayload: {
@@ -120,7 +137,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'sentry',
     desc: 'Create deduplicated incidents from uncaught application exceptions and performance transactions.',
-    docPath: latestDocsHref('integrations/apm-monitoring/sentry'),
+    docPath: latestDocsHref('integrations/monitoring/sentry'),
     protocol: 'Signed Webhook',
     webhookSlug: 'sentry',
     samplePayload: {
@@ -136,7 +153,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'APM & Observability',
     iconKey: 'splunk',
     desc: 'Real-time ingestion for Splunk Infrastructure Monitoring detector alerts and incident bridges.',
-    docPath: latestDocsHref('integrations/apm-monitoring/splunk-observability'),
+    docPath: latestDocsHref('integrations/monitoring/splunk-observability'),
     protocol: 'Detector Webhook',
     webhookSlug: 'splunk',
     samplePayload: {
@@ -153,7 +170,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Metrics & Daemons',
     iconKey: 'prometheus',
     desc: 'Native Alertmanager webhook receiver with deterministic SHA-256 fingerprint deduplication.',
-    docPath: latestDocsHref('integrations/metrics-alerting/prometheus'),
+    docPath: latestDocsHref('integrations/monitoring/prometheus'),
     protocol: 'Native Alertmanager',
     webhookSlug: 'prometheus',
     samplePayload: {
@@ -174,7 +191,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Metrics & Daemons',
     iconKey: 'grafana',
     desc: 'Ingest Grafana unified alerting rules and contact point webhooks in real time.',
-    docPath: latestDocsHref('integrations/apm-monitoring/grafana'),
+    docPath: latestDocsHref('integrations/monitoring/grafana'),
     protocol: 'Contact Point',
     webhookSlug: 'grafana',
     samplePayload: {
@@ -190,7 +207,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Metrics & Daemons',
     iconKey: 'zabbix',
     desc: 'Enterprise-grade Zabbix media type webhook with EVENT.ID deduplication & recovery sync.',
-    docPath: latestDocsHref('integrations/metrics-alerting/zabbix'),
+    docPath: latestDocsHref('integrations/monitoring/zabbix'),
     protocol: 'Media Type Webhook',
     webhookSlug: 'zabbix',
     samplePayload: {
@@ -207,7 +224,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Metrics & Daemons',
     iconKey: 'nagios',
     desc: 'Connect host & service state changes, notification macros, and scheduled downtime.',
-    docPath: latestDocsHref('integrations/metrics-alerting/nagios'),
+    docPath: latestDocsHref('integrations/monitoring/nagios'),
     protocol: 'Notification Macro',
     webhookSlug: 'nagios',
     samplePayload: {
@@ -224,7 +241,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Metrics & Daemons',
     iconKey: 'icinga',
     desc: 'Native notification command scripts for Icinga 2 check results, state changes, and recovery events.',
-    docPath: latestDocsHref('integrations/metrics-alerting/icinga'),
+    docPath: latestDocsHref('integrations/monitoring/icinga'),
     protocol: 'Notification Pipe',
     webhookSlug: 'icinga',
     samplePayload: {
@@ -242,7 +259,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Cloud & Infrastructure',
     iconKey: 'cloudwatch',
     desc: 'Connect AWS CloudWatch composite alarms, SNS notifications, and EventBridge events.',
-    docPath: latestDocsHref('integrations/cloud/aws-cloudwatch'),
+    docPath: latestDocsHref('integrations/cloud/cloudwatch'),
     protocol: 'AWS SNS / HTTPS',
     webhookSlug: 'aws-cloudwatch',
     samplePayload: {
@@ -258,7 +275,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'Cloud & Infrastructure',
     iconKey: 'azure',
     desc: 'Ingest Azure Monitor Action Groups, Log Analytics alerts, and Application Insights signals.',
-    docPath: latestDocsHref('integrations/cloud/azure-monitor'),
+    docPath: latestDocsHref('integrations/cloud/azure'),
     protocol: 'Azure Action Group',
     webhookSlug: 'azure-monitor',
     samplePayload: {
@@ -298,7 +315,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'CI/CD & Deployments',
     iconKey: 'github',
     desc: 'Automate incident triggering and deployment rollback alerts on workflow failures.',
-    docPath: latestDocsHref('integrations/ci-cd/github'),
+    docPath: latestDocsHref('integrations/webhooks/github'),
     protocol: 'GitHub Webhook',
     webhookSlug: 'github-actions',
     samplePayload: {
@@ -317,7 +334,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'CI/CD & Deployments',
     iconKey: 'gitlab',
     desc: 'Track pipeline execution failures, runner downtime, and automatic incident resolution on retry success.',
-    docPath: latestDocsHref('integrations/ci-cd/gitlab'),
+    docPath: latestDocsHref('integrations/webhooks/gitlab'),
     protocol: 'GitLab Pipeline Hook',
     webhookSlug: 'gitlab-ci',
     samplePayload: {
@@ -336,7 +353,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'CI/CD & Deployments',
     iconKey: 'bitbucket',
     desc: 'Catch build breaks and automated deployment pipeline failures with zero latency.',
-    docPath: latestDocsHref('integrations/ci-cd/bitbucket'),
+    docPath: latestDocsHref('integrations/webhooks/bitbucket'),
     protocol: 'Bitbucket Webhook',
     webhookSlug: 'bitbucket-pipelines',
     samplePayload: {
@@ -351,7 +368,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'CI/CD & Deployments',
     iconKey: 'vercel',
     desc: 'Alert immediately on production deployment build failures and edge function crashes.',
-    docPath: latestDocsHref('integrations/ci-cd/vercel'),
+    docPath: latestDocsHref('integrations/webhooks/vercel'),
     protocol: 'Vercel Deployment Webhook',
     webhookSlug: 'vercel',
     samplePayload: {
@@ -439,7 +456,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'ChatOps & Collaboration',
     iconKey: 'slack',
     desc: 'Dedicated war room auto-provisioning, auto-invited on-call responders, interactive action buttons, and slash commands.',
-    docPath: latestDocsHref('integrations/communication/slack-chatops'),
+    docPath: latestDocsHref('integrations/communication/slack'),
     protocol: 'Two-Way ChatOps Bot',
     webhookSlug: 'slack-events',
     samplePayload: {
@@ -473,7 +490,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'ChatOps & Collaboration',
     iconKey: 'whatsapp',
     desc: 'High-priority SMS & WhatsApp pager alerts for urgent Sev-0/Sev-1 escalations with ack links.',
-    docPath: latestDocsHref('administration/notifications'),
+    docPath: latestDocsHref('reference/notifications/providers'),
     protocol: 'Multi-Channel Pager',
     webhookSlug: 'whatsapp-pager',
     samplePayload: {
@@ -488,7 +505,7 @@ const allIntegrations: IntegrationItem[] = [
     category: 'ChatOps & Collaboration',
     iconKey: 'pagerduty',
     desc: 'Ingest adapter for Events API v2 payloads. Change the destination URL. Not a PagerDuty product and not a guarantee of every vendor integration.',
-    docPath: latestDocsHref('integrations/custom/pagerduty-emulation'),
+    docPath: latestDocsHref('integrations/webhooks/pagerduty'),
     protocol: 'Events API v2 ingest',
     webhookSlug: 'pagerduty-v2',
     samplePayload: {
@@ -499,6 +516,41 @@ const allIntegrations: IntegrationItem[] = [
         severity: 'critical',
         source: 'prod-k8s'
       }
+    }
+  },
+  {
+    id: 'teams',
+    name: 'Microsoft Teams ChatOps',
+    category: 'ChatOps & Collaboration',
+    iconKey: 'teams',
+    desc: 'Native Teams app with Entra ID authentication, Azure Bot service, incident Adaptive Cards, and dedicated war room channels.',
+    docPath: latestDocsHref('integrations/communication/microsoft-teams'),
+    protocol: 'Entra App + Azure Bot',
+    webhookSlug: 'msteams-bot',
+    samplePayload: {
+      type: 'message',
+      text: 'Incident INC-8492 triggered: High memory consumption on order-service',
+      channelData: {
+        teamsChannelId: '19:meeting_chat@thread.v2',
+        serviceId: 'srv-prod-orders'
+      }
+    }
+  },
+  {
+    id: 'twilio-voice',
+    name: 'Twilio Voice Paging',
+    category: 'ChatOps & Collaboration',
+    iconKey: 'voice',
+    desc: 'Triggered-incident voice phone calls with responder acknowledgment input (press 1 to ack) and signed callbacks.',
+    docPath: latestDocsHref('integrations/communication/voice'),
+    protocol: 'Voice Call / Callback Webhook',
+    webhookSlug: 'twilio-voice',
+    samplePayload: {
+      CallSid: 'CA1234567890abcdef',
+      From: '+15550199',
+      To: '+15550100',
+      Digits: '1',
+      CallStatus: 'completed'
     }
   }
 ];
@@ -581,7 +633,7 @@ export default function IntegrationsGrid() {
         </div>
 
         <Link
-          href={latestDocsHref("integrations/custom/pagerduty-emulation")}
+          href={latestDocsHref("integrations/webhooks/pagerduty")}
           className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d21a1b] hover:bg-[#b41516] text-white text-xs font-bold transition-all shadow-md shadow-red-700/20"
         >
           Events API v2 setup
@@ -598,7 +650,7 @@ export default function IntegrationsGrid() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search ${BRAND.integrationCountLabel} integrations by name, APM, cloud, or protocol…`}
+            placeholder={`Search ${allIntegrations.length} integrations by name, APM, cloud, or protocol…`}
             className="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#d21a1b] shadow-sm"
           />
           {searchQuery && (
@@ -737,7 +789,7 @@ export default function IntegrationsGrid() {
                       <Code2 className="w-3.5 h-3.5 text-[#d21a1b]" />
                       Ingestion Endpoint
                     </label>
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#020617] border border-slate-800 font-mono text-xs text-slate-200">
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#0f172a] border border-slate-800 font-mono text-xs text-slate-200">
                       <span className="truncate pr-2 text-slate-300 text-[11px]">
                         /api/webhooks/{selectedIntegration.webhookSlug}
                       </span>
@@ -758,7 +810,7 @@ export default function IntegrationsGrid() {
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                       Security &amp; Ingestion Headers
                     </label>
-                    <div className="p-3 rounded-xl bg-[#020617] border border-slate-800 text-[11px] font-mono space-y-1.5 text-slate-300">
+                    <div className="p-3 rounded-xl bg-[#0f172a] border border-slate-800 text-[11px] font-mono space-y-1.5 text-slate-300">
                       <div className="flex justify-between">
                         <span className="text-slate-500">Content-Type:</span>
                         <span className="text-slate-300">application/json</span>
@@ -788,7 +840,7 @@ export default function IntegrationsGrid() {
               </div>
 
               {/* Right Column: Interactive Code & Payload Viewer */}
-              <div className="lg:col-span-7 p-6 space-y-3 bg-[#020617] flex flex-col justify-between">
+              <div className="lg:col-span-7 p-6 space-y-3 bg-[#0f172a] flex flex-col justify-between">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900/90 p-0.5 font-mono text-xs">

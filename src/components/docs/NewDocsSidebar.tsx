@@ -9,6 +9,7 @@ import {
   ChevronDown,
   Code2,
   ExternalLink,
+  HelpCircle,
   Lightbulb,
   Plug,
   Rocket,
@@ -31,22 +32,34 @@ import {
 import { SidebarItem } from "@/lib/docs/sidebar";
 import { DocsVersionSwitcher } from "@/components/docs/DocsVersionSwitcher";
 import { DocsSearch } from "@/components/docs/DocsSearch";
-import { pathsMatch } from "@/lib/docs/paths";
+import { pathsMatch, pathIsAncestor } from "@/lib/docs/paths";
 import { cn } from "@/lib/utils";
 import { BRAND } from "@/lib/brand";
 import { BrandLockup } from "@/components/brand/BrandLockup";
 import type { DocsVersion } from "@/lib/docs/types";
 
 const SECTION_ICONS: Record<string, React.ElementType> = {
+  // v1.x root sections
   "getting-started": Rocket,
   "core-concepts": Lightbulb,
   administration: Settings,
-  integrations: Plug,
-  api: Code2,
   deployment: Server,
-  security: Shield,
   architecture: Boxes,
   mobile: Smartphone,
+
+  // v2.x root sections
+  start: Rocket,
+  concepts: Lightbulb,
+  guides: BookOpen,
+  operate: Server,
+  reference: Code2,
+  troubleshooting: HelpCircle,
+  develop: Boxes,
+
+  // Common sections
+  integrations: Plug,
+  api: Code2,
+  security: Shield,
 };
 
 function getSectionKeyFromHref(href?: string) {
@@ -62,6 +75,7 @@ function pathMatches(href: string | undefined, active: string) {
 
 function sectionContainsPath(item: SidebarItem, active: string): boolean {
   if (pathMatches(item.href, active)) return true;
+  if (item.href && pathIsAncestor(item.href, active)) return true;
   return item.children?.some((child) => sectionContainsPath(child, active)) ?? false;
 }
 
@@ -69,10 +83,12 @@ function NavLink({
   item,
   activePath,
   nested = false,
+  activeRef,
 }: {
   item: SidebarItem;
   activePath: string;
   nested?: boolean;
+  activeRef?: React.RefObject<HTMLAnchorElement | null>;
 }) {
   const isDirectActive = pathMatches(item.href, activePath);
   const containsActive = sectionContainsPath(item, activePath);
@@ -93,10 +109,12 @@ function NavLink({
         >
           {item.href ? (
             <Link
+              ref={isDirectActive ? activeRef : undefined}
               href={item.href}
               onClick={() => setIsOpen(true)}
+              title={item.title}
               className={cn(
-                "flex-1 truncate px-2 py-1.5 text-[12px] font-medium transition-colors text-left",
+                "flex-1 px-2 py-1.5 text-[12.5px] font-medium transition-colors text-left leading-snug break-words",
                 isDirectActive
                   ? "text-white font-bold"
                   : containsActive
@@ -107,7 +125,10 @@ function NavLink({
               {item.title}
             </Link>
           ) : (
-            <span className="flex-1 truncate px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-slate-500">
+            <span
+              title={item.title}
+              className="flex-1 px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-slate-500 leading-snug break-words"
+            >
               {item.title}
             </span>
           )}
@@ -134,7 +155,7 @@ function NavLink({
           <ul className="mt-0.5 space-y-0.5 border-l border-white/10 pl-2">
             {item.children.map((child) => (
               <li key={child.title}>
-                <NavLink item={child} activePath={activePath} nested />
+                <NavLink item={child} activePath={activePath} nested activeRef={activeRef} />
               </li>
             ))}
           </ul>
@@ -145,16 +166,20 @@ function NavLink({
 
   if (!item.href) {
     return (
-      <span className="block px-2 py-1.5 text-[13px] text-slate-500">{item.title}</span>
+      <span className="block px-2 py-1.5 text-[12.5px] text-slate-500 leading-snug break-words">
+        {item.title}
+      </span>
     );
   }
 
   const active = pathMatches(item.href, activePath);
   return (
     <Link
+      ref={active ? activeRef : undefined}
       href={item.href}
+      title={item.title}
       className={cn(
-        "block rounded-md border-l-2 px-2 py-1.5 text-[13px] leading-snug transition-colors",
+        "block rounded-md border-l-2 px-2 py-1.5 text-[12.5px] leading-snug transition-colors break-words",
         nested ? "ml-0" : "ml-1",
         active
           ? "border-[#d21a1b] bg-white/10 text-white font-medium"
@@ -169,9 +194,11 @@ function NavLink({
 function CollapsibleSection({
   item,
   activePath,
+  activeRef,
 }: {
   item: SidebarItem;
   activePath: string;
+  activeRef?: React.RefObject<HTMLAnchorElement | null>;
 }) {
   const sectionKey =
     getSectionKeyFromHref(item.children?.[0]?.href) ||
@@ -195,8 +222,10 @@ function CollapsibleSection({
       >
         {item.href ? (
           <Link
+            ref={isDirectActive ? activeRef : undefined}
             href={item.href}
             onClick={() => setIsOpen(true)}
+            title={item.title}
             className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left"
           >
             <Icon
@@ -211,7 +240,7 @@ function CollapsibleSection({
             />
             <span
               className={cn(
-                "min-w-0 flex-1 truncate text-[12px] font-semibold tracking-wide transition-colors",
+                "min-w-0 flex-1 text-[12.5px] font-semibold tracking-wide transition-colors leading-snug break-words",
                 isDirectActive
                   ? "text-white font-bold"
                   : containsActive
@@ -223,7 +252,7 @@ function CollapsibleSection({
             </span>
           </Link>
         ) : (
-          <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left">
+          <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left" title={item.title}>
             <Icon
               className={cn(
                 "h-4 w-4 shrink-0",
@@ -232,7 +261,7 @@ function CollapsibleSection({
             />
             <span
               className={cn(
-                "min-w-0 flex-1 truncate text-[12px] font-semibold tracking-wide",
+                "min-w-0 flex-1 text-[12.5px] font-semibold tracking-wide leading-snug break-words",
                 containsActive ? "text-white" : "text-slate-300"
               )}
             >
@@ -264,7 +293,7 @@ function CollapsibleSection({
           <SidebarMenu>
             {item.children?.map((child) => (
               <SidebarMenuItem key={child.title}>
-                <NavLink item={child} activePath={activePath} />
+                <NavLink item={child} activePath={activePath} activeRef={activeRef} />
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
@@ -285,6 +314,17 @@ export function NewDocsSidebar({
 }) {
   const pathname = usePathname();
   const activePath = pathname?.split("#")[0] ?? "";
+  const activeItemRef = React.useRef<HTMLAnchorElement | null>(null);
+
+  React.useEffect(() => {
+    if (activeItemRef.current) {
+      activeItemRef.current.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [activePath]);
 
   return (
     <Sidebar className="border-r border-white/10 [&_[data-sidebar=sidebar]]:!bg-[#0f172a]">
@@ -304,10 +344,11 @@ export function NewDocsSidebar({
               key={item.title}
               item={item}
               activePath={activePath}
+              activeRef={activeItemRef}
             />
           ) : (
             <div key={item.title} className="px-1">
-              <NavLink item={item} activePath={activePath} />
+              <NavLink item={item} activePath={activePath} activeRef={activeItemRef} />
             </div>
           )
         )}

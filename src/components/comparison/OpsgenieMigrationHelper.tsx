@@ -140,7 +140,7 @@ resource "datadog_webhook" "opsknight_alerts" {
         </div>
 
         <Link
-          href={latestDocsHref("integrations/metrics-alerting/prometheus")}
+          href={latestDocsHref("integrations/monitoring/prometheus")}
           className="inline-flex items-center gap-1 font-mono text-xs font-semibold text-[#d21a1b] hover:underline"
         >
           <span>Webhook documentation</span>
@@ -149,7 +149,7 @@ resource "datadog_webhook" "opsknight_alerts" {
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 bg-[#020617] px-4 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 bg-[#0f172a] px-4 py-2">
         <div className="flex flex-wrap items-center gap-1">
           {(
             [
@@ -215,7 +215,7 @@ resource "datadog_webhook" "opsknight_alerts" {
       </div>
 
       {/* Strict Legal Disclaimer */}
-      <div className="border-t border-slate-800/60 bg-slate-950 px-5 py-3 text-[11px] text-slate-500">
+      <div className="border-t border-slate-800/60 bg-[#0f172a] px-5 py-3 text-[11px] text-slate-500">
         <p className="flex items-start gap-1.5">
           <ShieldAlert className="h-3.5 w-3.5 shrink-0 text-slate-400 mt-0.5" />
           <span>

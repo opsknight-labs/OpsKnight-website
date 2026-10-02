@@ -22,6 +22,17 @@ const ROOT_SECTION_ORDER = new Map<string, number>([
   ["mobile", 9],
 ]);
 
+const V2_ROOT_SECTION_ORDER = new Map<string, number>([
+  ["start", 1],
+  ["concepts", 2],
+  ["guides", 3],
+  ["integrations", 4],
+  ["operate", 5],
+  ["reference", 6],
+  ["troubleshooting", 7],
+  ["develop", 8],
+]);
+
 function readTitle(filePath: string) {
   const content = fs.readFileSync(filePath, "utf8");
   const { data, content: body } = matter(content);
@@ -42,9 +53,9 @@ function readOrder(filePath: string) {
   return undefined;
 }
 
-function getPreferredOrder(baseHref: string[], entryName: string) {
+function getPreferredOrder(baseHref: string[], entryName: string, version: string) {
   if (baseHref.length === 0) {
-    return ROOT_SECTION_ORDER.get(entryName);
+    return (version.startsWith("v2") ? V2_ROOT_SECTION_ORDER : ROOT_SECTION_ORDER).get(entryName);
   }
   return undefined;
 }
@@ -62,7 +73,7 @@ function buildTree(dirPath: string, baseHref: string[], version: string): Sideba
       const indexPath = getDocFilePath(version, [...baseHref, entry.name]);
       const title = indexPath ? readTitle(indexPath) : entry.name.replace(/-/g, " ");
       const order =
-        indexPath ? readOrder(indexPath) : getPreferredOrder(baseHref, entry.name);
+        indexPath ? readOrder(indexPath) : getPreferredOrder(baseHref, entry.name, version);
       items.push({
         title,
         href: indexPath ? `/docs/${version}/${[...baseHref, entry.name].join("/")}/` : undefined,

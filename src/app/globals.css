@@ -60,7 +60,8 @@
   --accent-blue: #d21a1b;
   /* Added from App */
 
-  --radius: 0.75rem;
+  --radius: 0.875rem;
+  /* 14px — matches OpsKnight 2.0.0 app border-radius token */
 
   --gradient-hero: none;
   --gradient-accent: #d21a1b;
@@ -77,14 +78,14 @@
 }
 
 .dark {
-  --background: #020617;
-  /* Slate 950 */
+  /* Dark background matches OpsKnight 2.0.0 app sidebar color — slate-900 (#0f172a) */
+  --background: #0f172a;
   --foreground: #f8fafc;
   /* Slate 50 */
 
   --primary: #f8fafc;
   /* Slate 50 */
-  --primary-foreground: #020617;
+  --primary-foreground: #0f172a;
 
   --secondary: #1e293b;
   /* Slate 800 */
@@ -97,15 +98,16 @@
   --accent: #1e293b;
   --accent-foreground: #f8fafc;
 
-  --card: #0f172a;
-  /* Slate 900 */
+  --card: #1e293b;
+  /* Slate 800 — elevated surface above sidebar bg */
   --card-foreground: #f8fafc;
 
-  --popover: #0f172a;
+  --popover: #1e293b;
   --popover-foreground: #f8fafc;
 
-  --border: #1e293b;
-  --input: #1e293b;
+  --border: #334155;
+  /* Slate 700 — matches app dark border */
+  --input: #334155;
   --ring: #cbd5e1;
 
   --destructive: #7f1d1d;

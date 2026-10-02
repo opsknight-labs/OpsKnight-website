@@ -3,7 +3,7 @@ import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: `Terms for the ${BRAND.name} website and the licensing boundary between v1.5 Community and historical releases.`,
+  description: `Terms for the ${BRAND.name} website and the licensing boundary between v2.0.0 and historical releases.`,
 };
 
 export default function TermsPage() {
@@ -21,10 +21,10 @@ export default function TermsPage() {
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
-            OpsKnight v1.5 Community
+            OpsKnight v2.0.0
           </h2>
           <p>
-            The active OpsKnight v{BRAND.version} Community development line is
+            The active OpsKnight v{BRAND.version} release is
             distributed under{" "}
             <a
               href={BRAND.links.license}
@@ -42,7 +42,7 @@ export default function TermsPage() {
             Separately licensed Enterprise modules, hosted services, support, or
             other commercial offerings may have their own terms. Those offerings do
             not silently change the license attached to an already published
-            Community artifact.
+            release.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
@@ -51,7 +51,7 @@ export default function TermsPage() {
           <p>
             OpsKnight v{BRAND.legacyVersion} and earlier published releases retain
             the licenses that accompanied those artifacts, including {BRAND.legacyLicense}
-            where applicable. The v1.5 transition does not retroactively revoke or
+            where applicable. The v2.0.0 transition does not retroactively revoke or
             replace those rights. A release, tag, container image, chart, or source
             archive keeps the license that accompanied that artifact.
           </p>

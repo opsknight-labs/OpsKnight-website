@@ -7,8 +7,8 @@ const facts = [
     body: "The Community data plane is self-hosted in your environment. Enterprise modules or hosted offerings can be packaged separately.",
   },
   {
-    title: "Paging is text, chat, and push",
-    body: "Email, SMS (Twilio or SNS), Slack, WhatsApp, webhooks. No native voice calls in the current Community capability set.",
+    title: "Multi-channel paging & ChatOps",
+    body: "Email, SMS (Twilio or SNS), Twilio Voice paging with keypress ack, Slack & Microsoft Teams war rooms, WhatsApp, and webhooks on your infrastructure.",
   },
   {
     title: "One Community status page per install",

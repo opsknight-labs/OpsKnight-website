@@ -32,5 +32,12 @@ export function pathsMatch(href: string | undefined, active: string) {
   if (!href) return false;
   const a = withTrailingSlash(href);
   const b = withTrailingSlash(active);
-  return b === a || b.startsWith(a);
+  return b === a;
+}
+
+export function pathIsAncestor(parentHref: string | undefined, active: string) {
+  if (!parentHref) return false;
+  const a = withTrailingSlash(parentHref);
+  const b = withTrailingSlash(active);
+  return b !== a && b.startsWith(a);
 }
