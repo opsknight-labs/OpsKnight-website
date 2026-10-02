@@ -28,6 +28,8 @@ export const BRAND = {
   domain: "opsknight.com",
   integrationCount: 28,
   integrationCountLabel: "28",
+  ecosystemCount: 30,
+  ecosystemCountLabel: "30",
   stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm / Swarm",
 
   status: "Stable",

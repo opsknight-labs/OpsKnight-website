@@ -11,6 +11,8 @@ type TourTab = {
   id: string;
   name: string;
   image: string | null;
+  width?: number;
+  height?: number;
   heading: string;
   description: string;
   notes: string[];
@@ -21,6 +23,8 @@ const TOUR_TABS: TourTab[] = [
     id: "incidents",
     name: "Incidents",
     image: "/v2-incidents-list.png",
+    width: 1440,
+    height: 900,
     heading: "One list for what is open.",
     description:
       "Incoming webhooks become incidents. You acknowledge, assign, and resolve. Related alerts can share a fingerprint so one person is not paged for every downstream symptom.",
@@ -35,6 +39,8 @@ const TOUR_TABS: TourTab[] = [
     id: "schedules",
     name: "Schedules",
     image: "/v2-on-call-schedules.png",
+    width: 1440,
+    height: 900,
     heading: "Who is covering this week.",
     description:
       "Rotations, timezones, and last-minute swaps. When something fires, the active layer is who gets the first message.",
@@ -48,6 +54,8 @@ const TOUR_TABS: TourTab[] = [
     id: "slack",
     name: "Slack rooms",
     image: "/slack-chatops.png",
+    width: 1024,
+    height: 669,
     heading: "A dedicated channel for that incident.",
     description:
       "From 2.0, OpsKnight opens a dedicated Slack channel, invites the people on call, and lets you acknowledge or resolve from the message. Up to 3 Slack destinations per service.",
@@ -62,6 +70,8 @@ const TOUR_TABS: TourTab[] = [
     id: "teams",
     name: "MS Teams",
     image: "/v2-teams-chatops-war-room.png",
+    width: 2164,
+    height: 1462,
     heading: "A Teams war room for that incident.",
     description:
       "From 2.0, OpsKnight opens a Microsoft Teams war room, sends Adaptive Cards with ack/resolve actions, links user identities, and syncs participant membership.",
@@ -76,6 +86,8 @@ const TOUR_TABS: TourTab[] = [
     id: "escalation",
     name: "Voice & Escalation",
     image: "/v2-escalation-policies.png",
+    width: 1440,
+    height: 900,
     heading: "If they miss it, the next person is paged.",
     description:
       "Automated phone voice calls with DTMF keypress acknowledgment (press 1 to ack), SMS via Twilio or AWS SNS, push, Slack, Teams, WhatsApp, email, or a webhook.",
@@ -90,6 +102,8 @@ const TOUR_TABS: TourTab[] = [
     id: "services",
     name: "Services",
     image: "/v2-services.png",
+    width: 1440,
+    height: 900,
     heading: "What you page for.",
     description:
       "Each service has an escalation policy and the integrations that create incidents. Status for customers is one page you configure — not unlimited separate sites.",
@@ -174,8 +188,8 @@ export function ProductTour() {
                 <Image
                   src={currentTab.image}
                   alt={currentTab.heading}
-                  width={1600}
-                  height={900}
+                  width={currentTab.width || 1440}
+                  height={currentTab.height || 900}
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="h-auto w-full rounded-[12px] border border-slate-700"
                 />

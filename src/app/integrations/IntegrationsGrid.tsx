@@ -650,7 +650,7 @@ export default function IntegrationsGrid() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search ${BRAND.integrationCountLabel} integrations by name, APM, cloud, or protocol…`}
+            placeholder={`Search ${allIntegrations.length} integrations by name, APM, cloud, or protocol…`}
             className="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#d21a1b] shadow-sm"
           />
           {searchQuery && (
