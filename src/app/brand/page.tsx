@@ -93,7 +93,7 @@ export default function BrandPage() {
                     />
                     <div>
                       <p className="text-sm font-medium text-white">On chrome</p>
-                      <a href={BRAND.assets.logo} download className="text-xs text-slate-400 hover:text-white">
+                      <a href={BRAND.assets.logoMark} download className="text-xs text-slate-400 hover:text-white">
                         Download logo-mark.png
                       </a>
                     </div>
@@ -176,8 +176,8 @@ export default function BrandPage() {
                 <div className="mt-4">
                   <CopyBlock
                     label="curl"
-                    value={`curl -O https://opsknight.com/assets/logo.svg
-curl -O https://opsknight.com/assets/logo-mark.png`}
+                    value={`curl -O https://opsknight.com/logo.svg
+curl -O https://opsknight.com/logo-mark.png`}
                   />
                 </div>
               </div>
@@ -188,7 +188,7 @@ curl -O https://opsknight.com/assets/logo-mark.png`}
                 <PageToc
                   sections={TOC_SECTIONS}
                   specs={BRAND_SPECS}
-                  quickCommand="curl -O https://opsknight.com/assets/logo.svg"
+                  quickCommand="curl -O https://opsknight.com/logo.svg"
                   quickCommandLabel="Download SVG"
                   docLink={BRAND.links.github}
                   docLinkLabel="GitHub Repository"

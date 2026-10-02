@@ -58,8 +58,9 @@ export const BRAND = {
   },
 
   assets: {
-    logo: "/logo-mark.png",
+    logo: "/logo.svg",
     logoSvg: "/logo.svg",
+    logoMark: "/logo-mark.png",
     banner: "/banner.png",
     /** Updated to v2.0.0 UI screenshot */
     dashboard: "/v2-incidents-list.png",
