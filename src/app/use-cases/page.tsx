@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 const TOC_SECTIONS = [
   { id: "data-sovereignty", title: "VPC Data Sovereignty" },
   { id: "flat-rate-scale", title: "Self-Hosted Scale" },
-  { id: "slack-chatops", title: "Slack ChatOps & War Rooms" },
+  { id: "slack-chatops", title: "Slack & Teams War Rooms" },
   { id: "escalation-routing", title: "Escalations & Rotations" },
   { id: "audit-compliance", title: "Compliance & Audit Readiness" },
 ];
@@ -149,11 +149,11 @@ export default function UseCasesPage() {
                     <MessageSquare className="h-4 w-4" />
                   </div>
                   <h2 className="text-2xl font-semibold tracking-tight text-[#111827]">
-                    Slack ChatOps & Incident War Rooms
+                    Slack &amp; Microsoft Teams War Rooms
                   </h2>
                 </div>
                 <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-                  Engineers already collaborate in Slack during active incidents. Context switching between
+                  Engineers already collaborate in Slack or Microsoft Teams during active incidents. Context switching between
                   separate web dashboards, alert feeds, and chat apps slows down Mean Time to Resolution (MTTR).
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -161,23 +161,30 @@ export default function UseCasesPage() {
                   <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Automatically provisions dedicated Slack incident channels (for example, <code className="font-mono text-xs text-red-600">#inc-2026-payment-timeout</code>).</span>
+                      <span>Automatically provisions dedicated incident channels in Slack or Microsoft Teams (for example, <code className="font-mono text-xs text-red-600">#inc-2026-payment-timeout</code>).</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Interactive message buttons allow acknowledge, assign, and resolve actions directly inside Slack.</span>
+                      <span>Interactive message buttons and Adaptive Cards allow acknowledge, assign, and resolve actions directly inside chat.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d21a1b]" />
-                      <span>Conference bridge links can be attached to the incident workflow.</span>
+                      <span>Sync participant membership, attach video bridges, and configure up to 3 channel destinations per service.</span>
                     </li>
                   </ul>
-                  <div className="mt-5 border-t border-slate-100 pt-4">
+                  <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-4">
                     <Link
                       href={latestDocsHref("integrations/communication/slack")}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
                     >
-                      View Slack ChatOps Documentation
+                      Slack ChatOps Docs
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                    <Link
+                      href={latestDocsHref("integrations/communication/microsoft-teams")}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] hover:underline"
+                    >
+                      Microsoft Teams ChatOps Docs
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>

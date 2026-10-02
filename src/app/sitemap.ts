@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { BRAND } from "@/lib/brand";
+import { COMPETITORS } from "@/lib/competitors";
 import { DOC_VERSIONS } from "@/lib/docs/versions";
 import { getAllDocSlugs } from "@/lib/docs/content";
 
@@ -28,7 +29,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
-    ...["/changelog", "/integrations", "/about", "/privacy", "/terms", "/install", "/brand", "/use-cases", "/compare/pagerduty", "/compare/opsgenie", "/compare/squadcast", "/compare/incident-io", "/compare/grafana-oncall"].map((route) => ({
+    ...[
+      "/changelog",
+      "/integrations",
+      "/about",
+      "/privacy",
+      "/terms",
+      "/install",
+      "/brand",
+      "/use-cases",
+      "/security",
+      ...COMPETITORS.map((c) => c.href),
+    ].map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified,
       changeFrequency: "monthly" as const,

@@ -204,6 +204,15 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                       </Link>
                     </span>
                   </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-[#111827]">· Upgrading from 1.x:</span>
+                    <span>
+                      Database migrations, env variable updates, and rollback procedure for existing 1.x installs.{" "}
+                      <Link href={latestDocsHref("start/migrate-from-v1")} className="font-medium text-[#d21a1b] hover:underline">
+                        Migration from v1 guide
+                      </Link>
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -283,7 +292,7 @@ helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --cre
                   specs={INSTALL_SPECS}
                   quickCommand="docker compose up -d"
                   quickCommandLabel="Quick Launch"
-                  docLink={latestDocsHref("operate/deploy/compose/integrated")}
+                  docLink={latestDocsHref("operate/deploy/docker-compose/integrated")}
                   docLinkLabel="Deployment Docs Hub"
                 />
               </div>
