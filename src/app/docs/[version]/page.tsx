@@ -178,7 +178,10 @@ export default async function DocsIndexPage({
           <DocsArticleBody html={doc.html} />
         </article>
         <aside className="hidden lg:block">
-          <div className="sticky top-20 pl-2">
+          <div
+            className="sticky top-20 pl-2 max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar"
+            data-toc-container
+          >
             <DocsToc headings={doc.headings} editUrl={editUrl} />
           </div>
         </aside>

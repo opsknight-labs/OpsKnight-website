@@ -32,7 +32,7 @@ import {
 import { SidebarItem } from "@/lib/docs/sidebar";
 import { DocsVersionSwitcher } from "@/components/docs/DocsVersionSwitcher";
 import { DocsSearch } from "@/components/docs/DocsSearch";
-import { pathsMatch } from "@/lib/docs/paths";
+import { pathsMatch, pathIsAncestor } from "@/lib/docs/paths";
 import { cn } from "@/lib/utils";
 import { BRAND } from "@/lib/brand";
 import { BrandLockup } from "@/components/brand/BrandLockup";
@@ -75,6 +75,7 @@ function pathMatches(href: string | undefined, active: string) {
 
 function sectionContainsPath(item: SidebarItem, active: string): boolean {
   if (pathMatches(item.href, active)) return true;
+  if (item.href && pathIsAncestor(item.href, active)) return true;
   return item.children?.some((child) => sectionContainsPath(child, active)) ?? false;
 }
 
@@ -82,10 +83,12 @@ function NavLink({
   item,
   activePath,
   nested = false,
+  activeRef,
 }: {
   item: SidebarItem;
   activePath: string;
   nested?: boolean;
+  activeRef?: React.RefObject<HTMLAnchorElement | null>;
 }) {
   const isDirectActive = pathMatches(item.href, activePath);
   const containsActive = sectionContainsPath(item, activePath);
@@ -106,6 +109,7 @@ function NavLink({
         >
           {item.href ? (
             <Link
+              ref={isDirectActive ? activeRef : undefined}
               href={item.href}
               onClick={() => setIsOpen(true)}
               className={cn(
@@ -147,7 +151,7 @@ function NavLink({
           <ul className="mt-0.5 space-y-0.5 border-l border-white/10 pl-2">
             {item.children.map((child) => (
               <li key={child.title}>
-                <NavLink item={child} activePath={activePath} nested />
+                <NavLink item={child} activePath={activePath} nested activeRef={activeRef} />
               </li>
             ))}
           </ul>
@@ -165,6 +169,7 @@ function NavLink({
   const active = pathMatches(item.href, activePath);
   return (
     <Link
+      ref={active ? activeRef : undefined}
       href={item.href}
       className={cn(
         "block rounded-md border-l-2 px-2 py-1.5 text-[13px] leading-snug transition-colors",
@@ -182,9 +187,11 @@ function NavLink({
 function CollapsibleSection({
   item,
   activePath,
+  activeRef,
 }: {
   item: SidebarItem;
   activePath: string;
+  activeRef?: React.RefObject<HTMLAnchorElement | null>;
 }) {
   const sectionKey =
     getSectionKeyFromHref(item.children?.[0]?.href) ||
@@ -208,6 +215,7 @@ function CollapsibleSection({
       >
         {item.href ? (
           <Link
+            ref={isDirectActive ? activeRef : undefined}
             href={item.href}
             onClick={() => setIsOpen(true)}
             className="flex min-w-0 flex-1 items-center gap-2 px-2 py-2 text-left"
@@ -277,7 +285,7 @@ function CollapsibleSection({
           <SidebarMenu>
             {item.children?.map((child) => (
               <SidebarMenuItem key={child.title}>
-                <NavLink item={child} activePath={activePath} />
+                <NavLink item={child} activePath={activePath} activeRef={activeRef} />
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
@@ -298,6 +306,17 @@ export function NewDocsSidebar({
 }) {
   const pathname = usePathname();
   const activePath = pathname?.split("#")[0] ?? "";
+  const activeItemRef = React.useRef<HTMLAnchorElement | null>(null);
+
+  React.useEffect(() => {
+    if (activeItemRef.current) {
+      activeItemRef.current.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [activePath]);
 
   return (
     <Sidebar className="border-r border-white/10 [&_[data-sidebar=sidebar]]:!bg-[#0f172a]">
@@ -317,10 +336,11 @@ export function NewDocsSidebar({
               key={item.title}
               item={item}
               activePath={activePath}
+              activeRef={activeItemRef}
             />
           ) : (
             <div key={item.title} className="px-1">
-              <NavLink item={item} activePath={activePath} />
+              <NavLink item={item} activePath={activePath} activeRef={activeItemRef} />
             </div>
           )
         )}

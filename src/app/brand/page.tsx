@@ -184,7 +184,7 @@ curl -O https://opsknight.com/logo-mark.png`}
             </article>
 
             <aside className="hidden lg:block">
-              <div className="sticky top-24 pl-4 border-l border-slate-200/80">
+              <div className="sticky top-24 pl-4 border-l border-slate-200/80 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
                 <PageToc
                   sections={TOC_SECTIONS}
                   specs={BRAND_SPECS}

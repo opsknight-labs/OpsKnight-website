@@ -275,14 +275,16 @@ export default function UseCasesPage() {
             </article>
 
             <aside className="hidden lg:block">
-              <PageToc
-                sections={TOC_SECTIONS}
-                specs={SPEC_ITEMS}
-                quickCommand="docker compose up -d"
-                quickCommandLabel="Test locally with Compose"
-                docLink={latestDocsHref("start/quickstart")}
-                docLinkLabel="Installation Documentation"
-              />
+              <div className="sticky top-24 pl-4 border-l border-slate-200/80 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
+                <PageToc
+                  sections={TOC_SECTIONS}
+                  specs={SPEC_ITEMS}
+                  quickCommand="docker compose up -d"
+                  quickCommandLabel="Test locally with Compose"
+                  docLink={latestDocsHref("start/quickstart")}
+                  docLinkLabel="Installation Documentation"
+                />
+              </div>
             </aside>
           </div>
         </div>
