@@ -36,7 +36,7 @@ export function VoiceCallingSpotlight() {
             </div>
             <h3 className="text-base font-semibold text-[#111827]">Keypad Acknowledgment</h3>
             <p className="mt-2 text-sm leading-relaxed text-[#4b5563]">
-              Press <strong>1</strong> on the phone keypad to claim the incident right on the call. Press <strong>2</strong> to escalate immediately.
+              Press <strong>1</strong> on your phone keypad to claim and acknowledge the incident. If unanswered or unacknowledged, OpsKnight automatically advances to the next escalation tier.
             </p>
           </div>
 
@@ -54,13 +54,11 @@ export function VoiceCallingSpotlight() {
         {/* Minimal Call Flow Strip */}
         <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-[14px] border border-slate-200 bg-white px-6 py-4 shadow-sm">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="font-mono text-xs text-slate-500">Keypad actions:</span>
-            <span className="inline-flex items-center gap-1.5 rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs text-slate-700">
-              <span className="font-bold text-[#d21a1b]">1</span> Acknowledge
+            <span className="font-mono text-xs text-slate-500">Keypad interaction:</span>
+            <span className="inline-flex items-center gap-1.5 rounded border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700">
+              <span className="font-bold text-[#d21a1b]">Press 1</span> Acknowledge &amp; Halt Escalation
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs text-slate-700">
-              <span className="font-bold text-slate-800">2</span> Escalate
-            </span>
+            <span className="font-mono text-xs text-slate-400">· Unacknowledged calls advance to the next rotation layer</span>
           </div>
           <Link
             href={latestDocsHref("integrations/communication/voice")}
