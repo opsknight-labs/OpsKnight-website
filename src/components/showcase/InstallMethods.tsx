@@ -46,8 +46,8 @@ export function InstallMethods() {
             Run it where your systems already live.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            Compose, Docker, Helm, Kustomize, or Swarm. Postgres, {`NEXTAUTH_SECRET`}, and{" "}
-            {`ENCRYPTION_KEY`} are required. There is no hosted cloud.
+            Compose, Docker, Helm, Kustomize, or Swarm. Postgres, {`NEXTAUTH_SECRET`},{" "}
+            {`ENCRYPTION_KEY`}, and {`API_KEY_SECRET`} are required. There is no hosted cloud.
           </p>
         </div>
 

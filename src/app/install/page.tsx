@@ -69,9 +69,9 @@ export default function InstallPage() {
                   <li>Docker Engine 20+ and Compose 2+, or a Kubernetes 1.24+ cluster</li>
                   <li>PostgreSQL 14+ (Compose automatically provisions PostgreSQL 15)</li>
                   <li>
-                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>{" "}
-                    and{" "}
-                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>{" "}
+                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>,{" "}
+                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>,{" "}
+                    and <code className="font-mono text-xs text-[#111827]">API_KEY_SECRET</code>{" "}
                     configured before first start
                   </li>
                   <li>A stable HTTPS reverse proxy in production (for auth callbacks and webhook ingestion)</li>
@@ -93,7 +93,7 @@ export default function InstallPage() {
                   value={`git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
-# set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
+# set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
 docker compose up -d`}
                 />
                 <p className="mt-3 text-xs text-slate-500">

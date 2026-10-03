@@ -101,11 +101,11 @@ export const BRAND = {
 
   deploy: {
     secretsNote:
-      "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose starts both PostgreSQL and OpsKnight automatically. For split runtime or Swarm deployments, see the deployment docs.",
+      "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET. The bundled Docker Compose starts both PostgreSQL and OpsKnight automatically. For split runtime or Swarm deployments, see the deployment docs.",
     compose: `git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
-# Set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
 docker compose up -d`,
     docker: `# 1. Run PostgreSQL database container
 docker run -d --name opsknight-db \\
@@ -121,6 +121,7 @@ docker run -d --name opsknight-app -p 3000:3000 \\
   -e NEXTAUTH_URL="http://localhost:3000" \\
   -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
   -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
+  -e API_KEY_SECRET="$(openssl rand -base64 32)" \\
   --link opsknight-db \\
   ghcr.io/opsknight-labs/opsknight:2.0.0`,
     helm: `helm repo add opsknight https://charts.opsknight.com
