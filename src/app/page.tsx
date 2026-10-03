@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
+import { MissionControlSection } from "@/components/hero/MissionControlSection";
 import { ProductTour } from "@/components/showcase/ProductTour";
 import { VoiceCallingSpotlight } from "@/components/voice/VoiceCallingSpotlight";
 import { Features } from "@/components/features/Features";
@@ -37,6 +38,7 @@ export default function Home() {
     <>
       <Hero />
       <HowItWorks />
+      <MissionControlSection />
       <ProductTour />
       <VoiceCallingSpotlight />
       <Features />
