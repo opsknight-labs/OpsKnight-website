@@ -52,6 +52,8 @@ Every supported packaging path has the same control points. Do not skip ahead wh
 9. Sign in through the same hostname and confirm **Settings → System → App URL**.
 10. Run domain, authentication, webhook, realtime, incident, notification, backup, and restore acceptance tests.
 
+When a runbook contains host, Docker, Systemd, Kubernetes, or Bash steps, also deploy a separately constrained [Runbook Agent](./agent-operations). The Runbook Worker alone does not execute those actions.
+
 Read [Application URL and host routing](./application-url-and-host-routing) before exposing any production installation. A wrong canonical host can cause HTTP 421 after bootstrap.
 
 ## Choose how to run OpsKnight
@@ -71,7 +73,7 @@ Compose is a single-host orchestrator. Swarm and Kubernetes can reschedule workl
 ## Choose integrated or split runtime
 
 - **Integrated** runs the web application and background responsibilities together. It is the least complex path for evaluation and smaller installations.
-- **Split** runs Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector separately. Choose it when you need role-specific scaling, failure isolation, or Web-only pooling.
+- **Split** runs Web, Scheduler, General Worker, Critical Worker, Bulk Worker, Runbook Worker, and Status Projector separately. Choose it when you need role-specific scaling, failure isolation, or Web-only pooling.
 
 Read [Integrated versus split](./architecture/integrated-vs-split) before choosing. Do not run integrated and split ownership at the same time against one database.
 
@@ -103,6 +105,7 @@ The packaging-specific production checklist gives exact commands and expected re
 ## Related guides
 
 - [Runtime roles](./architecture/runtime-roles)
+- [Runbook Agent operations](./agent-operations)
 - [Application URL and host routing](./application-url-and-host-routing)
 - [Reverse-proxy contract](./reverse-proxy-contract)
 - [Initial setup](../../start/initial-setup)

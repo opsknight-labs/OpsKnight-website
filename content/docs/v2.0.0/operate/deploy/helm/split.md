@@ -23,7 +23,7 @@ Read [Runtime roles](../architecture/runtime-roles), calculate resources and con
 
 ## Prepare the configuration
 
-Set `runtime.mode: split`, enable the migration Job, and define Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector replicas, resources, connection pool sizes, probes, termination grace periods, and PDBs. Direct ingress only to Web. Set `database.maxApplicationConnections` to the reviewed ceiling.
+Set `runtime.mode: split`, enable the migration Job, and define Web, Scheduler, General Worker, Critical Worker, Bulk Worker, Runbook Worker, and Status Projector replicas, resources, connection pool sizes, probes, termination grace periods, and PDBs. Direct ingress only to Web. Set `database.maxApplicationConnections` to the reviewed ceiling.
 
 Create `values.split.yaml` with the complete role configuration:
 
@@ -35,10 +35,10 @@ runtime:
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
-    whenUnsatisfiable: ScheduleAnyway
+    whenUnsatisfiable: DoNotSchedule
   - maxSkew: 1
     topologyKey: topology.kubernetes.io/zone
-    whenUnsatisfiable: ScheduleAnyway
+    whenUnsatisfiable: DoNotSchedule
 
 database:
   port: 5432
@@ -109,6 +109,18 @@ bulkWorker:
     limits: { cpu: 500m, memory: 1Gi }
   database:
     poolSize: 10
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+# Runbook Worker (isolated remediation orchestration and reconciliation)
+runbookWorker:
+  replicaCount: 2
+  resources:
+    requests: { cpu: 200m, memory: 512Mi }
+    limits: { cpu: 500m, memory: 1Gi }
+  database:
+    poolSize: 3
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
