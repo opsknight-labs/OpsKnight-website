@@ -7,10 +7,11 @@ import { BRAND } from "@/lib/brand";
 import { latestDocsHref } from "@/lib/docs/paths";
 import { SecretsGenerator } from "@/components/showcase/SecretsGenerator";
 
-type DeployTab = "compose" | "docker" | "helm" | "kustomize" | "swarm";
+type DeployTab = "compose" | "split" | "docker" | "helm" | "kustomize" | "swarm";
 
 const TABS: { id: DeployTab; label: string }[] = [
   { id: "compose", label: "Compose" },
+  { id: "split", label: "Split Runtime" },
   { id: "docker", label: "Docker" },
   { id: "helm", label: "Helm" },
   { id: "kustomize", label: "Kustomize" },
@@ -23,6 +24,7 @@ export function InstallMethods() {
 
   const commands: Record<DeployTab, string> = {
     compose: BRAND.deploy.compose,
+    split: BRAND.deploy.split,
     docker: BRAND.deploy.docker,
     helm: BRAND.deploy.helm,
     kustomize: BRAND.deploy.kustomize,
@@ -46,8 +48,8 @@ export function InstallMethods() {
             Run it where your systems already live.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#4b5563]">
-            Compose, Docker, Helm, Kustomize, or Swarm. Postgres, {`NEXTAUTH_SECRET`}, and{" "}
-            {`ENCRYPTION_KEY`} are required. There is no hosted cloud.
+            Compose, Docker, Helm, Kustomize, or Swarm. Postgres 14+, {`NEXTAUTH_SECRET`},{" "}
+            {`ENCRYPTION_KEY`}, and {`API_KEY_SECRET`} are required. There is no hosted cloud.
           </p>
         </div>
 

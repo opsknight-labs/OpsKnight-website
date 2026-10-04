@@ -101,12 +101,12 @@ export const BRAND = {
 
   deploy: {
     secretsNote:
-      "OpsKnight requires PostgreSQL, NEXTAUTH_SECRET, and ENCRYPTION_KEY. The bundled Docker Compose starts both PostgreSQL and OpsKnight automatically. For split runtime or Swarm deployments, see the deployment docs.",
+      "OpsKnight requires PostgreSQL 14+, NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET. The bundled Docker Compose starts both PostgreSQL and OpsKnight automatically. For split runtime, PgBouncer pooling, or Swarm HA, see the deployment docs.",
     compose: `git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
-# Set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
-docker compose up -d`,
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
+docker compose -f deploy/compose/docker-compose.yml up -d`,
     docker: `# 1. Run PostgreSQL database container
 docker run -d --name opsknight-db \\
   -e POSTGRES_DB=opsknight_db \\
@@ -118,32 +118,45 @@ docker run -d --name opsknight-db \\
 # 2. Run OpsKnight container connected to database
 docker run -d --name opsknight-app -p 3000:3000 \\
   -e DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\
+  -e DIRECT_DATABASE_URL="postgresql://opsknight:opsknight_secure_password@opsknight-db:5432/opsknight_db" \\
   -e NEXTAUTH_URL="http://localhost:3000" \\
   -e NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
   -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
+  -e API_KEY_SECRET="$(openssl rand -base64 32)" \\
   --link opsknight-db \\
   ghcr.io/opsknight-labs/opsknight:2.0.0`,
-    helm: `helm repo add opsknight https://charts.opsknight.com
-helm repo update
-helm upgrade --install opsknight opsknight/opsknight \\
+    helm: `# 1. Create namespace & production secrets
+kubectl create namespace opsknight
+kubectl -n opsknight create secret generic opsknight-secrets \\
+  --from-literal=DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=20' \\
+  --from-literal=DIRECT_DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=5' \\
+  --from-literal=NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
+  --from-literal=ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
+  --from-literal=API_KEY_SECRET="$(openssl rand -base64 32)"
+
+# 2. Deploy OpsKnight Helm Chart with Enterprise HA values
+helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
   --namespace opsknight \\
-  --create-namespace`,
-    kustomize: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
+  -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`,
+    kustomize: `# 1. Create base infrastructure & run migration job
+kubectl apply -k deploy/kubernetes/kustomize/base
+kubectl apply -f deploy/kubernetes/kustomize/migration-job.yaml
+kubectl -n opsknight wait --for=condition=complete job/opsknight-migration --timeout=15m
+
+# 2. Deploy integrated profile (or profiles/split-pgbouncer)
 kubectl apply -k deploy/kubernetes/kustomize/profiles/integrated/`,
     swarm: `git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
-# Initialize swarm (skip if already initialized)
+cd OpsKnight/deploy/swarm
+# Initialize Docker Swarm (if not already active)
 docker swarm init
-# Deploy integrated stack with Raft secrets
-docker stack deploy \\
-  -c deploy/swarm/docker-stack.integrated.yml \\
-  opsknight`,
+# Deploy multi-node HA cluster with automatic Raft secrets & validation
+./scripts/deploy.sh`,
     split: `git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
-# Set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
-# Deploy Web + Scheduler + Workers + Status Projector as independent services
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+
+# Deploy 6 dedicated split roles + migration runner
 docker compose \\
   -f deploy/compose/docker-compose.yml \\
   -f deploy/compose/docker-compose.split.yml \\

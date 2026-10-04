@@ -30,8 +30,10 @@ export function SecretsGenerator({
 }) {
   const [nextAuthSecret, setNextAuthSecret] = useState<string>("");
   const [encryptionKey, setEncryptionKey] = useState<string>("");
+  const [apiKeySecret, setApiKeySecret] = useState<string>("");
   const [copiedNextAuth, setCopiedNextAuth] = useState(false);
   const [copiedEncryption, setCopiedEncryption] = useState(false);
+  const [copiedApiKey, setCopiedApiKey] = useState(false);
   const [copiedEnv, setCopiedEnv] = useState(false);
   const [copiedOneLiner, setCopiedOneLiner] = useState(false);
   const [mode, setMode] = useState<"generator" | "openssl">("generator");
@@ -41,6 +43,7 @@ export function SecretsGenerator({
     setIsRotating(true);
     setNextAuthSecret(generateBase64Secret());
     setEncryptionKey(generateHexSecret());
+    setApiKeySecret(generateBase64Secret());
     setTimeout(() => setIsRotating(false), 250);
   };
 
@@ -57,9 +60,10 @@ export function SecretsGenerator({
 
   const envBlock = `# First-Boot Secrets
 NEXTAUTH_SECRET="${nextAuthSecret}"
-ENCRYPTION_KEY="${encryptionKey}"`;
+ENCRYPTION_KEY="${encryptionKey}"
+API_KEY_SECRET="${apiKeySecret}"`;
 
-  const opensslOneLiner = `echo "NEXTAUTH_SECRET=$(openssl rand -base64 32)" >> .env && echo "ENCRYPTION_KEY=$(openssl rand -hex 32)" >> .env`;
+  const opensslOneLiner = `echo "NEXTAUTH_SECRET=$(openssl rand -base64 32)" >> .env && echo "ENCRYPTION_KEY=$(openssl rand -hex 32)" >> .env && echo "API_KEY_SECRET=$(openssl rand -base64 32)" >> .env`;
 
   return (
     <div
@@ -144,7 +148,7 @@ ENCRYPTION_KEY="${encryptionKey}"`;
       {/* Content Area */}
       <div className="p-3 sm:p-3.5">
         {mode === "generator" ? (
-          <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {/* NEXTAUTH_SECRET Card */}
             <div className="rounded-lg border border-slate-800/80 bg-[#0b1120] p-2.5">
               <div className="mb-1 flex items-center justify-between">
@@ -202,6 +206,36 @@ ENCRYPTION_KEY="${encryptionKey}"`;
               </div>
               <p className="truncate font-mono text-[11px] text-slate-300">
                 {encryptionKey || "Generating..."}
+              </p>
+            </div>
+
+            {/* API_KEY_SECRET Card */}
+            <div className="rounded-lg border border-slate-800/80 bg-[#0b1120] p-2.5 sm:col-span-2 lg:col-span-1">
+              <div className="mb-1 flex items-center justify-between">
+                <span className="flex items-center gap-1 font-mono text-[11px] font-medium text-slate-300">
+                  <Key className="h-3 w-3 text-slate-400" />
+                  API_KEY_SECRET
+                </span>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(apiKeySecret, setCopiedApiKey)}
+                  className="flex items-center gap-1 font-mono text-[10px] text-slate-400 transition-colors hover:text-white"
+                >
+                  {copiedApiKey ? (
+                    <>
+                      <Check className="h-3 w-3 text-[#059669]" />
+                      <span className="text-[#059669]">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3 w-3" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+              <p className="truncate font-mono text-[11px] text-slate-300">
+                {apiKeySecret || "Generating..."}
               </p>
             </div>
           </div>
