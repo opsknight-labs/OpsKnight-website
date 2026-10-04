@@ -69,9 +69,9 @@ export default function InstallPage() {
                   <li>Docker Engine 20+ and Compose 2+, or a Kubernetes 1.24+ cluster</li>
                   <li>PostgreSQL 14+ (Compose automatically provisions PostgreSQL 15)</li>
                   <li>
-                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>{" "}
-                    and{" "}
-                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>{" "}
+                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>,{" "}
+                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>,{" "}
+                    and <code className="font-mono text-xs text-[#111827]">API_KEY_SECRET</code>{" "}
                     configured before first start
                   </li>
                   <li>A stable HTTPS reverse proxy in production (for auth callbacks and webhook ingestion)</li>
@@ -93,8 +93,8 @@ export default function InstallPage() {
                   value={`git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
-# set NEXTAUTH_SECRET and ENCRYPTION_KEY in .env
-docker compose up -d`}
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
+docker compose -f deploy/compose/docker-compose.yml up -d`}
                 />
                 <p className="mt-3 text-xs text-slate-500">
                   Then navigate to <span className="font-mono text-[#111827]">http://localhost:3000/setup</span> to initialize the primary administrator account.
@@ -110,16 +110,18 @@ docker compose up -d`}
               </div>
 
               <div id="docker-swarm" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Docker Swarm (High-Availability)</h2>
+                <h2 className="text-xl font-semibold text-[#111827]">Docker Swarm (Multi-Node HA)</h2>
                 <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  New in 2.0. Native multi-node Swarm deployment with Raft-encrypted secrets, rolling zero-downtime updates, and direct-database lifecycle management:
+                  Native multi-node Swarm deployment with automated Raft-encrypted secrets, rolling zero-downtime updates, and isolated worker lanes:
                 </p>
                 <CopyBlock
                   label="swarm"
                   value={`git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
+cd OpsKnight/deploy/swarm
+# Initialize Docker Swarm (if not already active)
 docker swarm init
-docker stack deploy -c deploy/swarm/docker-stack.integrated.yml opsknight`}
+# Deploy multi-node HA cluster with automatic Raft secrets & validation
+./scripts/deploy.sh`}
                 />
                 <p className="mt-3">
                   <Link
@@ -138,7 +140,12 @@ docker stack deploy -c deploy/swarm/docker-stack.integrated.yml opsknight`}
                 </p>
                 <CopyBlock
                   label="split-compose"
-                  value={`docker compose \\
+                  value={`cp env.example .env
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+
+# Deploy 6 dedicated split roles + migration runner
+docker compose \\
   -f deploy/compose/docker-compose.yml \\
   -f deploy/compose/docker-compose.split.yml \\
   up -d`}
@@ -156,13 +163,23 @@ docker stack deploy -c deploy/swarm/docker-stack.integrated.yml opsknight`}
               <div id="kubernetes-helm" className="scroll-mt-28 border-t border-slate-200 pt-10">
                 <h2 className="text-xl font-semibold text-[#111827]">Kubernetes (Helm Chart)</h2>
                 <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  For versioned, repeatable Kubernetes deployments with Horizontal Pod Autoscaling (HPA) and Ingress TLS:
+                  For versioned, repeatable Kubernetes deployments with Horizontal Pod Autoscaling (HPA), Ingress TLS, and Enterprise HA:
                 </p>
                 <CopyBlock
                   label="helm"
-                  value={`helm repo add opsknight https://charts.opsknight.com
-helm repo update
-helm upgrade --install opsknight opsknight/opsknight --namespace opsknight --create-namespace`}
+                  value={`# 1. Create namespace & production secrets
+kubectl create namespace opsknight
+kubectl -n opsknight create secret generic opsknight-secrets \\
+  --from-literal=DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=20' \\
+  --from-literal=DIRECT_DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=5' \\
+  --from-literal=NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
+  --from-literal=ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
+  --from-literal=API_KEY_SECRET="$(openssl rand -base64 32)"
+
+# 2. Deploy OpsKnight Helm Chart with Enterprise HA values
+helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
+  --namespace opsknight \\
+  -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`}
                 />
                 <p className="mt-3">
                   <Link
