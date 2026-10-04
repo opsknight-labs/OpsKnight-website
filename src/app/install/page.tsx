@@ -140,7 +140,9 @@ docker swarm init
                 </p>
                 <CopyBlock
                   label="split-compose"
-                  value={`export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+                  value={`cp env.example .env
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
 
 # Deploy 6 dedicated split roles + migration runner
 docker compose \\

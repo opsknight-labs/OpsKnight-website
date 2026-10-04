@@ -140,6 +140,7 @@ helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
   -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`,
     kustomize: `# 1. Create base infrastructure & run migration job
 kubectl apply -k deploy/kubernetes/kustomize/base
+kubectl delete -f deploy/kubernetes/kustomize/migration-job.yaml --ignore-not-found
 kubectl apply -f deploy/kubernetes/kustomize/migration-job.yaml
 kubectl -n opsknight wait --for=condition=complete job/opsknight-migration --timeout=15m
 
@@ -154,6 +155,7 @@ docker swarm init
     split: `git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight
 cp env.example .env
+# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
 export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
 
 # Deploy 6 dedicated split roles + migration runner
