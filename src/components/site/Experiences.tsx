@@ -105,7 +105,7 @@ export function IncidentLoop() {
   const [cinematic, setCinematic] = useState(false);
   useEffect(() => {
     const media = window.matchMedia(
-      "(min-width: 1100px) and (prefers-reduced-motion: no-preference)",
+      "(min-width: 1180px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)",
     );
     const update = () => setCinematic(media.matches);
     update();
@@ -207,7 +207,7 @@ export function IncidentLoop() {
               </button>
             </div>
           </div>
-          <div className="signal-stage" key={active}>
+          <div className="signal-stage">
             <div className="stage-orbit" />
             <div className="theater-signal-path" aria-hidden="true">
               <span className="signal-dot" />
@@ -253,17 +253,19 @@ export function IncidentLoop() {
 }
 function TheaterScene({ active }: { active: number }) {
   const image =
-    active === 2 || active === 5
-      ? "incident-detail.png"
-      : active === 3
-        ? "on-call-schedule-detail.png"
-        : active === 6
-          ? "teams-chatops-war-room.png"
-          : active === 7
-            ? "status-pages.png"
-            : active === 9
-              ? "postmortems.png"
-              : null;
+    active === 2
+      ? "incident-triggered.png"
+      : active === 5
+        ? "incident-acknowledged.png"
+        : active === 3
+          ? "on-call-schedule-detail.png"
+          : active === 6
+            ? "teams-chatops-war-room.png"
+            : active === 7
+              ? "status-pages.png"
+              : active === 9
+                ? "postmortems.png"
+                : null;
   if (image)
     return (
       <div className={`theater-product scene-${active}`}>

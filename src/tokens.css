@@ -96,6 +96,12 @@
   --container-pad: 96px;
 
   /* ===================================================================
+   * Navigation and Stage Heights
+   * =================================================================== */
+  --nav-height: 68px;
+  --stage-height: 380px;
+
+  /* ===================================================================
    * Typography Scale — fluid via clamp()
    *
    * Every text size scales proportionally. No more fixed px sizes that
@@ -110,7 +116,7 @@
   --text-3xl: clamp(28px, 1.8vw + 8px, 36px);
   --text-4xl: clamp(34px, 2.5vw + 10px, 48px);
   --text-5xl: clamp(40px, 4vw + 8px, 64px);
-  --text-hero: clamp(48px, 6vw + 12px, 104px);
+  --text-hero: clamp(52px, 5vw, 112px);
 
   /* ===================================================================
    * Border Radius
@@ -143,20 +149,48 @@
 }
 
 /* =====================================================================
- * Responsive Container Padding
- *
- * Instead of per-section width overrides, the container padding scales
- * with the viewport. All containers automatically adjust.
+ * Responsive Container & Dimension Scaling
  * =================================================================== */
+@media (min-width: 1600px) {
+  :root {
+    --nav-height: 74px;
+    --stage-height: 440px;
+  }
+}
 @media (max-width: 1279px) {
-  :root { --container-pad: 64px; }
+  :root {
+    --container-pad: 64px;
+    --nav-height: 64px;
+    --stage-height: 360px;
+  }
 }
 @media (max-width: 1023px) {
-  :root { --container-pad: 48px; }
+  :root {
+    --container-pad: 48px;
+    --nav-height: 64px;
+  }
 }
 @media (max-width: 767px) {
-  :root { --container-pad: 40px; }
+  :root {
+    --container-pad: 40px;
+    --nav-height: 60px;
+  }
 }
 @media (max-width: 479px) {
-  :root { --container-pad: 32px; }
+  :root {
+    --container-pad: 32px;
+    --nav-height: 60px;
+  }
+}
+
+/* =====================================================================
+ * Height-aware rules for compact displays (e.g. 1366x768 laptops)
+ * =================================================================== */
+@media (max-height: 768px) {
+  :root {
+    --nav-height: 60px;
+    --stage-height: 320px;
+    --section-pad: clamp(40px, 5vh, 64px);
+    --section-pad-sm: clamp(32px, 4vh, 48px);
+  }
 }

@@ -77,13 +77,13 @@ export default function Home() {
           <div className="hero-product">
             <HeroSignal />
             <ProductScreenshot
-              name="incident-detail.png"
-              alt="OpsKnight incident detail with ownership, response actions and incident context"
+              name="dashboard-overview.png"
+              alt="OpsKnight operations command center showing system health, active incidents and on-call coverage"
               priority
             />
             <div className="hero-product-foot">
               <span>YOUR INFRASTRUCTURE. YOUR COMMAND CENTER.</span>
-              <span>01 — INCIDENT RESPONSE</span>
+              <span>01 — OPERATIONS DASHBOARD</span>
             </div>
           </div>
         </div>

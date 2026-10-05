@@ -4,6 +4,24 @@
   "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
   "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
   "assets": {
+    "dashboard-overview": {
+      "width": 2400,
+      "height": 1290,
+      "sha256": "e3269e78d58e1a26b1db60b485556419a41e4dfe979e0d06b70bb2d0f17b5af5",
+      "route": "/"
+    },
+    "incident-triggered": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "54aebd73b8ef50497897f2536cb1ded65d59c926ea2f062a55c48a29de61526c",
+      "route": "/incidents/new"
+    },
+    "incident-acknowledged": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "e23c0dbf4d75bb25228c52d18cce63707a36f01d1f21414653f20b8a080a694b",
+      "route": "/incidents/cmurz14gx0032ytbwj5tolfat"
+    },
     "incident-detail": {
       "width": 1304,
       "height": 897,
