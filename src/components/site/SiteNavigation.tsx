@@ -70,7 +70,10 @@ export function SiteNavigation() {
                   <br />
                   to resolution.
                 </h3>
-                <Link href="/#incident-loop">Explore the workflow →</Link>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "12px" }}>
+                  <Link href="/product/">Overview of all capabilities →</Link>
+                  <Link href="/#incident-loop">Explore the workflow →</Link>
+                </div>
               </div>
               <div className="mega-links">
                 {PRODUCT.platform.products.map((p) => (
@@ -136,6 +139,7 @@ export function SiteNavigation() {
             <summary aria-label="Open navigation">☰</summary>
             <nav aria-label="Mobile navigation">
               <Link href="/">Home</Link>
+              <Link href="/product/">Product Overview</Link>
               {PRODUCT.platform.products.map((p) => (
                 <Link key={p.slug} href={`/product/${p.slug}/`}>
                   {p.label}
