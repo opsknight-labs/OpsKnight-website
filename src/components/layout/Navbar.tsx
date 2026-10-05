@@ -15,7 +15,7 @@ const navItems = [
   { label: "Compare", href: "/compare" },
   { label: "Changelog", href: "/changelog" },
   { label: "Docs", href: BRAND.links.docs },
-  { label: "Community", href: "/contact" },
+  { label: "Community", href: "/community/" },
 ];
 
 export function Navbar() {

@@ -4,7 +4,6 @@ import { PRODUCT } from "@/lib/product";
 import solutions from "@/../content/product/solutions.json";
 import comparisons from "@/../content/product/comparisons.json";
 import { BRAND } from "@/lib/brand";
-import { COMPETITORS } from "@/lib/competitors";
 import { DOC_VERSIONS } from "@/lib/docs/versions";
 import { getAllDocSlugs } from "@/lib/docs/content";
 
@@ -43,6 +42,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       "/brand",
       "/use-cases",
       "/security",
+      "/support",
+      "/community",
       "/deploy",
       "/deploy/architecture",
       ...PRODUCT.platform.products.map((p) => `/product/${p.slug}`),
@@ -50,7 +51,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...PRODUCT.deployments.models.map((p) => `/deploy/${p.id}`),
       ...solutions.map((p) => `/solutions/${p.slug}`),
       ...comparisons.map((p) => `/compare/${p.slug}`),
-      ...COMPETITORS.map((c) => c.href),
     ].map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified,

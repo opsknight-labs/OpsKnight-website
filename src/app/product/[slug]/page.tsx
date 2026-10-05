@@ -11,6 +11,7 @@ import {
   SectionIntro,
   TextLink,
 } from "@/components/site/Primitives";
+import { ProductWorkflow } from "@/components/site/ProductWorkflow";
 import { ArchitectureViewer } from "@/components/site/Experiences";
 export function generateStaticParams() {
   return PRODUCT.platform.products.map((p) => ({ slug: p.slug }));
@@ -114,6 +115,33 @@ export default async function ProductPage({
           {boundary && <p className="site-boundary">{boundary}</p>}
         </div>
       </section>
+      {["paging", "on-call", "chatops", "status-pages"].includes(slug) && (
+        <section className="site-section site-dark">
+          <div className="site-container">
+            <ProductWorkflow slug={slug} />
+          </div>
+        </section>
+      )}
+      {p.story.map((chapter, index) => (
+        <section
+          className={`site-section product-chapter ${index % 2 ? "site-light-alt" : "site-white"}`}
+          key={chapter.title}
+        >
+          <div className="site-container product-chapter-grid">
+            <div className="chapter-marker">
+              <span className="signal-dot" />
+              {String(index + 1).padStart(2, "0")} / {p.label.toUpperCase()}
+            </div>
+            <div className="interior-copy">
+              <h2>{chapter.title}</h2>
+              <p>{chapter.body}</p>
+              <TextLink href={productDocs(chapter.docs)}>
+                Explore the workflow
+              </TextLink>
+            </div>
+          </div>
+        </section>
+      ))}
       {slug === "operations" && (
         <section className="site-section site-dark">
           <div className="site-container">

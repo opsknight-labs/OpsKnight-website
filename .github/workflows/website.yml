@@ -1,6 +1,7 @@
 name: Website quality
 on:
   push:
+    branches: [main]
   pull_request:
 permissions:
   contents: read
@@ -20,7 +21,27 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run test:export
-      - run: npx playwright install --with-deps chromium
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-pages-static
+          path: out/
+  browser:
+    # Match the pinned Linux browser/font environment used to capture baselines.
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    needs: static-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: cloudflare-pages-static
+          path: out/
       - name: Test the exported site
         run: |
           PORT=5001 node scripts/serve-static.mjs &
@@ -30,7 +51,3 @@ jobs:
         with:
           name: website-browser-evidence
           path: test-results/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cloudflare-pages-static
-          path: out/

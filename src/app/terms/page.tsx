@@ -14,7 +14,9 @@ export default function TermsPage() {
         <h1 className="text-4xl font-semibold tracking-tight text-[#111827]">
           Terms of Service
         </h1>
-        <p className="mt-4 text-sm text-slate-500">Last updated: September 13, 2026</p>
+        <p className="mt-4 text-sm text-slate-500">
+          Last updated: October 5, 2026
+        </p>
         <div className="mt-8 space-y-6 text-base leading-relaxed text-[#4b5563]">
           <p>
             These terms cover the public website at {BRAND.domain}. Software
@@ -25,8 +27,7 @@ export default function TermsPage() {
             OpsKnight v2.0.0
           </h2>
           <p>
-            The active OpsKnight v{BRAND.version} release is
-            distributed under{" "}
+            The active OpsKnight v{BRAND.version} release is distributed under{" "}
             <a
               href={BRAND.links.license}
               className="text-[#d21a1b] hover:underline"
@@ -35,26 +36,28 @@ export default function TermsPage() {
             >
               GNU Affero General Public License version 3 only
             </a>{" "}
-            ({BRAND.license}). The AGPL includes obligations for modified versions
-            used for remote network interaction, including the corresponding-source
-            requirement in section 13.
+            ({BRAND.license}). The AGPL includes obligations for modified
+            versions used for remote network interaction, including the
+            corresponding-source requirement in section 13.
           </p>
           <p>
-            Separately licensed Enterprise modules, hosted services, support, or
-            other commercial offerings may have their own terms. Those offerings do
-            not silently change the license attached to an already published
-            release.
+            Commercial support, implementation services, sponsorship, and
+            services that incur external operating or licensing costs may have
+            separate terms. Those terms do not change the license attached to a
+            published software release.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
             Historical releases
           </h2>
           <p>
-            OpsKnight v{BRAND.legacyVersion} and earlier published releases retain
-            the licenses that accompanied those artifacts, including {BRAND.legacyLicense}
-            where applicable. The v2.0.0 transition does not retroactively revoke or
-            replace those rights. A release, tag, container image, chart, or source
-            archive keeps the license that accompanied that artifact.
+            OpsKnight v{BRAND.legacyVersion} and earlier published releases
+            retain the licenses that accompanied those artifacts, including{" "}
+            {BRAND.legacyLicense}
+            where applicable. The v2.0.0 transition does not retroactively
+            revoke or replace those rights. A release, tag, container image,
+            chart, or source archive keeps the license that accompanied that
+            artifact.
           </p>
           <p>
             The repository{" "}
@@ -67,8 +70,8 @@ export default function TermsPage() {
               license-transition notice
             </a>{" "}
             explains the release boundary in more detail. The applicable license
-            text shipped with a particular software artifact controls its software
-            grant.
+            text shipped with a particular software artifact controls its
+            software grant.
           </p>
 
           <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
@@ -95,17 +98,20 @@ export default function TermsPage() {
           </h2>
           <p>
             The marketing site is provided as-is. There is no support SLA. This
-            website repository is not made available under the OpsKnight Community
-            software license merely because it describes the Community product.
-            Trademarks of other companies, including PagerDuty, Slack, and Grafana,
-            belong to their owners. OpsKnight is not affiliated with them; names and
-            marks appear only to identify products we compare or interoperate with.
+            website repository is not made available under the OpsKnight
+            Community software license merely because it describes the Community
+            product. Trademarks of other companies, including PagerDuty, Slack,
+            and Grafana, belong to their owners. OpsKnight is not affiliated
+            with them; names and marks appear only to identify products we
+            compare or interoperate with.
           </p>
 
-          <h2 className="pt-2 text-2xl font-semibold text-[#111827]">Changes</h2>
+          <h2 className="pt-2 text-2xl font-semibold text-[#111827]">
+            Changes
+          </h2>
           <p>
-            We may update these terms. Material changes will be dated at the top of
-            this page.
+            We may update these terms. Material changes will be dated at the top
+            of this page.
           </p>
         </div>
       </div>

@@ -62,7 +62,7 @@ export const releases: ReleaseItem[] = [
       },
       {
         type: "added",
-        title: "Enterprise Governance & Delivery Control",
+        title: "Governance & Delivery Control",
         items: [
           "Incident response policy engine: versioned SLA policies, classification, and support-hours rules at workspace and service scope.",
           "SCIM 2.0 provisioning: Users, Groups, discovery endpoints, team membership, and bearer token rotation.",

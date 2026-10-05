@@ -24,6 +24,21 @@ type SearchItem = {
 };
 
 const STATIC_QUICK_LINKS: SearchItem[] = [
+  {
+    title: "Support & Services",
+    href: "/support/",
+    category: "Services",
+    keywords:
+      "sponsor sponsorship professional commercial support implementation consulting monitoring integration architecture",
+  },
+  {
+    title: "Contact & Corporate Evaluation",
+    href: "/contact/",
+    category: "Services",
+    keywords:
+      "procurement supplier security questionnaire email contact support",
+  },
+
   ...PRODUCT.platform.products.map((p) => ({
     title: p.label,
     href: `/product/${p.slug}/`,
@@ -99,7 +114,7 @@ const STATIC_QUICK_LINKS: SearchItem[] = [
   },
   {
     title: "Community & Discussions",
-    href: "/contact",
+    href: "/community/",
     category: "Company",
     keywords: "github issues questions discord",
   },

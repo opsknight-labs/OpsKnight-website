@@ -12,6 +12,33 @@
         "Create and acknowledge incidents",
         "Assign responders and track ownership",
         "Keep a timeline and action items"
+      ],
+      "story": [
+        {
+          "title": "One incident, with the context to act.",
+          "body": "An incoming signal belongs to a service. Priority, urgency, ownership and related alert context give the responder a place to begin instead of another isolated notification.",
+          "docs": "concepts/incidents"
+        },
+        {
+          "title": "Acknowledge. Assign. Investigate.",
+          "body": "Acknowledge the incident, assign a responder and record the investigation. Keep notes, watchers and the operational timeline together so the next person can understand the response.",
+          "docs": "guides/incidents/respond-to-an-incident"
+        },
+        {
+          "title": "Response timing with a policy behind it.",
+          "body": "Use the documented response-policy and SLA workflow to inspect acknowledgement and resolution timing. Review the applicable policy and support-hours context before interpreting a breach.",
+          "docs": "concepts/incident-sla"
+        },
+        {
+          "title": "Coordinate without losing the record.",
+          "body": "Create a provider-backed war room when collaboration is needed. OpsKnight remains authoritative for incident state while Slack or Teams projects the response into the conversation.",
+          "docs": "guides/chatops/create-war-room"
+        },
+        {
+          "title": "Recovery is the beginning of learning.",
+          "body": "Resolve the incident, preserve the response timeline and carry follow-up work into a postmortem with accountable owners.",
+          "docs": "concepts/postmortems"
+        }
       ]
     },
     {
@@ -26,6 +53,33 @@
         "Timezone-aware rotations",
         "Temporary overrides and handoffs",
         "User, team and schedule escalation targets"
+      ],
+      "story": [
+        {
+          "title": "A schedule is a promise of ownership.",
+          "body": "Build rotations around real team availability, time zones and coverage. Verify the effective on-call responder instead of relying on how a calendar looks.",
+          "docs": "guides/on-call/build-schedule"
+        },
+        {
+          "title": "Change coverage without rebuilding the rotation.",
+          "body": "Use an override for planned leave or a last-minute swap. Review its time window and validate that the intended responder owns the affected interval.",
+          "docs": "guides/on-call/overrides"
+        },
+        {
+          "title": "Primary, backup, and a viable final target.",
+          "body": "An escalation step can target a user, team or effective schedule. Set explicit delays and channels, then test unavailable users and empty schedules before relying on the policy.",
+          "docs": "concepts/escalation-policies"
+        },
+        {
+          "title": "Make the handoff deliberate.",
+          "body": "Review active incidents, current ownership and incoming coverage together. A schedule transition is an operational handoff, not a guarantee that every open incident was understood.",
+          "docs": "guides/on-call/handoffs"
+        },
+        {
+          "title": "Test the page before you need it.",
+          "body": "Validate the selected responder, healthy endpoints and delivery evidence with a synthetic incident. A saved schedule alone does not prove an end-to-end page.",
+          "docs": "guides/on-call/test-on-call"
+        }
       ]
     },
     {
@@ -40,6 +94,43 @@
         "Multi-channel routing",
         "Twilio voice for triggered incidents",
         "Delivery evidence and retry visibility"
+      ],
+      "story": [
+        {
+          "title": "Intent first. Delivery evidence next.",
+          "body": "The notification control plane stores a logical intent and provider-specific attempts. Routing and admission decide eligible work; callbacks add delivery evidence without rewriting the incident lifecycle.",
+          "docs": "concepts/notifications"
+        },
+        {
+          "title": "Critical, transactional and bulk work.",
+          "body": "Notification priority and worker lanes keep time-sensitive response work distinguishable from general and bulk processing. Inspect admission, oldest queue age and lane health together when capacity is constrained.",
+          "docs": "reference/notifications"
+        },
+        {
+          "title": "Route to people and service destinations.",
+          "body": "Configure lifecycle events, channels and healthy responder endpoints. Slack and Teams service destinations receive lifecycle messages; linked destinations are not an ordered fallback chain.",
+          "docs": "guides/notifications/configure-routing"
+        },
+        {
+          "title": "Voice for the triggered incident.",
+          "body": "Twilio voice paging supports responder acknowledgement input. Acknowledgement and resolution events do not start additional voice calls. Test the call input against the actual incident state.",
+          "docs": "integrations/communication/voice"
+        },
+        {
+          "title": "Retry the operation, not the incident.",
+          "body": "Transient failures, provider rate limits, deferred work and permanent failures require different actions. Inspect the existing retry schedule, respect provider hints and correct bad credentials or endpoints before retrying.",
+          "docs": "guides/notifications/retry-failures"
+        },
+        {
+          "title": "Accepted is not the same as delivered.",
+          "body": "Trace the notification ID, attempts, provider message ID, callback outcome and next-attempt time. Superseded intents are discarded when a newer incident state makes them stale.",
+          "docs": "guides/notifications/inspect-delivery"
+        },
+        {
+          "title": "See the failure where it happened.",
+          "body": "Use Notifications Operations and Health Center to connect provider failures, capacity and worker availability. Provider delivery is an operational outcome to verify, not a promise attached to a queued page.",
+          "docs": "operate/reliability/health-center"
+        }
       ]
     },
     {
@@ -54,6 +145,33 @@
         "Acknowledge, assign and resolve",
         "War rooms and participant synchronization",
         "Service destinations for Slack and Teams"
+      ],
+      "story": [
+        {
+          "title": "Choose the conversation that owns the response.",
+          "body": "Create an incident-scoped Slack or Microsoft Teams war room manually, or use the effective global/service policy for automatic creation. One destination should own automatic room creation for a service.",
+          "docs": "guides/chatops/create-war-room"
+        },
+        {
+          "title": "Keep actions attached to the incident.",
+          "body": "Provider cards project incident context and supported actions. Identity links, product permissions, provider capabilities and lifecycle phase determine which actions can run.",
+          "docs": "concepts/chatops"
+        },
+        {
+          "title": "Policy before provisioning.",
+          "body": "Service policy overrides the global default. Validate the effective destination and permissions with a new incident; changing policy does not migrate an already provisioned room.",
+          "docs": "guides/chatops/configure-global-policy"
+        },
+        {
+          "title": "Reconcile drift instead of creating duplicates.",
+          "body": "Inspect the durable room and operation identity when provisioning times out, membership changes or a card is stale. Retry or reconcile the existing operation before attempting another room.",
+          "docs": "guides/chatops/create-war-room"
+        },
+        {
+          "title": "Close the response with the conversation.",
+          "body": "Resolve the incident, verify terminal context and close or archive the room through supported controls. Provider retention and cleanup capabilities determine the final room behavior.",
+          "docs": "guides/chatops/create-war-room"
+        }
       ]
     },
     {
@@ -68,6 +186,33 @@
         "Components and service mapping",
         "Incident and maintenance updates",
         "Subscribers, branding and uptime"
+      ],
+      "story": [
+        {
+          "title": "Internal response. Deliberate public communication.",
+          "body": "Map services to customer-facing components and choose approved impact wording. Projection controls the fields that cross the privacy boundary; it does not serialize the internal incident directly.",
+          "docs": "guides/status-pages/publish-update"
+        },
+        {
+          "title": "Publish, verify, correct, resolve.",
+          "body": "Confirm affected components, publish a scoped update and open the page through the audience\u2019s hostname while signed out. Follow with a correcting update or resolution and verify the public state again.",
+          "docs": "guides/status-pages/publish-update"
+        },
+        {
+          "title": "A page and its subscribers are separate outcomes.",
+          "body": "Subscriber and webhook delivery are asynchronous and separate from page rendering. Review verification, unsubscribe and API-access behavior, then inspect delivery independently.",
+          "docs": "guides/status-pages/subscribers-and-api-access"
+        },
+        {
+          "title": "Brand the customer-facing surface.",
+          "body": "Configure the installation\u2019s supported status page, service mapping and privacy options. Verify DNS, TLS and the public URL when using a custom domain.",
+          "docs": "guides/status-pages/create-and-configure"
+        },
+        {
+          "title": "History with an operational boundary.",
+          "body": "Service availability and incident history give customers context. Check projection freshness, privacy settings and documented metrics before treating the public view as current.",
+          "docs": "concepts/status-pages"
+        }
       ]
     },
     {
@@ -82,6 +227,28 @@
         "MTTA and MTTR",
         "Incident volume and service trends",
         "Reports and configurable dashboards"
+      ],
+      "story": [
+        {
+          "title": "Measure the response, not just the alert count.",
+          "body": "Explore incident volume, acknowledgement and resolution timing with the available dashboard filters. Compare like-for-like time windows and service context.",
+          "docs": "guides/analytics/use-analytics"
+        },
+        {
+          "title": "Keep current state and historical timing distinct.",
+          "body": "An active incident count describes the current response. MTTA and MTTR describe timing across the selected population; inspect the sample and filters before drawing conclusions.",
+          "docs": "concepts/analytics"
+        },
+        {
+          "title": "Bring the questions back to the team.",
+          "body": "Use the analysis to identify repeated incidents and response bottlenecks, then connect findings to owned postmortem action items. Metrics support investigation rather than explaining root cause on their own.",
+          "docs": "concepts/postmortems"
+        },
+        {
+          "title": "Verify the evidence behind a review.",
+          "body": "Record the selected time range and service scope when sharing a finding. Follow the analytics guide to understand available views and operational limitations.",
+          "docs": "guides/analytics/use-analytics"
+        }
       ]
     },
     {
@@ -96,6 +263,28 @@
         "Incident timeline",
         "Interactive 5 Whys",
         "Action items with owners and due dates"
+      ],
+      "story": [
+        {
+          "title": "Start from the incident evidence.",
+          "body": "Connect impact, detection, response and resolution to the source timeline. Preserve evidence links so the review remains traceable to the incident record.",
+          "docs": "concepts/postmortems"
+        },
+        {
+          "title": "Draft. Review. Publish.",
+          "body": "Separate investigation from the published review. Distinguish observed facts from hypotheses and write for system improvement rather than individual blame.",
+          "docs": "guides/postmortems/create-review-publish"
+        },
+        {
+          "title": "Learning needs an owner.",
+          "body": "Track follow-up action items with an owner and status. Close remediation work when it is verifiably complete, rather than when the incident review is written.",
+          "docs": "concepts/postmortems"
+        },
+        {
+          "title": "Carry the change into the next response.",
+          "body": "Review detection gaps, response friction and contributing conditions together. Use the documented workflow to keep review and publication deliberate.",
+          "docs": "concepts/postmortem-workflow"
+        }
       ]
     },
     {
@@ -110,6 +299,28 @@
         "Installable progressive web app",
         "Per-device Web Push registration",
         "Mobile incident response"
+      ],
+      "story": [
+        {
+          "title": "The response fits in your pocket.",
+          "body": "Use the mobile incident routes with the same installation identity and permissions. Keep active incidents and their context accessible away from the desktop.",
+          "docs": "concepts/mobile"
+        },
+        {
+          "title": "Install the progressive web app.",
+          "body": "Follow the device and browser-specific installation guide. Mobile is a PWA, not a separate app-store product.",
+          "docs": "guides/mobile/install-and-notifications"
+        },
+        {
+          "title": "Register each device deliberately.",
+          "body": "Enable Web Push, grant the required browser permission and validate the device endpoint with the notification workflow. Delivery behavior depends on the browser and device.",
+          "docs": "guides/notifications/configure-web-push"
+        },
+        {
+          "title": "Verify before relying on it.",
+          "body": "Test notifications and incident access on the actual phone. Device permission, endpoint registration and product authorization are separate checks.",
+          "docs": "guides/mobile/install-and-notifications"
+        }
       ]
     },
     {
@@ -124,6 +335,28 @@
         "OIDC and SCIM 2.0",
         "Role and resource authorization",
         "Session registry and audit events"
+      ],
+      "story": [
+        {
+          "title": "Identity belongs to your organization.",
+          "body": "Connect OIDC authentication and provision users and groups with SCIM. Enforce MFA at your identity provider; OpsKnight does not provide a native server-verified second factor.",
+          "docs": "guides/identity/configure-oidc"
+        },
+        {
+          "title": "Access is an operational control.",
+          "body": "Review roles, scoped authorization and session behavior. Provisioning and deprovisioning should be verified against the effective product permissions.",
+          "docs": "concepts/permissions"
+        },
+        {
+          "title": "Keys and infrastructure have an owner.",
+          "body": "Configure secrets, network access, HTTPS and recovery for your deployment. Preserve required encryption keys separately from database backups and follow the key-rotation guide.",
+          "docs": "operate/security/hardening"
+        },
+        {
+          "title": "Prepare evidence for your evaluation.",
+          "body": "Use the security and procurement entry point for release policies, vulnerability handling, SBOM scope, supported versions and shared responsibility. These materials do not confer external certification.",
+          "docs": "operate/security"
+        }
       ]
     },
     {
@@ -138,6 +371,38 @@
         "Health Center and worker visibility",
         "Prometheus metrics and structured logs",
         "Independently scalable runtime roles"
+      ],
+      "story": [
+        {
+          "title": "Scale the responsibility that is constrained.",
+          "body": "Choose an integrated process or separate Web, Scheduler, General Worker, Critical Worker, Bulk Worker and Status Projector. A split runtime alone does not provide high availability.",
+          "docs": "operate/deploy/architecture/runtime-roles"
+        },
+        {
+          "title": "Workers, queues and providers tell different stories.",
+          "body": "Inspect worker heartbeat, oldest pending job age and provider state together. A growing critical queue has a different operational priority from delayed bulk work.",
+          "docs": "operate/reliability/health-center"
+        },
+        {
+          "title": "Budget database connections before adding replicas.",
+          "body": "Include each role\u2019s replica count and pool size in the connection budget. More workers can exhaust database capacity instead of improving queue latency.",
+          "docs": "operate/deploy/architecture/database-connections"
+        },
+        {
+          "title": "Use PgBouncer where the topology calls for it.",
+          "body": "Follow the documented transaction-pooling and direct-connection requirements. Schema management and runtime traffic must use the connection paths appropriate to their work.",
+          "docs": "operate/deploy/docker-compose/pgbouncer"
+        },
+        {
+          "title": "Health Center for investigation. Metrics for monitoring.",
+          "body": "Use the Health Center to inspect recorded diagnostics and operational priorities. Connect documented health and Prometheus metrics to your own monitoring, and interpret component status rather than only HTTP status.",
+          "docs": "operate/reliability/health-and-metrics"
+        },
+        {
+          "title": "Make scale and recovery a tested plan.",
+          "body": "Scale the constrained role only after checking database and provider capacity. Plan backups, upgrades, ingress and recovery together for production availability.",
+          "docs": "operate/reliability/scaling"
+        }
       ]
     }
   ]

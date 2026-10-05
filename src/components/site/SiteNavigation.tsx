@@ -5,6 +5,7 @@ import { Github, Search, ArrowUpRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { PRODUCT } from "@/lib/product";
+import { IncidentSignal } from "./IncidentSignal";
 import { BRAND } from "@/lib/brand";
 const solutions = [
   ["Self-hosted operations", "self-hosted-incident-management"],
@@ -40,13 +41,20 @@ export function SiteNavigation() {
     };
   }, []);
   return (
+    <>
+    <IncidentSignal />
     <header className="site-nav" ref={header}>
       <a className="site-skip" href="#main-content">
         Skip to content
       </a>
       <div className="site-container nav-inner">
         <Link className="site-wordmark" href="/" aria-label="OpsKnight home">
-          <Image src="/brand/opsknight-mark.webp" width={32} height={32} alt="" />
+          <Image
+            src="/brand/opsknight-mark.webp"
+            width={32}
+            height={32}
+            alt=""
+          />
           OpsKnight
         </Link>
         <nav aria-label="Main navigation" className="desktop-nav">
@@ -88,11 +96,15 @@ export function SiteNavigation() {
           </details>
           <Link href="/integrations/">Integrations</Link>
           <Link href={BRAND.links.docs}>Docs</Link>
+          <Link href="/security/">Security</Link>
+          <Link href="/support/">Support & Services</Link>
           <details name="site-navigation" key={`community-${path}`}>
             <summary>
               Community <span>⌄</span>
             </summary>
             <div className="site-small-menu">
+              <Link href="/community/">Community hub</Link>
+              <Link href="/contact/">Contact</Link>
               <Link href={BRAND.links.github}>GitHub</Link>
               <Link href={BRAND.links.discussions}>Discussions</Link>
               <Link href={BRAND.links.contributing}>Contributing</Link>
@@ -133,12 +145,16 @@ export function SiteNavigation() {
               <Link href="/deploy/">Deploy</Link>
               <Link href="/security/">Security</Link>
               <Link href={BRAND.links.docs}>Docs</Link>
+              <Link href="/support/">Support & Services</Link>
+              <Link href="/community/">Community</Link>
+              <Link href="/contact/">Contact</Link>
               <Link href="/about/">About</Link>
             </nav>
           </details>
         </div>
       </div>
     </header>
+    </>
   );
 }
 export function SiteFooter() {
@@ -167,9 +183,12 @@ export function SiteFooter() {
               <Link href="/changelog/">What’s new</Link>
               <Link href="/compare/">Compare</Link>
               <Link href="/brand/">Brand</Link>
+              <Link href="/support/">Support & Services</Link>
+              <Link href="/contact/">Contact</Link>
             </div>
             <div>
               <span>COMMUNITY</span>
+              <Link href="/community/">Community hub</Link>
               <Link href={BRAND.links.github}>Source code</Link>
               <Link href={BRAND.links.discussions}>Discussions</Link>
               <Link href={BRAND.links.contributing}>Contributing</Link>

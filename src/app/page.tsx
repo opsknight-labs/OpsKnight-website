@@ -455,7 +455,8 @@ export default function Home() {
           <div className="paired-links">
             <TextLink href={BRAND.links.github}>View source</TextLink>
             <TextLink href="/changelog/">Read the release</TextLink>
-            <TextLink href={BRAND.links.sponsor}>Support development</TextLink>
+            <TextLink href="/support/">Support & Services</TextLink>
+            <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
           </div>
         </div>
       </section>

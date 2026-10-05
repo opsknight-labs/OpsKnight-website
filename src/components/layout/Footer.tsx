@@ -22,7 +22,7 @@ const footerLinks = {
     { label: "Brand", href: "/brand" },
   ],
   community: [
-    { label: "Community", href: "/contact" },
+    { label: "Community", href: "/community/" },
     { label: "GitHub Discussions", href: BRAND.links.discussions },
     { label: "Issues", href: BRAND.links.issues },
     { label: "Contributing", href: BRAND.links.contributing },

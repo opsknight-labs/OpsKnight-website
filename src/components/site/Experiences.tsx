@@ -15,6 +15,7 @@ import {
   Globe,
   Terminal,
 } from "lucide-react";
+import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
 const steps = [
   {
@@ -99,79 +100,219 @@ const steps = [
 export function IncidentLoop() {
   const [active, setActive] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const theater = useRef<HTMLDivElement>(null);
+  const manual = useRef(false);
+  const [cinematic, setCinematic] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(
+      "(min-width: 1100px) and (prefers-reduced-motion: no-preference)",
+    );
+    const update = () => setCinematic(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
+    if (!cinematic || !theater.current) return;
+    const chapters = theater.current.querySelectorAll<HTMLElement>(
+      "[data-loop-chapter]",
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (manual.current) return;
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0])
+          setActive(
+            Number((visible[0].target as HTMLElement).dataset.loopChapter),
+          );
+      },
+      { rootMargin: "-20% 0px -40% 0px", threshold: [0, 0.2, 0.4, 0.6] },
+    );
+    chapters.forEach((chapter) => observer.observe(chapter));
+    const resume = () => {
+      manual.current = false;
+    };
+    window.addEventListener("wheel", resume, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("wheel", resume);
+    };
+  }, [cinematic]);
   function select(i: number) {
+    manual.current = true;
     setActive(i);
   }
   const step = steps[active],
     Icon = step.icon;
   return (
-    <div className="incident-experience" ref={ref}>
-      <div className="loop-tabs" role="tablist" aria-label="Incident lifecycle">
-        {steps.map((s, i) => (
-          <button
-            key={s.label}
-            id={`loop-tab-${i}`}
-            role="tab"
-            aria-selected={active === i}
-            aria-controls="loop-panel"
-            tabIndex={active === i ? 0 : -1}
-            onClick={() => select(i)}
-            onKeyDown={(e) => {
-              const next =
-                e.key === "ArrowRight"
-                  ? (i + 1) % steps.length
-                  : e.key === "ArrowLeft"
-                    ? (i + steps.length - 1) % steps.length
-                    : e.key === "Home"
-                      ? 0
-                      : e.key === "End"
-                        ? steps.length - 1
-                        : null;
-              if (next !== null) {
-                e.preventDefault();
-                select(next);
-                document.getElementById(`loop-tab-${next}`)?.focus();
-              }
-            }}
-          >
-            <span>{String(i + 1).padStart(2, "0")}</span>
-            {s.label}
-          </button>
-        ))}
+    <div
+      className={`incident-theater ${cinematic ? "cinematic" : ""}`}
+      ref={theater}
+    >
+      <div className="incident-experience" ref={ref}>
+        <div
+          className="loop-tabs"
+          role="tablist"
+          aria-label="Incident lifecycle"
+        >
+          {steps.map((s, i) => (
+            <button
+              key={s.label}
+              id={`loop-tab-${i}`}
+              role="tab"
+              aria-selected={active === i}
+              aria-controls="loop-panel"
+              tabIndex={active === i ? 0 : -1}
+              onClick={() => select(i)}
+              onKeyDown={(e) => {
+                const next =
+                  e.key === "ArrowRight"
+                    ? (i + 1) % steps.length
+                    : e.key === "ArrowLeft"
+                      ? (i + steps.length - 1) % steps.length
+                      : e.key === "Home"
+                        ? 0
+                        : e.key === "End"
+                          ? steps.length - 1
+                          : null;
+                if (next !== null) {
+                  e.preventDefault();
+                  select(next);
+                  document.getElementById(`loop-tab-${next}`)?.focus();
+                }
+              }}
+            >
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              {s.label}
+            </button>
+          ))}
+        </div>
+        <div
+          id="loop-panel"
+          role="tabpanel"
+          aria-labelledby={`loop-tab-${active}`}
+          tabIndex={0}
+          className="loop-panel"
+        >
+          <div className="loop-copy">
+            <p className="site-eyebrow">ASTER CLOUD / ILLUSTRATIVE WORKFLOW</p>
+            <h3>{step.title}</h3>
+            <p>{step.detail}</p>
+            <div className="loop-controls">
+              <span>{String(active + 1).padStart(2, "0")} / 10</span>
+              <button onClick={() => select((active + 1) % steps.length)}>
+                Next step <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+          <div className="signal-stage" key={active}>
+            <div className="stage-orbit" />
+            <div className="theater-signal-path" aria-hidden="true">
+              <span className="signal-dot" />
+            </div>
+            {cinematic && <TheaterScene active={active} />}
+
+            <div className="stage-node">
+              <Icon size={30} />
+            </div>
+            <div className="stage-event">
+              <span className="signal-dot" />
+              <span>{step.event}</span>
+            </div>
+            <div className="stage-bottom">
+              <span>CHECKOUT API</span>
+              <span>INC-1042</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        id="loop-panel"
-        role="tabpanel"
-        aria-labelledby={`loop-tab-${active}`}
-        tabIndex={0}
-        className="loop-panel"
+        className="theater-chapters"
+        aria-label="Scroll through the incident lifecycle"
       >
-        <div className="loop-copy">
-          <p className="site-eyebrow">NORTHSTAR / ILLUSTRATIVE WORKFLOW</p>
-          <h3>{step.title}</h3>
-          <p>{step.detail}</p>
-          <div className="loop-controls">
-            <span>{String(active + 1).padStart(2, "0")} / 10</span>
-            <button onClick={() => select((active + 1) % steps.length)}>
-              Next step <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-        <div className="signal-stage" key={active}>
-          <div className="stage-orbit" />
-          <div className="stage-node">
-            <Icon size={30} />
-          </div>
-          <div className="stage-event">
-            <span className="signal-dot" />
-            <span>{step.event}</span>
-          </div>
-          <div className="stage-bottom">
-            <span>CHECKOUT API</span>
-            <span>INC-1042</span>
-          </div>
-        </div>
+        {steps.map((chapter, index) => (
+          <section
+            key={chapter.label}
+            data-loop-chapter={index}
+            className="theater-chapter"
+          >
+            <p className="site-eyebrow">
+              <span className="signal-dot" />
+              {String(index + 1).padStart(2, "0")} /{" "}
+              {chapter.label.toUpperCase()}
+            </p>
+            <h3>{chapter.title}</h3>
+            <p>{chapter.detail}</p>
+          </section>
+        ))}
       </div>
+    </div>
+  );
+}
+function TheaterScene({ active }: { active: number }) {
+  const image =
+    active === 2 || active === 5
+      ? "incident-detail.png"
+      : active === 3
+        ? "on-call-schedule-detail.png"
+        : active === 6
+          ? "teams-chatops-war-room.png"
+          : active === 7
+            ? "status-pages.png"
+            : active === 9
+              ? "postmortems.png"
+              : null;
+  if (image)
+    return (
+      <div className={`theater-product scene-${active}`}>
+        <ProductScreenshot
+          name={image}
+          alt={`Real OpsKnight product evidence for ${steps[active].label.toLowerCase()}`}
+        />
+      </div>
+    );
+  if (active === 4)
+    return (
+      <div className="theater-phone">
+        <PhoneCall size={26} />
+        <small>ILLUSTRATIVE VOICE PAGE</small>
+        <strong>Checkout needs you.</strong>
+        <span>Anika Rao · P1 incident</span>
+        <span className="phone-response">Acknowledgement input</span>
+      </div>
+    );
+  if (active === 1)
+    return (
+      <div
+        className="converging-signals"
+        aria-label="Related signals converge into one incident"
+      >
+        <span>Latency</span>
+        <span>Errors</span>
+        <span>Provider key</span>
+        <strong>One incident</strong>
+      </div>
+    );
+  if (active === 8)
+    return (
+      <div className="recovery-scene">
+        <Check size={52} />
+        <strong>Checkout recovered.</strong>
+        <span>Timeline preserved. Follow-up begins.</span>
+      </div>
+    );
+  return (
+    <div className="incoming-signal">
+      <Image
+        src="/integrations/datadog.svg"
+        width={48}
+        height={48}
+        alt="Datadog"
+      />
+      <strong>Checkout p95 &gt; 4.5s</strong>
+      <span>Monitoring signal → OpsKnight</span>
     </div>
   );
 }

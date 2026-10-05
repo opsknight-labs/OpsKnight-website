@@ -143,6 +143,9 @@ test("visual coverage for key pages", async ({ page }) => {
     "/integrations/",
     "/install/",
     "/security/",
+    "/support/",
+    "/contact/",
+    "/community/",
     "/compare/",
     "/docs/v2.0.0/",
   ]) {
@@ -173,6 +176,9 @@ test("WCAG AA checks on marketing flows", async ({ page }) => {
     "/integrations/",
     "/product/incidents/",
     "/security/",
+    "/support/",
+    "/contact/",
+    "/community/",
   ]) {
     await page.goto(route);
     const results = await new AxeBuilder({ page })
@@ -184,5 +190,65 @@ test("WCAG AA checks on marketing flows", async ({ page }) => {
         nodes: v.nodes.map((n) => n.target),
       })),
     ).toEqual([]);
+  }
+});
+
+test("organizations can find services and evaluate security without a community account", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+  if (testInfo.project.name === "mobile") {
+    await page.getByLabel("Open navigation").click();
+    await page
+      .getByRole("navigation", { name: "Mobile navigation" })
+      .getByRole("link", { name: "Support & Services", exact: true })
+      .click();
+  } else {
+    await page
+      .getByRole("navigation", { name: "Main navigation" })
+      .getByRole("link", { name: "Support & Services", exact: true })
+      .click();
+  }
+  await expect(page).toHaveURL(/\/support\//);
+  await expect(
+    page.getByRole("heading", { name: "Commercial Support", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Discuss support", exact: true }),
+  ).toHaveAttribute("href", /^mailto:help@opsknight\.com\?subject=/);
+  await expect(page.locator(".services-process li")).toHaveCount(5);
+  await page.goto("/contact/");
+  await expect(page.locator("#procurement a").first()).toHaveAttribute(
+    "href",
+    /^mailto:help@opsknight\.com\?subject=/,
+  );
+  await expect(page.locator("#security a").first()).toHaveAttribute(
+    "href",
+    /security\/advisories\/new$/,
+  );
+  await page
+    .locator("#procurement a")
+    .filter({ hasText: "Review security" })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: "For security & procurement teams",
+      exact: true,
+    }),
+  ).toBeVisible();
+  const policy = page
+    .locator("#evaluation")
+    .getByRole("link", { name: "Read security policy", exact: true });
+  await expect(policy).toHaveAttribute(
+    "href",
+    new RegExp(`/blob/${manifest.release.tag}/SECURITY\\.md$`),
+  );
+  for (const width of [900, 1050, 1100, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
   }
 });

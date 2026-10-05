@@ -22,9 +22,9 @@ export const BRAND = {
   legacyLicense: LEGACY_STABLE_LICENSE,
   tagline: "Incident operations you control",
   description:
-    "Self-hosted incident command center: on-call rotations, paging, Slack war rooms, status pages, and MTTA/MTTR — on your infrastructure.",
+    "Self-hosted incident management and on-call. Detect, page, coordinate, communicate and learn on infrastructure you control.",
   fullDescription:
-    "OpsKnight is a self-hosted incident command center — an alternative to PagerDuty, incident.io, Opsgenie, Squadcast, Splunk On-Call, and Grafana Cloud IRM.",
+    "OpsKnight brings incident management, on-call, paging, ChatOps, status pages and postmortems together on infrastructure you control.",
   domain: "opsknight.com",
   integrationCount: PRODUCT.inboundIntegrationCount,
   integrationCountLabel: String(PRODUCT.inboundIntegrationCount),
@@ -48,7 +48,7 @@ export const BRAND = {
     contributing:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/CONTRIBUTING.md",
     // v2.0.0 stable release license.
-    license: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    license: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/LICENSE`,
     // Backward-compatible alias for pages that still use the development key.
     developmentLicense:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
@@ -60,6 +60,13 @@ export const BRAND = {
     trademarks:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md",
     security: "https://github.com/opsknight-labs/OpsKnight/security",
+    securityPolicy: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/SECURITY.md`,
+    vulnerabilityResponse: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/docs/security/vulnerability-response.md`,
+    sbom: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/docs/security/sbom.md`,
+    supportedVersions: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/docs/security/supported-versions.md`,
+    sharedResponsibility: `https://github.com/opsknight-labs/OpsKnight/blob/${PRODUCT.release.tag}/docs/compliance/shared-responsibility.md`,
+    privateSecurityReport:
+      "https://github.com/opsknight-labs/OpsKnight/security/advisories/new",
     helmCharts: "https://github.com/opsknight-labs/helm-charts",
   },
 
@@ -74,8 +81,8 @@ export const BRAND = {
   },
 
   seo: {
-    title: "OpsKnight | Self-hosted on-call & incident response",
-    description: `OpsKnight ${PRODUCT.release.tag} is self-hosted incident command for on-call, paging, Slack & Teams war rooms, status pages, and SLA analytics under ${PRODUCT_LICENSE}.`,
+    title: "OpsKnight | Incident operations you control",
+    description: `OpsKnight ${PRODUCT.release.tag}: self-hosted incident management and on-call, with paging, ChatOps, status pages and postmortems under ${PRODUCT_LICENSE}.`,
     keywords: [
       "incident management",
       "on-call",
@@ -137,7 +144,7 @@ kubectl -n opsknight create secret generic opsknight-secrets \\
   --from-literal=ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
   --from-literal=API_KEY_SECRET="$(openssl rand -base64 32)"
 
-# 2. Deploy OpsKnight Helm Chart with Enterprise HA values
+# 2. Deploy OpsKnight Helm Chart with production HA values
 helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
   --namespace opsknight \\
   -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`,
