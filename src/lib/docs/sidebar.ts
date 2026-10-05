@@ -32,17 +32,6 @@ const V2_ROOT_SECTION_ORDER = new Map<string, number>([
   ["develop", 8],
 ]);
 
-const V2_ROOT_SECTION_ORDER = new Map<string, number>([
-  ["start", 1],
-  ["concepts", 2],
-  ["guides", 3],
-  ["integrations", 4],
-  ["operate", 5],
-  ["reference", 6],
-  ["troubleshooting", 7],
-  ["develop", 8],
-]);
-
 function readTitle(filePath: string) {
   const content = fs.readFileSync(filePath, "utf8");
   const { data, content: body } = matter(content);
