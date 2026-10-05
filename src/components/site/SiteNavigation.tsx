@@ -180,6 +180,9 @@ export function SiteFooter() {
               <Link href="/integrations/">Integrations</Link>
               <Link href="/security/">Security</Link>
               <Link href="/deploy/">Deployment</Link>
+              <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
+                🟢 Live OpsKnight status
+              </a>
             </div>
             <div>
               <span>RESOURCES</span>
@@ -205,6 +208,9 @@ export function SiteFooter() {
             v{PRODUCT.release.version} · {PRODUCT.release.license} · Self-hosted
           </span>
           <div>
+            <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
+              Live status ↗
+            </a>
             <Link href="/privacy/">Privacy</Link>
             <Link href="/terms/">Terms</Link>
             <Link href="/about/">About</Link>

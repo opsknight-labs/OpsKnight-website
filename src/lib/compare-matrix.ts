@@ -17,9 +17,19 @@ export type CompareVendorId =
   | "splunk"
   | "grafana";
 
+export type CompareCategory =
+  | "deployment"
+  | "response"
+  | "paging"
+  | "collaboration"
+  | "status"
+  | "analytics"
+  | "identity"
+  | "integrations";
+
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "13 Sep 2026";
+export const COMPARE_AS_OF = "5 Oct 2026";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;
@@ -37,6 +47,7 @@ export const COMPARE_VENDORS: {
 
 export type CompareRow = {
   feature: string;
+  category?: CompareCategory;
   source?: string;
   values: Record<CompareVendorId, CompareCell>;
 };
@@ -83,9 +94,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Deployment",
-        source: "OpsKnight: Compose/Helm. Others: vendor product model as of Sep 2026.",
+        category: "deployment",
+        source: "OpsKnight: Compose, Swarm, Helm, Kustomize. Others: vendor product model as of Oct 2026.",
         values: {
-          opsknight: "Self-hosted Community (your VPC)",
+          opsknight: "Self-hosted: Compose, Swarm, Helm, Kustomize (your VPC)",
           pagerduty: "Vendor SaaS",
           incidentio: "Vendor SaaS (GCP)",
           opsgenie: "Vendor SaaS (Atlassian Cloud)",
@@ -96,9 +108,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Software license",
-        source: `OpsKnight v1.5 Community: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
+        category: "deployment",
+        source: `OpsKnight v2.0.0: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
         values: {
-          opsknight: `${BRAND.license} (v1.5 Community)`,
+          opsknight: `${BRAND.license} (v2.0.0)`,
           pagerduty: "Proprietary",
           incidentio: "Proprietary",
           opsgenie: "Proprietary",
@@ -109,9 +122,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Commercial model",
-        source: "OpsKnight Community and commercial offerings have separate licensing boundaries. Vendor pricing references should be confirmed on vendor sites.",
+        category: "deployment",
+        source: "OpsKnight: 100% Free Open Source Community Edition; enterprise support & custom implementation services available. Vendor pricing references should be confirmed on vendor sites.",
         values: {
-          opsknight: "Self-hosted Community; Enterprise/hosted capabilities may be packaged separately",
+          opsknight: "100% Free AGPL-3.0 OSS; commercial support & services available",
           pagerduty: "Professional $25/user/mo or $21 annual; Business/Enterprise and add-ons vary",
           incidentio: "Per-seat responder/on-call plans; packaging varies by tier",
           opsgenie: "No new sales; capabilities moving to Jira Service Management",
@@ -122,8 +136,9 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Incident data location",
+        category: "deployment",
         values: {
-          opsknight: "Your Postgres / VPC for Community self-hosting",
+          opsknight: "Your Postgres / VPC (100% data sovereignty, zero external beacons)",
           pagerduty: "PagerDuty cloud",
           incidentio: "Vendor cloud",
           opsgenie: "Atlassian cloud",
@@ -133,10 +148,11 @@ export const COMPARE_SECTIONS: CompareSection[] = [
         },
       },
       {
-        feature: "Product standing (Sep 2026)",
-        source: "OpsKnight v1.5 is the active development line; v1.4.0 remains the last published Apache-era stable release. Atlassian Opsgenie and Grafana status from their public migration/archive pages.",
+        feature: "Product standing (Oct 2026)",
+        category: "deployment",
+        source: `OpsKnight ${BRAND.releaseLabel} is the stable release under ${BRAND.license}. Atlassian Opsgenie and Grafana status from their public migration/archive pages.`,
         values: {
-          opsknight: `${BRAND.releaseLabel}; v${BRAND.legacyVersion} remains historical stable`,
+          opsknight: `${BRAND.releaseLabel} stable release (${BRAND.license})`,
           pagerduty: "Actively sold",
           incidentio: "Actively sold",
           opsgenie: "Standalone: no new purchases; EOL 5 Apr 2027 → Jira Service Management",
@@ -152,6 +168,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Incident lifecycle",
+        category: "response",
         source: "OpsKnight Prisma IncidentStatus. Others: core incident/alert products.",
         values: {
           opsknight: "Open, ack, snooze, suppress, resolve",
@@ -165,6 +182,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "On-call schedules",
+        category: "paging",
         source: "OpsKnight layers/overrides. Others: documented schedule products.",
         values: {
           opsknight: "Layers, rotations, overrides, timezones",
@@ -178,6 +196,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Escalation policies",
+        category: "paging",
         values: {
           opsknight: "Steps: user, schedule, or team",
           pagerduty: true,
@@ -190,9 +209,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Outbound paging channels",
+        category: "paging",
         source: "OpsKnight NotificationChannel enum + docs. Vendor contact-method docs.",
         values: {
-          opsknight: "Email, SMS (Twilio or AWS SNS), push, Slack, WhatsApp (Twilio), webhook. No voice",
+          opsknight: "Email, SMS (Twilio or AWS SNS), push, Slack, WhatsApp, webhook, Twilio voice calls",
           pagerduty: "Push, phone, SMS, email, Slack; WhatsApp in Early Access",
           incidentio: "Mobile app, phone, SMS, Slack, email, WhatsApp (WhatsApp not on Basic)",
           opsgenie: "Push, email, SMS, voice (plan caps); Slack and Teams apps",
@@ -203,9 +223,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Native voice / phone calls",
-        source: "OpsKnight Community baseline has no VOICE channel. Others: notification/contact docs.",
+        category: "paging",
+        source: "OpsKnight v2.0.0 adds Twilio voice paging on incident trigger (single-key DTMF ack, press 1). Others: notification/contact docs.",
         values: {
-          opsknight: false,
+          opsknight: "Yes — Twilio voice paging on trigger (press 1 to ack)",
           pagerduty: "Yes — phone contact method",
           incidentio: "Yes — phone escalations; live call routing on Pro/Enterprise",
           opsgenie: "Yes — voice on historical paid plans",
@@ -216,6 +237,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Slack ChatOps war rooms",
+        category: "collaboration",
         source: "OpsKnight Slack OAuth war rooms from v1.2. Vendor Slack apps.",
         values: {
           opsknight: "Channel per incident; ack/assign/resolve from Slack",
@@ -229,9 +251,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Microsoft Teams ChatOps",
-        source: "OpsKnight published v1.4 baseline: outgoing webhook formatter only. Current development may evolve; verify v1.5 docs before release. Others: published Teams apps.",
+        category: "collaboration",
+        source: "OpsKnight v2.0.0: Native Teams war rooms and incident channels. Others: published Teams apps.",
         values: {
-          opsknight: "Published baseline: outgoing webhook payload only",
+          opsknight: "Native Teams war rooms & incident channels",
           pagerduty: "Native Teams app: channel cards, ack/resolve, service mapping",
           incidentio: "Native Teams app (Pro/Enterprise): dedicated channel, lifecycle in Teams",
           opsgenie: "Teams V2 integration: ack/close/snooze from channel",
@@ -242,6 +265,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Video bridge on incident",
+        category: "collaboration",
         source: "OpsKnight: Jitsi generator + Zoom/Meet URL templates. Vendor collaboration docs.",
         values: {
           opsknight: "Jitsi; Zoom/Meet via URL template",
@@ -255,6 +279,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Postmortems + action items",
+        category: "analytics",
         source: "OpsKnight Postmortem + ActionItem models. Vendor PIR docs.",
         values: {
           opsknight: "Timeline-based postmortems and action items",
@@ -268,9 +293,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Status page",
-        source: "OpsKnight published Community baseline: one page per install. Other vendors: status-page product docs.",
+        category: "status",
+        source: "OpsKnight v2.0.0: One public/private status page per install with subscribers. Other vendors: status-page product docs.",
         values: {
-          opsknight: "Community baseline: one public/private page with custom domain and subscribers",
+          opsknight: "v2.0.0: 1 public/private page with custom domain & subscribers",
           pagerduty: "Internal / external / private Status Pages (plan-gated; custom domain on external)",
           incidentio: "Public, internal, customer pages (counts by plan); custom domain",
           opsgenie: "Pair with Atlassian Statuspage (separate product)",
@@ -281,6 +307,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "MTTA / MTTR / SLA",
+        category: "analytics",
         source: "OpsKnight SLA definitions/analytics. Other vendors: reporting products.",
         values: {
           opsknight: "MTTA/MTTR and SLA definitions in-app",
@@ -294,7 +321,8 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Mobile",
-        source: "OpsKnight: installable PWA. Vendor App Store / Play apps.",
+        category: "response",
+        source: "OpsKnight: installable PWA with push. Vendor App Store / Play apps.",
         values: {
           opsknight: "Installable PWA with push; no App Store listing",
           pagerduty: "iOS and Android apps",
@@ -312,6 +340,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Inbound monitoring webhooks",
+        category: "integrations",
         source: `OpsKnight published docs catalog: ${BRAND.integrationCountLabel} native parsers. Other vendors: integration directories.`,
         values: {
           opsknight: `${BRAND.integrationCountLabel} native parsers + generic JSON`,
@@ -325,6 +354,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "PagerDuty Events API v2 ingest",
+        category: "integrations",
         source: "OpsKnight docs: POST /api/integrations/pagerduty/v2/enqueue. PagerDuty: events.pagerduty.com/v2/enqueue.",
         values: {
           opsknight: "Yes — ingest adapter (routing_key payload). Not a PagerDuty clone",
@@ -338,6 +368,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Jira Cloud",
+        category: "integrations",
         source: "OpsKnight published integration and vendor Jira integration guides.",
         values: {
           opsknight: "Bi-directional issue sync",
@@ -351,6 +382,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "REST API keys",
+        category: "integrations",
         values: {
           opsknight: true,
           pagerduty: "REST API + Events API keys",
@@ -363,9 +395,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "SSO",
-        source: "OpsKnight v1.4 published baseline includes OIDC. v1.5 Community/Enterprise packaging should be read from the v1.5 release documentation when published. Vendor SSO docs for other products.",
+        category: "identity",
+        source: "OpsKnight v2.0.0: OIDC with PKCE, JIT provisioning, claim-to-role mapping, and SCIM 2.0 user provisioning. Vendor SSO docs for other products.",
         values: {
-          opsknight: "Published baseline: OIDC; v1.5 packaging may distinguish Community and Enterprise capabilities",
+          opsknight: "OIDC (PKCE, JIT, claim-to-role) + SCIM 2.0 provisioning (v2.0.0)",
           pagerduty: "SAML 2.0 IdP; Google OAuth; OIDC for private status pages",
           incidentio: "Slack SSO; SAML/SCIM on applicable plans",
           opsgenie: "SSO/SAML on historical paid plans",
@@ -376,9 +409,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "RBAC + audit log",
+        category: "identity",
         source: "OpsKnight roles + AuditLog. Other vendors: documented admin controls.",
         values: {
-          opsknight: "Roles + audit log; advanced governance can be packaged separately",
+          opsknight: "4 roles (Admin, Responder, Observer, Auditor) + append-only audit log",
           pagerduty: "Roles + audit / analytics (plan-dependent)",
           incidentio: "Roles; custom RBAC + audit logs on Enterprise",
           opsgenie: "Roles + audit on paid plans",

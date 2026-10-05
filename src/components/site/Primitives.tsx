@@ -188,6 +188,8 @@ export function ShowcaseSection({
   screenshotAlt,
   linkHref,
   linkText,
+  secondaryHref,
+  secondaryText,
   annotations,
   reverse = false,
   dark = false,
@@ -199,6 +201,8 @@ export function ShowcaseSection({
   screenshotAlt: string;
   linkHref: string;
   linkText: string;
+  secondaryHref?: string;
+  secondaryText?: string;
   annotations?: string[];
   reverse?: boolean;
   dark?: boolean;
@@ -211,7 +215,20 @@ export function ShowcaseSection({
             <SectionIntro eyebrow={eyebrow} title={title}>
               {description}
             </SectionIntro>
-            <TextLink href={linkHref}>{linkText}</TextLink>
+            <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap", marginTop: "16px" }}>
+              <TextLink href={linkHref}>{linkText}</TextLink>
+              {secondaryHref && secondaryText && (
+                <a
+                  href={secondaryHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-action secondary"
+                  style={{ fontSize: "13px", padding: "8px 16px", textDecoration: "none" }}
+                >
+                  {secondaryText}
+                </a>
+              )}
+            </div>
           </div>
           <div className="showcase-visual">
             <ProductScreenshot name={screenshotName} alt={screenshotAlt} />

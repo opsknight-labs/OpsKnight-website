@@ -206,6 +206,24 @@ export default function Home() {
         reverse
       />
 
+      <ShowcaseSection
+        eyebrow="COMMUNICATION & STATUS"
+        title="See OpsKnight's status page in action."
+        description="Publish incident updates, maintain subscriber transparency, and showcase system health directly from your installation."
+        screenshotName="status-pages.png"
+        screenshotAlt="OpsKnight status page with operational components and incident updates"
+        linkHref="/product/status-pages/"
+        linkText="Explore status-page features"
+        secondaryHref="https://status.opsknight.com"
+        secondaryText="View live status ↗"
+        annotations={[
+          "Public & private status",
+          "Component degradation",
+          "Email & webhook subscribers",
+          "Live incident updates",
+        ]}
+      />
+
       {/* 6. Production Architecture */}
       <section className="site-section site-dark">
         <div className="site-container">

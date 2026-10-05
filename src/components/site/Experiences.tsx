@@ -248,9 +248,201 @@ export function IncidentLoop() {
           </section>
         ))}
       </div>
+      {cinematic && <ProductCanvas active={active} />}
     </div>
   );
 }
+
+export function ProductCanvas({ active }: { active: number }) {
+  return (
+    <div className="product-canvas-card" aria-hidden="false">
+      <div className="canvas-header">
+        <div className="canvas-traffic-lights" aria-hidden="true">
+          <span className="light-dot red" />
+          <span className="light-dot yellow" />
+          <span className="light-dot green" />
+        </div>
+        <div className="canvas-title">
+          <span>OPSKNIGHT COMMAND</span>
+          <span className="canvas-sep">/</span>
+          <span>ASTER CLOUD</span>
+        </div>
+        <div className="canvas-status-badge">
+          <span className="signal-dot" />
+          <span>{steps[active].label.toUpperCase()}</span>
+        </div>
+      </div>
+      <div className="canvas-body">
+        {/* Scene 0: Detect */}
+        <div className={`canvas-scene ${active === 0 ? "active" : ""}`}>
+          <div className="telemetry-card">
+            <div className="telemetry-header">
+              <span className="telemetry-source">
+                <Image src="/integrations/datadog.svg" width={22} height={22} alt="Datadog" />
+                DATADOG INGEST WEBHOOK
+              </span>
+              <span className="telemetry-severity">CRITICAL</span>
+            </div>
+            <div className="telemetry-event">Checkout API Latency &gt; 4,500ms</div>
+            <div className="telemetry-metrics">
+              <div><span>p95 Latency</span><strong>4,820ms</strong></div>
+              <div><span>Threshold</span><strong>1,500ms</strong></div>
+              <div><span>Service</span><strong>checkout-api</strong></div>
+              <div><span>Environment</span><strong>Production US-East</strong></div>
+            </div>
+            <div className="telemetry-footer">
+              <span>Ingested: 14:23:08 UTC</span>
+              <span>HTTP 200 OK · Validated</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scene 1: Correlate */}
+        <div className={`canvas-scene ${active === 1 ? "active" : ""}`}>
+          <div className="correlation-card">
+            <div className="correlation-eyebrow">ALERT DEDUPLICATION &amp; CONVERGENCE</div>
+            <div className="correlation-signals">
+              <div className="signal-pill"><span>•</span> Latency p95 &gt; 4.5s (Datadog)</div>
+              <div className="signal-pill"><span>•</span> 502 Bad Gateway Spike (Cloudflare)</div>
+              <div className="signal-pill"><span>•</span> Container OOM checkout-worker (Prometheus)</div>
+              <div className="signal-pill"><span>•</span> DB Pool Connection Exhaustion (Postgres)</div>
+            </div>
+            <div className="correlation-arrow">↳ Grouped by Provider Key <code>service:checkout-api</code></div>
+            <div className="correlation-outcome">
+              <span className="signal-dot" />
+              <strong>1 INCIDENT CREATED</strong>
+              <span>(4 repeating alerts deduplicated)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scene 2: Create (Triggered) */}
+        <div className={`canvas-scene ${active === 2 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 2 && (
+              <ProductScreenshot
+                name="incident-triggered.png"
+                alt="OpsKnight triggered incident view with P1 status, escalation policy and service details"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Scene 3: On-Call */}
+        <div className={`canvas-scene ${active === 3 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 3 && (
+              <ProductScreenshot
+                name="on-call-schedule-detail.png"
+                alt="OpsKnight on-call schedule with active rotation layers and responder coverage"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Scene 4: Page (Notification Dispatch) */}
+        <div className={`canvas-scene ${active === 4 ? "active" : ""}`}>
+          <div className="dispatch-card">
+            <div className="dispatch-header">
+              <PhoneCall size={24} className="dispatch-icon" />
+              <div>
+                <strong>VOICE &amp; MULTI-CHANNEL DISPATCH</strong>
+                <span>Active responder: Anika Rao (Primary On-Call)</span>
+              </div>
+            </div>
+            <div className="dispatch-channels">
+              <div className="dispatch-row">
+                <span>Twilio Voice Call</span>
+                <span className="dispatch-status">Answered · DTMF Ack active</span>
+              </div>
+              <div className="dispatch-row">
+                <span>Web Push Notification</span>
+                <span className="dispatch-status">Delivered · 180ms</span>
+              </div>
+              <div className="dispatch-row">
+                <span>Slack Direct Message</span>
+                <span className="dispatch-status">Delivered · 240ms</span>
+              </div>
+            </div>
+            <div className="voice-prompt-box">
+              <small>LIVE VOICE CALL SIMULATION</small>
+              <p>&ldquo;OpsKnight Alert: P1 Critical on Checkout API. Press 1 to acknowledge.&rdquo;</p>
+              <span className="phone-key-badge">Press 1 to Ack</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scene 5: Acknowledge */}
+        <div className={`canvas-scene ${active === 5 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 5 && (
+              <ProductScreenshot
+                name="incident-acknowledged.png"
+                alt="OpsKnight acknowledged incident with responder ownership and response timer"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Scene 6: Coordinate (ChatOps War Room) */}
+        <div className={`canvas-scene ${active === 6 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 6 && (
+              <ProductScreenshot
+                name="teams-chatops-war-room.png"
+                alt="OpsKnight Microsoft Teams ChatOps war room with collaborative response actions"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Scene 7: Communicate (Status Page) */}
+        <div className={`canvas-scene ${active === 7 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 7 && (
+              <ProductScreenshot
+                name="status-pages.png"
+                alt="OpsKnight public status page with service degradation update and customer messaging"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Scene 8: Resolve */}
+        <div className={`canvas-scene ${active === 8 ? "active" : ""}`}>
+          <div className="resolution-card">
+            <div className="resolution-icon">
+              <Check size={36} />
+            </div>
+            <h3>Checkout API Recovered</h3>
+            <p>p95 latency returned to 210ms across all availability zones.</p>
+            <div className="resolution-stats">
+              <div><span>Total Duration</span><strong>18m 42s</strong></div>
+              <div><span>Time to Ack</span><strong>1m 24s</strong></div>
+              <div><span>Incident State</span><strong className="resolved-text">RESOLVED</strong></div>
+            </div>
+            <div className="resolution-note">
+              Timeline sealed. Audit log preserved. Triggering postmortem review.
+            </div>
+          </div>
+        </div>
+
+        {/* Scene 9: Learn (Postmortem) */}
+        <div className={`canvas-scene ${active === 9 ? "active" : ""}`}>
+          <div className="canvas-screenshot-wrapper">
+            {active === 9 && (
+              <ProductScreenshot
+                name="postmortems.png"
+                alt="OpsKnight postmortem review with root cause analysis and action items"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TheaterScene({ active }: { active: number }) {
   const image =
     active === 2
