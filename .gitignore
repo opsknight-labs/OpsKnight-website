@@ -48,3 +48,13 @@ public/_headers
 public/videos/
 *.webm
 *.mp4
+
+# Browser verification artifacts
+/test-results/
+/playwright-report/
+
+# Responsive image variants generated before the static build
+/public/product/*-400.webp
+/public/product/*-800.webp
+/public/product/*-1200.webp
+/performance-reports/

@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import Fuse from "fuse.js";
+import { PRODUCT } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 
 type SearchItem = {
@@ -23,23 +24,94 @@ type SearchItem = {
 };
 
 const STATIC_QUICK_LINKS: SearchItem[] = [
-  { title: "Deploy & Install Hub", href: "/install", category: "Deployment", keywords: "docker compose helm kustomize kubernetes systemd cloud run ecs" },
-  { title: "Security & Hardening Architecture", href: "/security", category: "Security", keywords: "encryption aes-256 webhook hmac oidc sso rbac timingSafeEqual" },
-  { title: "Monitoring Integrations (40+)", href: "/integrations", category: "Product", keywords: "prometheus datadog sentry grafana aws cloudwatch zabbix alerts" },
-  { title: "Compare Matrix & ROI Calculator", href: "/compare", category: "Compare", keywords: "pricing cost calculator pagerduty opsgenie incident.io splunk" },
-  { title: "PagerDuty Drop-in Ingest Adapter", href: "/compare/pagerduty", category: "Compare", keywords: "events api v2 drop in migration alertmanager" },
-  { title: "Opsgenie Sunset Migration Guide", href: "/compare/opsgenie", category: "Compare", keywords: "atlassian opsgenie deprecation escalation routes" },
-  { title: "Grafana OnCall OSS Migration Guide", href: "/compare/grafana-oncall", category: "Compare", keywords: "grafana labs archived contact points" },
-  { title: "Changelog & Releases", href: "/changelog", category: "Resources", keywords: "versions v2.0.0 v1.4 updates release notes" },
-  { title: "Brand Assets & Guidelines", href: "/brand", category: "Resources", keywords: "logos icons colors typography svg png" },
-  { title: "Use Cases & Architecture", href: "/use-cases", category: "Product", keywords: "on-prem enterprise self hosted privacy" },
-  { title: "About OpsKnight & Mission", href: "/about", category: "Company", keywords: "maintainers team license agpl-3.0-only community enterprise v2.0.0" },
-  { title: "Community & Discussions", href: "/contact", category: "Company", keywords: "github issues questions discord" },
+  ...PRODUCT.platform.products.map((p) => ({
+    title: p.label,
+    href: `/product/${p.slug}/`,
+    category: "Product",
+    keywords: p.description,
+  })),
+  {
+    title: "Deploy & Install Hub",
+    href: "/install",
+    category: "Deployment",
+    keywords: "docker compose helm kustomize kubernetes systemd cloud run ecs",
+  },
+  {
+    title: "Security & Hardening Architecture",
+    href: "/security",
+    category: "Security",
+    keywords: "encryption aes-256 webhook hmac oidc sso rbac timingSafeEqual",
+  },
+  {
+    title: `Integrations (${PRODUCT.inboundIntegrationCount} inbound)`,
+    href: "/integrations",
+    category: "Product",
+    keywords: "prometheus datadog sentry grafana aws cloudwatch zabbix alerts",
+  },
+  {
+    title: "Compare incident platforms",
+    href: "/compare",
+    category: "Compare",
+    keywords: "pricing cost calculator pagerduty opsgenie incident.io splunk",
+  },
+  {
+    title: "PagerDuty Drop-in Ingest Adapter",
+    href: "/compare/pagerduty",
+    category: "Compare",
+    keywords: "events api v2 drop in migration alertmanager",
+  },
+  {
+    title: "Opsgenie Sunset Migration Guide",
+    href: "/compare/opsgenie",
+    category: "Compare",
+    keywords: "atlassian opsgenie deprecation escalation routes",
+  },
+  {
+    title: "Grafana OnCall OSS Migration Guide",
+    href: "/compare/grafana-oncall",
+    category: "Compare",
+    keywords: "grafana labs archived contact points",
+  },
+  {
+    title: "Changelog & Releases",
+    href: "/changelog",
+    category: "Resources",
+    keywords: "versions v2.0.0 v1.4 updates release notes",
+  },
+  {
+    title: "Brand Assets & Guidelines",
+    href: "/brand",
+    category: "Resources",
+    keywords: "logos icons colors typography svg png",
+  },
+  {
+    title: "Use Cases & Architecture",
+    href: "/use-cases",
+    category: "Product",
+    keywords: "on-prem enterprise self hosted privacy",
+  },
+  {
+    title: "About OpsKnight & Mission",
+    href: "/about",
+    category: "Company",
+    keywords:
+      "maintainers team license agpl-3.0-only community enterprise v2.0.0",
+  },
+  {
+    title: "Community & Discussions",
+    href: "/contact",
+    category: "Company",
+    keywords: "github issues questions discord",
+  },
 ];
 
-export function GlobalCommandPalette() {
+export function GlobalCommandPalette({
+  initialOpen = false,
+}: {
+  initialOpen?: boolean;
+}) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(initialOpen);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [docEntries, setDocEntries] = useState<SearchItem[]>([]);
@@ -86,16 +158,21 @@ export function GlobalCommandPalette() {
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.results)) {
-            const formatted: SearchItem[] = data.results.map((r: { title: string; href: string; text?: string }) => {
-              const parts = r.href.split("/").filter(Boolean);
-              const section = parts.length > 2 ? parts[2].replace(/-/g, " ").toUpperCase() : "DOCS";
-              return {
-                title: r.title,
-                href: r.href,
-                category: section,
-                keywords: r.text?.slice(0, 150),
-              };
-            });
+            const formatted: SearchItem[] = data.results.map(
+              (r: { title: string; href: string; text?: string }) => {
+                const parts = r.href.split("/").filter(Boolean);
+                const section =
+                  parts.length > 2
+                    ? parts[2].replace(/-/g, " ").toUpperCase()
+                    : "DOCS";
+                return {
+                  title: r.title,
+                  href: r.href,
+                  category: section,
+                  keywords: r.text?.slice(0, 150),
+                };
+              },
+            );
             setDocEntries(formatted);
           }
         }
@@ -126,7 +203,10 @@ export function GlobalCommandPalette() {
     if (!query.trim()) {
       return STATIC_QUICK_LINKS.slice(0, 8);
     }
-    return fuse.search(query).slice(0, 10).map((res) => res.item);
+    return fuse
+      .search(query)
+      .slice(0, 10)
+      .map((res) => res.item);
   }, [query, fuse]);
 
   const navigateTo = useCallback(
@@ -134,16 +214,20 @@ export function GlobalCommandPalette() {
       setIsOpen(false);
       router.push(href);
     },
-    [router]
+    [router],
   );
 
   const handleListKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev < filteredItems.length - 1 ? prev + 1 : 0));
+      setSelectedIndex((prev) =>
+        prev < filteredItems.length - 1 ? prev + 1 : 0,
+      );
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : filteredItems.length - 1));
+      setSelectedIndex((prev) =>
+        prev > 0 ? prev - 1 : filteredItems.length - 1,
+      );
     } else if (e.key === "Enter" && filteredItems[selectedIndex]) {
       e.preventDefault();
       navigateTo(filteredItems[selectedIndex].href);
@@ -209,7 +293,8 @@ export function GlobalCommandPalette() {
         >
           {filteredItems.length === 0 ? (
             <div className="py-12 text-center text-xs text-slate-400">
-              No results found for &ldquo;<span className="text-slate-200">{query}</span>&rdquo;
+              No results found for &ldquo;
+              <span className="text-slate-200">{query}</span>&rdquo;
             </div>
           ) : (
             filteredItems.map((item, index) => {
@@ -232,7 +317,9 @@ export function GlobalCommandPalette() {
                   <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
-                        isSelected ? "bg-white/20 text-white" : "bg-slate-800 text-slate-400"
+                        isSelected
+                          ? "bg-white/20 text-white"
+                          : "bg-slate-800 text-slate-400"
                       }`}
                     >
                       {item.category === "Security" ? (
@@ -260,12 +347,16 @@ export function GlobalCommandPalette() {
                   <div className="flex items-center gap-2 shrink-0">
                     <span
                       className={`rounded px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider ${
-                        isSelected ? "bg-black/20 text-white" : "bg-slate-800 text-slate-400"
+                        isSelected
+                          ? "bg-black/20 text-white"
+                          : "bg-slate-800 text-slate-400"
                       }`}
                     >
                       {item.category}
                     </span>
-                    {isSelected && <CornerDownLeft className="h-3.5 w-3.5 text-white" />}
+                    {isSelected && (
+                      <CornerDownLeft className="h-3.5 w-3.5 text-white" />
+                    )}
                   </div>
                 </div>
               );

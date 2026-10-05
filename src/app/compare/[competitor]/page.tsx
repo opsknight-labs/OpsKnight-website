@@ -1,236 +1,96 @@
-import { Fragment } from "react";
-import { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Check, Minus } from "lucide-react";
-import { COMPETITORS } from "@/lib/competitors";
-import { BRAND } from "@/lib/brand";
-import {
-  COMPARE_AS_OF,
-  COMPARE_FOOTNOTE,
-  COMPARE_SECTIONS,
-  COMPARE_SOURCE_LINKS,
-  HONEST_BLURB,
-  type CompareCell,
-  vendorIdFromCompareSlug,
-} from "@/lib/compare-matrix";
-import { PagerDutyMigrationHelper } from "@/components/comparison/PagerDutyMigrationHelper";
-import { OpsgenieMigrationHelper } from "@/components/comparison/OpsgenieMigrationHelper";
-import { GrafanaMigrationHelper } from "@/components/comparison/GrafanaMigrationHelper";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
+import { siteMetadata } from "@/lib/site-metadata";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-const ALIAS_SLUGS = ["incident-io", "victorops"] as const;
-
-function Cell({ value }: { value: CompareCell }) {
-  if (value === true) {
-    return (
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-50 text-[#d21a1b]">
-        <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-      </span>
-    );
-  }
-  if (value === false) {
-    return (
-      <span className="inline-flex h-6 w-6 items-center justify-center text-slate-300">
-        <Minus className="h-3.5 w-3.5" />
-      </span>
-    );
-  }
-  return <span className="text-sm leading-snug text-slate-700">{value}</span>;
-}
-
+import comparisons from "@/../content/product/comparisons.json";
+import { PRODUCT } from "@/lib/product";
+import { Action, FinalCTA, TextLink } from "@/components/site/Primitives";
+const aliases: Record<string, string> = {
+  incidentio: "incident-io",
+  "grafana-oncall": "grafana",
+  victorops: "splunk",
+};
+const find = (s: string) =>
+  comparisons.find((c) => c.slug === (aliases[s] ?? s));
 export function generateStaticParams() {
   return [
-    ...COMPETITORS.map((c) => ({ competitor: c.slug })),
-    ...ALIAS_SLUGS.map((competitor) => ({ competitor })),
+    ...comparisons.map((c) => ({ competitor: c.slug })),
+    ...Object.keys(aliases).map((competitor) => ({ competitor })),
   ];
 }
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ competitor: string }>;
 }): Promise<Metadata> {
-  const { competitor: slug } = await params;
-  const vendorId = vendorIdFromCompareSlug(slug);
-  const name = HONEST_BLURB[vendorId ?? ""]?.title ?? "this product";
-  return {
-    title: `OpsKnight vs ${name}`,
-    description: `How OpsKnight v${BRAND.version} compares with ${name}: self-host vs SaaS, ${BRAND.license}, and capabilities that actually ship.`,
-  };
+  const { competitor } = await params;
+  const c = find(competitor);
+  return siteMetadata({
+    title: `OpsKnight and ${c?.name}`,
+    description: `Compare operational choices for OpsKnight and ${c?.name}, with dated vendor sources.`,
+    alternates: { canonical: `/compare/${c?.slug ?? competitor}/` },
+    openGraph: { url: `/compare/${c?.slug ?? competitor}/` },
+  });
 }
-
-export default async function CompetitorComparePage({
+export default async function Compare({
   params,
 }: {
   params: Promise<{ competitor: string }>;
 }) {
-  const { competitor: slug } = await params;
-  const vendorId = vendorIdFromCompareSlug(slug);
-  if (!vendorId || vendorId === "opsknight") notFound();
-
-  const blurb = HONEST_BLURB[vendorId];
-  const navSlug =
-    vendorId === "incidentio"
-      ? "incidentio"
-      : vendorId === "splunk"
-        ? "splunk"
-        : vendorId === "grafana"
-          ? "grafana-oncall"
-          : vendorId;
-
+  const { competitor } = await params;
+  const c = find(competitor);
+  if (!c) notFound();
   return (
-    <main className="min-h-screen bg-[#f8fafc] px-4 pb-24 pt-28 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl space-y-14">
-        <header className="max-w-3xl">
-          <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-            Compare · v{BRAND.version} · as of {COMPARE_AS_OF}
+    <div className="site-page">
+      <BreadcrumbSchema name={c.name} path={`/compare/${c.slug}/`} />
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> COMPARE / VERIFIED {c.asOf}
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl">
-            {BRAND.name} vs {blurb.title}
+          <h1>
+            OpsKnight and
+            <br />
+            {c.name}.
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-            {blurb.body}
-          </p>
-        </header>
-
-        <nav className="flex flex-wrap gap-2">
-          {COMPETITORS.map((vendor) => {
-            const active = vendor.slug === navSlug;
-            return (
-              <Link
-                key={vendor.slug}
-                href={vendor.href}
-                className={`rounded-full border px-3 py-1.5 text-xs font-medium ${
-                  active
-                    ? "border-red-600 bg-red-50 text-red-700"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-                }`}
-              >
-                vs {vendor.shortName}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <section>
-          <h2 className="mb-4 text-xl font-semibold text-[#111827]">Side by side</h2>
-          <div className="overflow-x-auto rounded-[14px] border border-slate-200 bg-white">
-            <table className="w-full min-w-[640px] border-collapse text-left">
-              <thead>
-                <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="px-4 py-3 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Capability
-                  </th>
-                  <th className="border-x border-slate-200 bg-red-50 px-4 py-3 text-sm font-semibold text-[#d21a1b]">
-                    {BRAND.name}
-                  </th>
-                  <th className="px-4 py-3 text-sm font-medium text-slate-600">{blurb.title}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARE_SECTIONS.map((section) => (
-                  <Fragment key={section.title}>
-                    <tr key={section.title} className="border-t border-slate-200">
-                      <td colSpan={3} className="bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        {section.title}
-                      </td>
-                    </tr>
-                    {section.rows.map((row) => (
-                      <tr key={`${section.title}-${row.feature}`} className="border-t border-slate-100">
-                        <td className="px-4 py-3">
-                          <p className="text-sm font-medium text-[#111827]">{row.feature}</p>
-                          {row.source ? (
-                            <p className="mt-1 text-[11px] leading-snug text-slate-400">{row.source}</p>
-                          ) : null}
-                        </td>
-                        <td className="border-x border-slate-100 bg-red-50/40 px-4 py-3">
-                          <Cell value={row.values.opsknight} />
-                        </td>
-                        <td className="px-4 py-3">
-                          <Cell value={row.values[vendorId]} />
-                        </td>
-                      </tr>
-                    ))}
-                  </Fragment>
-                ))}
-              </tbody>
-            </table>
+          <p className="site-description">{c.focus}</p>
+          <div className="site-actions">
+            <Action href="/install/">Evaluate OpsKnight</Action>
           </div>
-          <p className="mt-3 text-xs leading-relaxed text-slate-500">{COMPARE_FOOTNOTE}</p>
-          <ul className="mt-3 columns-1 gap-x-8 text-[11px] leading-relaxed text-slate-500 sm:columns-2">
-            {COMPARE_SOURCE_LINKS.map((link) => (
-              <li key={link.href} className="break-inside-avoid pb-1">
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#d21a1b] hover:underline"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {vendorId === "pagerduty" && (
-          <section className="space-y-4">
-            <div>
-              <h2 className="text-xl font-semibold text-[#111827]">
-                Zero-Code Drop-In Ingest Adapter
-              </h2>
-              <p className="mt-1 text-sm text-[#4b5563]">
-                Already sending alerts to Events API v2? OpsKnight provides a native ingest adapter so you can point Alertmanager, Terraform, and Datadog webhooks directly to OpsKnight without rewriting alert rules.
-              </p>
-            </div>
-            <PagerDutyMigrationHelper />
-          </section>
-        )}
-
-        {vendorId === "opsgenie" && (
-          <section className="space-y-4">
-            <div>
-              <h2 className="text-xl font-semibold text-[#111827]">
-                Opsgenie Sunset Migration Guide
-              </h2>
-              <p className="mt-1 text-sm text-[#4b5563]">
-                Migrate your on-call rotations, multi-tier escalation policies, and alerting webhooks seamlessly to an actively maintained self-hosted platform.
-              </p>
-            </div>
-            <OpsgenieMigrationHelper />
-          </section>
-        )}
-
-        {vendorId === "grafana" && (
-          <section className="space-y-4">
-            <div>
-              <h2 className="text-xl font-semibold text-[#111827]">
-                Grafana OnCall OSS Migration Guide
-              </h2>
-              <p className="mt-1 text-sm text-[#4b5563]">
-                Switch from archived open-source tooling to OpsKnight with native Grafana Alerting Contact Points, HMAC signature checks, and dedicated Slack ChatOps.
-              </p>
-            </div>
-            <GrafanaMigrationHelper />
-          </section>
-        )}
-
-        <div className="flex flex-wrap items-center gap-4">
-          <Link
-            href="/compare"
-            className="inline-flex h-11 items-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
-          >
-            Full matrix and cost sketch
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-          <Link
-            href={BRAND.links.docs}
-            className="text-sm font-medium text-[#d21a1b] hover:underline"
-          >
-            Install docs
-          </Link>
         </div>
-      </div>
-    </main>
+      </section>
+      <section className="site-section">
+        <div className="site-container interior-copy">
+          <h2>Vendor context.</h2>
+          <p>{c.summary}</p>
+          <TextLink href={c.source}>{c.sourceLabel}</TextLink>
+          <h2 className="mt-12">The OpsKnight operating model.</h2>
+          <p>
+            OpsKnight {PRODUCT.release.tag} is self-hosted under{" "}
+            {PRODUCT.release.license}. You operate the deployment, database,
+            upgrades, backups and notification provider configuration.
+            Infrastructure and provider costs remain part of that choice.
+          </p>
+          <h2>Compare the actual workflow.</h2>
+          <p>
+            Validate schedule coverage, escalation targets, provider delivery,
+            ChatOps permissions, customer updates and review workflows against
+            your requirements. Plan scope and pricing are separate from whether
+            a capability exists.
+          </p>
+          <p className="site-boundary">
+            OpsKnight supports {PRODUCT.boundaries.statusPageLimit} status page
+            per installation. Mobile is a {PRODUCT.boundaries.mobileType}.{" "}
+            {PRODUCT.boundaries.manualEscalation}
+          </p>
+          <div className="paired-links">
+            <TextLink href="/product/on-call/">On-call</TextLink>
+            <TextLink href="/product/chatops/">ChatOps</TextLink>
+            <TextLink href="/deploy/">Deployment</TextLink>
+          </div>
+        </div>
+      </section>
+      <FinalCTA />
+    </div>
   );
 }

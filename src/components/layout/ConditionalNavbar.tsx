@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
+import { SiteNavigation } from "@/components/site/SiteNavigation";
 
 export function ConditionalNavbar() {
     const pathname = usePathname();
@@ -9,5 +9,5 @@ export function ConditionalNavbar() {
 
     if (isDocs) return null;
 
-    return <Navbar />;
+    return <SiteNavigation />;
 }

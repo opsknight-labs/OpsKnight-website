@@ -17,7 +17,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { integrationIcons, IntegrationKey } from '@/components/icons/IntegrationIcons';
-import { BRAND } from '@/lib/brand';
 
 interface IntegrationItem {
   id: string;

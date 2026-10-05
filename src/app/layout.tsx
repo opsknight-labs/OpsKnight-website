@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./site.css";
+import { PRODUCT } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 import { ConditionalNavbar } from "@/components/layout/ConditionalNavbar";
 import { ConditionalFooter } from "@/components/layout/ConditionalFooter";
@@ -9,7 +11,7 @@ import { ClientCommandPalette } from "@/components/navigation/ClientCommandPalet
 
 const baseUrl = `https://${BRAND.domain}`;
 const mergedKeywords = Array.from(
-  new Set([...(BRAND.keywords || []), ...(BRAND.seo.keywords || [])])
+  new Set([...(BRAND.keywords || []), ...(BRAND.seo.keywords || [])]),
 );
 const structuredData = [
   {
@@ -36,6 +38,8 @@ const structuredData = [
     "@type": "SoftwareApplication",
     name: "OpsKnight",
     applicationCategory: "DeveloperApplication",
+    softwareVersion: PRODUCT.release.version,
+    datePublished: PRODUCT.release.date,
     operatingSystem: "Docker, Kubernetes, Linux",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     license: BRAND.licenseUrl,
@@ -65,7 +69,9 @@ export const metadata: Metadata = {
   applicationName: BRAND.name,
   creator: BRAND.authors?.[0]?.name,
   publisher: BRAND.name,
-  authors: BRAND.authors ? BRAND.authors.map(author => ({ ...author })) : undefined,
+  authors: BRAND.authors
+    ? BRAND.authors.map((author) => ({ ...author }))
+    : undefined,
   category: "Technology",
   robots: {
     index: true,
@@ -78,7 +84,7 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     images: [
       {
-        url: BRAND.assets.banner,
+        url: "/social/opsknight.png",
         width: 1200,
         height: 630,
         alt: `${BRAND.name} — ${BRAND.tagline}`,
@@ -90,17 +96,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: BRAND.seo.title,
     description: BRAND.seo.description,
-    images: [BRAND.assets.banner],
+    images: ["/social/opsknight.png"],
     creator: BRAND.authors[0]?.twitter
       ? `@${BRAND.authors[0].twitter.split("twitter.com/")[1]?.replace(/\/.*/, "")}`
       : undefined,
   },
   icons: {
-    icon: [
-      { url: "/logo.svg", type: "image/svg+xml" },
-      { url: "/logo.png", type: "image/png" },
-    ],
-    apple: "/logo.png",
+    icon: [{url:"/brand/favicon.png",type:"image/png",sizes:"48x48"}],
+    apple: "/brand/apple-touch-icon.png",
   },
   metadataBase: new URL(baseUrl),
 };
@@ -122,7 +125,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <ConditionalNavbar />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <ConditionalFooter />
         <ClientCommandPalette />
       </body>

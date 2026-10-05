@@ -1,319 +1,55 @@
+import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { BRAND } from "@/lib/brand";
-import { CopyBlock } from "@/components/brand/CopyBlock";
-import { SecretsGenerator } from "@/components/showcase/SecretsGenerator";
-import { PageToc } from "@/components/common/PageToc";
-import { latestDocsHref } from "@/lib/docs/paths";
-
-const title = "Install OpsKnight";
-const description =
-  `Deploy OpsKnight v${BRAND.version} Community with Docker Compose, Helm, Kustomize, Cloud Run, ECS, or Linux Systemd. ${BRAND.license}, self-hosted on your infrastructure.`;
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/install" },
-  openGraph: { title, description, url: "/install" },
+import { DeploymentChooser } from "@/components/site/Experiences";
+import { SectionIntro, TextLink } from "@/components/site/Primitives";
+import { productDocs, PRODUCT } from "@/lib/product";
+const pageMetadata: Metadata = {
+  title: "Deploy OpsKnight",
+  description:
+    "Choose Docker Compose, Kubernetes or Docker Swarm for your self-hosted OpsKnight installation.",
+  alternates: { canonical: "/install/" },
+  openGraph: { url: "/install/" },
 };
-
-const TOC_SECTIONS = [
-  { id: "prerequisites", title: "Prerequisites & Secrets" },
-  { id: "docker-compose", title: "Docker Compose Starter" },
-  { id: "docker-swarm", title: "Docker Swarm (HA)" },
-  { id: "split-runtime", title: "Split Runtime (v2.0)" },
-  { id: "kubernetes-helm", title: "Kubernetes (Helm Chart)" },
-  { id: "other-topologies", title: "Other Supported Topologies" },
-  { id: "hardware-sizing", title: "Hardware Sizing Matrix" },
-  { id: "what-this-is-not", title: "Community boundary" },
-];
-
-const INSTALL_SPECS = [
-  { label: "Min Compute", value: "1 vCPU · 1 GB RAM" },
-  { label: "Database", value: "PostgreSQL 14+" },
-  { label: "Default Port", value: "3000 (HTTP)" },
-  { label: "License", value: BRAND.license },
-  { label: "Runtime", value: "Integrated or Split" },
-  { label: "External Telemetry", value: "None (0 beacons)" },
-];
-
-export default function InstallPage() {
+export const metadata = siteMetadata(pageMetadata);
+export default function Install() {
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      <section className="border-b border-slate-200 pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-              Install · {BRAND.releaseLabel} · {BRAND.license}
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.12]">
-              Run it on machines you already operate.
-            </h1>
-            <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              OpsKnight Community is self-hosted. Compose is the shortest path. Helm is the
-              production path. After boot, open port 3000 and create the first admin
-              on <span className="font-mono text-sm">/setup</span>. Full steps live
-              in the docs — this page is the operational checklist.
-            </p>
-          </div>
+    <div className="site-page">
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> DEPLOY / {PRODUCT.release.tag}
+          </p>
+          <h1>
+            Your infrastructure.
+            <br />
+            Your starting point.
+          </h1>
+          <p className="site-description">
+            Start with the deployment that fits your environment. The
+            documentation covers prerequisites, secrets, database setup and
+            upgrades.
+          </p>
         </div>
       </section>
-
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            <article className="min-w-0 space-y-12 max-w-3xl">
-              <div id="prerequisites" className="scroll-mt-28">
-                <h2 className="text-xl font-semibold text-[#111827]">Prerequisites</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#4b5563]">
-                  <li>Docker Engine 20+ and Compose 2+, or a Kubernetes 1.24+ cluster</li>
-                  <li>PostgreSQL 14+ (Compose automatically provisions PostgreSQL 15)</li>
-                  <li>
-                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>,{" "}
-                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>,{" "}
-                    and <code className="font-mono text-xs text-[#111827]">API_KEY_SECRET</code>{" "}
-                    configured before first start
-                  </li>
-                  <li>A stable HTTPS reverse proxy in production (for auth callbacks and webhook ingestion)</li>
-                </ul>
-                <div className="mt-6">
-                  <SecretsGenerator />
-                </div>
-              </div>
-
-              <div id="docker-compose" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Docker Compose (Recommended Starter)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Clone the repository, copy <span className="font-mono text-xs text-[#111827]">env.example</span>{" "}
-                  to <span className="font-mono text-xs text-[#111827]">.env</span>, inject your generated secrets,
-                  and launch the stack:
-                </p>
-                <CopyBlock
-                  label="compose"
-                  value={`git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
-cp env.example .env
-# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
-docker compose -f deploy/compose/docker-compose.yml up -d`}
-                />
-                <p className="mt-3 text-xs text-slate-500">
-                  Then navigate to <span className="font-mono text-[#111827]">http://localhost:3000/setup</span> to initialize the primary administrator account.
-                </p>
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/docker-compose/integrated")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Docker Compose deployment guide →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="docker-swarm" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Docker Swarm (Multi-Node HA)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Native multi-node Swarm deployment with automated Raft-encrypted secrets, rolling zero-downtime updates, and isolated worker lanes:
-                </p>
-                <CopyBlock
-                  label="swarm"
-                  value={`git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight/deploy/swarm
-# Initialize Docker Swarm (if not already active)
-docker swarm init
-# Deploy multi-node HA cluster with automatic Raft secrets & validation
-./scripts/deploy.sh`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/swarm-operations")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Docker Swarm operations &amp; secrets guide →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="split-runtime" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Split Production Runtime (v2.0)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  For high-throughput installations, OpsKnight separates Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector into independently scalable containers:
-                </p>
-                <CopyBlock
-                  label="split-compose"
-                  value={`cp env.example .env
-# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
-export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
-
-# Deploy 6 dedicated split roles + migration runner
-docker compose \\
-  -f deploy/compose/docker-compose.yml \\
-  -f deploy/compose/docker-compose.split.yml \\
-  up -d`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/docker-compose/split")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Split runtime architecture &amp; worker tuning →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="kubernetes-helm" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Kubernetes (Helm Chart)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  For versioned, repeatable Kubernetes deployments with Horizontal Pod Autoscaling (HPA), Ingress TLS, and Enterprise HA:
-                </p>
-                <CopyBlock
-                  label="helm"
-                  value={`# 1. Create namespace & production secrets
-kubectl create namespace opsknight
-kubectl -n opsknight create secret generic opsknight-secrets \\
-  --from-literal=DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=20' \\
-  --from-literal=DIRECT_DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=5' \\
-  --from-literal=NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
-  --from-literal=ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
-  --from-literal=API_KEY_SECRET="$(openssl rand -base64 32)"
-
-# 2. Deploy OpsKnight Helm Chart with Enterprise HA values
-helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
-  --namespace opsknight \\
-  -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/helm-operations")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Helm configuration &amp; values.yaml guide →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="other-topologies" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Other Supported Topologies</h2>
-                <ul className="mt-4 space-y-3 text-sm text-[#4b5563]">
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Kustomize &amp; GitOps:</span>
-                    <span>
-                      Declarative base and overlay manifests designed for ArgoCD and Flux pipelines.{" "}
-                      <Link href={latestDocsHref("operate/deploy/kustomize-operations")} className="font-medium text-[#d21a1b] hover:underline">
-                        Kustomize guide
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· PgBouncer &amp; External Postgres:</span>
-                    <span>
-                      Connection-pool overlays (`docker-compose.pgbouncer.yml`) for high concurrency.{" "}
-                      <Link href={latestDocsHref("operate/capacity/choose-deployment")} className="font-medium text-[#d21a1b] hover:underline">
-                        Capacity &amp; deployment guide
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Cloud &amp; Serverless Containers:</span>
-                    <span>
-                      Deploy to AWS ECS / Fargate with RDS PostgreSQL, or GCP Cloud Run with Cloud SQL.{" "}
-                      <Link href={latestDocsHref("operate/deploy/docker-compose/integrated")} className="font-medium text-[#d21a1b] hover:underline">
-                        Cloud container deployment
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Upgrading from 1.x:</span>
-                    <span>
-                      Database migrations, env variable updates, and rollback procedure for existing 1.x installs.{" "}
-                      <Link href={latestDocsHref("start/migrate-from-v1")} className="font-medium text-[#d21a1b] hover:underline">
-                        Migration from v1 guide
-                      </Link>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div id="hardware-sizing" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Hardware Sizing Matrix</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Recommended capacity for OpsKnight and PostgreSQL based on monthly alert volume:
-                </p>
-                <div className="overflow-hidden rounded-[14px] border border-slate-200 bg-white">
-                  <table className="w-full text-left text-xs">
-                    <thead className="border-b border-slate-200 bg-slate-50 font-mono text-[11px] uppercase tracking-wider text-slate-500">
-                      <tr>
-                        <th className="px-4 py-2.5">Tier</th>
-                        <th className="px-4 py-2.5">Alert Volume</th>
-                        <th className="px-4 py-2.5">Compute</th>
-                        <th className="px-4 py-2.5">Topology</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-mono text-slate-700">
-                      <tr>
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Starter / Eval</td>
-                        <td className="px-4 py-2.5 text-slate-500">&lt; 10k / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">1 vCPU · 1 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Integrated Compose ($5 VPS)</td>
-                      </tr>
-                      <tr className="bg-slate-50/40">
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Team / Growth</td>
-                        <td className="px-4 py-2.5 text-slate-500">10k – 100k / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">2 vCPU · 2 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Split Compose or Docker Swarm</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Enterprise scale</td>
-                        <td className="px-4 py-2.5 text-slate-500">100k+ / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">4+ vCPU · 4–8 GB</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Helm / Kustomize Split + PgBouncer</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div id="what-this-is-not" className="scroll-mt-28 rounded-[14px] border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-[#111827]">Community and commercial boundary</h2>
-                <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  This page installs the self-hosted OpsKnight Community application under {BRAND.license}.
-                  Separately licensed Enterprise modules, support, or hosted offerings may be documented and
-                  packaged independently. Check the current release documentation for exact Community feature
-                  availability and limits. The canonical installation reference is the{" "}
-                  <Link href={latestDocsHref("start/quickstart")} className="font-medium text-[#111827] underline">
-                    quickstart guide
-                  </Link>
-                  .
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 pt-4">
-                <Link
-                  href={latestDocsHref("start/quickstart")}
-                  className="inline-flex h-11 items-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
-                >
-                  Getting Started Docs
-                </Link>
-                <Link
-                  href="/security"
-                  className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                >
-                  Security &amp; hardening architecture →
-                </Link>
-              </div>
-            </article>
-
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 pl-4 border-l border-slate-200/80 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
-                <PageToc
-                  sections={TOC_SECTIONS}
-                  specs={INSTALL_SPECS}
-                  quickCommand="docker compose up -d"
-                  quickCommandLabel="Quick Launch"
-                  docLink={latestDocsHref("operate/deploy/docker-compose/integrated")}
-                  docLinkLabel="Deployment Docs Hub"
-                />
-              </div>
-            </aside>
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="DEPLOYMENT CHOOSER"
+            title="Where will OpsKnight run?"
+          />
+          <DeploymentChooser />
+          <p className="site-boundary">
+            Configure production secrets, HTTPS, backups and your public
+            application URL before handling real incidents. Notification
+            providers require their own accounts and configuration.
+          </p>
+          <div className="paired-links">
+            <TextLink href={productDocs("operate/capacity/choose-deployment")}>
+              Deployment planning
+            </TextLink>
+            <TextLink href="/deploy/architecture/">
+              Explore runtime architecture
+            </TextLink>
           </div>
         </div>
       </section>

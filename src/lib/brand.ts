@@ -2,17 +2,17 @@
  * OpsKnight brand — single source of truth for marketing copy, SEO, and deploy facts.
  */
 
+import { PRODUCT } from "@/lib/product";
 import { latestDocsHref } from "@/lib/docs/paths";
 
 /**
  * v2.0.0 is the first stable AGPL release.
  * v1.4.0 and earlier retain their historical Apache-2.0 license.
  */
-const PRODUCT_VERSION = "2.0.0";
-const PRODUCT_LICENSE = "AGPL-3.0-only";
+const PRODUCT_VERSION = PRODUCT.release.version;
+const PRODUCT_LICENSE = PRODUCT.release.license;
 const LEGACY_STABLE_VERSION = "1.4.0";
 const LEGACY_STABLE_LICENSE = "Apache-2.0";
-
 
 export const BRAND = {
   name: "OpsKnight",
@@ -20,17 +20,18 @@ export const BRAND = {
   releaseLabel: `v${PRODUCT_VERSION}`,
   legacyVersion: LEGACY_STABLE_VERSION,
   legacyLicense: LEGACY_STABLE_LICENSE,
-  tagline: "Self-hosted on-call & incident response",
+  tagline: "Incident operations you control",
   description:
     "Self-hosted incident command center: on-call rotations, paging, Slack war rooms, status pages, and MTTA/MTTR — on your infrastructure.",
   fullDescription:
     "OpsKnight is a self-hosted incident command center — an alternative to PagerDuty, incident.io, Opsgenie, Squadcast, Splunk On-Call, and Grafana Cloud IRM.",
   domain: "opsknight.com",
-  integrationCount: 28,
-  integrationCountLabel: "28",
-  ecosystemCount: 30,
-  ecosystemCountLabel: "30",
-  stack: "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm / Swarm",
+  integrationCount: PRODUCT.inboundIntegrationCount,
+  integrationCountLabel: String(PRODUCT.inboundIntegrationCount),
+  ecosystemCount: PRODUCT.integrations.length,
+  ecosystemCountLabel: String(PRODUCT.integrations.length),
+  stack:
+    "Next.js 16, React 19, Prisma, Postgres, Docker Compose / Helm / Swarm",
 
   status: "Stable",
   statusMessage: `v${PRODUCT_VERSION} stable`,
@@ -49,18 +50,21 @@ export const BRAND = {
     // v2.0.0 stable release license.
     license: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
     // Backward-compatible alias for pages that still use the development key.
-    developmentLicense: "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
+    developmentLicense:
+      "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE",
     // Historical v1.4 release license (Apache-2.0); do not use for current product marketing.
-    legacyLicense: "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
+    legacyLicense:
+      "https://github.com/opsknight-labs/OpsKnight/blob/v1.4.0/LICENSE",
     licenseTransition:
       "https://github.com/opsknight-labs/OpsKnight/blob/main/LICENSE-TRANSITION.md",
-    trademarks: "https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md",
+    trademarks:
+      "https://github.com/opsknight-labs/OpsKnight/blob/main/TRADEMARKS.md",
     security: "https://github.com/opsknight-labs/OpsKnight/security",
     helmCharts: "https://github.com/opsknight-labs/helm-charts",
   },
 
   assets: {
-    logo: "/logo.svg",
+    logo: "/brand/opsknight-mark.webp",
     logoSvg: "/logo.svg",
     logoMark: "/logo-mark.png",
     banner: "/banner.png",
@@ -71,8 +75,7 @@ export const BRAND = {
 
   seo: {
     title: "OpsKnight | Self-hosted on-call & incident response",
-    description:
-      "OpsKnight v2.0.0 is self-hosted incident command for on-call, paging, Slack & Teams war rooms, status pages, and SLA analytics under AGPL-3.0-only. v1.4 and earlier releases retain their original Apache-2.0 terms.",
+    description: `OpsKnight ${PRODUCT.release.tag} is self-hosted incident command for on-call, paging, Slack & Teams war rooms, status pages, and SLA analytics under ${PRODUCT_LICENSE}.`,
     keywords: [
       "incident management",
       "on-call",
@@ -124,7 +127,7 @@ docker run -d --name opsknight-app -p 3000:3000 \\
   -e ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
   -e API_KEY_SECRET="$(openssl rand -base64 32)" \\
   --link opsknight-db \\
-  ghcr.io/opsknight-labs/opsknight:2.0.0`,
+  ghcr.io/opsknight-labs/opsknight:${PRODUCT_VERSION}`,
     helm: `# 1. Create namespace & production secrets
 kubectl create namespace opsknight
 kubectl -n opsknight create secret generic opsknight-secrets \\
@@ -156,7 +159,7 @@ docker swarm init
 cd OpsKnight
 cp env.example .env
 # Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
-export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:${PRODUCT_VERSION}"
 
 # Deploy 6 dedicated split roles + migration runner
 docker compose \\
@@ -210,7 +213,8 @@ export const FEATURES = [
   },
   {
     title: "Voice calls & escalations",
-    description: "Automated voice phone calls, SMS, push, Slack, Teams, and WhatsApp on your policies.",
+    description:
+      "Automated voice phone calls, SMS, push, Slack, Teams, and WhatsApp on your policies.",
     icon: "PhoneCall",
   },
   {

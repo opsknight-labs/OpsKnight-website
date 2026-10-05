@@ -1,0 +1,69 @@
+{
+  "source": "Isolated Docker Compose marketing demo, actual v2.0.0 release",
+  "capturedAt": "2026-10-05T05:24:34.938Z",
+  "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
+  "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+  "assets": {
+    "incident-detail": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "b0ef76b41433d0abede8a5463190f646d9f9a8ba9dfb946973333635cb05c0e5",
+      "route": "/incidents/cmurz14gx0032ytbwj5tolfat"
+    },
+    "on-call-schedule-detail": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "8b58c9df6e14249cdb00d8c46692de512e81c9795dbdc7cf61daad0225f07359",
+      "route": "/schedules/cmurz14fv001yytbwuhmp8tvd"
+    },
+    "analytics-overview": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "23eb25e529dea646436c8548aff744a68dfe783240e045cfe95f240b82d3ca5f",
+      "route": "/analytics"
+    },
+    "postmortems": {
+      "width": 1304,
+      "height": 944,
+      "sha256": "ebba4fce0165537f27a64ddc86b4810de90cb02c348e7dad8b126957592da9f1",
+      "route": "/postmortems"
+    },
+    "audit-log": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "0f490c9fb44adef41ff2b1fd3d8d58ecd08c202cfb5f26b4491d6549779dd0a4",
+      "route": "/audit"
+    },
+    "notification-settings": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "d3bf84ab273d2f369e0a9e0b4fd4999b3b880ff33898dedd705e3ab071b012dc",
+      "route": "/settings/notifications"
+    },
+    "health-center": {
+      "width": 1304,
+      "height": 897,
+      "sha256": "233dde4bf3fc857efbf386f724d6591ed144eaf55880d7f2b3f21458c11834fb",
+      "route": "/settings/system/health"
+    },
+    "status-pages": {
+      "width": 1520,
+      "height": 1000,
+      "sha256": "99cc68676d66009cd46b8461e6201a33cd13fdb4044c575e6eac08a234db4d64",
+      "route": "/status/aster-cloud",
+      "authenticated": false
+    },
+    "teams-chatops-war-room": {
+      "width": 1600,
+      "height": 1081,
+      "sha256": "f256bf409b4619375acfe41695fb7dc82622dda12d59ba7fcc1513fd8de70ac9",
+      "route": "Certified Teams collaboration evidence"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "sha256": "34fd1021581db110ed52e0c7ab471d38e9be706c8196f82f882375ba174a428d",
+      "route": "/m"
+    }
+  }
+}

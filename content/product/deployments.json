@@ -1,0 +1,30 @@
+{
+  "models": [
+    {
+      "id": "docker",
+      "title": "Docker Compose",
+      "docs": "operate/deploy/docker-compose",
+      "description": "Start with the integrated runtime and PostgreSQL. Split the runtime when independent scaling is useful."
+    },
+    {
+      "id": "kubernetes",
+      "title": "Kubernetes",
+      "docs": "operate/deploy/kubernetes",
+      "description": "Use Kubernetes manifests, Helm or Kustomize with integrated and split runtime profiles."
+    },
+    {
+      "id": "swarm",
+      "title": "Docker Swarm",
+      "docs": "operate/deploy/swarm",
+      "description": "Run integrated or split stacks with Swarm secrets and documented upgrade workflows."
+    }
+  ],
+  "roles": [
+    "Web",
+    "Scheduler",
+    "General Worker",
+    "Critical Worker",
+    "Bulk Worker",
+    "Status Projector"
+  ]
+}

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms/" },
   title: "Terms of Service",
   description: `Terms for the ${BRAND.name} website and the licensing boundary between v2.0.0 and historical releases.`,
 };

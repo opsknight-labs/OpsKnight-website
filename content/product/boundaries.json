@@ -1,0 +1,17 @@
+{
+  "statusPageLimit": 1,
+  "mobileType": "PWA",
+  "manualEscalation": "Capability-enabled Microsoft Teams cards; no manual escalation control in Web or standard Slack incident actions.",
+  "statusEvidence": {
+    "docs": "concepts/status-pages",
+    "contains": "one status page per installation"
+  },
+  "mobileEvidence": {
+    "docs": "concepts/mobile",
+    "contains": "PWA"
+  },
+  "escalationEvidence": {
+    "docs": "guides/incidents/escalate",
+    "contains": "no manual **Escalate** control"
+  }
+}

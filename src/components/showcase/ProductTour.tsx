@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Activity, Calendar, MessageSquare, ShieldCheck, BarChart3, Check, Users2 } from "lucide-react";
 import { BRAND } from "@/lib/brand";
-import { latestDocsHref } from "@/lib/docs/paths";
 
 type TourTab = {
   id: string;

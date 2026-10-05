@@ -1,16 +1,47 @@
-import { Metadata } from "next";
-import { ChangelogView } from "@/components/changelog/ChangelogView";
-
-export const metadata: Metadata = {
-  title: "Changelog",
+import { siteMetadata } from "@/lib/site-metadata";
+import type { Metadata } from "next";
+import { PRODUCT } from "@/lib/product";
+import { Action, FinalCTA } from "@/components/site/Primitives";
+import { BRAND } from "@/lib/brand";
+const pageMetadata: Metadata = {
+  title: "What’s new",
   description:
-    "What shipped in each OpsKnight release — new integrations, Slack & Teams war rooms, voice paging, security, and tagged GHCR images.",
+    "Release notes generated from the OpsKnight product release metadata.",
+  alternates: { canonical: "/changelog/" },
+  openGraph: { url: "/changelog/" },
 };
-
-export default function ChangelogPage() {
+export const metadata = siteMetadata(pageMetadata);
+export default function Changelog() {
   return (
-    <main className="min-h-screen bg-[#f8fafc] pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-      <ChangelogView />
-    </main>
+    <div className="site-page">
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> WHAT’S NEW / {PRODUCT.release.date}
+          </p>
+          <h1>OpsKnight {PRODUCT.release.tag}.</h1>
+          <p className="site-description">
+            The latest release. Generated from the product changelog, with the
+            complete details available in the source repository.
+          </p>
+          <div className="site-actions">
+            <Action href={`${BRAND.links.releases}/tag/${PRODUCT.release.tag}`}>
+              Read complete release notes
+            </Action>
+          </div>
+        </div>
+      </section>
+      <section className="site-section">
+        <div className="site-container release-highlights">
+          {PRODUCT.release.highlights.map((h) => (
+            <article key={h.title}>
+              <h2>{h.title}</h2>
+              <p>{h.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <FinalCTA />
+    </div>
   );
 }

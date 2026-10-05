@@ -1,0 +1,36 @@
+name: Website quality
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  static-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run product:verify-source
+      - run: npm run product:check
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test:export
+      - run: npx playwright install --with-deps chromium
+      - name: Test the exported site
+        run: |
+          PORT=5001 node scripts/serve-static.mjs &
+          npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-browser-evidence
+          path: test-results/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-pages-static
+          path: out/

@@ -1,0 +1,144 @@
+{
+  "products": [
+    {
+      "slug": "incidents",
+      "label": "Incident command",
+      "headline": "One place to run the incident.",
+      "description": "Keep ownership, responders, timeline, notes and action items together from first alert to resolution.",
+      "capability": "incident_lifecycle",
+      "docs": "concepts/incidents",
+      "screenshot": "incident-detail.png",
+      "features": [
+        "Create and acknowledge incidents",
+        "Assign responders and track ownership",
+        "Keep a timeline and action items"
+      ]
+    },
+    {
+      "slug": "on-call",
+      "label": "On-call & escalation",
+      "headline": "Know who\u2019s responsible before something breaks.",
+      "description": "Build rotations, schedule overrides and escalation policies around the people responsible for each service.",
+      "capability": "on_call",
+      "docs": "concepts/schedules",
+      "screenshot": "on-call-schedule-detail.png",
+      "features": [
+        "Timezone-aware rotations",
+        "Temporary overrides and handoffs",
+        "User, team and schedule escalation targets"
+      ]
+    },
+    {
+      "slug": "paging",
+      "label": "Paging",
+      "headline": "Reach the responder. Not just their inbox.",
+      "description": "Route urgent pages through configured providers and inspect attempts, retries and terminal delivery outcomes.",
+      "capability": "notifications",
+      "docs": "concepts/notifications",
+      "screenshot": "notification-settings.png",
+      "features": [
+        "Multi-channel routing",
+        "Twilio voice for triggered incidents",
+        "Delivery evidence and retry visibility"
+      ]
+    },
+    {
+      "slug": "chatops",
+      "label": "ChatOps",
+      "headline": "Response belongs in the room.",
+      "description": "Coordinate incidents in Slack and Microsoft Teams with incident actions, linked identities and war rooms.",
+      "capability": "chatops",
+      "docs": "integrations/communication/microsoft-teams",
+      "screenshot": "teams-chatops-war-room.png",
+      "features": [
+        "Acknowledge, assign and resolve",
+        "War rooms and participant synchronization",
+        "Service destinations for Slack and Teams"
+      ]
+    },
+    {
+      "slug": "status-pages",
+      "label": "Status page",
+      "headline": "Give customers clarity.",
+      "description": "Publish service status, incident updates and maintenance without exposing your internal response timeline.",
+      "capability": "status_pages",
+      "docs": "concepts/status-pages",
+      "screenshot": "status-pages.png",
+      "features": [
+        "Components and service mapping",
+        "Incident and maintenance updates",
+        "Subscribers, branding and uptime"
+      ]
+    },
+    {
+      "slug": "analytics",
+      "label": "Analytics",
+      "headline": "See the shape of your operations.",
+      "description": "Use incident and service performance data to understand response times, trends and SLA outcomes.",
+      "capability": "analytics_and_reports",
+      "docs": "concepts/analytics",
+      "screenshot": "analytics-overview.png",
+      "features": [
+        "MTTA and MTTR",
+        "Incident volume and service trends",
+        "Reports and configurable dashboards"
+      ]
+    },
+    {
+      "slug": "postmortems",
+      "label": "Postmortems",
+      "headline": "Make the next incident easier.",
+      "description": "Turn resolved incidents into reviews with a timeline, contributing factors and owned follow-up work.",
+      "capability": "postmortems",
+      "docs": "concepts/postmortems",
+      "screenshot": "postmortems.png",
+      "features": [
+        "Incident timeline",
+        "Interactive 5 Whys",
+        "Action items with owners and due dates"
+      ]
+    },
+    {
+      "slug": "mobile",
+      "label": "Mobile",
+      "headline": "Your response travels with you.",
+      "description": "Install the progressive web app and acknowledge, triage and follow incidents from your phone.",
+      "capability": "mobile",
+      "docs": "concepts/mobile",
+      "screenshot": "mobile.png",
+      "features": [
+        "Installable progressive web app",
+        "Per-device Web Push registration",
+        "Mobile incident response"
+      ]
+    },
+    {
+      "slug": "security",
+      "label": "Security & identity",
+      "headline": "Your infrastructure. Your users. Your keys.",
+      "description": "Connect identity, control access and inspect operational evidence on infrastructure you own.",
+      "capability": "authorization",
+      "docs": "operate/security/hardening",
+      "screenshot": "audit-log.png",
+      "features": [
+        "OIDC and SCIM 2.0",
+        "Role and resource authorization",
+        "Session registry and audit events"
+      ]
+    },
+    {
+      "slug": "operations",
+      "label": "Operations",
+      "headline": "The platform has to survive the incident too.",
+      "description": "Choose integrated or split runtimes and inspect worker health, delivery operations, metrics and logs.",
+      "capability": "observability",
+      "docs": "operate/reliability/health-center",
+      "screenshot": "health-center.png",
+      "features": [
+        "Health Center and worker visibility",
+        "Prometheus metrics and structured logs",
+        "Independently scalable runtime roles"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "slug": "self-hosted-incident-management",
+    "label": "Self-hosted incident management",
+    "headline": "Bring incident operations onto your infrastructure.",
+    "description": "Keep operational data and deployment decisions under your control. Connect alerts to on-call, response, customer updates and postmortems.",
+    "problem": "You need a complete response workflow and the ability to decide where the system runs.",
+    "workflow": "Deploy an integrated runtime, connect an inbound provider, configure schedules and routing, then validate one synthetic incident end to end.",
+    "products": [
+      "incidents",
+      "on-call",
+      "paging"
+    ]
+  },
+  {
+    "slug": "sre",
+    "label": "SRE teams",
+    "headline": "Close the loop on reliability.",
+    "description": "Connect the alert to the response, the response to the review, and the review to owned follow-up work.",
+    "problem": "A restored service is only part of the job. Response evidence and learning need to survive the incident.",
+    "workflow": "Track incident ownership and SLA outcomes, review MTTA and MTTR, and create a postmortem with action items assigned to owners.",
+    "products": [
+      "incidents",
+      "analytics",
+      "postmortems"
+    ]
+  },
+  {
+    "slug": "platform-engineering",
+    "label": "Platform engineering",
+    "headline": "Build a shared response foundation.",
+    "description": "Give service teams a common incident workflow while keeping deployment, identity and operational health in view.",
+    "problem": "Different teams own different services, but the incident platform still needs coherent access and operational control.",
+    "workflow": "Organize teams and services, connect OIDC and SCIM, and use worker health and delivery evidence to operate the platform.",
+    "products": [
+      "operations",
+      "security",
+      "chatops"
+    ]
+  },
+  {
+    "slug": "regulated-environments",
+    "label": "Regulated environments",
+    "headline": "Keep control and evidence together.",
+    "description": "Run the data plane yourself. Apply identity and authorization controls and review operational evidence in your own environment.",
+    "problem": "Your response tooling must fit your data handling, access and retention requirements.",
+    "workflow": "Plan the deployment, configure scoped roles and identity, review audit events, and use privacy and evidence workflows for your own controls.",
+    "products": [
+      "security",
+      "operations",
+      "incidents"
+    ]
+  },
+  {
+    "slug": "on-call",
+    "label": "On-call operations",
+    "headline": "Make responsibility explicit.",
+    "description": "Build schedules, apply overrides and route escalation to the responder responsible for the service.",
+    "problem": "Coverage and handoffs are hard to reason about during a page.",
+    "workflow": "Create rotations, validate current coverage, configure escalation targets and confirm delivery outcomes on a test incident.",
+    "products": [
+      "on-call",
+      "paging",
+      "mobile"
+    ]
+  },
+  {
+    "slug": "devops",
+    "label": "DevOps teams",
+    "headline": "Connect your monitoring to the response.",
+    "description": "Bring signals from your existing tools into a shared incident lifecycle.",
+    "problem": "Alerts arrive from several tools, while ownership and communication happen elsewhere.",
+    "workflow": "Connect providers, map services and escalation policies, coordinate in ChatOps and publish scoped customer updates.",
+    "products": [
+      "incidents",
+      "chatops",
+      "status-pages"
+    ]
+  }
+]

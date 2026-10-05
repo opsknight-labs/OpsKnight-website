@@ -1,0 +1,891 @@
+{
+  "release": {
+    "version": "2.0.0",
+    "license": "AGPL-3.0-only",
+    "hostedSaaS": false,
+    "date": "2026-10-02",
+    "tag": "v2.0.0",
+    "sourceCommit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+    "highlights": [
+      {
+        "title": "Split production runtime",
+        "description": "Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector can scale independently. The integrated runtime remains supported."
+      },
+      {
+        "title": "Notification delivery control plane",
+        "description": "Durable logical intents, provider attempts, traffic classes, admission/defer behavior, retry and terminal states, callback reconciliation, provider capacity controls, and an administrator Operations view. Delivery evidence distinguishes deferred, retrying, accepted, delivered, permanent-failure, and superseded work."
+      },
+      {
+        "title": "Microsoft Teams ChatOps",
+        "description": "Entra application and Azure Bot integration, Teams app packaging and tenant installation, service-to-channel destinations, Adaptive Cards, interactive incident actions, identity linking, war rooms, participant synchronization, and meeting collaboration. A service can target up to three Teams destinations."
+      },
+      {
+        "title": "Twilio voice paging",
+        "description": "`VOICE` is a triggered-incident paging channel with responder acknowledgement input, signed callbacks, and reconciliation of uncertain provider outcomes. Acknowledge and resolve lifecycle updates do not initiate additional voice calls."
+      },
+      {
+        "title": "Incident response policy engine",
+        "description": "Versioned classification, incident SLA, and support-hours policies at workspace and service scope, with immutable published versions, preview, history, diff, restore, and API access."
+      },
+      {
+        "title": "SCIM 2.0 provisioning",
+        "description": "Users, Groups, discovery endpoints, provisioning/deprovisioning, team membership, PATCH operations, and in-product bearer-token generation, rotation, and revocation."
+      },
+      {
+        "title": "Auditor access and sessions",
+        "description": "A read-oriented `AUDITOR` role, centralized resource authorization, OIDC claim mapping, and a canonical signed-in-session registry with browser, OS, device, authentication type, activity, expiry, and revoke controls."
+      },
+      {
+        "title": "Privacy and compliance operations",
+        "description": "Privacy/DSAR request processing, export and erasure evidence, retention holds, controlled encryption migrations, technical control evaluation, framework mappings, evidence ledgers, drift monitoring, and verifiable evidence-package exports. Framework mapping does not confer external certification."
+      },
+      {
+        "title": "Docker Swarm",
+        "description": "Integrated and split stacks, Raft secrets, direct-database migration lifecycle, health checks, topology switching, and rollback tooling."
+      },
+      {
+        "title": "Deployment planning and load certification",
+        "description": "Workload shapes and multi-topology load/correctness tests cover ingestion, incident lifecycle, escalation, notification fanout, realtime delivery, status fanout, and recovery."
+      },
+      {
+        "title": "ManageEngine ingestion",
+        "description": "A new native inbound parser joins the existing integration catalog. The release certifies 28 current inbound contracts in total; it does not add 28 new integrations."
+      },
+      {
+        "title": "Incident response",
+        "description": "Centralized lifecycle commands, durable side effects, persistent idempotency, stale-worker fencing, a global create modal, templates, stronger validation, rebuilt incident detail, action items, and interactive 5-Whys postmortems."
+      },
+      {
+        "title": "Schedules and escalation",
+        "description": "Redesigned schedule setup/detail, DST-safe rotations, overrides and handoff behavior, user/team/schedule escalation targets, priority/urgency/support-hours conditions, durable recovery, and stale-work protection."
+      },
+      {
+        "title": "Slack and Jira",
+        "description": "More reliable Slack war rooms, identity and capability controls, up to three Slack destinations per service, provider-neutral collaboration, and stronger bidirectional Jira lifecycle reconciliation."
+      },
+      {
+        "title": "Quiet Hours",
+        "description": "Personal timezone-aware suppression for low-urgency notifications; medium- and high-urgency operational paging bypasses Quiet Hours."
+      },
+      {
+        "title": "Status Page V3",
+        "description": "One supported status page with themes, announcements, subscriber verification/unsubscribe, API tokens, webhooks, privacy controls, uptime history/export, rebuild-safe snapshots, and hardened routing. Multiple status pages are not a supported 2.0 capability."
+      },
+      {
+        "title": "Dashboards and reports",
+        "description": "Templates, configurable widgets, persisted layout, private/team/organization visibility, filtered share links, PDF export, live refresh, and fullscreen NOC/TV presentation mode."
+      },
+      {
+        "title": "Responder-grade mobile PWA",
+        "description": "Rebuilt mobile navigation and operational workflows, per-device push registration and reconciliation, repair flows, offline/cached-state boundaries, update handling, and hardened fresh-install iOS Web Push recovery. This is an installable PWA, not a native App Store application."
+      },
+      {
+        "title": "OIDC and SSO policy",
+        "description": "Entra, Google, Okta, Auth0, and generic provider flows with PKCE/nonce, JIT provisioning, explicit account linking, claim-to-role mapping, provider lifecycle hardening, maximum lifetime, update interval, idle timeout, and reauthentication controls."
+      },
+      {
+        "title": "Application bootstrap and routing",
+        "description": "Short-lived first-admin bootstrap capability, UI-managed Application URL, canonical-host enforcement, reverse-proxy awareness, and explicit HTTP 421 protection."
+      },
+      {
+        "title": "Health and operations",
+        "description": "Expanded Health Center diagnostics, Prometheus metrics, system logs, backup/restore, worker/readiness visibility, and PgBouncer-aware connection ownership."
+      },
+      {
+        "title": "Documentation",
+        "description": "The 2.0 task-oriented documentation is backed by implementation discovery, semantic contracts, runtime evidence, API smoke tests, legacy-knowledge mapping, and rendered-site validation."
+      },
+      {
+        "title": "License",
+        "description": "OpsKnight 2.0.0 is the first stable release distributed under `AGPL-3.0-only`. OpsKnight 1.4.0 and earlier retain their historical licenses."
+      }
+    ]
+  },
+  "inboundIntegrationCount": 28,
+  "platform": {
+    "products": [
+      {
+        "slug": "incidents",
+        "label": "Incident command",
+        "headline": "One place to run the incident.",
+        "description": "Keep ownership, responders, timeline, notes and action items together from first alert to resolution.",
+        "capability": "incident_lifecycle",
+        "docs": "concepts/incidents",
+        "screenshot": "incident-detail.png",
+        "features": [
+          "Create and acknowledge incidents",
+          "Assign responders and track ownership",
+          "Keep a timeline and action items"
+        ]
+      },
+      {
+        "slug": "on-call",
+        "label": "On-call & escalation",
+        "headline": "Know who’s responsible before something breaks.",
+        "description": "Build rotations, schedule overrides and escalation policies around the people responsible for each service.",
+        "capability": "on_call",
+        "docs": "concepts/schedules",
+        "screenshot": "on-call-schedule-detail.png",
+        "features": [
+          "Timezone-aware rotations",
+          "Temporary overrides and handoffs",
+          "User, team and schedule escalation targets"
+        ]
+      },
+      {
+        "slug": "paging",
+        "label": "Paging",
+        "headline": "Reach the responder. Not just their inbox.",
+        "description": "Route urgent pages through configured providers and inspect attempts, retries and terminal delivery outcomes.",
+        "capability": "notifications",
+        "docs": "concepts/notifications",
+        "screenshot": "notification-settings.png",
+        "features": [
+          "Multi-channel routing",
+          "Twilio voice for triggered incidents",
+          "Delivery evidence and retry visibility"
+        ]
+      },
+      {
+        "slug": "chatops",
+        "label": "ChatOps",
+        "headline": "Response belongs in the room.",
+        "description": "Coordinate incidents in Slack and Microsoft Teams with incident actions, linked identities and war rooms.",
+        "capability": "chatops",
+        "docs": "integrations/communication/microsoft-teams",
+        "screenshot": "teams-chatops-war-room.png",
+        "features": [
+          "Acknowledge, assign and resolve",
+          "War rooms and participant synchronization",
+          "Service destinations for Slack and Teams"
+        ]
+      },
+      {
+        "slug": "status-pages",
+        "label": "Status page",
+        "headline": "Give customers clarity.",
+        "description": "Publish service status, incident updates and maintenance without exposing your internal response timeline.",
+        "capability": "status_pages",
+        "docs": "concepts/status-pages",
+        "screenshot": "status-pages.png",
+        "features": [
+          "Components and service mapping",
+          "Incident and maintenance updates",
+          "Subscribers, branding and uptime"
+        ]
+      },
+      {
+        "slug": "analytics",
+        "label": "Analytics",
+        "headline": "See the shape of your operations.",
+        "description": "Use incident and service performance data to understand response times, trends and SLA outcomes.",
+        "capability": "analytics_and_reports",
+        "docs": "concepts/analytics",
+        "screenshot": "analytics-overview.png",
+        "features": [
+          "MTTA and MTTR",
+          "Incident volume and service trends",
+          "Reports and configurable dashboards"
+        ]
+      },
+      {
+        "slug": "postmortems",
+        "label": "Postmortems",
+        "headline": "Make the next incident easier.",
+        "description": "Turn resolved incidents into reviews with a timeline, contributing factors and owned follow-up work.",
+        "capability": "postmortems",
+        "docs": "concepts/postmortems",
+        "screenshot": "postmortems.png",
+        "features": [
+          "Incident timeline",
+          "Interactive 5 Whys",
+          "Action items with owners and due dates"
+        ]
+      },
+      {
+        "slug": "mobile",
+        "label": "Mobile",
+        "headline": "Your response travels with you.",
+        "description": "Install the progressive web app and acknowledge, triage and follow incidents from your phone.",
+        "capability": "mobile",
+        "docs": "concepts/mobile",
+        "screenshot": "mobile.png",
+        "features": [
+          "Installable progressive web app",
+          "Per-device Web Push registration",
+          "Mobile incident response"
+        ]
+      },
+      {
+        "slug": "security",
+        "label": "Security & identity",
+        "headline": "Your infrastructure. Your users. Your keys.",
+        "description": "Connect identity, control access and inspect operational evidence on infrastructure you own.",
+        "capability": "authorization",
+        "docs": "operate/security/hardening",
+        "screenshot": "audit-log.png",
+        "features": [
+          "OIDC and SCIM 2.0",
+          "Role and resource authorization",
+          "Session registry and audit events"
+        ]
+      },
+      {
+        "slug": "operations",
+        "label": "Operations",
+        "headline": "The platform has to survive the incident too.",
+        "description": "Choose integrated or split runtimes and inspect worker health, delivery operations, metrics and logs.",
+        "capability": "observability",
+        "docs": "operate/reliability/health-center",
+        "screenshot": "health-center.png",
+        "features": [
+          "Health Center and worker visibility",
+          "Prometheus metrics and structured logs",
+          "Independently scalable runtime roles"
+        ]
+      }
+    ]
+  },
+  "notifications": {
+    "channels": [
+      "Voice",
+      "Push",
+      "SMS",
+      "Email",
+      "WhatsApp",
+      "Slack",
+      "Microsoft Teams",
+      "Webhook"
+    ],
+    "voiceProvider": "Twilio",
+    "voiceScope": "Triggered incidents with responder acknowledgement input. Acknowledgement and resolution events do not initiate additional calls.",
+    "docs": "integrations/communication/voice",
+    "deliveryDocs": "guides/notifications/inspect-delivery"
+  },
+  "deployments": {
+    "models": [
+      {
+        "id": "docker",
+        "title": "Docker Compose",
+        "docs": "operate/deploy/docker-compose",
+        "description": "Start with the integrated runtime and PostgreSQL. Split the runtime when independent scaling is useful."
+      },
+      {
+        "id": "kubernetes",
+        "title": "Kubernetes",
+        "docs": "operate/deploy/kubernetes",
+        "description": "Use Kubernetes manifests, Helm or Kustomize with integrated and split runtime profiles."
+      },
+      {
+        "id": "swarm",
+        "title": "Docker Swarm",
+        "docs": "operate/deploy/swarm",
+        "description": "Run integrated or split stacks with Swarm secrets and documented upgrade workflows."
+      }
+    ],
+    "roles": [
+      "Web",
+      "Scheduler",
+      "General Worker",
+      "Critical Worker",
+      "Bulk Worker",
+      "Status Projector"
+    ]
+  },
+  "security": {
+    "sections": [
+      {
+        "title": "Identity",
+        "description": "Authenticate with OIDC and provision users and groups through SCIM 2.0.",
+        "capability": "oidc",
+        "docs": "guides/identity/configure-oidc"
+      },
+      {
+        "title": "Provisioning",
+        "description": "Manage user and group lifecycle through SCIM discovery, tokens and provisioning endpoints.",
+        "capability": "scim",
+        "docs": "guides/identity/configure-scim"
+      },
+      {
+        "title": "Access & sessions",
+        "description": "Use roles, scoped authorization and the signed-in-session registry.",
+        "capability": "authorization",
+        "docs": "concepts/permissions"
+      },
+      {
+        "title": "Privacy operations",
+        "description": "Process privacy requests and retention holds with operational evidence.",
+        "capability": "privacy",
+        "docs": "concepts/privacy"
+      },
+      {
+        "title": "Deployment hardening",
+        "description": "Configure secrets, networking and operational access for your environment.",
+        "capability": "deployment",
+        "docs": "operate/security/hardening"
+      }
+    ]
+  },
+  "boundaries": {
+    "statusPageLimit": 1,
+    "mobileType": "PWA",
+    "manualEscalation": "Capability-enabled Microsoft Teams cards; no manual escalation control in Web or standard Slack incident actions.",
+    "statusEvidence": {
+      "docs": "concepts/status-pages",
+      "contains": "one status page per installation"
+    },
+    "mobileEvidence": {
+      "docs": "concepts/mobile",
+      "contains": "PWA"
+    },
+    "escalationEvidence": {
+      "docs": "guides/incidents/escalate",
+      "contains": "no manual **Escalate** control"
+    }
+  },
+  "integrations": [
+    {
+      "id": "appdynamics",
+      "title": "AppDynamics",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/appdynamics"
+    },
+    {
+      "id": "azure",
+      "title": "Azure Monitor",
+      "category": "cloud",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "signature": "none",
+      "docs": "integrations/cloud/azure"
+    },
+    {
+      "id": "better-uptime",
+      "title": "Better Uptime",
+      "category": "uptime",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/uptime/better-uptime"
+    },
+    {
+      "id": "bitbucket",
+      "title": "Bitbucket",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/webhooks/bitbucket"
+    },
+    {
+      "id": "cloudwatch",
+      "title": "Amazon CloudWatch",
+      "category": "cloud",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "signature": "none",
+      "docs": "integrations/cloud/cloudwatch"
+    },
+    {
+      "id": "datadog",
+      "title": "Datadog",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/datadog"
+    },
+    {
+      "id": "dynatrace",
+      "title": "Dynatrace",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/dynatrace"
+    },
+    {
+      "id": "elastic",
+      "title": "Elastic",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/elastic"
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/webhooks/github"
+    },
+    {
+      "id": "gitlab",
+      "title": "GitLab",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/webhooks/gitlab"
+    },
+    {
+      "id": "google-cloud-monitoring",
+      "title": "Google Cloud Monitoring",
+      "category": "cloud",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/cloud/google-cloud-monitoring"
+    },
+    {
+      "id": "grafana",
+      "title": "Grafana",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/grafana"
+    },
+    {
+      "id": "honeycomb",
+      "title": "Honeycomb",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/honeycomb"
+    },
+    {
+      "id": "icinga",
+      "title": "Icinga",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/icinga"
+    },
+    {
+      "id": "manageengine",
+      "title": "ManageEngine",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/manageengine"
+    },
+    {
+      "id": "nagios",
+      "title": "Nagios",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/nagios"
+    },
+    {
+      "id": "newrelic",
+      "title": "New Relic",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "signature": "none",
+      "docs": "integrations/monitoring/newrelic"
+    },
+    {
+      "id": "pagerduty",
+      "title": "PagerDuty Events API",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key-or-routing-key"
+      ],
+      "signature": "none",
+      "docs": "integrations/webhooks/pagerduty"
+    },
+    {
+      "id": "pingdom",
+      "title": "Pingdom",
+      "category": "uptime",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/uptime/pingdom"
+    },
+    {
+      "id": "prometheus",
+      "title": "Prometheus Alertmanager",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "signature": "none",
+      "docs": "integrations/monitoring/prometheus"
+    },
+    {
+      "id": "sentry",
+      "title": "Sentry",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/sentry"
+    },
+    {
+      "id": "splunk-observability",
+      "title": "Splunk Observability",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/splunk-observability"
+    },
+    {
+      "id": "splunk-oncall",
+      "title": "Splunk On-Call",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/splunk-oncall"
+    },
+    {
+      "id": "uptime-kuma",
+      "title": "Uptime Kuma",
+      "category": "uptime",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/uptime/uptime-kuma"
+    },
+    {
+      "id": "uptimerobot",
+      "title": "UptimeRobot",
+      "category": "uptime",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/uptime/uptimerobot"
+    },
+    {
+      "id": "vercel",
+      "title": "Vercel",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/webhooks/vercel"
+    },
+    {
+      "id": "webhook",
+      "title": "Generic webhook",
+      "category": "webhooks",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/webhooks/webhook"
+    },
+    {
+      "id": "zabbix",
+      "title": "Zabbix",
+      "category": "monitoring",
+      "direction": "inbound",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "signature": "conditional-when-secret-configured",
+      "docs": "integrations/monitoring/zabbix"
+    },
+    {
+      "id": "slack",
+      "catalogId": "slack-chatops",
+      "title": "Slack",
+      "category": "communication",
+      "direction": "bidirectional",
+      "docs": "integrations/communication/slack",
+      "actions": [],
+      "authentication": [],
+      "signature": "See setup guide"
+    },
+    {
+      "id": "microsoft-teams",
+      "title": "Microsoft Teams",
+      "category": "communication",
+      "direction": "bidirectional",
+      "docs": "integrations/communication/microsoft-teams",
+      "actions": [],
+      "authentication": [],
+      "signature": "See setup guide"
+    },
+    {
+      "id": "jira",
+      "title": "Jira",
+      "category": "issue-tracking",
+      "direction": "bidirectional",
+      "docs": "integrations/issue-tracking/jira",
+      "actions": [],
+      "authentication": [],
+      "signature": "See setup guide"
+    }
+  ],
+  "screenshots": {
+    "source": "Isolated Docker Compose marketing demo, actual v2.0.0 release",
+    "capturedAt": "2026-10-05T05:24:34.938Z",
+    "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
+    "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+    "assets": {
+      "incident-detail": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "b0ef76b41433d0abede8a5463190f646d9f9a8ba9dfb946973333635cb05c0e5",
+        "route": "/incidents/cmurz14gx0032ytbwj5tolfat"
+      },
+      "on-call-schedule-detail": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "8b58c9df6e14249cdb00d8c46692de512e81c9795dbdc7cf61daad0225f07359",
+        "route": "/schedules/cmurz14fv001yytbwuhmp8tvd"
+      },
+      "analytics-overview": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "23eb25e529dea646436c8548aff744a68dfe783240e045cfe95f240b82d3ca5f",
+        "route": "/analytics"
+      },
+      "postmortems": {
+        "width": 1304,
+        "height": 944,
+        "sha256": "ebba4fce0165537f27a64ddc86b4810de90cb02c348e7dad8b126957592da9f1",
+        "route": "/postmortems"
+      },
+      "audit-log": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "0f490c9fb44adef41ff2b1fd3d8d58ecd08c202cfb5f26b4491d6549779dd0a4",
+        "route": "/audit"
+      },
+      "notification-settings": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "d3bf84ab273d2f369e0a9e0b4fd4999b3b880ff33898dedd705e3ab071b012dc",
+        "route": "/settings/notifications"
+      },
+      "health-center": {
+        "width": 1304,
+        "height": 897,
+        "sha256": "233dde4bf3fc857efbf386f724d6591ed144eaf55880d7f2b3f21458c11834fb",
+        "route": "/settings/system/health"
+      },
+      "status-pages": {
+        "width": 1520,
+        "height": 1000,
+        "sha256": "99cc68676d66009cd46b8461e6201a33cd13fdb4044c575e6eac08a234db4d64",
+        "route": "/status/aster-cloud",
+        "authenticated": false
+      },
+      "teams-chatops-war-room": {
+        "width": 1600,
+        "height": 1081,
+        "sha256": "f256bf409b4619375acfe41695fb7dc82622dda12d59ba7fcc1513fd8de70ac9",
+        "route": "Certified Teams collaboration evidence"
+      },
+      "mobile": {
+        "width": 390,
+        "height": 844,
+        "sha256": "34fd1021581db110ed52e0c7ab471d38e9be706c8196f82f882375ba174a428d",
+        "route": "/m"
+      }
+    }
+  }
+}
