@@ -1635,15 +1635,12 @@ html {
     width: min(1360px, calc(100% - 120px));
   }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1279px) {
   .desktop-nav {
     gap: 17px;
   }
   .nav-inner {
     gap: 15px;
-  }
-  .site-container {
-    width: calc(100% - 64px);
   }
   .nav-github {
     display: none;
@@ -1676,18 +1673,28 @@ html {
     padding: 35px;
   }
 }
-@media (max-width: 800px) {
-  .site-container {
-    width: calc(100% - 40px);
-  }
+@media (max-width: 1023px) {
+  /* Nav: switch to mobile nav at this breakpoint instead of 800 */
+  .desktop-nav { display: none; }
+  .mobile-nav { display: block; }
+  
+  /* Layouts that should go single-column on tablet */
+  .product-chapter-grid { grid-template-columns: 1fr; gap: 40px; }
+  .chatops-presentation { grid-template-columns: 1fr; gap: 32px; }
+  .paging-layout { grid-template-columns: 1fr; }
+  .status-composition { grid-template-columns: 1fr; }
+  .security-story { grid-template-columns: 1fr; gap: 32px; }
+  .reliability-story { grid-template-columns: 1fr; gap: 24px; }
+  .loop-panel { grid-template-columns: 1fr; }
+  
+  /* Cinematic theater falls back to standard on tablet */
+  .incident-theater.cinematic { grid-template-columns: 1fr; }
+  .cinematic .theater-chapters { display: none; }
+  .cinematic .incident-experience { grid-column: 1; position: relative; top: auto; }
+}
+@media (max-width: 767px) {
   .site-nav {
     height: 68px;
-  }
-  .desktop-nav {
-    display: none;
-  }
-  .mobile-nav {
-    display: block;
   }
   .mobile-nav > summary {
     list-style: none;
@@ -1788,8 +1795,9 @@ html {
     max-height: 330px;
   }
   .hero-product .product-shot img {
-    min-width: 700px;
-    transform: translateX(-5%);
+    width: 100%;
+    min-width: 0;
+    transform: none;
   }
   .hero-product-foot {
     font-size: 7px;
@@ -2048,6 +2056,16 @@ html {
     font-size: 16px;
   }
 }
+@media (max-width: 479px) {
+  .hero-copy h1 { font-size: clamp(36px, 10vw, 48px); }
+  .hero-subtitle { font-size: 18px; }
+  .section-intro h2 { font-size: 32px; }
+  .trust-strip > .site-container { grid-template-columns: repeat(2, 1fr); font-size: 8px; }
+  .annotation-strip { grid-template-columns: 1fr; }
+  .footer-links { grid-template-columns: 1fr 1fr; }
+  .architecture-roles { grid-template-columns: 1fr; }
+  .product-signal-flow { grid-template-columns: 1fr; }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -2102,7 +2120,7 @@ html {
     monospace;
   color: var(--text-secondary);
 }
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   .brand-logo-stage {
     flex-direction: column;
     gap: 30px;
@@ -2133,7 +2151,7 @@ html {
   align-items: center;
   min-height: 44px;
 }
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   .footer-links a,
   .footer-bottom a {
     min-height: 44px;
@@ -2149,10 +2167,7 @@ html {
 .services-process li { padding-left: 12px; }
 .services-process h3 { font-size: 20px; font-weight: 700; margin: 0 0 8px; }
 .site-page article[id], #evaluation { scroll-margin-top: 110px; }
-@media (min-width: 801px) and (max-width: 1050px) {
-  .desktop-nav { display: none; }
-  .mobile-nav { display: block; }
-}
+
 
 .site-light-alt { background: var(--surface-alt); }
 /* The same operational signal connects product chapters and the full site. */
@@ -2215,8 +2230,8 @@ html {
 @keyframes scene-expand { from {opacity: 0; transform: perspective(900px) translateY(16px) rotateY(-7deg) scale(.96);} to {opacity: 1; transform: perspective(900px) rotateY(0deg) scale(1);} }
 @keyframes converge { from {transform: translateY(-12px);opacity: .3;} to {transform: translateY(0);opacity: 1;} }
 @keyframes scene-signal { from {left:0;} to {left:calc(100% - 7px);} }
-@media (max-width: 1099px) { .incident-signal-rail { display: none; } }
-@media (max-width: 800px) {
+@media (max-width: 1023px) { .incident-signal-rail { display: none; } }
+@media (max-width: 767px) {
   .product-chapter-grid,.chatops-presentation { grid-template-columns: 1fr; gap: 28px; }
   .product-workflow { padding: 24px; }
   .product-signal-flow { grid-template-columns: repeat(2,1fr); }
