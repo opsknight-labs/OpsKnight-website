@@ -129,3 +129,102 @@ export function FinalCTA() {
     </section>
   );
 }
+
+export function TrustStrip() {
+  return (
+    <div className="trust-strip">
+      <div className="site-container">
+        <span>Self-hosted</span>
+        <span>{PRODUCT.release.license}</span>
+        <span>Docker + Kubernetes</span>
+        <span>Slack + Teams</span>
+        <span>OIDC + SCIM</span>
+        <span>Prometheus</span>
+      </div>
+    </div>
+  );
+}
+
+export function FeatureCard({
+  eyebrow,
+  title,
+  description,
+  href,
+  linkText,
+  icon: Icon,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  linkText: string;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+}) {
+  return (
+    <div className="pillar-card">
+      <div className="pillar-header">
+        <p className="site-eyebrow">
+          <span className="signal-dot" />
+          {eyebrow}
+        </p>
+        {Icon && (
+          <div className="pillar-icon">
+            <Icon size={20} />
+          </div>
+        )}
+      </div>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <TextLink href={href}>{linkText}</TextLink>
+    </div>
+  );
+}
+
+export function ShowcaseSection({
+  eyebrow,
+  title,
+  description,
+  screenshotName,
+  screenshotAlt,
+  linkHref,
+  linkText,
+  annotations,
+  reverse = false,
+  dark = false,
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  screenshotName: string;
+  screenshotAlt: string;
+  linkHref: string;
+  linkText: string;
+  annotations?: string[];
+  reverse?: boolean;
+  dark?: boolean;
+}) {
+  return (
+    <section className={`site-section ${dark ? "site-dark" : "site-white"} showcase-section`}>
+      <div className="site-container">
+        <div className={`showcase-grid ${reverse ? "reverse" : ""}`}>
+          <div className="showcase-content">
+            <SectionIntro eyebrow={eyebrow} title={title}>
+              {description}
+            </SectionIntro>
+            <TextLink href={linkHref}>{linkText}</TextLink>
+          </div>
+          <div className="showcase-visual">
+            <ProductScreenshot name={screenshotName} alt={screenshotAlt} />
+            {annotations && annotations.length > 0 && (
+              <div className="annotation-strip">
+                {annotations.map((a) => (
+                  <span key={a}>{a}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

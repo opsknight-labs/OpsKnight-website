@@ -2,10 +2,15 @@ import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import {
   ArrowUpRight,
+  ShieldAlert,
+  CalendarDays,
   PhoneCall,
+  MessageSquare,
+  Globe,
+  BarChart3,
   Check,
-  Github,
   ShieldCheck,
+  Github,
 } from "lucide-react";
 import { PRODUCT, productProof } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
@@ -14,6 +19,9 @@ import {
   SectionIntro,
   ProductScreenshot,
   TextLink,
+  TrustStrip,
+  FeatureCard,
+  ShowcaseSection,
   FinalCTA,
 } from "@/components/site/Primitives";
 import {
@@ -21,6 +29,7 @@ import {
   IncidentLoop,
   ArchitectureViewer,
 } from "@/components/site/Experiences";
+
 const pageMetadata: Metadata = {
   title: "OpsKnight — Incident operations you control",
   description:
@@ -28,10 +37,13 @@ const pageMetadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { url: "/" },
 };
+
 export const metadata = siteMetadata(pageMetadata);
+
 export default function Home() {
   return (
     <div className="site-page">
+      {/* 1. Hero */}
       <section className="site-hero site-dark">
         <div className="site-container">
           <div className="hero-topline">
@@ -76,16 +88,11 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className="trust-strip">
-        <div className="site-container">
-          <span>Self-hosted</span>
-          <span>{PRODUCT.release.license}</span>
-          <span>Docker + Kubernetes</span>
-          <span>Slack + Teams</span>
-          <span>OIDC + SCIM</span>
-          <span>Prometheus</span>
-        </div>
-      </div>
+
+      {/* 2. Trust Strip */}
+      <TrustStrip />
+
+      {/* 3. The Incident Loop */}
       <section id="incident-loop" className="site-section">
         <div className="site-container">
           <SectionIntro
@@ -98,238 +105,116 @@ export default function Home() {
           <IncidentLoop />
         </div>
       </section>
+
+      {/* 4. Core Capabilities (Pillars Grid) */}
       <section className="site-section site-white">
         <div className="site-container">
           <div className="section-heading-row">
             <SectionIntro
-              eyebrow="01 / INCIDENT COMMAND"
-              title="One place to run the incident."
+              eyebrow="PRODUCT PILLARS"
+              title="Built for the entire incident lifecycle."
             >
-              Ownership, responders, service context and the timeline. The
-              complete response, in view.
+              Every capability runs on your infrastructure, connects to your
+              identity, and keeps your operational data strictly yours.
             </SectionIntro>
-            <TextLink href="/product/incidents/">
-              Explore incident command
-            </TextLink>
+            <TextLink href="/product/incidents/">Browse all features</TextLink>
           </div>
-          <ProductScreenshot
-            name="incident-detail.png"
-            alt="The incident command view: status, ownership, responders and service context"
-          />
-          <div className="annotation-strip">
-            <span>Status & ownership</span>
-            <span>Response timeline</span>
-            <span>Notes & action items</span>
-            <span>Service context</span>
-          </div>
-        </div>
-      </section>
-      <section className="site-section">
-        <div className="site-container">
-          <div className="section-heading-row">
-            <SectionIntro
-              eyebrow="02 / ON-CALL & ESCALATION"
-              title="Responsibility, before the alert."
-            >
-              Build rotations and overrides. Let the escalation policy find the
-              right responder when it matters.
-            </SectionIntro>
-            <TextLink href="/product/on-call/">Explore on-call</TextLink>
-          </div>
-          <div className="schedule-composition">
-            <ProductScreenshot
-              name="on-call-schedule-detail.png"
-              alt="OpsKnight schedule detail with rotation and coverage context"
+          <div className="pillars-grid">
+            <FeatureCard
+              eyebrow="01 / COMMAND"
+              title="Incident Command"
+              description="Keep ownership, responders, timeline, notes and action items organized from first alert to resolution."
+              href="/product/incidents/"
+              linkText="Explore command"
+              icon={ShieldAlert}
             />
-            <div className="escalation-rail">
-              <p className="site-eyebrow">ILLUSTRATIVE POLICY</p>
-              {[
-                ["0m", "Primary", "Anika Rao"],
-                ["5m", "Secondary", "Sofia Reyes"],
-                ["10m", "Fallback", "Platform Team"],
-              ].map(([time, label, name]) => (
-                <div key={time}>
-                  <span>{time}</span>
-                  <div>
-                    <small>{label}</small>
-                    <strong>{name}</strong>
-                  </div>
-                  <span className="signal-dot" />
-                </div>
-              ))}
-            </div>
-          </div>
-          <p className="site-boundary">{PRODUCT.boundaries.manualEscalation}</p>
-        </div>
-      </section>
-      <section className="site-section site-dark paging-section">
-        <div className="site-container">
-          <div className="paging-layout">
-            <div>
-              <SectionIntro
-                eyebrow="03 / PAGING"
-                title="Reach the responder. Not just their inbox."
-              >
-                Route the page through your configured channels. Inspect
-                attempts, retries and delivery evidence.
-              </SectionIntro>
-              <div className="channel-list">
-                {PRODUCT.notifications.channels.map((c) => (
-                  <span key={c}>{c}</span>
-                ))}
-              </div>
-              <TextLink href="/product/paging/">
-                Explore the delivery control plane
-              </TextLink>
-            </div>
-            <div className="phone-stage">
-              <div className="phone">
-                <div className="phone-island" />
-                <p className="phone-time">09:41</p>
-                <span className="phone-brand">OPSKNIGHT</span>
-                <div className="phone-icon">
-                  <PhoneCall size={32} />
-                </div>
-                <h3>Critical incident</h3>
-                <p>Checkout unavailable</p>
-                <small>Illustrative voice page</small>
-                <div className="phone-keypad">
-                  <span>1</span>
-                  <p>Acknowledgement input</p>
-                </div>
-                <div className="phone-bottom">
-                  <span />
-                  <PhoneCall size={20} />
-                  <span />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="voice-footnote">
-            <h3>Critical pages can call.</h3>
-            <p>
-              Connect your own {PRODUCT.notifications.voiceProvider} account.{" "}
-              {PRODUCT.notifications.voiceScope}
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className="site-section site-white">
-        <div className="site-container">
-          <SectionIntro
-            eyebrow="04 / CHATOPS"
-            title="Bring response into the room."
-          >
-            Slack and Microsoft Teams. Linked identities, incident actions and
-            war rooms that keep your team connected.
-          </SectionIntro>
-          <div className="chatops-composition">
-            <div className="chat-story">
-              <span className="chat-hash">#</span>
-              <p className="site-eyebrow">SLACK / ILLUSTRATIVE CONVERSATION</p>
-              <h3>inc-1042-checkout</h3>
-              <div className="chat-message">
-                <div className="chat-avatar">OK</div>
-                <div>
-                  <strong>
-                    OpsKnight <small>APP</small>
-                  </strong>
-                  <p>P1 · Checkout API unavailable</p>
-                  <p>Anika Rao acknowledged the incident.</p>
-                  <div className="chat-buttons">
-                    <span>Acknowledge</span>
-                    <span>Assign</span>
-                    <span>Resolve</span>
-                  </div>
-                </div>
-              </div>
-              <div className="chat-message">
-                <div className="chat-avatar human">AC</div>
-                <div>
-                  <strong>Anika Rao</strong>
-                  <p>
-                    Investigating the checkout error rate. Response context is
-                    linked to the incident.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <ProductScreenshot
-              name="teams-chatops-war-room.png"
-              alt="Microsoft Teams war room connected to an OpsKnight incident"
+            <FeatureCard
+              eyebrow="02 / ON-CALL"
+              title="On-Call & Escalation"
+              description="Build rotations, schedule overrides and multi-step escalation policies around the engineers responsible for each service."
+              href="/product/on-call/"
+              linkText="Explore on-call"
+              icon={CalendarDays}
+            />
+            <FeatureCard
+              eyebrow="03 / PAGING"
+              title="Multi-Channel Paging"
+              description="Route urgent pages through voice, SMS, push, Slack, and Teams. Inspect delivery evidence, retries, and worker lanes."
+              href="/product/paging/"
+              linkText="Explore paging"
+              icon={PhoneCall}
+            />
+            <FeatureCard
+              eyebrow="04 / CHATOPS"
+              title="Slack & Teams War Rooms"
+              description="Coordinate directly where your team already communicates with two-way sync, interactive cards, and participant tracking."
+              href="/product/chatops/"
+              linkText="Explore ChatOps"
+              icon={MessageSquare}
+            />
+            <FeatureCard
+              eyebrow="05 / STATUS"
+              title="Customer Status Pages"
+              description="Publish service health, maintenance, and scoped updates to customers without exposing your internal response timeline."
+              href="/product/status-pages/"
+              linkText="Explore status page"
+              icon={Globe}
+            />
+            <FeatureCard
+              eyebrow="06 / ANALYTICS"
+              title="Analytics & Postmortems"
+              description="Turn every outage into an organizational asset with MTTA/MTTR metrics, service health trends, and blameless 5 Whys retrospectives."
+              href="/product/analytics/"
+              linkText="Explore analytics"
+              icon={BarChart3}
             />
           </div>
-          <TextLink href="/product/chatops/">
-            Explore Slack and Teams workflows
-          </TextLink>
         </div>
       </section>
-      <section className="site-section">
-        <div className="site-container">
-          <SectionIntro
-            eyebrow="05 / CUSTOMER COMMUNICATION"
-            title="Clarity for your customers."
-          >
-            Publish what customers need to know. Keep the internal response
-            timeline inside OpsKnight.
-          </SectionIntro>
-          <div className="status-composition">
-            <ProductScreenshot
-              name="status-pages.png"
-              alt="Aster Cloud public status page showing service availability, incident updates and uptime history"
-            />
-            <div className="status-copy">
-              <h3>One clear, public view.</h3>
-              <p>
-                Components, incident updates, maintenance, subscribers, uptime
-                and branding.
-              </p>
-              <p className="site-boundary">
-                {PRODUCT.boundaries.statusPageLimit} status page per OpsKnight{" "}
-                {PRODUCT.release.version} installation.
-              </p>
-              <TextLink href="/product/status-pages/">
-                Explore the status page
-              </TextLink>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="site-section site-white">
-        <div className="site-container">
-          <SectionIntro
-            eyebrow="06 / ANALYTICS & POSTMORTEMS"
-            title="Every incident should make the next one easier."
-          >
-            Understand response times and service trends. Turn the review into
-            action items with owners and due dates.
-          </SectionIntro>
-          <ProductScreenshot
-            name="analytics-overview.png"
-            alt="OpsKnight analytics with incident volume and response performance"
-          />
-          <div className="annotation-strip">
-            <span>MTTA / MTTR</span>
-            <span>Service trends</span>
-            <span>SLA outcomes</span>
-            <span>Postmortem action items</span>
-          </div>
-          <div className="paired-links">
-            <TextLink href="/product/analytics/">Explore analytics</TextLink>
-            <TextLink href="/product/postmortems/">
-              Explore postmortems
-            </TextLink>
-          </div>
-        </div>
-      </section>
+
+      {/* 5. Visual Showcases — Command Center & Status Page */}
+      <ShowcaseSection
+        eyebrow="COMMAND CENTER"
+        title="One clear place to run the incident."
+        description="Ownership, responders, service context, and timeline. The complete response state in a single, high-fidelity view."
+        screenshotName="incident-detail.png"
+        screenshotAlt="The incident command view: status, ownership, responders and service context"
+        linkHref="/product/incidents/"
+        linkText="Deep dive into incident command"
+        annotations={[
+          "Status & ownership",
+          "Response timeline",
+          "Notes & action items",
+          "Service context",
+        ]}
+      />
+
+      <ShowcaseSection
+        eyebrow="ON-CALL ROTATIONS"
+        title="Responsibility, before the alert."
+        description="Build multi-layer schedules and temporary overrides. Let the escalation engine route to the right responder with verified delivery."
+        screenshotName="on-call-schedule-detail.png"
+        screenshotAlt="OpsKnight schedule detail with rotation and coverage context"
+        linkHref="/product/on-call/"
+        linkText="Deep dive into on-call policies"
+        annotations={[
+          "Primary & secondary tiers",
+          "Timezone-aware rotations",
+          "One-click overrides",
+          "Audited handoffs",
+        ]}
+        reverse
+      />
+
+      {/* 6. Production Architecture */}
       <section className="site-section site-dark">
         <div className="site-container">
           <SectionIntro
-            eyebrow="07 / PRODUCTION ARCHITECTURE"
+            eyebrow="PRODUCTION ARCHITECTURE"
             title="Start simple. Scale the pieces that need it."
           >
-            An integrated runtime to get started. Dedicated runtime roles when
-            your deployment needs independent scaling.
+            An integrated runtime to get started in minutes. Dedicated runtime
+            roles when your deployment requires independent scaling and high throughput.
           </SectionIntro>
           <ArchitectureViewer />
           <div className="reliability-story">
@@ -344,12 +229,14 @@ export default function Home() {
                 structured logs.
               </p>
               <TextLink href="/product/operations/">
-                Explore operations
+                Explore operations & scaling
               </TextLink>
             </div>
           </div>
         </div>
       </section>
+
+      {/* 7. Security, Integrations & Open Source */}
       <section className="site-section site-white">
         <div className="site-container security-story">
           <div>
@@ -357,25 +244,26 @@ export default function Home() {
               <ShieldCheck size={64} />
             </div>
             <SectionIntro
-              eyebrow="08 / SECURITY & IDENTITY"
+              eyebrow="SECURITY & ECOSYSTEM"
               title="Your infrastructure. Your users. Your keys."
             />
           </div>
           <div>
             <p className="site-description">
-              Connect your identity provider. Provision users with SCIM. Control
-              access with roles and inspect sessions and audit events.
+              Connect your enterprise identity provider with OIDC and SCIM 2.0.
+              Enforce role-based access control and audit every operator event on
+              systems you control.
             </p>
             <div className="security-tokens">
               {[
                 "OIDC",
                 "SCIM 2.0",
                 "RBAC",
-                "Auditor",
-                "Sessions",
-                "API keys",
-                "Encryption",
-                "Audit events",
+                "Auditor Role",
+                "Session Registry",
+                "Scoped API Keys",
+                "Envelope Encryption",
+                "Audit Log Stream",
               ].map((t) => (
                 <span key={t}>
                   <Check size={15} />
@@ -383,60 +271,47 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <TextLink href="/security/">Explore security</TextLink>
-          </div>
-        </div>
-      </section>
-      <section className="site-section">
-        <div className="site-container">
-          <SectionIntro
-            eyebrow="09 / YOUR EXISTING STACK"
-            title="Connect the tools already watching."
-          >
-            Bring monitoring, cloud, uptime and webhook events into one response
-            workflow.
-          </SectionIntro>
-          <div className="ecosystem-line">
-            <strong>
-              OpsKnight
-              <span className="signal-dot" />
-            </strong>
-            <div>
-              {[
-                "Datadog",
-                "Prometheus",
-                "Grafana",
-                "CloudWatch",
-                "Sentry",
-                "GitHub",
-                "Slack",
-                "Microsoft Teams",
-                "Jira",
-              ].map((n) => (
-                <span key={n}>{n}</span>
-              ))}
+            <div className="ecosystem-line">
+              <strong>
+                OpsKnight
+                <span className="signal-dot" />
+              </strong>
+              <div>
+                {[
+                  "Datadog",
+                  "Prometheus",
+                  "Grafana",
+                  "CloudWatch",
+                  "Sentry",
+                  "GitHub",
+                  "Slack",
+                  "Microsoft Teams",
+                  "Jira",
+                ].map((n) => (
+                  <span key={n}>{n}</span>
+                ))}
+              </div>
+            </div>
+            <div className="section-heading-row" style={{ marginTop: "24px" }}>
+              <p className="site-description" style={{ margin: 0 }}>
+                {PRODUCT.inboundIntegrationCount} inbound monitoring and alerting
+                integrations, verified against the release catalog.
+              </p>
+              <TextLink href="/integrations/">Explore all integrations</TextLink>
             </div>
           </div>
-          <div className="section-heading-row">
-            <p className="site-description">
-              {PRODUCT.inboundIntegrationCount} inbound providers, generated
-              from the release catalog.
-              <br />
-              ChatOps and issue tracking are listed separately.
-            </p>
-            <TextLink href="/integrations/">Explore all integrations</TextLink>
-          </div>
         </div>
       </section>
-      <section className="site-section site-white">
+
+      <section className="site-section">
         <div className="site-container open-source-story">
           <Github size={48} />
           <SectionIntro
             eyebrow="BUILT IN THE OPEN"
-            title="Run on your infrastructure."
+            title="Inspectable, verifiable, and free of vendor lock-in."
           >
-            Source you can inspect. A release you can pin. Operational data
-            under your control.
+            Source code you can audit. Releases you can pin. Operational data
+            strictly under your governance.
           </SectionIntro>
           <div className="release-strip">
             <div>
@@ -453,13 +328,15 @@ export default function Home() {
             </div>
           </div>
           <div className="paired-links">
-            <TextLink href={BRAND.links.github}>View source</TextLink>
-            <TextLink href="/changelog/">Read the release</TextLink>
-            <TextLink href="/support/">Support & Services</TextLink>
+            <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
+            <TextLink href="/changelog/">Read release notes</TextLink>
+            <TextLink href="/support/">Enterprise Support & Services</TextLink>
             <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
           </div>
         </div>
       </section>
+
+      {/* 8. Final CTA */}
       <FinalCTA />
     </div>
   );
