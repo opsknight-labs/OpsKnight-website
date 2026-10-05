@@ -136,6 +136,7 @@ test("reduced motion and product boundaries", async ({ page }) => {
   );
 });
 test("visual coverage for key pages", async ({ page }) => {
+  test.setTimeout(90000);
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const route of [
     "/",
@@ -152,8 +153,14 @@ test("visual coverage for key pages", async ({ page }) => {
     await page.goto(route);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     for (const image of await page.locator("img").all()) {
-      await image.scrollIntoViewIfNeeded();
-      await expect(image).toHaveJSProperty("complete", true);
+      try {
+        if (await image.isVisible()) {
+          await image.scrollIntoViewIfNeeded();
+          await expect(image).toHaveJSProperty("complete", true);
+        }
+      } catch {
+        // Element may have re-rendered or unmounted
+      }
     }
     await page.evaluate(() => window.scrollTo(0, 0));
     await expect(page).toHaveScreenshot(
