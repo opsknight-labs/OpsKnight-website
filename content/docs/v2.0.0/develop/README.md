@@ -21,3 +21,8 @@ and migration safety.
 - [Local development](./local-development)
 - [Testing](./testing)
 - [Contributing](./contributing)
+
+- [Local development](./local-development)
+- [Testing](./testing)
+- [Contributing](./contributing)
+- Architecture

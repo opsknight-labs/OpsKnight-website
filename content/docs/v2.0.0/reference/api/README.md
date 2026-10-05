@@ -6,7 +6,7 @@ product_area: api
 audience: [developer, operator, administrator]
 verification:
   level: source
-  verified_at: 2026-10-03
+  verified_at: 2026-09-28
   evidence:
     - src/app/api/
 ---
@@ -26,22 +26,10 @@ Supported general-purpose contracts are documented separately:
 - [Incidents API](./incidents)
 - [Responses and errors](./errors)
 
-## Runtime proof scope
-
-The documentation runtime journey smoke-probes every route classified as a
-supported public API and rejects server failures. A smoke probe is reachability
-and failure-envelope evidence, not a complete behavioral contract test. Deeper
-runtime assertions currently cover three groups: authentication/error-envelope
-behavior, incident list/create/read/update plus idempotent replay, and Events
-API validation. Certification therefore reports these separately as **public
-APIs smoke-probed** and **deep contract groups**; it does not claim that every
-public route has a full success/authorization/validation/concurrency matrix.
-
 ## Application and internal UI endpoints
 
 > These routes support the OpsKnight UI and are not a supported external API contract. Do not build external automation against them unless a dedicated contract page says otherwise.
 
-- `GET /api/action-items/owners` — `src/app/api/action-items/owners/route.ts`
 - `POST /api/admin/generate-reset-link` — `src/app/api/admin/generate-reset-link/route.ts`
 - `POST /api/admin/incident-collaboration/meetings/[meetingId]/retry-cleanup` — `src/app/api/admin/incident-collaboration/meetings/[meetingId]/retry-cleanup/route.ts`
 - `GET, POST /api/admin/incident-collaboration` — `src/app/api/admin/incident-collaboration/route.ts`
@@ -264,13 +252,6 @@ public route has a full success/authorization/validation/concurrency matrix.
 
 ## Identity protocol endpoints
 
-- `GET, PUT, PATCH, DELETE /api/scim/v2/Groups/[id]` — `src/app/api/scim/v2/Groups/[id]/route.ts`
-- `GET, POST /api/scim/v2/Groups` — `src/app/api/scim/v2/Groups/route.ts`
-- `GET /api/scim/v2/ResourceTypes/[id]` — `src/app/api/scim/v2/ResourceTypes/[id]/route.ts`
-- `GET /api/scim/v2/ResourceTypes` — `src/app/api/scim/v2/ResourceTypes/route.ts`
-- `GET /api/scim/v2/Schemas/[id]` — `src/app/api/scim/v2/Schemas/[id]/route.ts`
-- `GET /api/scim/v2/Schemas` — `src/app/api/scim/v2/Schemas/route.ts`
-- `GET /api/scim/v2/ServiceProviderConfig` — `src/app/api/scim/v2/ServiceProviderConfig/route.ts`
 - `GET, PUT, PATCH, DELETE /api/scim/v2/Users/[id]` — `src/app/api/scim/v2/Users/[id]/route.ts`
 - `GET, POST, PATCH /api/scim/v2/Users` — `src/app/api/scim/v2/Users/route.ts`
 

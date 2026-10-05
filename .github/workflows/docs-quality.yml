@@ -1,0 +1,46 @@
+name: Documentation site quality
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'content/docs/**'
+      - 'public/docs/**'
+      - 'src/app/docs/**'
+      - 'src/app/api/docs/**'
+      - 'src/components/docs/**'
+      - 'src/lib/docs/**'
+      - 'scripts/check-docs-search.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/docs-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'content/docs/**'
+      - 'public/docs/**'
+      - 'src/app/docs/**'
+      - 'src/app/api/docs/**'
+      - 'src/components/docs/**'
+      - 'src/lib/docs/**'
+      - 'scripts/check-docs-search.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/docs-quality.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run docs:search:test

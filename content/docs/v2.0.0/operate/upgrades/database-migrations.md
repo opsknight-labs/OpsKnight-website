@@ -4,9 +4,6 @@ description: Validate, apply, verify, and recover OpsKnight PostgreSQL migration
 type: deployment
 product_area: upgrades
 audience: [operator]
-reader:
-  status: READER_COMPLETE
-  task: Validate, apply, verify, and recover OpsKnight database migrations.
 verification:
   level: source
   verified_at: 2026-09-29
@@ -25,7 +22,7 @@ Set `DIRECT_DATABASE_URL` to PostgreSQL itself. Do not point migration commands 
 
 Stop or hold the rollout if you cannot identify a single migration owner. A Helm migration Job, Swarm migration service, Compose migration-only container, or one integrated container can own the operation. Do not start every replica with migrations enabled at the same time.
 
-## Configure and validate the migration set
+## Validate the migration set
 
 From the release checkout, with database variables set for the target:
 
@@ -57,11 +54,12 @@ concurrent build:
 DATABASE_URL="$DIRECT_DATABASE_URL" npm run prisma:indexes:sla-scheduler
 ```
 
-The Helm migration Job invokes this installer explicitly. For deployments or
-older release artifacts whose migration owner does not, run the command during
-the `SHADOW` rollout before selecting `INDEXED`. Confirm the index is valid
-rather than assuming schema migrations alone created it; the UI rejects Indexed
-mode until the database check passes.
+The current container entrypoint and Helm migration Job install the status-page
+and voice-attempt online indexes but do not invoke the SLA scheduler installer.
+Run the command explicitly during the `SHADOW` rollout before selecting
+`INDEXED`. Do not assume the index exists merely because schema migrations or
+the deployment migration Job completed; the UI will reject Indexed mode until
+the database check passes.
 
 ## Apply migrations by deployment type
 
@@ -81,7 +79,7 @@ Use the actual web service name from your Compose file. A zero exit code and the
 
 ### Helm
 
-The chart enables a one-shot install Job and a blocking `pre-upgrade` migration hook when `migrations.job.enabled` is true. It uses the chart image and direct database secret, runs Prisma against `DIRECT_DATABASE_URL`, then installs the status-platform, SLA-scheduler, and voice-attempt indexes.
+The chart enables a pre-install/pre-upgrade migration Job when `migrations.job.enabled` is true. It uses the chart image and database secret, runs Prisma against `DIRECT_DATABASE_URL`, then installs the status-platform and voice-attempt indexes.
 
 ```bash
 helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \
@@ -124,10 +122,6 @@ psql "$DIRECT_DATABASE_URL" -c \
 ```
 
 Success means there are no active records with `finished_at IS NULL` and `rolled_back_at IS NULL`. Then verify application readiness, administrator login, incident read/write, scheduler and worker health, queue processing, and one synthetic notification before ending the rollout soak period.
-
-## Operate migrations in production
-
-Retain migration logs, image digest, schema-health output, and approval with the release record. Run exactly one migration owner, preserve a direct database route, and rehearse restore-based recovery whenever the previous image is incompatible with the new schema.
 
 ## If a migration fails
 

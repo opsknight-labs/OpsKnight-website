@@ -1,6 +1,6 @@
 ---
 title: OpsKnight 2.0.0 documentation
-description: Documentation for the released OpsKnight 2.0.0 product.
+description: Documentation workspace for the upcoming OpsKnight 2.0.0 release.
 type: concept
 product_area: documentation
 audience:
@@ -14,9 +14,9 @@ verification:
 
 # OpsKnight 2.0.0 documentation
 
-This is the documentation for the released **OpsKnight 2.0.0** product.
-`v2.0.0` is the current release and is listed in `releasedVersions` in
-`docs/versions.json`, so the release-gated documentation sync publishes it.
+This is the documentation workspace for the upcoming **OpsKnight 2.0.0**
+release. It is not published by the release-gated documentation sync until
+`v2.0.0` is added to `releasedVersions` in `docs/versions.json`.
 
 The 2.0.0 documentation is rebuilt from current product evidence. Historical
 documentation can help locate a topic, but it is never authoritative.
@@ -52,9 +52,9 @@ documentation can help locate a topic, but it is never authoritative.
 
 ## Run in production
 
-- [Choose a deployment topology](./operate/deploy/), then follow the complete
-  [Compose](./operate/deploy/docker-compose/),
-  [Kubernetes](./operate/deploy/kubernetes/), or multi-node path.
+- Deploy with [Compose](./operate/deploy/compose),
+  [Kubernetes](./operate/deploy/kubernetes), or the
+  [split runtime](./operate/deploy/split-runtime).
 - Plan [scaling](./operate/reliability/scaling),
   [hardening](./operate/security/hardening),
   [backup and restore](./operate/data/backup-and-restore), and

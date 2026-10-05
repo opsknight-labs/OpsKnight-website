@@ -1,13 +1,9 @@
 ---
 title: Review audit logs
 description: Search administrative changes, inspect record details, and export the current result page as CSV.
-type: tutorial
+type: how-to
 product_area: administration
 audience: [administrator, operator]
-reader:
-  status: READER_COMPLETE
-  task: Search, interpret, paginate, and export audit records.
-  evidence: [docs/v2.0.0/assets/audit-log.png]
 verification:
   level: source
   verified_at: 2026-09-29
@@ -15,8 +11,6 @@ verification:
 ---
 
 # Review audit logs
-
-![Audit log with actor, action, entity, detail, search, filter, and export controls](/docs/v2.0.0/assets/audit-log.png)
 
 The Audit Log records security-sensitive and administrative actions. Use it to identify the recorded actor, action, entity, timestamp, source, and before/after details. It is distinct from application System Logs, notification delivery history, and an incident timeline.
 

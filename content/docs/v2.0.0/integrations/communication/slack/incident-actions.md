@@ -1,8 +1,7 @@
 ---
 title: Use Slack incident actions
-order: 7
 description: Acknowledge, resolve, annotate, and inspect incidents from Slack.
-type: concept
+type: how-to
 product_area: chatops
 audience: [responder]
 verification:
@@ -12,8 +11,6 @@ verification:
 ---
 
 # Use Slack incident actions
-
-This page summarizes the supported action surface. Follow [Acknowledge and resolve incidents](./acknowledge-resolve) for lifecycle effects and [Slack incident commands](./commands) for exact slash-command behavior.
 
 ## Before you begin
 

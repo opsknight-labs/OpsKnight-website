@@ -18,9 +18,9 @@ type SearchResult = {
 type SearchIndexEntry = {
   title: string;
   href: string;
-  description?: string;
-  keywords?: string[];
-  headings?: string[];
+  description: string;
+  keywords: string[];
+  headings: string[];
   text: string;
 };
 

@@ -21,6 +21,16 @@ const ROOT_SECTION_ORDER = new Map<string, number>([
   ["architecture", 8],
   ["mobile", 9],
 ]);
+const V2_ROOT_SECTION_ORDER = new Map<string, number>([
+  ["start", 1],
+  ["concepts", 2],
+  ["guides", 3],
+  ["integrations", 4],
+  ["operate", 5],
+  ["reference", 6],
+  ["troubleshooting", 7],
+  ["develop", 8],
+]);
 
 const V2_ROOT_SECTION_ORDER = new Map<string, number>([
   ["start", 1],
