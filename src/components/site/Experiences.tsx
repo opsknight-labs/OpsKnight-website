@@ -691,9 +691,14 @@ export function IntegrationExplorer() {
       provider.title,
       provider.category,
       provider.direction,
+      provider.protocol ?? "",
+      provider.endpoint ?? "",
       ...provider.actions,
       ...provider.authentication,
+      ...provider.acceptedCredentials,
       provider.signature,
+      provider.correlation ?? "",
+      provider.recovery ?? "",
     ].join(" ").toLowerCase();
     return (
       (category === "all" || provider.category === category) &&
@@ -737,7 +742,7 @@ export function IntegrationExplorer() {
       </div>
 
       <p className="results-count" aria-live="polite">
-        {filtered.length} integrations match this view
+        {filtered.length} connections match this view · {PRODUCT.inboundIntegrationCount} inbound alert sources + 3 workflow connections
       </p>
 
       <div className="integration-results">
@@ -841,6 +846,57 @@ export function IntegrationExplorer() {
                   <span>SIGNATURE BEHAVIOR</span>
                   <p>{readableToken(selected.signature)}</p>
                 </section>
+                {selected.endpoint ? (
+                  <section>
+                    <span>ENDPOINT</span>
+                    <code className="integration-contract-code">
+                      {selected.method ?? "POST"} {selected.endpoint}
+                    </code>
+                  </section>
+                ) : null}
+                {selected.acceptedCredentials.length ? (
+                  <section>
+                    <span>ACCEPTED CREDENTIAL FORMS</span>
+                    <div className="integration-chip-row">
+                      {selected.acceptedCredentials.map((credential) => (
+                        <strong key={credential}>{credential}</strong>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
+                {selected.rateLimit || selected.bodyLimitBytes ? (
+                  <section>
+                    <span>REQUEST LIMITS</span>
+                    <p>
+                      {selected.rateLimit
+                        ? `${selected.rateLimit.requests} requests / ${selected.rateLimit.windowSeconds}s / integration`
+                        : "Provider-specific rate limit"}
+                      {selected.bodyLimitBytes
+                        ? ` · ${Math.round(selected.bodyLimitBytes / 1048576)} MiB body limit`
+                        : ""}
+                    </p>
+                  </section>
+                ) : null}
+                {selected.correlation || selected.recovery ? (
+                  <section>
+                    <span>CORRELATION &amp; RECOVERY</span>
+                    {selected.correlation ? <p>Correlation: {selected.correlation}</p> : null}
+                    {selected.recovery ? <p>Recovery: {selected.recovery}</p> : null}
+                  </section>
+                ) : null}
+                {selected.errors.length ? (
+                  <section>
+                    <span>COMMON API OUTCOMES</span>
+                    <div className="integration-error-list">
+                      {selected.errors.map((error) => (
+                        <div key={error.status}>
+                          <code>{error.status}</code>
+                          <p>{error.meaning}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
                 <section>
                   <span>TRUTH BOUNDARY</span>
                   <p>

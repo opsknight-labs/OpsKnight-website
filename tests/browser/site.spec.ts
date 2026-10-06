@@ -86,12 +86,18 @@ test("integration filtering and setup routes", async ({ page }) => {
   await expect(drawer).toContainText("SUPPORTED ACTIONS");
   await expect(drawer).toContainText("AUTHENTICATION");
   await expect(drawer).toContainText("SIGNATURE BEHAVIOR");
+  await expect(drawer).toContainText("POST /api/integrations/datadog");
+  await expect(drawer).toContainText("100 requests / 60s / integration");
+  await expect(drawer).toContainText("CORRELATION & RECOVERY");
   await drawer.getByRole("link", { name: /Open Datadog integration/ }).click();
   await expect(page).toHaveURL(/\/integrations\/datadog\//);
   await expect(
     page.getByRole("link", { name: "View setup guide" }),
   ).toHaveAttribute("href", new RegExp(`${docsPrefix}/.+datadog/`));
   await page.goto("/integrations/");
+  await page.getByRole("searchbox").fill("x-routing-key");
+  await expect(page.locator(".integration-item")).toHaveCount(1);
+  await expect(page.locator(".integration-item")).toContainText("PagerDuty");
   await page.getByRole("searchbox").fill("no-provider-by-this-name");
   await expect(page.locator(".empty-result")).toBeVisible();
   await page.getByRole("searchbox").fill("");

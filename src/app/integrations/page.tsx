@@ -49,9 +49,10 @@ export default function Integrations() {
                 Use OpsKnight’s generic webhook path for internal monitoring,
                 scripts and systems that are not in the provider catalog.
               </p>
-              <TextLink href={productDocs("integrations/webhooks/webhook")}>
-                Read the generic webhook guide
-              </TextLink>
+              <div className="paired-links">
+                <TextLink href="/integrations/webhook/">Explore Generic Webhook</TextLink>
+                <TextLink href={productDocs("integrations/webhooks/webhook")}>Read the setup guide</TextLink>
+              </div>
             </article>
             <article>
               <p className="site-eyebrow">

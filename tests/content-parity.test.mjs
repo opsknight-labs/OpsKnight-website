@@ -161,3 +161,21 @@ test("primary adoption routes remain exposed", () => {
   assert.ok(/PagerDuty Events API/i.test(integrations), "PagerDuty compatibility path missing");
   assert.ok(integrations.includes("IntegrationExplorer"), "Integration explorer missing");
 });
+
+test("integration manifest preserves release-backed request contracts", () => {
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(root, "src/generated/product-manifest.json"), "utf8")
+  );
+  const byId = Object.fromEntries(manifest.integrations.map((item) => [item.id, item]));
+  assert.equal(byId.datadog.endpoint, "/api/integrations/datadog");
+  assert.equal(byId.datadog.method, "POST");
+  assert.deepEqual(byId.datadog.rateLimit, { requests: 100, windowSeconds: 60 });
+  assert.ok(byId.datadog.acceptedCredentials.includes("Authorization: Bearer"));
+  assert.match(byId.datadog.correlation, /dedup_key/);
+  assert.ok(byId.datadog.errors.some((error) => error.status === 429));
+  assert.equal(byId.pagerduty.signature, "none");
+  assert.ok(byId.pagerduty.acceptedCredentials.includes("x-routing-key"));
+  assert.equal(byId.webhook.bodyLimitBytes, 1048576);
+  assert.equal(byId.slack.kind, "workflow");
+  assert.equal(byId.slack.endpoint, null);
+});
