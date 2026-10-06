@@ -142,11 +142,11 @@ jobs:
         working-directory: site
         shell: bash
         run: |
-          cat > /tmp/import-northstar.mjs <<'EOF'
+          cat > .northstar-import.mjs <<'EOF'
           import fs from "node:fs";
           import path from "node:path";
           import crypto from "node:crypto";
-          import sharp from "./node_modules/sharp/lib/index.js";
+          import sharp from "sharp";
 
           const source = path.resolve("../source/generated/website-captures");
           const manifestPath = "content/product/screenshots.json";
@@ -199,7 +199,8 @@ jobs:
 
           fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
           EOF
-          node /tmp/import-northstar.mjs
+          node .northstar-import.mjs
+          rm .northstar-import.mjs
 
       - name: Commit Northstar captures and remove importer
         shell: bash
