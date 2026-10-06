@@ -10,7 +10,11 @@
       "incidents",
       "on-call",
       "paging"
-    ]
+    ],
+    "deployment": "Start with integrated Docker Compose when a single application host is acceptable. Move to split runtime or Kubernetes when availability, workload isolation, or independent scaling requires it.",
+    "integration": "Connect one release-verified inbound provider first, map it to the owning service, then add ChatOps or issue-tracking only after the core alert-to-response path is proven.",
+    "security": "Set the public HTTPS origin, durable PostgreSQL and backups, production secrets, and the identity policy before exposing the installation to responders.",
+    "validation": "Run a synthetic incident through ingestion, correlation, on-call resolution, paging, acknowledgement, customer communication, resolution, and follow-up."
   },
   {
     "slug": "sre",
@@ -23,7 +27,11 @@
       "incidents",
       "analytics",
       "postmortems"
-    ]
+    ],
+    "deployment": "Choose the smallest topology that still meets the reliability target for the incident platform itself; split runtime only where failure isolation or independent worker scaling is justified.",
+    "integration": "Start with the monitoring systems that already define service health, then connect Slack or Teams for response collaboration and Jira when follow-up work belongs in the issue tracker.",
+    "security": "Use scoped roles, audit evidence, and enterprise identity where required. Keep incident and postmortem data within the deployment boundary your team operates.",
+    "validation": "Exercise one real service journey and verify MTTA/MTTR evidence, timeline completeness, postmortem creation, and owned action items after recovery."
   },
   {
     "slug": "platform-engineering",
@@ -36,7 +44,11 @@
       "operations",
       "security",
       "chatops"
-    ]
+    ],
+    "deployment": "Standardize a supported deployment pattern for service teams, including database ownership, ingress, secrets, backups, health signals, and upgrade responsibility.",
+    "integration": "Offer a curated set of monitoring and ChatOps paths instead of letting every team invent a different response contract. Use the generic webhook only for internal systems without a first-class provider.",
+    "security": "Define OIDC/SCIM ownership, RBAC boundaries, auditor access, API-key scope, and session policy as part of the platform contract.",
+    "validation": "Onboard a pilot service, trigger a synthetic incident, verify responder routing and delivery evidence, then validate Health Center and recovery procedures."
   },
   {
     "slug": "regulated-environments",
@@ -49,7 +61,11 @@
       "security",
       "operations",
       "incidents"
-    ]
+    ],
+    "deployment": "Keep the application, database, backups, and network controls inside the environment governed by your organization. Select a topology that fits your own availability and recovery requirements.",
+    "integration": "Prefer narrowly scoped provider credentials and document every inbound and outbound trust boundary used by the incident workflow.",
+    "security": "Configure enterprise identity, least-privilege roles, audit evidence, secret rotation, retention, and network hardening. OpsKnight controls support your program but do not create compliance certification by themselves.",
+    "validation": "Prove access denial as well as success: allowed user, denied user, audit event capture, credential rotation, backup/restore, and incident evidence retention."
   },
   {
     "slug": "on-call",
@@ -62,7 +78,11 @@
       "on-call",
       "paging",
       "mobile"
-    ]
+    ],
+    "deployment": "The deployment choice matters less than proving the scheduler, worker health, database durability, and notification-provider reachability during an incident.",
+    "integration": "Map services to the schedules and escalation policies that actually own them. Enable only the paging channels responders are expected to use and test each configured provider.",
+    "security": "Limit schedule and escalation administration to the roles that need it, and protect notification-provider credentials with the same production secret controls as the rest of the platform.",
+    "validation": "Test current coverage, an override, a triggered incident, each required delivery channel, acknowledgement, retry visibility, and escalation behavior."
   },
   {
     "slug": "devops",
@@ -75,6 +95,10 @@
       "incidents",
       "chatops",
       "status-pages"
-    ]
+    ],
+    "deployment": "Begin with a simple integrated deployment for evaluation, then choose split or Kubernetes based on the production availability and operations model rather than team size alone.",
+    "integration": "Connect monitoring and delivery systems already in use, route alerts by service ownership, use ChatOps for coordination, and publish only customer-safe updates to status pages.",
+    "security": "Configure identity, roles, API keys, provider credentials, HTTPS, backups, and audit review before treating the installation as production incident infrastructure.",
+    "validation": "Send representative alerts from each important source and verify deduplication, assignment, paging, ChatOps actions, status communication, resolution, and recovery."
   }
 ]

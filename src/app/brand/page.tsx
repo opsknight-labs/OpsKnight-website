@@ -107,6 +107,37 @@ export default function Brand() {
       </section>
 
       <section className="site-section">
+        <div className="site-container">
+          <SectionIntro eyebrow="USE IT CORRECTLY" title="Practical rules for product references.">
+            Keep the name, mark and product claims recognizable and accurate
+            wherever OpsKnight appears in documentation, integrations or partner material.
+          </SectionIntro>
+          <div className="brand-do-dont">
+            <article>
+              <span>DO</span>
+              <h3>Preserve the supplied identity.</h3>
+              <ul>
+                <li>Use “OpsKnight” with the exact capitalization.</li>
+                <li>Use supplied logo assets with clear space and sufficient contrast.</li>
+                <li>Describe the product using capabilities that are current for the referenced release.</li>
+                <li>Link to the project or documentation when attribution helps readers verify a claim.</li>
+              </ul>
+            </article>
+            <article>
+              <span>DON’T</span>
+              <h3>Invent variants or implied endorsements.</h3>
+              <ul>
+                <li>Do not stretch, rotate, recolor, or redraw the knight mark.</li>
+                <li>Do not call a third-party product or service an official OpsKnight offering without permission.</li>
+                <li>Do not combine the OpsKnight name with another brand in a way that implies ownership or endorsement.</li>
+                <li>Do not reuse old release claims as if they describe the current product.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section">
         <div className="site-container brand-principles-grid">
           <article className="interior-copy">
             <p className="site-eyebrow">THE INCIDENT SIGNAL</p>
@@ -123,6 +154,16 @@ export default function Brand() {
               Manrope leads narrative copy. JetBrains Mono labels versions,
               commands, states and operational details. Large headings should
               create hierarchy, not crowd smaller laptop viewports.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">TRADEMARK & ATTRIBUTION</p>
+            <h2>Identify the project without implying affiliation.</h2>
+            <p>
+              The OpsKnight name and logo identify this project and product.
+              When referencing OpsKnight from another product, company or service,
+              keep the attribution clear and do not imply endorsement, certification
+              or an official partnership that has not been established.
             </p>
           </article>
           <article className="interior-copy">

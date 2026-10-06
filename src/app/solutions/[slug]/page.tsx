@@ -102,6 +102,43 @@ export default async function Solution({
         </div>
       </section>
 
+      <section className="site-section site-light-alt">
+        <div className="site-container">
+          <div className="section-intro">
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> IMPLEMENTATION CONTEXT
+            </p>
+            <h2>Turn the use case into an operating model.</h2>
+            <p className="site-description">
+              The product workflow is only useful when deployment, integrations,
+              access controls and validation are planned together.
+            </p>
+          </div>
+          <div className="solution-evaluation-grid">
+            <article>
+              <span>DEPLOYMENT</span>
+              <h3>How to run it</h3>
+              <p>{solution.deployment}</p>
+            </article>
+            <article>
+              <span>INTEGRATIONS</span>
+              <h3>What to connect first</h3>
+              <p>{solution.integration}</p>
+            </article>
+            <article>
+              <span>SECURITY & OPERATIONS</span>
+              <h3>What to decide up front</h3>
+              <p>{solution.security}</p>
+            </article>
+            <article>
+              <span>VALIDATION</span>
+              <h3>What to prove before production</h3>
+              <p>{solution.validation}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="site-section">
         <div className="site-container solution-next">
           <div>
@@ -121,6 +158,9 @@ export default async function Solution({
             <TextLink href="/security/">Review security & identity</TextLink>
             <TextLink href={productDocs("operate/reliability/health-center")}>
               Validate Health Center
+            </TextLink>
+            <TextLink href="/support/">
+              Discuss implementation & support
             </TextLink>
           </div>
         </div>

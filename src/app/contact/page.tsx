@@ -97,6 +97,30 @@ export default function Contact() {
           ))}
         </div>
       </section>
+      <section className="site-section site-light-alt">
+        <div className="site-container contact-issue-guide">
+          <div>
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> REPORTING A PRODUCT ISSUE
+            </p>
+            <h2>Give maintainers enough context to reproduce it.</h2>
+            <p className="site-description">
+              For non-sensitive bugs, include the release, deployment type,
+              affected page or workflow, exact reproduction steps, expected and
+              actual behavior, and sanitized logs or request IDs where useful.
+              Remove secrets, tokens, cookies, credentials and private incident data.
+            </p>
+          </div>
+          <div className="issue-evidence-list">
+            <span>Release / commit</span>
+            <span>Deployment topology</span>
+            <span>Reproduction steps</span>
+            <span>Expected vs actual</span>
+            <span>Sanitized logs / request IDs</span>
+            <span>Relevant provider or service</span>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
