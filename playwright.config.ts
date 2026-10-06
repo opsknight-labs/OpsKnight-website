@@ -16,5 +16,29 @@ export default defineConfig({
       name: "mobile",
       use: { ...devices["iPhone 13"], defaultBrowserType: "chromium" },
     },
+    {
+      name: "laptop-1366",
+      grep: /visual coverage for key pages/,
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1366, height: 768 },
+      },
+    },
+    {
+      name: "laptop-1440",
+      grep: /visual coverage for key pages/,
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1440, height: 900 },
+      },
+    },
+    {
+      name: "desktop-1920",
+      grep: /visual coverage for key pages/,
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
   ],
 });

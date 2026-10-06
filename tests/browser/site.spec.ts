@@ -134,21 +134,31 @@ test("reduced motion and product boundaries", async ({ page }) => {
     "no manual escalation control in Web",
   );
 });
-test("visual coverage for key pages", async ({ page }) => {
-  test.setTimeout(90000);
+test("visual coverage for key pages", async ({ page }, testInfo) => {
+  test.setTimeout(120000);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const route of [
+  const coreVisualRoutes = [
     "/",
     "/product/incidents/",
     "/integrations/",
     "/install/",
+    "/compare/",
+  ];
+  const fullVisualRoutes = [
+    ...coreVisualRoutes,
     "/security/",
     "/support/",
     "/contact/",
     "/community/",
-    "/compare/",
     "/docs/v2.0.0/",
-  ]) {
+  ];
+  const routes = ["laptop-1366", "laptop-1440", "desktop-1920"].includes(
+    testInfo.project.name,
+  )
+    ? coreVisualRoutes
+    : fullVisualRoutes;
+
+  for (const route of routes) {
     await page.goto(route);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     for (const image of await page.locator("img").all()) {
@@ -171,6 +181,18 @@ test("visual coverage for key pages", async ({ page }) => {
         stylePath: "tests/browser/screenshot.css",
       },
     );
+  }
+
+  if (testInfo.project.name === "mobile") {
+    await page.goto("/");
+    await page.getByLabel("Open navigation").click();
+    await expect(
+      page.getByRole("navigation", { name: "Mobile navigation" }),
+    ).toHaveScreenshot("mobile-navigation.png", {
+      animations: "disabled",
+      maxDiffPixelRatio: 0.025,
+      stylePath: "tests/browser/screenshot.css",
+    });
   }
 });
 

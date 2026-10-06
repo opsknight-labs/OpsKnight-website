@@ -1,6 +1,8 @@
 name: Bootstrap Linux visual baselines
 
 on:
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches: [feat/website-v2-redesign]
 
@@ -9,6 +11,7 @@ permissions:
 
 jobs:
   baselines:
+    if: github.event_name == 'push' || github.event.pull_request.head.ref == 'feat/website-v2-redesign'
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
