@@ -115,9 +115,8 @@ jobs:
             await expect(page.getByText(DOCS_FIXTURES.service, { exact: true }).first()).toBeVisible();
             await capture(page, 'service-catalog');
 
-            await page.goto('/status/northstar-systems');
-            await expect(page).toHaveURL(/\/status\/northstar-systems/);
-            await expect(page.locator('body')).not.toContainText(/404|not found|something went wrong/i);
+            await page.goto('/settings/status-pages');
+            await expect(page.getByText(DOCS_FIXTURES.statusPage, { exact: true }).first()).toBeVisible();
             await capture(page, 'status-pages');
           });
           EOF
@@ -164,7 +163,7 @@ jobs:
             "audit-log": { route: "/audit" },
             "health-center": { route: "/settings/system/health" },
             "service-catalog": { route: "/services" },
-            "status-pages": { route: "/status/northstar-systems", authenticated: false },
+            "status-pages": { route: "/settings/status-pages", authenticated: true, publicProof: "https://status.opsknight.com" },
           };
 
           manifest.source = "OpsKnight v2.0.0 documentation evidence runtime · Northstar Systems synthetic fixture";
