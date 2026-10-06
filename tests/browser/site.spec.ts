@@ -199,6 +199,24 @@ test("responsive coverage for key marketing pages", async ({ page }) => {
   }
 });
 
+test("comparison matrix is usable on desktop and mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/compare/");
+  await expect(page.locator(".comparison-desktop")).toBeVisible();
+  await expect(page.locator(".comparison-desktop")).toContainText("PagerDuty");
+  await expect(page.locator(".comparison-desktop")).toContainText("Paging channels");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".comparison-mobile")).toBeVisible();
+  await page.locator(".comparison-mobile select").selectOption("incidentio");
+  await expect(page.locator(".comparison-mobile")).toContainText("incident.io");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+});
+
 test("WCAG AA checks on marketing flows", async ({ page }) => {
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   for (const route of [
