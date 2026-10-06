@@ -1,7 +1,6 @@
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { siteMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
-import type { Metadata } from "next";
 import { PRODUCT } from "@/lib/product";
 import {
   Action,

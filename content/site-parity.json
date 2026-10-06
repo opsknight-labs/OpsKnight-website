@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "auditedAgainst": "pre-redesign OpsKnight website",
+  "updatedAt": "2026-10-06",
+  "policy": "Nothing disappears silently. Preserve, move, rewrite, or intentionally remove with a reason.",
+  "entries": [
+    {
+      "id": "home-live-status",
+      "area": "homepage",
+      "oldContent": "Live status hero CTA",
+      "status": "RESTORED",
+      "newDestination": "homepage hero + status showcase + footer"
+    },
+    {
+      "id": "home-command-center",
+      "area": "homepage",
+      "oldContent": "Product overview proof",
+      "status": "REWRITTEN",
+      "newDestination": "homepage hero product proof"
+    },
+    {
+      "id": "home-incident-story",
+      "area": "homepage",
+      "oldContent": "Incident lifecycle story",
+      "status": "REWRITTEN",
+      "newDestination": "Detect → Learn narrative + stable Response Canvas"
+    },
+    {
+      "id": "home-compare",
+      "area": "homepage",
+      "oldContent": "Comparison entry point",
+      "status": "RESTORED",
+      "newDestination": "homepage comparison teaser + /compare/"
+    },
+    {
+      "id": "home-deploy",
+      "area": "homepage",
+      "oldContent": "Deployment explanation",
+      "status": "PRESERVED",
+      "newDestination": "homepage architecture + /install/"
+    },
+    {
+      "id": "home-security",
+      "area": "homepage",
+      "oldContent": "Security trust story",
+      "status": "PRESERVED",
+      "newDestination": "homepage trust section + /security/"
+    },
+    {
+      "id": "home-open-source",
+      "area": "homepage",
+      "oldContent": "Open-source positioning",
+      "status": "PRESERVED",
+      "newDestination": "homepage project section + /about/"
+    },
+    {
+      "id": "nav-compare",
+      "area": "navigation",
+      "oldContent": "Direct Compare navigation",
+      "status": "RESTORED",
+      "newDestination": "primary desktop/mobile navigation"
+    },
+    {
+      "id": "nav-integrations",
+      "area": "navigation",
+      "oldContent": "Direct Integrations navigation",
+      "status": "PRESERVED",
+      "newDestination": "primary desktop/mobile navigation"
+    },
+    {
+      "id": "nav-install",
+      "area": "navigation",
+      "oldContent": "Install CTA",
+      "status": "PRESERVED",
+      "newDestination": "header install CTA + mobile actions"
+    },
+    {
+      "id": "footer-live-status",
+      "area": "footer",
+      "oldContent": "Live status demo",
+      "status": "RESTORED",
+      "newDestination": "footer Live OpsKnight status"
+    },
+    {
+      "id": "compare-master-matrix",
+      "area": "compare",
+      "oldContent": "Capability comparison matrix",
+      "status": "REWRITTEN",
+      "newDestination": "/compare/ source-backed 7-vendor matrix"
+    },
+    {
+      "id": "compare-mobile",
+      "area": "compare",
+      "oldContent": "Comparison on small screens",
+      "status": "REWRITTEN",
+      "newDestination": "mobile vendor selector + stacked capability cards"
+    },
+    {
+      "id": "compare-vendor-pages",
+      "area": "compare",
+      "oldContent": "Individual competitor pages",
+      "status": "RESTORED",
+      "newDestination": "/compare/[competitor]/"
+    },
+    {
+      "id": "compare-pagerduty-migration",
+      "area": "compare",
+      "oldContent": "PagerDuty Events API v2 migration helper",
+      "status": "RESTORED",
+      "newDestination": "/compare/pagerduty/"
+    },
+    {
+      "id": "compare-opsgenie-migration",
+      "area": "compare",
+      "oldContent": "Opsgenie migration blueprint",
+      "status": "RESTORED",
+      "newDestination": "/compare/opsgenie/"
+    },
+    {
+      "id": "compare-grafana-migration",
+      "area": "compare",
+      "oldContent": "Grafana transition guide",
+      "status": "RESTORED",
+      "newDestination": "/compare/grafana/"
+    },
+    {
+      "id": "integrations-search-filter",
+      "area": "integrations",
+      "oldContent": "Search and category filtering",
+      "status": "RESTORED",
+      "newDestination": "IntegrationExplorer on /integrations/"
+    },
+    {
+      "id": "integrations-provider-depth",
+      "area": "integrations",
+      "oldContent": "Provider descriptions/actions/authentication",
+      "status": "REWRITTEN",
+      "newDestination": "release-backed IntegrationExplorer"
+    },
+    {
+      "id": "integrations-custom-webhook",
+      "area": "integrations",
+      "oldContent": "Custom webhook guidance",
+      "status": "RESTORED",
+      "newDestination": "/integrations/ custom systems block"
+    },
+    {
+      "id": "integrations-pagerduty-adapter",
+      "area": "integrations",
+      "oldContent": "PagerDuty Events API compatibility",
+      "status": "RESTORED",
+      "newDestination": "/integrations/ compatibility block + docs"
+    },
+    {
+      "id": "integrations-blanket-hmac",
+      "area": "integrations",
+      "oldContent": "Blanket HMAC-SHA256 claim",
+      "status": "INTENTIONALLY_REMOVED",
+      "reason": "Authentication/signature behavior varies by provider and the blanket statement was technically inaccurate."
+    },
+    {
+      "id": "install-chooser",
+      "area": "install",
+      "oldContent": "Deployment choice guidance",
+      "status": "REWRITTEN",
+      "newDestination": "/install/ interactive chooser"
+    },
+    {
+      "id": "install-secrets",
+      "area": "install",
+      "oldContent": "Production secrets and prerequisites",
+      "status": "RESTORED",
+      "newDestination": "/install/ prerequisites and secrets"
+    },
+    {
+      "id": "install-topologies",
+      "area": "install",
+      "oldContent": "Compose, split, Swarm and Kubernetes deployment choices",
+      "status": "RESTORED",
+      "newDestination": "/install/ topology sections"
+    },
+    {
+      "id": "install-capacity",
+      "area": "install",
+      "oldContent": "Hardware/capacity guidance",
+      "status": "RESTORED",
+      "newDestination": "/install/ sizing matrix + capacity docs"
+    },
+    {
+      "id": "install-production-checklist",
+      "area": "install",
+      "oldContent": "Operational requirements",
+      "status": "RESTORED",
+      "newDestination": "/install/ production readiness checklist"
+    },
+    {
+      "id": "security-identity",
+      "area": "security",
+      "oldContent": "OIDC, SCIM, RBAC and auditor guidance",
+      "status": "RESTORED",
+      "newDestination": "/security/ identity architecture"
+    },
+    {
+      "id": "security-secrets",
+      "area": "security",
+      "oldContent": "Encryption and secret handling",
+      "status": "RESTORED",
+      "newDestination": "/security/ cryptography section"
+    },
+    {
+      "id": "security-audit",
+      "area": "security",
+      "oldContent": "Audit/evidence guidance",
+      "status": "RESTORED",
+      "newDestination": "/security/ auditability section"
+    },
+    {
+      "id": "security-procurement",
+      "area": "security",
+      "oldContent": "Procurement/SBOM/security policy",
+      "status": "PRESERVED",
+      "newDestination": "/security/ procurement section"
+    },
+    {
+      "id": "about-audience",
+      "area": "about",
+      "oldContent": "Who OpsKnight is for and not for",
+      "status": "RESTORED",
+      "newDestination": "/about/ fit sections"
+    },
+    {
+      "id": "about-license",
+      "area": "about",
+      "oldContent": "Open-source model and licensing",
+      "status": "RESTORED",
+      "newDestination": "/about/ open-source model"
+    },
+    {
+      "id": "about-maintainer",
+      "area": "about",
+      "oldContent": "Maintainer and community",
+      "status": "RESTORED",
+      "newDestination": "/about/ project section"
+    },
+    {
+      "id": "about-support",
+      "area": "about",
+      "oldContent": "Professional help",
+      "status": "RESTORED",
+      "newDestination": "/about/ + /support/"
+    },
+    {
+      "id": "brand-assets",
+      "area": "brand",
+      "oldContent": "Logo downloads and usage rules",
+      "status": "RESTORED",
+      "newDestination": "/brand/"
+    },
+    {
+      "id": "brand-colors-type",
+      "area": "brand",
+      "oldContent": "Color and typography guidance",
+      "status": "RESTORED",
+      "newDestination": "/brand/"
+    },
+    {
+      "id": "brand-naming",
+      "area": "brand",
+      "oldContent": "Product naming/writing guidance",
+      "status": "RESTORED",
+      "newDestination": "/brand/"
+    }
+  ]
+}

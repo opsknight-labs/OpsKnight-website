@@ -1,7 +1,7 @@
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Scale, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 import { COMPETITORS } from "@/lib/competitors";
 import {

@@ -127,3 +127,37 @@ test("competitor compare pages have perspectives, migration helpers, and side-by
   assert.ok(compPageContent.includes("OpsgenieMigrationHelper"), "Opsgenie helper missing");
   assert.ok(compPageContent.includes("GrafanaMigrationHelper"), "Grafana helper missing");
 });
+
+
+test("site parity ledger is explicit and complete", () => {
+  const ledger = JSON.parse(
+    fs.readFileSync(path.join(root, "content/site-parity.json"), "utf8")
+  );
+  const allowed = new Set(["PRESERVED", "RESTORED", "REWRITTEN", "INTENTIONALLY_REMOVED"]);
+  assert.ok(Array.isArray(ledger.entries) && ledger.entries.length >= 25, "Parity ledger is too small");
+  for (const entry of ledger.entries) {
+    assert.ok(entry.id && entry.area && entry.oldContent, "Parity entry missing identity fields");
+    assert.ok(allowed.has(entry.status), `Invalid parity status for ${entry.id}`);
+    if (entry.status === "INTENTIONALLY_REMOVED") {
+      assert.ok(entry.reason, `Removal reason missing for ${entry.id}`);
+    } else {
+      assert.ok(entry.newDestination, `Destination missing for ${entry.id}`);
+    }
+  }
+});
+
+test("primary adoption routes remain exposed", () => {
+  const nav = fs.readFileSync(path.join(root, "src/components/site/SiteNavigation.tsx"), "utf8");
+  for (const route of ["/integrations/", "/compare/", "/security/", "/install/"]) {
+    assert.ok(nav.includes(route), `Primary route ${route} missing from navigation`);
+  }
+
+  const home = fs.readFileSync(path.join(root, "src/app/page.tsx"), "utf8");
+  assert.ok(home.includes("Live OpsKnight status"), "Homepage live-status proof missing");
+  assert.ok(home.includes("Compare") || home.includes("/compare/"), "Homepage compare entry missing");
+
+  const integrations = fs.readFileSync(path.join(root, "src/app/integrations/page.tsx"), "utf8");
+  assert.ok(/generic webhook/i.test(integrations), "Generic webhook path missing from integrations");
+  assert.ok(/PagerDuty Events API/i.test(integrations), "PagerDuty compatibility path missing");
+  assert.ok(integrations.includes("IntegrationExplorer"), "Integration explorer missing");
+});

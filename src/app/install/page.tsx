@@ -3,18 +3,11 @@ import type { Metadata } from "next";
 import { DeploymentChooser } from "@/components/site/Experiences";
 import { SectionIntro, TextLink, Action, FinalCTA } from "@/components/site/Primitives";
 import { productDocs, PRODUCT } from "@/lib/product";
-import { BRAND } from "@/lib/brand";
 import {
-  Terminal,
   Shield,
   Server,
   Layers,
   CheckCircle2,
-  AlertTriangle,
-  Cpu,
-  Database,
-  ExternalLink,
-  Code2,
 } from "lucide-react";
 
 export const metadata: Metadata = siteMetadata({

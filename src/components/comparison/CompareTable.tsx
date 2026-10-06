@@ -53,7 +53,7 @@ export function CompareTable() {
     ...section,
     rows: section.rows.filter((row) => {
       if (selectedCategory === "all") return true;
-      return (row as any).category === selectedCategory;
+      return row.category === selectedCategory;
     }),
   })).filter((section) => section.rows.length > 0);
 

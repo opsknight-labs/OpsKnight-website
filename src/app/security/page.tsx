@@ -5,15 +5,10 @@ import { enquiryHref } from "@/lib/contact";
 import { PRODUCT, productDocs } from "@/lib/product";
 import { Action, FinalCTA, TextLink } from "@/components/site/Primitives";
 import {
-  ShieldCheck,
   KeyRound,
   Lock,
   UserCheck,
-  FileText,
-  Activity,
-  Server,
   Network,
-  ExternalLink,
   CheckCircle2,
 } from "lucide-react";
 

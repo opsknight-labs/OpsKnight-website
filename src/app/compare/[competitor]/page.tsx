@@ -10,14 +10,13 @@ import { Action, FinalCTA, TextLink } from "@/components/site/Primitives";
 import {
   COMPARE_SECTIONS,
   COMPARE_SOURCE_LINKS,
-  COMPARE_VENDORS,
   type CompareCell,
   type CompareVendorId,
 } from "@/lib/compare-matrix";
 import { PagerDutyMigrationHelper } from "@/components/comparison/PagerDutyMigrationHelper";
 import { OpsgenieMigrationHelper } from "@/components/comparison/OpsgenieMigrationHelper";
 import { GrafanaMigrationHelper } from "@/components/comparison/GrafanaMigrationHelper";
-import { Check, Minus, ExternalLink, ShieldCheck, ArrowRight, ArrowLeft } from "lucide-react";
+import { Check, Minus, ExternalLink, ShieldCheck, ArrowLeft } from "lucide-react";
 
 const aliases: Record<string, string> = {
   incidentio: "incident-io",

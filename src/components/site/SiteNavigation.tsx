@@ -21,9 +21,16 @@ const resources = [
 export function SiteNavigation() {
   const path = usePathname();
   const header = useRef<HTMLElement>(null);
-  const isActive = (href: string) =>
-    href.startsWith("/") &&
-    (href === "/" ? path === "/" : path === href || path.startsWith(href));
+  const normalizePath = (value: string) =>
+    value.length > 1 ? value.replace(/\\/+$/, "") : value;
+  const isActive = (href: string) => {
+    if (!href.startsWith("/")) return false;
+    const current = normalizePath(path);
+    const target = normalizePath(href);
+    return target === "/"
+      ? current === "/"
+      : current === target || current.startsWith(`${target}/`);
+  };
   const resourcesActive = resources.some(([, href]) => isActive(href));
 
   useEffect(() => {
