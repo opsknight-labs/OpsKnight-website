@@ -1,8 +1,8 @@
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
-import { PRODUCT } from "@/lib/product";
+import { PRODUCT, productDocs } from "@/lib/product";
 import { IntegrationExplorer } from "@/components/site/Experiences";
-import { FinalCTA } from "@/components/site/Primitives";
+import { FinalCTA, TextLink } from "@/components/site/Primitives";
 const pageMetadata: Metadata = {
   title: "Integrations",
   description:
@@ -38,6 +38,36 @@ export default function Integrations() {
             Authentication, supported actions and signature verification vary by
             provider. Follow the setup guide for the exact contract.
           </p>
+
+          <div className="integration-utility-grid">
+            <article>
+              <p className="site-eyebrow">
+                <span className="signal-dot" /> CUSTOM SYSTEMS
+              </p>
+              <h2>Don’t see your tool?</h2>
+              <p>
+                Use OpsKnight’s generic webhook path for internal monitoring,
+                scripts and systems that are not in the provider catalog.
+              </p>
+              <TextLink href={productDocs("integrations/webhooks/webhook")}>
+                Read the generic webhook guide
+              </TextLink>
+            </article>
+            <article>
+              <p className="site-eyebrow">
+                <span className="signal-dot" /> PAGERDUTY COMPATIBILITY
+              </p>
+              <h2>Moving an Events API v2 sender?</h2>
+              <p>
+                OpsKnight includes an ingest adapter for PagerDuty Events API
+                v2-shaped payloads. It is a compatibility path for event
+                ingestion, not emulation of the PagerDuty product.
+              </p>
+              <TextLink href={productDocs("integrations/webhooks/pagerduty")}>
+                View the compatibility guide
+              </TextLink>
+            </article>
+          </div>
         </div>
       </section>
       <FinalCTA />

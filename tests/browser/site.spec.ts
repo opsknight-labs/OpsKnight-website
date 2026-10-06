@@ -91,6 +91,12 @@ test("integration filtering and setup routes", async ({ page }) => {
     "Datadog",
   );
   await page.goto("/integrations/");
+  await expect(
+    page.getByRole("link", { name: "Read the generic webhook guide" }),
+  ).toHaveAttribute("href", `${docsPrefix}/integrations/webhooks/webhook/`);
+  await expect(
+    page.getByRole("link", { name: "View the compatibility guide" }),
+  ).toHaveAttribute("href", `${docsPrefix}/integrations/webhooks/pagerduty/`);
   await page.getByRole("searchbox").fill("no-provider-by-this-name");
   await expect(page.locator(".empty-result")).toBeVisible();
   await page.getByRole("searchbox").fill("");
@@ -162,6 +168,9 @@ test("responsive coverage for key marketing pages", async ({ page }) => {
       "complete",
       true,
     );
+    if (height <= 720 || width <= 1099) {
+      await expect(page.locator(".response-stepper")).toBeVisible();
+    }
   }
 
   await page.setViewportSize({ width: 1440, height: 900 });

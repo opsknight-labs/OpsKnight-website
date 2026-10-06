@@ -39,7 +39,7 @@ try {
     "catalog.yaml": `docs/${provenance.tag}/integrations/catalog.yaml`,
     "CHANGELOG.md": "CHANGELOG.md",
     LICENSE: "LICENSE",
-    "notification-priority.ts": "src/lib/notification-priority.ts",
+    "notification-priority.source.txt": "src/lib/notification-priority.ts",
   };
   for (const [file, source] of Object.entries(mapping)) {
     const bytes = git(["show", `${commit}:${source}`]);

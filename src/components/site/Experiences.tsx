@@ -137,7 +137,7 @@ export function IncidentLoop() {
 
   return (
     <div
-      className={`incident-theater response-theater ${cinematic ? "cinematic" : ""}`}
+      className={`incident-theater response-theater ${cinematic ? "cinematic" : "compact"}`}
       ref={theater}
     >
       <div
@@ -211,7 +211,7 @@ function ResponseCanvas({ active }: { active: number }) {
           <span className="signal-dot" />
           ASTER CLOUD / CHECKOUT API
         </div>
-        <span className={`response-status status-${status.toLowerCase()}`}>
+        <span className={`response-status status-${status.toLowerCase().replaceAll(" ", "-")}`}>
           {status}
         </span>
       </div>
