@@ -2,14 +2,23 @@ import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Action, SectionIntro, TextLink } from "@/components/site/Primitives";
+
 const pageMetadata: Metadata = {
   title: "Brand",
   description:
-    "OpsKnight identity, colors, typography and the Incident Signal.",
+    "OpsKnight identity, logo usage, colors, typography, naming and the Incident Signal.",
   alternates: { canonical: "/brand/" },
   openGraph: { url: "/brand/" },
 };
 export const metadata = siteMetadata(pageMetadata);
+
+const usageRules = [
+  ["Clear space", "Give the knight mark breathing room. Do not crowd it with text, borders or partner marks."],
+  ["Keep proportions", "Scale the supplied asset as one unit. Do not stretch, squash, rotate or redraw the mark."],
+  ["Use contrast", "Use the red mark where it remains legible. Prefer the supplied assets over recoloring the logo."],
+  ["Name it OpsKnight", "Write the product name as “OpsKnight”. Avoid alternate spacing, abbreviations or invented product names."],
+] as const;
+
 export default function Brand() {
   return (
     <div className="site-page">
@@ -23,23 +32,25 @@ export default function Brand() {
             <br />A clear signal.
           </h1>
           <p className="site-description">
-            Incident operations you control. Our identity pairs operational
-            surfaces with a deliberate red signal and room to breathe.
+            Incident operations you control. The identity pairs operational
+            surfaces with a deliberate red signal and enough restraint for the
+            product to remain the focus.
           </p>
           <div className="site-actions">
-            <Action href="/logo.svg">Download the logo</Action>
+            <Action href="/logo.svg">Download SVG logo</Action>
             <Action href="/logo.png" secondary>
-              PNG logo
+              Download PNG
             </Action>
           </div>
         </div>
       </section>
+
       <section className="site-section">
         <div className="site-container">
-          <SectionIntro
-            eyebrow="THE MARK"
-            title="Keep the knight recognizable."
-          />
+          <SectionIntro eyebrow="THE MARK" title="Keep the knight recognizable.">
+            Use the supplied mark, preserve its proportions and leave clear
+            space around it.
+          </SectionIntro>
           <div className="brand-logo-stage">
             <Image
               src="/logo.svg"
@@ -47,11 +58,33 @@ export default function Brand() {
               height={160}
               alt="OpsKnight red knight shield"
             />
-            <p>
-              Use the original mark. Preserve its proportions and give it clear
-              space.
-            </p>
+            <div>
+              <p>
+                Use the original vector wherever possible. The PNG is provided
+                for environments that cannot use SVG.
+              </p>
+              <div className="paired-links">
+                <TextLink href="/logo.svg">SVG asset</TextLink>
+                <TextLink href="/logo.png">PNG asset</TextLink>
+                <TextLink href="/brand/opsknight-mark.webp">Web mark</TextLink>
+              </div>
+            </div>
           </div>
+
+          <div className="brand-usage-grid">
+            {usageRules.map(([title, body]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-white">
+        <div className="site-container">
+          <SectionIntro eyebrow="COLOR" title="Operational, not decorative." />
           <div className="brand-palette">
             {[
               ["OpsKnight Red", "#D21A1B"],
@@ -72,22 +105,35 @@ export default function Brand() {
           </div>
         </div>
       </section>
-      <section className="site-section site-white">
-        <div className="site-container interior-copy">
-          <p className="site-eyebrow">THE INCIDENT SIGNAL</p>
-          <h2>Red carries meaning.</h2>
-          <p>
-            A point, a path, an active incident. Use red to explain routing,
-            paging, attention and action. Motion should show what happens to the
-            signal.
-          </p>
-          <h2>Type with clarity.</h2>
-          <p>
-            Manrope leads the story. JetBrains Mono labels versions, commands
-            and operational details. Large headings, concise copy and strong
-            contrast keep the product in focus.
-          </p>
-          <TextLink href="/">See the identity in use</TextLink>
+
+      <section className="site-section">
+        <div className="site-container brand-principles-grid">
+          <article className="interior-copy">
+            <p className="site-eyebrow">THE INCIDENT SIGNAL</p>
+            <h2>Red carries meaning.</h2>
+            <p>
+              A point, a path, an active incident. Use red to explain routing,
+              paging, attention and action—not as decoration on every surface.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">TYPOGRAPHY</p>
+            <h2>Type with clarity.</h2>
+            <p>
+              Manrope leads narrative copy. JetBrains Mono labels versions,
+              commands, states and operational details. Large headings should
+              create hierarchy, not crowd smaller laptop viewports.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">WRITING</p>
+            <h2>Specific beats dramatic.</h2>
+            <p>
+              Describe what the product actually does, its operational
+              boundaries and where to verify the behavior. Avoid unsupported
+              superlatives or claims that a deployment has not proven.
+            </p>
+          </article>
         </div>
       </section>
     </div>

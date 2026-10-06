@@ -72,6 +72,15 @@ export default function Home() {
                 Explore the platform
               </Action>
             </div>
+            <a
+              className="hero-status-link"
+              href={BRAND.links.status}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="live-dot" /> Live OpsKnight status
+              <ArrowUpRight size={13} />
+            </a>
             <p className="site-proof">{productProof}</p>
           </div>
           <div className="hero-product">

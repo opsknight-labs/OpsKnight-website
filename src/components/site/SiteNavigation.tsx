@@ -7,15 +7,25 @@ import { usePathname } from "next/navigation";
 import { PRODUCT } from "@/lib/product";
 import { IncidentSignal } from "./IncidentSignal";
 import { BRAND } from "@/lib/brand";
-const solutions = [
-  ["Self-hosted operations", "self-hosted-incident-management"],
-  ["SRE teams", "sre"],
-  ["Platform engineering", "platform-engineering"],
-  ["Regulated environments", "regulated-environments"],
-];
+
+const resources = [
+  ["Solutions", "/use-cases/"],
+  ["Support & Services", "/support/"],
+  ["Community", "/community/"],
+  ["What’s new", "/changelog/"],
+  ["About", "/about/"],
+  ["Brand", "/brand/"],
+  ["Contact", "/contact/"],
+] as const;
+
 export function SiteNavigation() {
   const path = usePathname();
   const header = useRef<HTMLElement>(null);
+  const isActive = (href: string) =>
+    href.startsWith("/") &&
+    (href === "/" ? path === "/" : path === href || path.startsWith(href));
+  const resourcesActive = resources.some(([, href]) => isActive(href));
+
   useEffect(() => {
     function closeMenus(event: Event) {
       if (event.type === "keydown" && (event as KeyboardEvent).key !== "Escape")
@@ -40,127 +50,194 @@ export function SiteNavigation() {
       document.removeEventListener("pointerdown", closeMenus);
     };
   }, []);
+
   return (
     <>
-    <IncidentSignal />
-    <header className="site-nav" ref={header}>
-      <a className="site-skip" href="#main-content">
-        Skip to content
-      </a>
-      <div className="site-container nav-inner">
-        <Link className="site-wordmark" href="/" aria-label="OpsKnight home">
-          <Image
-            src="/brand/opsknight-mark.webp"
-            width={32}
-            height={32}
-            alt=""
-          />
-          OpsKnight
-        </Link>
-        <nav aria-label="Main navigation" className="desktop-nav">
-          <details name="site-navigation" key={`product-${path}`}>
-            <summary>
-              Product <span>⌄</span>
-            </summary>
-            <div className="site-mega">
-              <div>
-                <p className="site-eyebrow">THE INCIDENT LIFECYCLE</p>
-                <h3>
-                  From signal
-                  <br />
-                  to resolution.
-                </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "12px" }}>
-                  <Link href="/product/">Overview of all capabilities →</Link>
-                  <Link href="/#incident-loop">Explore the workflow →</Link>
+      <IncidentSignal />
+      <header className="site-nav" ref={header}>
+        <a className="site-skip" href="#main-content">
+          Skip to content
+        </a>
+        <div className="site-container nav-inner">
+          <Link className="site-wordmark" href="/" aria-label="OpsKnight home">
+            <Image
+              src="/brand/opsknight-mark.webp"
+              width={32}
+              height={32}
+              alt=""
+            />
+            OpsKnight
+          </Link>
+
+          <nav aria-label="Main navigation" className="desktop-nav">
+            <details
+                name="site-navigation"
+                key={`product-${path}`}
+                className={path.startsWith("/product/") ? "nav-active" : undefined}
+              >
+              <summary>
+                Product <span>⌄</span>
+              </summary>
+              <div className="site-mega">
+                <div>
+                  <p className="site-eyebrow">THE INCIDENT LIFECYCLE</p>
+                  <h3>
+                    From signal
+                    <br />
+                    to resolution.
+                  </h3>
+                  <div className="mega-story-links">
+                    <Link href="/product/">Overview of all capabilities →</Link>
+                    <Link href="/#incident-loop">Explore the workflow →</Link>
+                  </div>
+                </div>
+                <div className="mega-links">
+                  {PRODUCT.platform.products.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={`/product/${p.slug}/`}
+                      aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
+                    >
+                      {p.label}
+                      <ArrowUpRight size={14} />
+                    </Link>
+                  ))}
                 </div>
               </div>
-              <div className="mega-links">
-                {PRODUCT.platform.products.map((p) => (
-                  <Link key={p.slug} href={`/product/${p.slug}/`}>
-                    {p.label}
-                    <ArrowUpRight size={14} />
+            </details>
+            <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>Integrations</Link>
+            <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>Compare</Link>
+            <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>Deploy</Link>
+            <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>Security</Link>
+            <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>Docs</Link>
+            <details
+              className={`resources-menu ${resourcesActive ? "nav-active" : ""}`}
+              name="site-navigation"
+              key={`resources-${path}`}
+            >
+              <summary>
+                Resources <span>⌄</span>
+              </summary>
+              <div className="site-small-menu">
+                {resources.map(([name, href]) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={isActive(href) ? "page" : undefined}
+                  >
+                    {name}
                   </Link>
                 ))}
+                <Link href={BRAND.links.status}>Live status ↗</Link>
               </div>
-            </div>
-          </details>
-          <details name="site-navigation" key={`solutions-${path}`}>
-            <summary>
-              Solutions <span>⌄</span>
-            </summary>
-            <div className="site-small-menu">
-              {solutions.map(([name, slug]) => (
-                <Link key={slug} href={`/solutions/${slug}/`}>
-                  {name}
-                </Link>
-              ))}
-            </div>
-          </details>
-          <Link href="/integrations/">Integrations</Link>
-          <Link href={BRAND.links.docs}>Docs</Link>
-          <Link href="/security/">Security</Link>
-          <Link href="/support/">Support & Services</Link>
-          <details name="site-navigation" key={`community-${path}`}>
-            <summary>
-              Community <span>⌄</span>
-            </summary>
-            <div className="site-small-menu">
-              <Link href="/community/">Community hub</Link>
-              <Link href="/contact/">Contact</Link>
-              <Link href={BRAND.links.github}>GitHub</Link>
-              <Link href={BRAND.links.discussions}>Discussions</Link>
-              <Link href={BRAND.links.contributing}>Contributing</Link>
-              <Link href="/changelog/">What’s new</Link>
-              <Link href="/about/">About</Link>
-            </div>
-          </details>
-        </nav>
-        <div className="nav-actions">
-          <button
-            aria-label="Search website"
-            onClick={() =>
-              window.dispatchEvent(new Event("open-global-search"))
-            }
-          >
-            <Search size={18} />
-          </button>
-          <Link
-            className="nav-github"
-            href={BRAND.links.github}
-            aria-label="GitHub"
-          >
-            <Github size={19} />
-          </Link>
-          <Link className="nav-install" href="/install/">
-            Install <ArrowUpRight size={14} />
-          </Link>
-          <details className="mobile-nav" key={path}>
-            <summary aria-label="Open navigation">☰</summary>
-            <nav aria-label="Mobile navigation">
-              <Link href="/">Home</Link>
-              <Link href="/product/">Product Overview</Link>
-              {PRODUCT.platform.products.map((p) => (
-                <Link key={p.slug} href={`/product/${p.slug}/`}>
-                  {p.label}
-                </Link>
-              ))}
-              <Link href="/integrations/">Integrations</Link>
-              <Link href="/deploy/">Deploy</Link>
-              <Link href="/security/">Security</Link>
-              <Link href={BRAND.links.docs}>Docs</Link>
-              <Link href="/support/">Support & Services</Link>
-              <Link href="/community/">Community</Link>
-              <Link href="/contact/">Contact</Link>
-              <Link href="/about/">About</Link>
-            </nav>
-          </details>
+            </details>
+          </nav>
+
+          <div className="nav-actions">
+            <button
+              aria-label="Search website"
+              onClick={() =>
+                window.dispatchEvent(new Event("open-global-search"))
+              }
+            >
+              <Search size={18} />
+            </button>
+            <Link
+              className="nav-github"
+              href={BRAND.links.github}
+              aria-label="GitHub"
+            >
+              <Github size={19} />
+            </Link>
+            <Link className="nav-install" href="/install/">
+              Install <ArrowUpRight size={14} />
+            </Link>
+            <details className="mobile-nav" key={path}>
+              <summary aria-label="Open navigation">
+                <span className="mobile-menu-icon" aria-hidden="true">
+                  <span />
+                  <span />
+                </span>
+              </summary>
+              <div className="mobile-menu-panel">
+                <div className="mobile-menu-head">
+                  <div>
+                    <span className="site-eyebrow">NAVIGATE</span>
+                    <strong>OpsKnight</strong>
+                  </div>
+                  <a
+                    className="mobile-live-status"
+                    href={BRAND.links.status}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="live-dot" /> Live status ↗
+                  </a>
+                </div>
+                <nav aria-label="Mobile navigation" className="mobile-menu-grid">
+                  <section className="mobile-menu-section">
+                    <span>PRODUCT</span>
+                    <Link href="/" aria-current={isActive("/") ? "page" : undefined}>
+                      Overview
+                    </Link>
+                    {PRODUCT.platform.products.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/product/${p.slug}/`}
+                        aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
+                      >
+                        {p.label}
+                      </Link>
+                    ))}
+                  </section>
+                  <section className="mobile-menu-section">
+                    <span>EXPLORE</span>
+                    <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>
+                      Integrations
+                    </Link>
+                    <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>
+                      Compare
+                    </Link>
+                    <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>
+                      Deploy
+                    </Link>
+                    <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>
+                      Security
+                    </Link>
+                    <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>
+                      Documentation
+                    </Link>
+                  </section>
+                  <section className="mobile-menu-section">
+                    <span>RESOURCES</span>
+                    {resources.map(([name, href]) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        aria-current={isActive(href) ? "page" : undefined}
+                      >
+                        {name}
+                      </Link>
+                    ))}
+                  </section>
+                </nav>
+                <div className="mobile-menu-actions">
+                  <Link className="mobile-install" href="/install/">
+                    Install OpsKnight <ArrowUpRight size={14} />
+                  </Link>
+                  <Link href={BRAND.links.github}>
+                    <Github size={16} /> GitHub
+                  </Link>
+                </div>
+              </div>
+            </details>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
     </>
   );
 }
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -175,45 +252,55 @@ export function SiteFooter() {
           </div>
           <div className="footer-links">
             <div>
-              <span>PLATFORM</span>
-              <Link href="/product/incidents/">Product</Link>
+              <span>PRODUCT</span>
+              <Link href="/product/incidents/">Incidents</Link>
+              <Link href="/product/on-call/">On-call</Link>
+              <Link href="/product/paging/">Paging</Link>
+              <Link href="/product/chatops/">ChatOps</Link>
+              <Link href="/product/status-pages/">Status</Link>
+              <Link href="/product/analytics/">Analytics</Link>
+            </div>
+            <div>
+              <span>EXPLORE</span>
               <Link href="/integrations/">Integrations</Link>
+              <Link href="/compare/">Compare</Link>
+              <Link href="/deploy/">Deploy</Link>
               <Link href="/security/">Security</Link>
-              <Link href="/deploy/">Deployment</Link>
-              <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
-                🟢 Live OpsKnight status
-              </a>
+              <Link href="/changelog/">What’s new</Link>
             </div>
             <div>
               <span>RESOURCES</span>
               <Link href={BRAND.links.docs}>Documentation</Link>
-              <Link href="/changelog/">What’s new</Link>
-              <Link href="/compare/">Compare</Link>
-              <Link href="/brand/">Brand</Link>
               <Link href="/support/">Support & Services</Link>
+              <Link href="/community/">Community</Link>
               <Link href="/contact/">Contact</Link>
+              <Link href="/brand/">Brand</Link>
             </div>
             <div>
-              <span>COMMUNITY</span>
-              <Link href="/community/">Community hub</Link>
-              <Link href={BRAND.links.github}>Source code</Link>
-              <Link href={BRAND.links.discussions}>Discussions</Link>
+              <span>PROJECT</span>
+              <Link href={BRAND.links.github}>GitHub</Link>
               <Link href={BRAND.links.contributing}>Contributing</Link>
               <Link href={BRAND.links.sponsor}>Sponsor</Link>
+              <Link href="/about/">About</Link>
             </div>
           </div>
         </div>
         <div className="footer-bottom">
+          <a
+            className="footer-live-status"
+            href={BRAND.links.status}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="live-dot" /> Live status
+          </a>
           <span>
             v{PRODUCT.release.version} · {PRODUCT.release.license} · Self-hosted
           </span>
           <div>
-            <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
-              Live status ↗
-            </a>
             <Link href="/privacy/">Privacy</Link>
             <Link href="/terms/">Terms</Link>
-            <Link href="/about/">About</Link>
+            <Link href={BRAND.links.license}>License</Link>
           </div>
         </div>
       </div>

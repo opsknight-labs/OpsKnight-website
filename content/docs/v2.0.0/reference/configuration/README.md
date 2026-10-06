@@ -116,87 +116,16 @@ Authenticates SCIM provisioning requests.
 
 ### `OIDC_REQUIRE_EMAIL_VERIFIED_STRICT`
 
-Rejects OIDC identities whose provider does not assert a verified email.
+Controls verified-email assurance for first OIDC identity binding/provisioning on providers that support the standard claim.
 
 - Type and valid value: boolean
+- Default: `true`
 - Runtime role: web
 - Apply behavior: restart required
 - Sensitivity: non-secret
 
-### `OIDC_CONFIG_CACHE_TTL_MS`
+An explicit `email_verified=false` is rejected for every provider. Validated Microsoft Entra workforce issuers use provider-aware handling when the standard claim is omitted; do not disable strict mode merely to work around a provider configuration error.
 
-Controls how long resolved OIDC provider configuration remains in the process cache.
-
-- Type and valid value: positive milliseconds
-- Runtime role: web
-- Apply behavior: restart required
-- Sensitivity: non-secret
-
-### `SLACK_BOT_TOKEN`
-
-Authorizes Slack Web API operations for the connected workspace.
-
-- Type and valid value: Slack bot token
-- Runtime role: web and notification workers
-- Apply behavior: restart required after secret replacement
-- Sensitivity: secret
-
-### `SLACK_SIGNING_SECRET`
-
-Verifies inbound Slack request signatures.
-
-- Type and valid value: Slack signing secret
-- Runtime role: web
-- Apply behavior: restart required; coordinate rotation with Slack configuration
-- Sensitivity: secret
-
-### `SLACK_CLIENT_SECRET`
-
-Authenticates the Slack OAuth client.
-
-- Type and valid value: Slack OAuth client secret
-- Runtime role: web
-- Apply behavior: restart required
-- Sensitivity: secret
-
-### `OPSKNIGHT_WORKER_CONCURRENCY`
-
-Sets general worker parallelism when a lane-specific override is absent.
-
-- Type and valid value: positive integer
-- Runtime role: worker
-- Apply behavior: restart required; increase only after checking database and provider capacity
-- Sensitivity: non-secret
-
-### `OPSKNIGHT_WORKER_BATCH_SIZE`
-
-Sets the general queue claim batch when a lane-specific override is absent.
-
-- Type and valid value: positive integer
-- Runtime role: worker
-- Apply behavior: restart required; keep aligned with concurrency and lease duration
-- Sensitivity: non-secret
-
-### `OPSKNIGHT_WORKER_BUSY_POLL_MS`
-
-Sets the polling interval while general work is available.
-
-- Type and valid value: positive milliseconds
-- Runtime role: worker
-- Apply behavior: restart required
-- Sensitivity: non-secret
-
-### `OPSKNIGHT_WORKER_IDLE_POLL_MS`
-
-Sets the polling interval while the general queue is idle.
-
-- Type and valid value: positive milliseconds
-- Runtime role: worker
-- Apply behavior: restart required
-- Sensitivity: non-secret
-
-
-## Complete discovered inventory
 
 ## `API_KEY_SECRET`
 
@@ -256,45 +185,43 @@ Sets the polling interval while the general queue is idle.
 
 ## `AUTH_BREAK_GLASS_EMAIL`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
-- Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+Exact emergency-account email permitted to use local credentials when break-glass is enabled.
+
+- Type and valid value: normalized account email
+- Default: unset
+- Runtime role: web/integrated authentication runtime
+- Apply behavior: restart every authentication-serving replica
+- Sensitivity: non-secret identifier; the password remains secret
+
+Use a dedicated active administrator whose credential is stored outside the normal SSO dependency. Matching is case-normalized and exact; this is not a domain or role wildcard.
+
 
 ## `AUTH_BREAK_GLASS_ENABLED`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
-- Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+Enables a single emergency local-credential exception when normal local login is disabled.
+
+- Type and valid value: boolean
+- Default: `false`
+- Runtime role: web/integrated authentication runtime
+- Apply behavior: restart every authentication-serving replica
+- Sensitivity: non-secret
+
+This setting has effect only when a valid `AUTH_BREAK_GLASS_EMAIL` is also configured. Prepare the emergency account's password before disabling local login.
+
 
 ## `AUTH_LOCAL_LOGIN_ENABLED`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
-- Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+Controls admission of ordinary local email/password sign-in independently from OIDC.
+
+- Type and valid value: boolean
+- Default: `true`
+- Runtime role: web/integrated authentication runtime
+- Apply behavior: restart every authentication-serving replica
+- Sensitivity: non-secret
+- Enterprise use: set `false` only after real OIDC login and break-glass recovery have been tested
+
+When `false`, normal credential sign-in is rejected server-side and forgot/reset-password APIs are disabled. Existing password hashes are not erased. OpsKnight does not fail open to passwords when OIDC is unavailable.
+
 
 ## `AUTH_OPTIONS_CACHE_TTL_MS`
 
@@ -312,59 +239,50 @@ Sets the polling interval while the general queue is idle.
 
 ## `AUTH_SSO_REAUTH_AFTER_SECONDS`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
+Maximum age of the OpsKnight OIDC authentication before a new OIDC authentication cycle is required.
+
+- Type and valid value: integer seconds, 900 to 2592000 (15 minutes to 30 days)
+- Built-in fallback: `43200` (12 hours)
+- Runtime role: web/integrated authentication runtime
 - Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+- Sensitivity: non-secret
+
+A new OpsKnight OIDC cycle does not guarantee an IdP password or MFA prompt; the provider can reuse its own SSO session.
+
 
 ## `AUTH_SSO_SESSION_IDLE_TIMEOUT_SECONDS`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
-- Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+Default maximum inactivity window for OIDC sessions.
+
+- Type and valid value: integer seconds, 300 to 604800 (5 minutes to 7 days)
+- Built-in fallback: `14400` (4 hours)
+- Invariant: effective idle timeout cannot exceed maximum session lifetime
+- Runtime role: web/integrated authentication runtime
+- Apply behavior: restart required for environment changes; UI override is stored in OIDC configuration
+- Sensitivity: non-secret
+
 
 ## `AUTH_SSO_SESSION_MAX_AGE_SECONDS`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
-- Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+Default OIDC maximum/renewal session window when the SSO UI does not override it.
+
+- Type and valid value: integer seconds, 900 to 2592000 (15 minutes to 30 days)
+- Built-in fallback: `43200` (12 hours)
+- Runtime role: web/integrated authentication runtime
+- Apply behavior: restart required for environment changes; UI override is stored in OIDC configuration
+- Sensitivity: non-secret
+
 
 ## `AUTH_SSO_SESSION_UPDATE_AGE_SECONDS`
 
-- Type: string
-- Required: conditional or optional; inspect cited source
-- Allowed values: not statically complete
-- Secret: no
-- Runtime roles: web or integrated runtime
-- Deployment support: runtime
+Controls the server-side OIDC session update interval.
+
+- Type and valid value: integer seconds, 60 to 86400 (1 minute to 24 hours)
+- Built-in fallback: `3600` (1 hour)
+- Runtime role: web/integrated authentication runtime
 - Apply behavior: restart required
-- Deprecated: no
-- Extraction confidence: incomplete
-- Static default: none discovered
-- Sources: `src/lib/local-auth-policy.ts`
+- Sensitivity: non-secret
+
 
 ## `AUTH_TRUST_HOST`
 
