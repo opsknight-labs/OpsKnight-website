@@ -171,7 +171,7 @@ export function SiteNavigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="live-dot" /> Live status ↗
+                    <span className="live-dot" /> Live OpsKnight status ↗
                   </a>
                 </div>
                 <nav aria-label="Mobile navigation" className="mobile-menu-grid">
