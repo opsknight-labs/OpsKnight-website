@@ -540,8 +540,12 @@ const PRODUCT_PROOFS = [
   },
 ] as const;
 
+type ProductProofId = (typeof PRODUCT_PROOFS)[number]["id"];
+
 export function ProductProofShowcase() {
-  const [activeId, setActiveId] = useState(PRODUCT_PROOFS[0].id);
+  const [activeId, setActiveId] = useState<ProductProofId>(
+    PRODUCT_PROOFS[0].id,
+  );
   const active =
     PRODUCT_PROOFS.find((proof) => proof.id === activeId) ?? PRODUCT_PROOFS[0];
 
