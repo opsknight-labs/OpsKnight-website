@@ -1,0 +1,56 @@
+name: Bootstrap Linux visual baselines
+
+on:
+  push:
+    branches: [feat/website-v2-redesign]
+
+permissions:
+  contents: write
+
+jobs:
+  baselines:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/website-v2-redesign
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Capture pinned Linux baselines
+        shell: bash
+        run: |
+          PORT=5001 node scripts/serve-static.mjs &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5001/ >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" -ne 1 ]; then
+            echo "Static preview did not become ready"
+            exit 1
+          fi
+
+          npx playwright test --grep "visual coverage for key pages" --update-snapshots
+      - name: Commit baselines and remove bootstrap workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/browser/snapshots/linux
+          git rm .github/workflows/bootstrap-linux-baselines.yml
+          git commit -m "Add Linux visual regression baselines"
+          git push origin HEAD:feat/website-v2-redesign
