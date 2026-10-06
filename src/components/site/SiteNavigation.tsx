@@ -20,6 +20,10 @@ const resources = [
 export function SiteNavigation() {
   const path = usePathname();
   const header = useRef<HTMLElement>(null);
+  const isActive = (href: string) =>
+    href.startsWith("/") &&
+    (href === "/" ? path === "/" : path === href || path.startsWith(href));
+  const resourcesActive = resources.some(([, href]) => isActive(href));
 
   useEffect(() => {
     function closeMenus(event: Event) {
@@ -65,7 +69,11 @@ export function SiteNavigation() {
           </Link>
 
           <nav aria-label="Main navigation" className="desktop-nav">
-            <details name="site-navigation" key={`product-${path}`}>
+            <details
+                name="site-navigation"
+                key={`product-${path}`}
+                className={path.startsWith("/product/") ? "nav-active" : undefined}
+              >
               <summary>
                 Product <span>⌄</span>
               </summary>
@@ -81,7 +89,11 @@ export function SiteNavigation() {
                 </div>
                 <div className="mega-links">
                   {PRODUCT.platform.products.map((p) => (
-                    <Link key={p.slug} href={`/product/${p.slug}/`}>
+                    <Link
+                      key={p.slug}
+                      href={`/product/${p.slug}/`}
+                      aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
+                    >
                       {p.label}
                       <ArrowUpRight size={14} />
                     </Link>
@@ -89,13 +101,13 @@ export function SiteNavigation() {
                 </div>
               </div>
             </details>
-            <Link href="/integrations/">Integrations</Link>
-            <Link href="/compare/">Compare</Link>
-            <Link href="/deploy/">Deploy</Link>
-            <Link href="/security/">Security</Link>
-            <Link href={BRAND.links.docs}>Docs</Link>
+            <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>Integrations</Link>
+            <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>Compare</Link>
+            <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>Deploy</Link>
+            <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>Security</Link>
+            <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>Docs</Link>
             <details
-              className="resources-menu"
+              className={`resources-menu ${resourcesActive ? "nav-active" : ""}`}
               name="site-navigation"
               key={`resources-${path}`}
             >
@@ -104,7 +116,11 @@ export function SiteNavigation() {
               </summary>
               <div className="site-small-menu">
                 {resources.map(([name, href]) => (
-                  <Link key={href} href={href}>
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={isActive(href) ? "page" : undefined}
+                  >
                     {name}
                   </Link>
                 ))}
@@ -133,26 +149,83 @@ export function SiteNavigation() {
               Install <ArrowUpRight size={14} />
             </Link>
             <details className="mobile-nav" key={path}>
-              <summary aria-label="Open navigation">☰</summary>
-              <nav aria-label="Mobile navigation">
-                <Link href="/">Home</Link>
-                {PRODUCT.platform.products.map((p) => (
-                  <Link key={p.slug} href={`/product/${p.slug}/`}>
-                    {p.label}
+              <summary aria-label="Open navigation">
+                <span className="mobile-menu-icon" aria-hidden="true">
+                  <span />
+                  <span />
+                </span>
+              </summary>
+              <div className="mobile-menu-panel">
+                <div className="mobile-menu-head">
+                  <div>
+                    <span className="site-eyebrow">NAVIGATE</span>
+                    <strong>OpsKnight</strong>
+                  </div>
+                  <a
+                    className="mobile-live-status"
+                    href={BRAND.links.status}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="live-dot" /> Live status ↗
+                  </a>
+                </div>
+                <nav aria-label="Mobile navigation" className="mobile-menu-grid">
+                  <section className="mobile-menu-section">
+                    <span>PRODUCT</span>
+                    <Link href="/" aria-current={isActive("/") ? "page" : undefined}>
+                      Overview
+                    </Link>
+                    {PRODUCT.platform.products.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/product/${p.slug}/`}
+                        aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
+                      >
+                        {p.label}
+                      </Link>
+                    ))}
+                  </section>
+                  <section className="mobile-menu-section">
+                    <span>EXPLORE</span>
+                    <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>
+                      Integrations
+                    </Link>
+                    <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>
+                      Compare
+                    </Link>
+                    <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>
+                      Deploy
+                    </Link>
+                    <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>
+                      Security
+                    </Link>
+                    <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>
+                      Documentation
+                    </Link>
+                  </section>
+                  <section className="mobile-menu-section">
+                    <span>RESOURCES</span>
+                    {resources.map(([name, href]) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        aria-current={isActive(href) ? "page" : undefined}
+                      >
+                        {name}
+                      </Link>
+                    ))}
+                  </section>
+                </nav>
+                <div className="mobile-menu-actions">
+                  <Link className="mobile-install" href="/install/">
+                    Install OpsKnight <ArrowUpRight size={14} />
                   </Link>
-                ))}
-                <Link href="/integrations/">Integrations</Link>
-                <Link href="/compare/">Compare</Link>
-                <Link href="/deploy/">Deploy</Link>
-                <Link href="/security/">Security</Link>
-                <Link href={BRAND.links.docs}>Docs</Link>
-                <Link href="/support/">Support & Services</Link>
-                <Link href="/community/">Community</Link>
-                <Link href="/changelog/">What’s new</Link>
-                <Link href="/about/">About</Link>
-                <Link href="/contact/">Contact</Link>
-                <Link href={BRAND.links.status}>Live status ↗</Link>
-              </nav>
+                  <Link href={BRAND.links.github}>
+                    <Github size={16} /> GitHub
+                  </Link>
+                </div>
+              </div>
             </details>
           </div>
         </div>
