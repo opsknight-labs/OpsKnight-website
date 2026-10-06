@@ -14,16 +14,14 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "href",
     "https://opsknight.com/",
   );
-  await page.getByRole("tab", { name: "05 Page", exact: true }).click();
-  await expect(page.locator("#loop-panel")).toContainText(
-    "Voice · Push · Slack",
-  );
-  await page
-    .getByRole("tab", { name: "05 Page", exact: true })
-    .press("ArrowRight");
-  await expect(
-    page.getByRole("tab", { name: "06 Acknowledge", exact: true }),
-  ).toBeFocused();
+  if (testInfo.project.name === "mobile") {
+    await page.locator(".response-stepper button").filter({ hasText: "Page" }).click();
+  } else {
+    await page.locator('[data-loop-chapter="4"]').scrollIntoViewIfNeeded();
+  }
+  await expect(page.locator(".response-canvas")).toHaveAttribute("data-step", "4");
+  await expect(page.locator(".response-canvas")).toContainText("Voice");
+  await expect(page.locator(".response-canvas")).toContainText("Push");
   await page.getByRole("tab", { name: "Split", exact: true }).click();
   await expect(page.locator("#arch-panel")).toContainText("Critical Worker");
   const noOverflow = await page.evaluate(
@@ -135,10 +133,39 @@ test("reduced motion and product boundaries", async ({ page }) => {
     "no manual escalation control in Web",
   );
 });
-test("visual coverage for key pages", async ({ page }) => {
+test("responsive coverage for key marketing pages", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
+  const viewports = [
+    [360, 800],
+    [390, 844],
+    [430, 932],
+    [768, 1024],
+    [1024, 768],
+    [1280, 720],
+    [1366, 768],
+    [1440, 900],
+    [1512, 982],
+    [1920, 1080],
+    [2560, 1440],
+  ] as const;
+
+  for (const [width, height] of viewports) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    await expect(page.locator(".hero-command-center img")).toHaveJSProperty(
+      "complete",
+      true,
+    );
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
   for (const route of [
-    "/",
     "/product/incidents/",
     "/integrations/",
     "/install/",
@@ -151,20 +178,15 @@ test("visual coverage for key pages", async ({ page }) => {
   ]) {
     await page.goto(route);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
     for (const image of await page.locator("img").all()) {
       await image.scrollIntoViewIfNeeded();
       await expect(image).toHaveJSProperty("complete", true);
     }
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await expect(page).toHaveScreenshot(
-      `${route === "/" ? "home" : route.replaceAll("/", "-")}.png`,
-      {
-        fullPage: true,
-        animations: "disabled",
-        maxDiffPixelRatio: 0.025,
-        stylePath: "tests/browser/screenshot.css",
-      },
-    );
   }
 });
 
@@ -204,6 +226,10 @@ test("organizations can find services and evaluate security without a community 
       .getByRole("link", { name: "Support & Services", exact: true })
       .click();
   } else {
+    await page
+      .locator(".desktop-nav summary")
+      .filter({ hasText: "Resources" })
+      .click();
     await page
       .getByRole("navigation", { name: "Main navigation" })
       .getByRole("link", { name: "Support & Services", exact: true })

@@ -1,5 +1,6 @@
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowUpRight,
   PhoneCall,
@@ -57,21 +58,40 @@ export default function Home() {
             <div className="site-actions">
               <Action href="/install/">Install OpsKnight</Action>
               <Action href="#incident-loop" secondary>
-                Explore the platform
+                Explore the product
               </Action>
             </div>
+            <a
+              className="hero-status-link"
+              href={BRAND.links.status}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="live-dot" /> Live OpsKnight status
+              <ArrowUpRight size={13} />
+            </a>
             <p className="site-proof">{productProof}</p>
           </div>
           <div className="hero-product">
             <HeroSignal />
-            <ProductScreenshot
-              name="incident-detail.png"
-              alt="OpsKnight incident detail with ownership, response actions and incident context"
-              priority
-            />
+            <figure className="hero-command-center">
+              <div className="shot-label">
+                <span className="signal-dot" />
+                REAL OPSKNIGHT UI
+                <span>Command Center</span>
+              </div>
+              <Image
+                src="/dashboard-command-center-1200.jpg"
+                width={1200}
+                height={750}
+                sizes="(max-width: 800px) 92vw, 1100px"
+                alt="OpsKnight Command Center showing the operational overview"
+                priority
+              />
+            </figure>
             <div className="hero-product-foot">
               <span>YOUR INFRASTRUCTURE. YOUR COMMAND CENTER.</span>
-              <span>01 — INCIDENT RESPONSE</span>
+              <span>01 — OPERATIONAL OVERVIEW</span>
             </div>
           </div>
         </div>
@@ -288,9 +308,14 @@ export default function Home() {
                 {PRODUCT.boundaries.statusPageLimit} status page per OpsKnight{" "}
                 {PRODUCT.release.version} installation.
               </p>
-              <TextLink href="/product/status-pages/">
-                Explore the status page
-              </TextLink>
+              <div className="paired-links">
+                <TextLink href="/product/status-pages/">
+                  Explore status pages
+                </TextLink>
+                <TextLink href={BRAND.links.status}>
+                  View live OpsKnight status
+                </TextLink>
+              </div>
             </div>
           </div>
         </div>
@@ -425,6 +450,48 @@ export default function Home() {
               ChatOps and issue tracking are listed separately.
             </p>
             <TextLink href="/integrations/">Explore all integrations</TextLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-dark compare-teaser">
+        <div className="site-container">
+          <div className="compare-teaser-grid">
+            <div>
+              <p className="site-eyebrow">
+                <span className="signal-dot" /> COMPARE WITH CONTEXT
+              </p>
+              <h2>Know what changes when you own the incident stack.</h2>
+              <p className="site-description">
+                Compare deployment ownership, data location and response
+                workflows before you migrate or standardize on a platform.
+              </p>
+              <TextLink href="/compare/">View full comparisons</TextLink>
+            </div>
+            <div className="compare-differences">
+              <article>
+                <span>01</span>
+                <strong>You operate it.</strong>
+                <p>Deploy and upgrade OpsKnight on infrastructure you control.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <strong>Your operational data stays with you.</strong>
+                <p>Database, backups and runtime ownership remain in your environment.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <strong>The software is open source.</strong>
+                <p>Inspect the source and pin the release you run.</p>
+              </article>
+            </div>
+          </div>
+          <div className="compare-vendors" aria-label="Available comparisons">
+            <span>PagerDuty</span>
+            <span>incident.io</span>
+            <span>Opsgenie</span>
+            <span>Grafana Cloud IRM</span>
+            <span>Splunk On-Call</span>
           </div>
         </div>
       </section>

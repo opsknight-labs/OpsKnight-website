@@ -16,7 +16,7 @@ const mappings = {
   "catalog.yaml": `docs/${tag}/integrations/catalog.yaml`,
   "CHANGELOG.md": "CHANGELOG.md",
   LICENSE: "LICENSE",
-  "notification-priority.ts": "src/lib/notification-priority.ts",
+  "notification-priority.source.txt": "src/lib/notification-priority.ts",
 };
 const staged = Object.entries(mappings).map(([dest, source]) => [
   dest,
