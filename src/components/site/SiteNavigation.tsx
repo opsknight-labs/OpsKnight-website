@@ -22,7 +22,7 @@ export function SiteNavigation() {
   const path = usePathname();
   const header = useRef<HTMLElement>(null);
   const normalizePath = (value: string) =>
-    value.length > 1 ? value.replace(/\\/+$/, "") : value;
+    value.length > 1 ? value.replace(/\/+$/, "") : value;
   const isActive = (href: string) => {
     if (!href.startsWith("/")) return false;
     const current = normalizePath(path);
