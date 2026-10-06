@@ -217,6 +217,29 @@ test("comparison matrix is usable on desktop and mobile", async ({ page }) => {
   ).toBe(true);
 });
 
+test("install, solutions, about and brand expose decision content", async ({ page }) => {
+  await page.goto("/install/");
+  await expect(page.locator(".deployment-profile-grid article")).toHaveCount(4);
+  await expect(page.getByText("Not a capacity promise.", { exact: false })).toBeVisible();
+  await expect(page.locator(".production-check-grid article")).toHaveCount(4);
+
+  await page.goto("/use-cases/");
+  await expect(page.locator(".solutions-grid article")).toHaveCount(6);
+  await page.getByRole("link", { name: "Explore the workflow" }).first().click();
+  await expect(page.locator(".solution-story article")).toHaveCount(2);
+  await expect(page.locator(".solution-product-grid article")).toHaveCount(3);
+
+  await page.goto("/about/");
+  await expect(page.getByText("WHO IT IS FOR", { exact: true })).toBeVisible();
+  await expect(page.getByText("WHO IT IS NOT FOR", { exact: true })).toBeVisible();
+
+  await page.goto("/brand/");
+  await expect(page.locator(".brand-usage-grid article")).toHaveCount(4);
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).toBe(true);
+});
+
 test("WCAG AA checks on marketing flows", async ({ page }) => {
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   for (const route of [
