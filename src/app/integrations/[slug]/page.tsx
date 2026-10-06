@@ -60,7 +60,7 @@ export default async function Integration({
           </p>
           <div className="site-actions">
             <Action href={productDocs(p.docs)}>View setup guide</Action>
-            <Action href="/install/" secondary>
+            <Action href="/deploy/" secondary>
               Deploy OpsKnight
             </Action>
           </div>

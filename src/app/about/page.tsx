@@ -33,7 +33,7 @@ export default function About() {
           </p>
           <div className="site-actions">
             <Action href={BRAND.links.github}>Explore the source</Action>
-            <Action href="/install/" secondary>
+            <Action href="/deploy/" secondary>
               Deploy OpsKnight
             </Action>
           </div>

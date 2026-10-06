@@ -9,7 +9,7 @@ import { IncidentSignal } from "./IncidentSignal";
 import { BRAND } from "@/lib/brand";
 
 const resources = [
-  ["Solutions", "/use-cases/"],
+  ["Solutions", "/solutions/"],
   ["Support & Services", "/support/"],
   ["Community", "/community/"],
   ["What’s new", "/changelog/"],
@@ -156,7 +156,7 @@ export function SiteNavigation() {
             >
               <Github size={19} />
             </Link>
-            <Link className="nav-install" href="/install/">
+            <Link className="nav-install" href="/deploy/">
               Install <ArrowUpRight size={14} />
             </Link>
             <details className="mobile-nav" key={path}>
@@ -229,7 +229,7 @@ export function SiteNavigation() {
                   </section>
                 </nav>
                 <div className="mobile-menu-actions">
-                  <Link className="mobile-install" href="/install/">
+                  <Link className="mobile-install" href="/deploy/">
                     Install OpsKnight <ArrowUpRight size={14} />
                   </Link>
                   <Link href={BRAND.links.github}>

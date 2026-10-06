@@ -14,8 +14,8 @@ export const metadata: Metadata = siteMetadata({
   title: "Deploy OpsKnight — Self-Hosted Production Topologies",
   description:
     "Deploy OpsKnight on your infrastructure with Docker Compose, Kubernetes/Helm, or Docker Swarm. Complete operational guide with secrets generation, hardware sizing, and production checklist.",
-  alternates: { canonical: "/install/" },
-  openGraph: { url: "/install/" },
+  alternates: { canonical: "/deploy/" },
+  openGraph: { url: "/deploy/" },
 });
 
 export default function Install() {

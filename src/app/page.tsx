@@ -67,7 +67,7 @@ export default function Home() {
               <br className="desktop-break" /> On infrastructure you control.
             </p>
             <div className="site-actions">
-              <Action href="/install/">Install OpsKnight</Action>
+              <Action href="/deploy/">Install OpsKnight</Action>
               <Action href="#incident-loop" secondary>
                 Explore the platform
               </Action>

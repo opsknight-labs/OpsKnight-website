@@ -123,6 +123,12 @@ const duplicateSegmentRules = [
 
 const reserved = [
   "",
+  "# Marketing route aliases",
+  "/install /deploy/ 301",
+  "/install/ /deploy/ 301",
+  "/use-cases /solutions/ 301",
+  "/use-cases/ /solutions/ 301",
+  "",
   "# Section deduplication fixes",
   ...duplicateSegmentRules,
   "",

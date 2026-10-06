@@ -148,7 +148,7 @@ test("site parity ledger is explicit and complete", () => {
 
 test("primary adoption routes remain exposed", () => {
   const nav = fs.readFileSync(path.join(root, "src/components/site/SiteNavigation.tsx"), "utf8");
-  for (const route of ["/integrations/", "/compare/", "/security/", "/install/"]) {
+  for (const route of ["/integrations/", "/compare/", "/security/", "/deploy/"]) {
     assert.ok(nav.includes(route), `Primary route ${route} missing from navigation`);
   }
 
