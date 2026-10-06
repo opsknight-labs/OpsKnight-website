@@ -116,7 +116,8 @@ jobs:
             await capture(page, 'service-catalog');
 
             await page.goto('/status/northstar-systems');
-            await expect(page.getByText(/Northstar Systems/i).first()).toBeVisible();
+            await expect(page).toHaveURL(/\/status\/northstar-systems/);
+            await expect(page.locator('body')).not.toContainText(/404|not found|something went wrong/i);
             await capture(page, 'status-pages');
           });
           EOF
@@ -201,6 +202,7 @@ jobs:
           EOF
           node .northstar-import.mjs
           rm .northstar-import.mjs
+          npm run product:generate
 
       - name: Commit Northstar captures and remove importer
         shell: bash
@@ -208,7 +210,7 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE/site"
           git -C "$GITHUB_WORKSPACE/site" config user.name "github-actions[bot]"
           git -C "$GITHUB_WORKSPACE/site" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$GITHUB_WORKSPACE/site" add public/product content/product/screenshots.json
+          git -C "$GITHUB_WORKSPACE/site" add public/product content/product/screenshots.json src/generated/product-manifest.json
           git -C "$GITHUB_WORKSPACE/site" rm .github/workflows/import-northstar-captures.yml
           git -C "$GITHUB_WORKSPACE/site" commit -m "Replace marketing captures with Northstar v2 evidence"
           git -C "$GITHUB_WORKSPACE/site" push origin HEAD:feat/website-v2-redesign
