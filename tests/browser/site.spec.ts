@@ -16,16 +16,16 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "href",
     "https://opsknight.com/",
   );
-  await page.getByRole("tab", { name: "05 Page", exact: true }).click();
+  await page.getByRole("button", { name: "05 Page", exact: true }).click();
+  await expect(page.locator("#loop-panel")).toHaveAttribute("data-step", "4");
   await expect(page.locator("#loop-panel")).toContainText(
-    "Voice · Push · Slack",
+    "Voice · Push · SMS · Teams",
   );
   await page
-    .getByRole("tab", { name: "05 Page", exact: true })
-    .press("ArrowRight");
-  await expect(
-    page.getByRole("tab", { name: "06 Acknowledge", exact: true }),
-  ).toBeFocused();
+    .getByRole("button", { name: "06 Acknowledge", exact: true })
+    .click();
+  await expect(page.locator("#loop-panel")).toHaveAttribute("data-step", "5");
+  await expect(page.locator("#loop-panel")).toContainText("ACKNOWLEDGED");
   await page.getByRole("tab", { name: "Split", exact: true }).click();
   await expect(page.locator("#arch-panel")).toContainText("Critical Worker");
   const noOverflow = await page.evaluate(
@@ -212,6 +212,11 @@ test("organizations can find services and evaluate security without a community 
   } else {
     await page
       .getByRole("navigation", { name: "Main navigation" })
+      .locator("summary")
+      .filter({ hasText: "Resources" })
+      .click();
+    await page
+      .locator(".resources-menu .site-small-menu")
       .getByRole("link", { name: "Support & Services", exact: true })
       .click();
   }

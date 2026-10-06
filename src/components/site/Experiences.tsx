@@ -59,7 +59,7 @@ const steps = [
     title: "Reach the responder.",
     detail:
       "Configured channels deliver the page. Operators can inspect attempts and delivery outcomes.",
-    event: "Voice · Push · Slack",
+    event: "Voice · Push · SMS · Teams",
     icon: PhoneCall,
   },
   {
@@ -207,6 +207,7 @@ function ResponseCanvas({ active }: { active: number }) {
 
   return (
     <div
+      id="loop-panel"
       className={`response-canvas response-step-${active}`}
       data-step={active}
       aria-label={`Illustrative OpsKnight response workflow. Current state: ${event}`}

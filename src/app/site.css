@@ -3317,3 +3317,17 @@ html {
   .contact-issue-guide { grid-template-columns:1fr; }
   .issue-evidence-list { grid-template-columns:1fr; }
 }
+
+/* Inactive Response Canvas stages are hidden, not low-contrast ghost text. */
+.response-core,
+.response-responder,
+.response-channels,
+.response-outcome {
+  opacity: 0;
+}
+.response-incident > span {
+  color: #fff;
+}
+.response-avatar {
+  color: var(--text-light-secondary);
+}
