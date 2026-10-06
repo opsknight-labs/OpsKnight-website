@@ -330,6 +330,51 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="site-section site-light-alt homepage-compare">
+        <div className="site-container compare-teaser-grid">
+          <div>
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> COMPARE THE OPERATING MODEL
+            </p>
+            <h2>How does OpsKnight fit against the usual incident stack?</h2>
+            <p className="site-description">
+              Compare ownership, paging, ChatOps, identity, integrations and
+              response workflows without reducing the decision to a checkbox list.
+            </p>
+            <div className="compare-vendors" aria-label="Products covered in the comparison">
+              <span>PagerDuty</span>
+              <span>incident.io</span>
+              <span>Opsgenie</span>
+              <span>Grafana Cloud IRM</span>
+            </div>
+            <TextLink href="/compare/">View full capability comparison</TextLink>
+          </div>
+          <div className="compare-difference-stack">
+            <article>
+              <span>01</span>
+              <div>
+                <strong>You operate it.</strong>
+                <p>Run OpsKnight on infrastructure and deployment topologies you control.</p>
+              </div>
+            </article>
+            <article>
+              <span>02</span>
+              <div>
+                <strong>Your incident data stays with you.</strong>
+                <p>The application, database, backups and network boundary remain under your governance.</p>
+              </div>
+            </article>
+            <article>
+              <span>03</span>
+              <div>
+                <strong>The software is open source.</strong>
+                <p>Inspect the code, pin releases, and evaluate the product before adopting it.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="site-section">
         <div className="site-container open-source-story">
           <Github size={48} />

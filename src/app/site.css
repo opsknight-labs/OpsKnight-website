@@ -2928,3 +2928,66 @@ html {
 @media (max-width:520px) {
   .nav-install { display:none; }
 }
+
+/* Homepage comparison: decision context without duplicating the full matrix. */
+.homepage-compare { border-block:1px solid var(--border-light); }
+.compare-teaser-grid {
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);
+  gap:clamp(56px,7vw,100px);
+  align-items:start;
+}
+.compare-teaser-grid h2 {
+  max-width:720px;
+  font-size:clamp(36px,4vw,58px);
+  line-height:1.1;
+  letter-spacing:-.05em;
+}
+.compare-vendors {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:30px 0 22px;
+}
+.compare-vendors span {
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:7px 11px;
+  border:1px solid var(--border-light);
+  border-radius:999px;
+  background:var(--surface-white);
+  color:var(--text-secondary);
+  font:10px var(--font-jetbrains-mono),monospace;
+}
+.compare-difference-stack {
+  display:grid;
+  border-top:1px solid var(--border-light);
+}
+.compare-difference-stack article {
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:22px;
+  padding:28px 0;
+  border-bottom:1px solid var(--border-light);
+}
+.compare-difference-stack article > span {
+  color:var(--ok-red);
+  font:10px var(--font-jetbrains-mono),monospace;
+  letter-spacing:.12em;
+}
+.compare-difference-stack strong {
+  display:block;
+  margin-bottom:8px;
+  font-size:19px;
+  letter-spacing:-.025em;
+}
+.compare-difference-stack p {
+  max-width:560px;
+  color:var(--text-secondary);
+  font-size:14px;
+  line-height:1.7;
+}
+@media (max-width:900px) {
+  .compare-teaser-grid { grid-template-columns:1fr; gap:42px; }
+}
