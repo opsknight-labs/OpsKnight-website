@@ -21,13 +21,13 @@ import {
   TextLink,
   TrustStrip,
   FeatureCard,
-  ShowcaseSection,
   FinalCTA,
 } from "@/components/site/Primitives";
 import {
   HeroSignal,
   IncidentLoop,
   ArchitectureViewer,
+  ProductProofShowcase,
 } from "@/components/site/Experiences";
 
 const pageMetadata: Metadata = {
@@ -181,57 +181,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Visual Showcases — Command Center & Status Page */}
-      <ShowcaseSection
-        eyebrow="COMMAND CENTER"
-        title="One clear place to run the incident."
-        description="Ownership, responders, service context, and timeline. The complete response state in a single, high-fidelity view."
-        screenshotName="incident-detail.png"
-        screenshotAlt="The incident command view: status, ownership, responders and service context"
-        linkHref="/product/incidents/"
-        linkText="Deep dive into incident command"
-        annotations={[
-          "Status & ownership",
-          "Response timeline",
-          "Notes & action items",
-          "Service context",
-        ]}
-      />
-
-      <ShowcaseSection
-        eyebrow="ON-CALL ROTATIONS"
-        title="Responsibility, before the alert."
-        description="Build multi-layer schedules and temporary overrides. Let the escalation engine route to the right responder with verified delivery."
-        screenshotName="on-call-schedule-detail.png"
-        screenshotAlt="OpsKnight schedule detail with rotation and coverage context"
-        linkHref="/product/on-call/"
-        linkText="Deep dive into on-call policies"
-        annotations={[
-          "Primary & secondary tiers",
-          "Timezone-aware rotations",
-          "One-click overrides",
-          "Audited handoffs",
-        ]}
-        reverse
-      />
-
-      <ShowcaseSection
-        eyebrow="COMMUNICATION & STATUS"
-        title="See OpsKnight's status page in action."
-        description="Publish incident updates, maintain subscriber transparency, and showcase system health directly from your installation."
-        screenshotName="status-pages.png"
-        screenshotAlt="OpsKnight status page with operational components and incident updates"
-        linkHref="/product/status-pages/"
-        linkText="Explore status-page features"
-        secondaryHref="https://status.opsknight.com"
-        secondaryText="View live status ↗"
-        annotations={[
-          "Public & private status",
-          "Component degradation",
-          "Email & webhook subscribers",
-          "Live incident updates",
-        ]}
-      />
+      {/* 5. Real product proof — screenshots prove what the response canvas explains */}
+      <section className="site-section site-dark product-proof-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="REAL PRODUCT PROOF"
+            title="The product behind the response."
+          >
+            The workflow illustration explains how response moves. These are
+            real v{PRODUCT.release.version} product views captured from the
+            release-backed demo environment.
+          </SectionIntro>
+          <ProductProofShowcase />
+        </div>
+      </section>
 
       {/* 6. Production Architecture */}
       <section className="site-section site-dark">

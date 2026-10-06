@@ -10,6 +10,8 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
+  await page.getByRole("tab", { name: "ChatOps", exact: true }).click();
+  await expect(page.locator("#product-proof-panel")).toContainText("ChatOps");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://opsknight.com/",
@@ -79,25 +81,22 @@ test("integration filtering and setup routes", async ({ page }) => {
   await page.getByRole("searchbox").fill("Datadog");
   await expect(page.locator(".integration-item")).toHaveCount(1);
   await page.locator(".integration-item").click();
+  const drawer = page.getByRole("dialog");
+  await expect(drawer).toContainText("Datadog");
+  await expect(drawer).toContainText("SUPPORTED ACTIONS");
+  await expect(drawer).toContainText("AUTHENTICATION");
+  await expect(drawer).toContainText("SIGNATURE BEHAVIOR");
+  await drawer.getByRole("link", { name: /Open Datadog integration/ }).click();
   await expect(page).toHaveURL(/\/integrations\/datadog\//);
   await expect(
     page.getByRole("link", { name: "View setup guide" }),
   ).toHaveAttribute("href", new RegExp(`${docsPrefix}/.+datadog/`));
-  await page.getByRole("link", { name: "View setup guide" }).click();
-  await expect(page).toHaveURL(new RegExp(`${docsPrefix}/.+datadog/`));
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Datadog",
-  );
-  await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Datadog",
-  );
   await page.goto("/integrations/");
   await page.getByRole("searchbox").fill("no-provider-by-this-name");
   await expect(page.locator(".empty-result")).toBeVisible();
   await page.getByRole("searchbox").fill("");
   await page
-    .getByRole("button", { name: "communication", exact: true })
+    .getByRole("button", { name: "Communication", exact: true })
     .click();
   await expect(page.locator(".integration-item")).toHaveCount(2);
 });

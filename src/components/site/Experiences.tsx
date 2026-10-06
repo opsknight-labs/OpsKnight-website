@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
 import { integrationLogos } from "@/lib/integration-logos";
 import {
@@ -14,8 +15,12 @@ import {
   MessageSquare,
   Globe,
   Terminal,
+  X,
+  ExternalLink,
 } from "lucide-react";
+import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
+import { BRAND } from "@/lib/brand";
 const steps = [
   {
     label: "Detect",
@@ -474,6 +479,119 @@ export function ArchitectureViewer() {
     </div>
   );
 }
+
+const PRODUCT_PROOFS = [
+  {
+    id: "command-center",
+    label: "Command Center",
+    image: "dashboard-overview.png",
+    href: "/product/",
+    summary: "Operational overview for active incidents, health and response context.",
+    alt: "OpsKnight Command Center showing operational health, active incidents and response context",
+  },
+  {
+    id: "incidents",
+    label: "Incidents",
+    image: "incident-detail.png",
+    href: "/product/incidents/",
+    summary: "Ownership, responders, service context and timeline in one incident command view.",
+    alt: "OpsKnight incident detail showing status, ownership, responders and timeline",
+  },
+  {
+    id: "on-call",
+    label: "On-call",
+    image: "on-call-schedule-detail.png",
+    href: "/product/on-call/",
+    summary: "Schedule layers and responder coverage before the page is sent.",
+    alt: "OpsKnight on-call schedule showing rotation layers and responder coverage",
+  },
+  {
+    id: "paging",
+    label: "Paging",
+    image: "notification-settings.png",
+    href: "/product/paging/",
+    summary: "Notification configuration and delivery controls for operational paging.",
+    alt: "OpsKnight notification settings used to configure paging delivery",
+  },
+  {
+    id: "chatops",
+    label: "ChatOps",
+    image: "teams-chatops-war-room.png",
+    href: "/product/chatops/",
+    summary: "Microsoft Teams collaboration evidence for the incident response room.",
+    alt: "OpsKnight Microsoft Teams incident war room",
+  },
+  {
+    id: "status",
+    label: "Status",
+    image: "status-pages.png",
+    href: "/product/status-pages/",
+    summary: "Customer-facing service health and incident communication from the same response workflow.",
+    alt: "OpsKnight public status page with service health and incident updates",
+    live: true,
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    image: "analytics-overview.png",
+    href: "/product/analytics/",
+    summary: "Response metrics and operational trends after the incident is under control.",
+    alt: "OpsKnight analytics overview showing incident response metrics",
+  },
+] as const;
+
+export function ProductProofShowcase() {
+  const [activeId, setActiveId] = useState(PRODUCT_PROOFS[0].id);
+  const active =
+    PRODUCT_PROOFS.find((proof) => proof.id === activeId) ?? PRODUCT_PROOFS[0];
+
+  return (
+    <div className="product-proof-experience">
+      <div className="product-proof-tabs" role="tablist" aria-label="OpsKnight product views">
+        {PRODUCT_PROOFS.map((proof) => (
+          <button
+            key={proof.id}
+            id={`proof-tab-${proof.id}`}
+            type="button"
+            role="tab"
+            aria-selected={active.id === proof.id}
+            aria-controls="product-proof-panel"
+            onClick={() => setActiveId(proof.id)}
+          >
+            {proof.label}
+          </button>
+        ))}
+      </div>
+      <div
+        id="product-proof-panel"
+        className="product-proof-panel"
+        role="tabpanel"
+        aria-labelledby={`proof-tab-${active.id}`}
+      >
+        <ProductScreenshot name={active.image} alt={active.alt} />
+        <div className="product-proof-meta">
+          <div>
+            <span>REAL OPSKNIGHT UI · v{PRODUCT.release.version}</span>
+            <strong>{active.label}</strong>
+            <p>{active.summary}</p>
+          </div>
+          <div className="product-proof-actions">
+            <Link href={active.href}>
+              Explore {active.label} <ArrowRight size={16} />
+            </Link>
+            {"live" in active && active.live ? (
+              <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
+                <span className="live-dot" /> View live status
+                <ExternalLink size={14} />
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function DeploymentChooser() {
   const [environment, setEnvironment] = useState("docker");
   const [scale, setScale] = useState("evaluation");
@@ -543,89 +661,202 @@ export function DeploymentChooser() {
     </div>
   );
 }
+const INTEGRATION_CATEGORY_LABELS: Record<string, string> = {
+  monitoring: "Observability & APM",
+  cloud: "Cloud",
+  uptime: "Uptime",
+  webhooks: "Webhooks & CI/CD",
+  communication: "Communication",
+  "issue-tracking": "Issue tracking",
+};
+
+function readableToken(value: string) {
+  return value.replaceAll("-", " ");
+}
+
 export function IntegrationExplorer() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const categories = Array.from(
-    new Set(PRODUCT.integrations.map((p) => p.category)),
+    new Set(PRODUCT.integrations.map((provider) => provider.category)),
   );
-  const filtered = PRODUCT.integrations.filter(
-    (p) =>
-      (category === "all" || p.category === category) &&
-      `${p.title} ${p.category}`.toLowerCase().includes(query.toLowerCase()),
+  const filtered = PRODUCT.integrations.filter((provider) => {
+    const haystack = [
+      provider.title,
+      provider.category,
+      provider.direction,
+      ...provider.actions,
+      ...provider.authentication,
+      provider.signature,
+    ].join(" ").toLowerCase();
+    return (
+      (category === "all" || provider.category === category) &&
+      haystack.includes(query.toLowerCase())
+    );
+  });
+  const selected = PRODUCT.integrations.find(
+    (provider) => provider.id === selectedId,
   );
+
   return (
     <div className="integration-explorer">
-      <label className="integration-search">
-        Search integrations
-        <input
-          type="search"
-          value={query}
-          placeholder="Search your stack…"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </label>
-      <div
-        className="integration-filters"
-        role="group"
-        aria-label="Filter by category"
-      >
-        {["all", ...categories].map((c) => (
+      <div className="integration-tools">
+        <label className="integration-search">
+          Search integrations
+          <input
+            type="search"
+            value={query}
+            placeholder="Search providers, actions, or auth…"
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </label>
+        <div className="integration-count">
+          <strong>{PRODUCT.inboundIntegrationCount}</strong>
+          <span>release-verified inbound integrations</span>
+        </div>
+      </div>
+
+      <div className="integration-filters" role="group" aria-label="Filter by category">
+        {["all", ...categories].map((item) => (
           <button
-            aria-pressed={c === category}
-            key={c}
-            onClick={() => setCategory(c)}
+            aria-pressed={item === category}
+            key={item}
+            onClick={() => setCategory(item)}
           >
-            {c.replaceAll("-", " ")}
+            {item === "all"
+              ? "All"
+              : (INTEGRATION_CATEGORY_LABELS[item] ?? readableToken(item))}
           </button>
         ))}
       </div>
+
       <p className="results-count" aria-live="polite">
-        {filtered.length} integrations
+        {filtered.length} integrations match this view
       </p>
+
       <div className="integration-results">
-        {filtered.map((p) => (
-          <Link
+        {filtered.map((provider) => (
+          <button
             className="integration-item"
-            key={p.id}
-            href={`/integrations/${p.id}/`}
+            key={provider.id}
+            type="button"
+            onClick={() => setSelectedId(provider.id)}
+            aria-label={`Inspect ${provider.title} integration`}
           >
             <div className="integration-letter">
-              <Image
-                src={integrationLogos[p.id]}
-                alt=""
-                width={36}
-                height={36}
-              />
+              <Image src={integrationLogos[provider.id]} alt="" width={36} height={36} />
             </div>
             <div>
               <h3>
-                {p.title}
+                {provider.title}
                 <ArrowRight size={17} />
               </h3>
               <p>
-                {p.category.replaceAll("-", " ")} · {p.direction}
+                {INTEGRATION_CATEGORY_LABELS[provider.category] ??
+                  readableToken(provider.category)}
+                {" · "}
+                {readableToken(provider.direction)}
               </p>
               <div className="integration-actions">
-                {p.actions.length
-                  ? p.actions.join(" / ")
+                {provider.actions.length
+                  ? provider.actions.map(readableToken).join(" · ")
                   : "See supported workflow"}
               </div>
               <small>
                 Authentication:{" "}
-                {p.authentication.length
-                  ? p.authentication.join(", ")
+                {provider.authentication.length
+                  ? provider.authentication.map(readableToken).join(", ")
                   : "See setup guide"}
               </small>
             </div>
-          </Link>
+          </button>
         ))}
       </div>
+
       {!filtered.length && (
         <p className="empty-result">
           No integrations match. Try another search or category.
         </p>
       )}
+
+      <Dialog.Root
+        open={Boolean(selected)}
+        onOpenChange={(open) => {
+          if (!open) setSelectedId(null);
+        }}
+      >
+        {selected ? (
+          <Dialog.Portal>
+            <Dialog.Overlay className="integration-drawer-overlay" />
+            <Dialog.Content className="integration-drawer">
+              <div className="integration-drawer-head">
+                <div className="integration-drawer-title">
+                  <div className="integration-letter">
+                    <Image src={integrationLogos[selected.id]} alt="" width={42} height={42} />
+                  </div>
+                  <div>
+                    <p className="site-eyebrow">RELEASE-VERIFIED INTEGRATION</p>
+                    <Dialog.Title>{selected.title}</Dialog.Title>
+                    <Dialog.Description>
+                      {INTEGRATION_CATEGORY_LABELS[selected.category] ??
+                        readableToken(selected.category)}
+                      {" · "}
+                      {readableToken(selected.direction)}
+                    </Dialog.Description>
+                  </div>
+                </div>
+                <Dialog.Close className="integration-drawer-close" aria-label="Close integration details">
+                  <X size={19} />
+                </Dialog.Close>
+              </div>
+
+              <div className="integration-drawer-body">
+                <section>
+                  <span>SUPPORTED ACTIONS</span>
+                  <div className="integration-chip-row">
+                    {selected.actions.length ? (
+                      selected.actions.map((action) => (
+                        <strong key={action}>{readableToken(action)}</strong>
+                      ))
+                    ) : (
+                      <strong>See setup guide</strong>
+                    )}
+                  </div>
+                </section>
+                <section>
+                  <span>AUTHENTICATION</span>
+                  <p>
+                    {selected.authentication.length
+                      ? selected.authentication.map(readableToken).join(", ")
+                      : "See the provider setup guide for the exact authentication contract."}
+                  </p>
+                </section>
+                <section>
+                  <span>SIGNATURE BEHAVIOR</span>
+                  <p>{readableToken(selected.signature)}</p>
+                </section>
+                <section>
+                  <span>TRUTH BOUNDARY</span>
+                  <p>
+                    Capabilities shown here come from the v{PRODUCT.release.version} release manifest.
+                    Provider authentication and verification rules are not generalized across integrations.
+                  </p>
+                </section>
+              </div>
+
+              <div className="integration-drawer-actions">
+                <Link className="site-action" href={`/integrations/${selected.id}/`}>
+                  Open {selected.title} integration <ArrowRight size={16} />
+                </Link>
+                <Link className="integration-doc-link" href={productDocs(selected.docs)}>
+                  Setup guide <ExternalLink size={15} />
+                </Link>
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        ) : null}
+      </Dialog.Root>
     </div>
   );
 }
