@@ -1,0 +1,41 @@
+name: Refresh integration visual baselines
+
+on:
+  push:
+    branches: [feat/website-v2-redesign]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/website-v2-redesign
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Refresh visual baselines
+        shell: bash
+        run: |
+          PORT=5001 node scripts/serve-static.mjs &
+          npx playwright test --grep "visual coverage for key pages" --update-snapshots
+      - name: Commit only intentional Integrations baselines
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git -C "$GITHUB_WORKSPACE" config user.name "github-actions[bot]"
+          git -C "$GITHUB_WORKSPACE" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$GITHUB_WORKSPACE" add tests/browser/snapshots/linux/*/-integrations-.png
+          git -C "$GITHUB_WORKSPACE" rm .github/workflows/refresh-integration-baselines.yml
+          git -C "$GITHUB_WORKSPACE" diff --cached --quiet && exit 1
+          git -C "$GITHUB_WORKSPACE" commit -m "Update Integrations visual baselines"
+          git -C "$GITHUB_WORKSPACE" push origin HEAD:feat/website-v2-redesign
