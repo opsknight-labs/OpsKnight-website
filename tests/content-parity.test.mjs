@@ -87,16 +87,24 @@ test("live status links are restored in footer, homepage, and product pages", ()
   );
 });
 
-test("install page documents required secrets, sizing, and all 3 deployment topologies", () => {
+test("deploy page documents the source-backed quickstart and topology boundaries", () => {
   const installContent = fs.readFileSync(path.join(root, "src/app/install/page.tsx"), "utf8");
-  assert.ok(installContent.includes("NEXTAUTH_SECRET"), "NEXTAUTH_SECRET missing from install");
-  assert.ok(installContent.includes("ENCRYPTION_KEY"), "ENCRYPTION_KEY missing from install");
-  assert.ok(installContent.includes("API_KEY_SECRET"), "API_KEY_SECRET missing from install");
-  assert.ok(installContent.includes("Docker Compose"), "Docker Compose missing from install");
-  assert.ok(installContent.includes("Kubernetes"), "Kubernetes missing from install");
-  assert.ok(installContent.includes("Docker Swarm"), "Docker Swarm missing from install");
-  assert.ok(installContent.includes("Sizing Matrix"), "Sizing matrix missing from install");
-  assert.ok(installContent.includes("Production Readiness Checklist"), "Production checklist missing");
+  assert.ok(installContent.includes("POSTGRES_PASSWORD"), "Database password missing from quickstart");
+  assert.ok(installContent.includes("NEXTAUTH_URL"), "NEXTAUTH_URL missing from quickstart");
+  assert.ok(installContent.includes("NEXT_PUBLIC_APP_URL"), "NEXT_PUBLIC_APP_URL missing from quickstart");
+  assert.ok(installContent.includes("NEXTAUTH_SECRET"), "NEXTAUTH_SECRET missing from deploy page");
+  assert.ok(installContent.includes("ENCRYPTION_KEY"), "ENCRYPTION_KEY missing from deploy page");
+  assert.ok(
+    /provider, metrics, SCIM, voice, or API secrets only when/i.test(installContent),
+    "Conditional provider/API secret boundary missing",
+  );
+  assert.ok(installContent.includes("Integrated Compose"), "Integrated Compose missing");
+  assert.ok(installContent.includes("Split Compose"), "Split Compose missing");
+  assert.ok(installContent.includes("Docker Swarm"), "Docker Swarm missing");
+  assert.ok(installContent.includes("Kubernetes Helm"), "Helm missing");
+  assert.ok(installContent.includes("Kubernetes Kustomize"), "Kustomize missing");
+  assert.ok(installContent.includes("Not certified"), "Capacity certification boundary missing");
+  assert.ok(installContent.includes("GO-LIVE ACCEPTANCE"), "Production acceptance section missing");
 });
 
 test("security page covers identity, encryption, auditability, and procurement", () => {
