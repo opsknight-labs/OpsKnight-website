@@ -1,239 +1,270 @@
 {
   "version": 1,
-  "purpose": "Track old-site usefulness through the Website 3.0 redesign. Every meaningful old behavior must be preserved, restored, or intentionally removed with a reason.",
-  "allowedStatuses": [
-    "PRESERVED",
-    "RESTORED",
-    "ADDED",
-    "INTENTIONALLY_REMOVED"
-  ],
+  "purpose": "Track old-site usefulness through the Website 3.0 redesign. Every meaningful old behavior must be preserved, restored, rewritten, or intentionally removed with a reason.",
   "entries": [
     {
       "id": "homepage-live-status",
-      "old": "Live Status CTA",
+      "area": "Homepage",
+      "oldContent": "Live Status CTA",
       "oldLocation": "homepage / footer",
-      "newLocation": "homepage hero / status journey / footer",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "homepage hero / status journey / footer",
+      "status": "RESTORED"
     },
     {
       "id": "homepage-product-walkthrough",
-      "old": "Product walkthrough",
+      "area": "Homepage",
+      "oldContent": "Product walkthrough",
       "oldLocation": "homepage",
-      "newLocation": "homepage incident loop + product proof",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "homepage incident loop + product proof",
+      "status": "RESTORED"
     },
     {
       "id": "homepage-deployment",
-      "old": "Deployment entry point",
+      "area": "Homepage",
+      "oldContent": "Deployment entry point",
       "oldLocation": "homepage",
-      "newLocation": "homepage architecture + /deploy/",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "homepage architecture + /deploy/",
+      "status": "RESTORED"
+    },
+    {
+      "id": "homepage-open-source",
+      "area": "Homepage",
+      "oldContent": "Open-source/license discovery",
+      "oldLocation": "homepage",
+      "newDestination": "homepage open-source section + footer",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "homepage-support",
+      "area": "Homepage",
+      "oldContent": "Sponsor/support discovery",
+      "oldLocation": "homepage/project links",
+      "newDestination": "homepage open-source section + /support/",
+      "status": "RESTORED"
     },
     {
       "id": "changelog-filters",
-      "old": "Changelog filters",
+      "area": "Changelog",
+      "oldContent": "Release filters",
       "oldLocation": "/changelog/",
-      "newLocation": "/changelog/",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "/changelog/ sticky filter bar",
+      "status": "RESTORED"
     },
     {
       "id": "changelog-version-nav",
-      "old": "Sticky version navigation",
+      "area": "Changelog",
+      "oldContent": "Sticky version navigation",
       "oldLocation": "/changelog/",
-      "newLocation": "/changelog/ desktop rail + mobile selector",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "desktop version rail + mobile release selector",
+      "status": "RESTORED"
     },
     {
       "id": "changelog-docker-copy",
-      "old": "Docker pull command with copy",
+      "area": "Changelog",
+      "oldContent": "Docker pull command with copy",
       "oldLocation": "/changelog/",
-      "newLocation": "/changelog/",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "each release article",
+      "status": "RESTORED"
     },
     {
       "id": "changelog-release-detail",
-      "old": "Release summary/date/categories/details",
+      "area": "Changelog",
+      "oldContent": "Summary, date, latest badge, detailed categories",
       "oldLocation": "/changelog/",
-      "newLocation": "/changelog/",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "release stream",
+      "status": "RESTORED"
     },
     {
       "id": "nav-product-hierarchy",
-      "old": "Product navigation",
+      "area": "Navigation",
+      "oldContent": "Product navigation",
       "oldLocation": "top navigation",
-      "newLocation": "grouped Product mega menu",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "grouped Respond / Collaborate / Operate mega menu",
+      "status": "REWRITTEN"
     },
     {
       "id": "nav-whats-new",
-      "old": "First-class Changelog discovery",
+      "area": "Navigation",
+      "oldContent": "First-class Changelog discovery",
       "oldLocation": "top navigation",
-      "newLocation": "adaptive What's New + Resources",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "adaptive What's New + Resources",
+      "status": "RESTORED"
+    },
+    {
+      "id": "nav-direct-routes",
+      "area": "Navigation",
+      "oldContent": "Direct primary product evaluation routes",
+      "oldLocation": "top navigation",
+      "newDestination": "Integrations / Compare / Deploy / Security / Docs",
+      "status": "PRESERVED"
     },
     {
       "id": "mobile-nav-density",
-      "old": "Fast access to primary routes",
+      "area": "Navigation",
+      "oldContent": "Fast mobile access to primary routes",
       "oldLocation": "mobile navigation",
-      "newLocation": "short Product / Explore / Resources groups",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "short Product / Explore / Resources groups",
+      "status": "REWRITTEN"
     },
     {
       "id": "legal-privacy",
-      "old": "Privacy route",
+      "area": "Legal",
+      "oldContent": "Privacy route",
       "oldLocation": "/privacy/",
-      "newLocation": "/privacy/ Website 3.0 legal layout",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "/privacy/ Website 3.0 reading layout",
+      "status": "REWRITTEN"
     },
     {
       "id": "legal-terms",
-      "old": "Terms route",
+      "area": "Legal",
+      "oldContent": "Terms route",
       "oldLocation": "/terms/",
-      "newLocation": "/terms/ Website 3.0 legal layout",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "/terms/ Website 3.0 reading layout",
+      "status": "REWRITTEN"
     },
     {
       "id": "legal-index",
-      "old": "No single policy index",
-      "oldLocation": "n/a",
-      "newLocation": "/legal/",
-      "status": "ADDED",
-      "action": "KEEP"
+      "area": "Legal",
+      "oldContent": "Legal policy discovery",
+      "oldLocation": "footer links",
+      "newDestination": "/legal/ policy index",
+      "status": "REWRITTEN"
     },
     {
       "id": "footer-legal",
-      "old": "Explicit legal links",
+      "area": "Footer",
+      "oldContent": "Explicit legal links",
       "oldLocation": "footer",
-      "newLocation": "footer Legal group",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "footer Legal group",
+      "status": "RESTORED"
     },
     {
       "id": "integration-search",
-      "old": "Integration search",
+      "area": "Integrations",
+      "oldContent": "Integration search",
       "oldLocation": "/integrations/",
-      "newLocation": "/integrations/",
-      "status": "PRESERVED",
-      "action": "KEEP"
+      "newDestination": "source-backed IntegrationExplorer",
+      "status": "PRESERVED"
     },
     {
       "id": "integration-categories",
-      "old": "Integration category filters",
+      "area": "Integrations",
+      "oldContent": "Integration category filters",
       "oldLocation": "/integrations/",
-      "newLocation": "/integrations/",
-      "status": "PRESERVED",
-      "action": "KEEP"
+      "newDestination": "source-backed category filters",
+      "status": "PRESERVED"
     },
     {
       "id": "integration-contract",
-      "old": "Provider protocol/endpoint/setup detail",
+      "area": "Integrations",
+      "oldContent": "Provider protocol/endpoint/setup detail",
       "oldLocation": "/integrations/",
-      "newLocation": "source-backed integration drawer + detail routes",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "integration drawer + detail routes",
+      "status": "RESTORED"
     },
     {
       "id": "integration-webhook",
-      "old": "Custom webhook guidance",
+      "area": "Integrations",
+      "oldContent": "Custom webhook guidance",
       "oldLocation": "/integrations/",
-      "newLocation": "/integrations/webhook/ + docs",
-      "status": "PRESERVED",
-      "action": "KEEP"
+      "newDestination": "/integrations/webhook/ + docs",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "integration-pagerduty",
+      "area": "Integrations",
+      "oldContent": "PagerDuty Events API compatibility",
+      "oldLocation": "/integrations/",
+      "newDestination": "compatibility entry + setup guide",
+      "status": "PRESERVED"
     },
     {
       "id": "integration-blanket-hmac",
-      "old": "Blanket HMAC wording",
-      "oldLocation": "old integration marketing",
-      "newLocation": "removed; provider verification shown individually",
+      "area": "Integrations",
+      "oldContent": "Blanket HMAC wording",
+      "oldLocation": "legacy integration marketing",
       "status": "INTENTIONALLY_REMOVED",
-      "action": "DO_NOT_RESTORE",
       "reason": "Incorrect across providers; authentication and signature behavior vary by integration."
     },
     {
       "id": "compare-matrix",
-      "old": "Capability matrix",
+      "area": "Compare",
+      "oldContent": "Capability matrix",
       "oldLocation": "/compare/",
-      "newLocation": "26-dimension dated matrix",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "26-dimension dated matrix",
+      "status": "RESTORED"
     },
     {
       "id": "compare-vendor-pages",
-      "old": "Vendor comparison pages",
+      "area": "Compare",
+      "oldContent": "Vendor comparison pages",
       "oldLocation": "/compare/[vendor]/",
-      "newLocation": "dated vendor deep-dives + source links",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "dated vendor deep-dives + sources",
+      "status": "RESTORED"
     },
     {
       "id": "compare-migration",
-      "old": "Migration helpers",
+      "area": "Compare",
+      "oldContent": "Migration helpers",
       "oldLocation": "comparison pages",
-      "newLocation": "PagerDuty / Opsgenie / Grafana helpers",
-      "status": "PRESERVED",
-      "action": "KEEP"
+      "newDestination": "PagerDuty / Opsgenie / Grafana migration helpers",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "compare-neutrality",
+      "area": "Compare",
+      "oldContent": "Marketing-led competitor claims",
+      "oldLocation": "legacy compare copy",
+      "newDestination": "dated, source-conscious operating-model language",
+      "status": "REWRITTEN"
     },
     {
       "id": "product-pages",
-      "old": "Broad homepage product explanation",
+      "area": "Product",
+      "oldContent": "Broad homepage product explanation",
       "oldLocation": "homepage",
-      "newLocation": "dedicated product pages + unique operational workflows",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "dedicated product routes + unique operational workflows",
+      "status": "RESTORED"
     },
     {
       "id": "solutions-depth",
-      "old": "Use-case routes",
+      "area": "Solutions",
+      "oldContent": "Use-case routes",
       "oldLocation": "/use-cases/",
-      "newLocation": "/solutions/ + detailed solution journeys",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "/solutions/ + deployment/integration/security/validation journeys",
+      "status": "RESTORED"
     },
     {
       "id": "support-services",
-      "old": "Support/sponsorship",
+      "area": "Commercial",
+      "oldContent": "Sponsorship/support discovery",
       "oldLocation": "project pages",
-      "newLocation": "/support/ with sponsorship, commercial support and implementation",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "/support/ sponsorship + commercial support + implementation",
+      "status": "RESTORED"
     },
     {
       "id": "enterprise-edition",
-      "old": "Enterprise-style positioning",
+      "area": "Commercial",
+      "oldContent": "Enterprise-style edition positioning",
       "oldLocation": "legacy marketing",
-      "newLocation": "not used",
       "status": "INTENTIONALLY_REMOVED",
-      "action": "DO_NOT_RESTORE",
-      "reason": "OpsKnight has one open-source product; commercial support/services do not gate product features."
+      "reason": "OpsKnight has one open-source product; commercial support and implementation do not gate product features."
     },
     {
       "id": "hosted-cloud-promise",
-      "old": "Hosted/cloud implication",
+      "area": "Commercial",
+      "oldContent": "Hosted/cloud implication",
       "oldLocation": "legacy marketing",
-      "newLocation": "not used",
       "status": "INTENTIONALLY_REMOVED",
-      "action": "DO_NOT_RESTORE",
       "reason": "No hosted OpsKnight cloud offering is being launched in this website release."
     },
     {
       "id": "responsive-matrix",
-      "old": "Basic responsive behavior",
+      "area": "Responsive",
+      "oldContent": "Responsive behavior across common devices",
       "oldLocation": "global",
-      "newLocation": "11-viewport overflow regression suite",
-      "status": "RESTORED",
-      "action": "KEEP"
+      "newDestination": "11-viewport overflow regression sweep + visual baselines",
+      "status": "RESTORED"
     }
   ]
 }

@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("site parity ledger has no unresolved redesign regressions", () => {
   const ledger = JSON.parse(fs.readFileSync("content/site-parity.json", "utf8"));
-  const allowed = new Set(ledger.allowedStatuses);
+  const allowed = new Set(["PRESERVED", "RESTORED", "REWRITTEN", "INTENTIONALLY_REMOVED"]);
   const ids = new Set();
 
   assert.ok(Array.isArray(ledger.entries) && ledger.entries.length >= 20);
@@ -18,10 +18,11 @@ test("site parity ledger has no unresolved redesign regressions", () => {
     assert.notEqual(entry.status, "MISSING", entry.id + ": still missing");
     assert.notEqual(entry.status, "TODO", entry.id + ": still TODO");
 
+    assert.ok(entry.area && entry.oldContent, entry.id + ": identity fields missing");
     if (entry.status === "INTENTIONALLY_REMOVED") {
       assert.ok(entry.reason, entry.id + ": intentional removals need a reason");
     } else {
-      assert.ok(entry.newLocation, entry.id + ": restored/preserved entries need a new location");
+      assert.ok(entry.newDestination, entry.id + ": restored/preserved entries need a destination");
     }
   }
 });

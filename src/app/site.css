@@ -3954,3 +3954,8 @@ html {
 @media (max-width:640px){
   .solution-entry-grid{grid-template-columns:1fr}
 }
+
+/* Keep compact laptop spacing continuous with the fluid token scale. */
+@media (max-height: 760px) and (min-width: 801px) {
+  .site-section { padding: var(--section-pad) 0; }
+}

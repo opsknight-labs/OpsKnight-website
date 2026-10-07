@@ -190,7 +190,7 @@
   :root {
     --nav-height: 60px;
     --stage-height: 320px;
-    --section-pad: clamp(40px, 5vh, 64px);
-    --section-pad-sm: clamp(32px, 4vh, 48px);
+    --section-pad: clamp(68px, 9.5vh, 82px);
+    --section-pad-sm: clamp(48px, 7vh, 64px);
   }
 }

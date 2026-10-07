@@ -235,7 +235,7 @@ export function SiteNavigation() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="live-dot" /> Live status
+                  <span className="live-dot" /> Live OpsKnight status
                   <ArrowUpRight size={13} />
                 </a>
               </div>
