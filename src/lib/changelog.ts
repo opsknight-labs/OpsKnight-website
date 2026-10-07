@@ -89,6 +89,15 @@ export const releases: ReleaseItem[] = [
         ],
       },
       {
+        type: "performance",
+        title: "Performance & Scale",
+        items: [
+          "Integrated and split runtime roles let operators scale Web, Scheduler, Critical, General, Bulk, and Status processing independently where the deployment model supports it.",
+          "PgBouncer pooling overlays and published sizing profiles reduce database-connection pressure and give operators a documented starting point for capacity planning.",
+          "Load and correctness scenarios exercise alert ingestion, incident lifecycle, escalation, notifications, status fan-out, realtime traffic, user workload, security-under-load, recovery, and queue-drain behavior. Results are planning evidence, not guaranteed capacity.",
+        ],
+      },
+      {
         type: "changed",
         title: "2.0 Release Boundaries",
         items: [
