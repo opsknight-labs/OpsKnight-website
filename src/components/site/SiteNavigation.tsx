@@ -1,7 +1,13 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Search, ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  Github,
+  Search,
+} from "lucide-react";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { PRODUCT } from "@/lib/product";
@@ -12,17 +18,45 @@ const resources = [
   ["Solutions", "/solutions/"],
   ["Support & Services", "/support/"],
   ["Community", "/community/"],
-  ["What’s new", "/changelog/"],
+  ["What’s New", "/changelog/"],
   ["About", "/about/"],
   ["Brand", "/brand/"],
   ["Contact", "/contact/"],
 ] as const;
 
+const mobileResources = [
+  ["Documentation", BRAND.links.docs],
+  ["What’s New", "/changelog/"],
+  ["Solutions", "/solutions/"],
+  ["Support & Services", "/support/"],
+  ["Community", "/community/"],
+  ["About", "/about/"],
+] as const;
+
+const productGroups = [
+  {
+    label: "RESPOND",
+    slugs: ["incidents", "on-call", "paging"],
+  },
+  {
+    label: "COLLABORATE",
+    slugs: ["chatops", "status-pages", "postmortems", "analytics"],
+  },
+  {
+    label: "OPERATE",
+    slugs: ["security", "operations", "mobile"],
+  },
+] as const;
+
+const mobileProductSlugs = ["incidents", "on-call", "paging", "chatops"] as const;
+
 export function SiteNavigation() {
   const path = usePathname();
   const header = useRef<HTMLElement>(null);
+
   const normalizePath = (value: string) =>
     value.length > 1 ? value.replace(/\/+$/, "") : value;
+
   const isActive = (href: string) => {
     if (!href.startsWith("/")) return false;
     const current = normalizePath(path);
@@ -31,25 +65,31 @@ export function SiteNavigation() {
       ? current === "/"
       : current === target || current.startsWith(`${target}/`);
   };
+
   const resourcesActive = resources.some(([, href]) => isActive(href));
 
   useEffect(() => {
     function closeMenus(event: Event) {
-      if (event.type === "keydown" && (event as KeyboardEvent).key !== "Escape")
+      if (event.type === "keydown" && (event as KeyboardEvent).key !== "Escape") {
         return;
+      }
       if (
         event.type === "pointerdown" &&
         header.current?.contains(event.target as Node)
-      )
+      ) {
         return;
+      }
+
       header.current
         ?.querySelectorAll<HTMLDetailsElement>("details[open]")
         .forEach((menu) => {
           menu.open = false;
-          if (event.type === "keydown")
+          if (event.type === "keydown") {
             menu.querySelector<HTMLElement>("summary")?.focus();
+          }
         });
     }
+
     document.addEventListener("keydown", closeMenus);
     document.addEventListener("pointerdown", closeMenus);
     return () => {
@@ -58,6 +98,9 @@ export function SiteNavigation() {
     };
   }, []);
 
+  const productBySlug = (slug: string) =>
+    PRODUCT.platform.products.find((product) => product.slug === slug);
+
   return (
     <>
       <IncidentSignal />
@@ -65,6 +108,7 @@ export function SiteNavigation() {
         <a className="site-skip" href="#main-content">
           Skip to content
         </a>
+
         <div className="site-container nav-inner">
           <Link className="site-wordmark" href="/" aria-label="OpsKnight home">
             <Image
@@ -78,52 +122,102 @@ export function SiteNavigation() {
 
           <nav aria-label="Main navigation" className="desktop-nav">
             <details
-                name="site-navigation"
-                key={`product-${path}`}
-                className={path.startsWith("/product/") ? "nav-active" : undefined}
-              >
+              name="site-navigation"
+              key={`product-${path}`}
+              className={isActive("/product/") ? "nav-active" : undefined}
+            >
               <summary>
-                Product <span>⌄</span>
+                Product
+                <ChevronDown className="nav-chevron" size={14} aria-hidden="true" />
               </summary>
               <div className="site-mega">
-                <div>
-                  <p className="site-eyebrow">THE INCIDENT LIFECYCLE</p>
-                  <h3>
-                    From signal
-                    <br />
-                    to resolution.
-                  </h3>
-                  <div className="mega-story-links">
-                    <Link href="/product/">Overview of all capabilities →</Link>
-                    <Link href="/#incident-loop">Explore the workflow →</Link>
-                  </div>
+                <div className="mega-product-head">
+                  <p className="site-eyebrow">PRODUCT</p>
+                  <h3>Incident operations, end to end.</h3>
+                  <p>
+                    Find the surface you need without digging through the whole
+                    product map.
+                  </p>
                 </div>
-                <div className="mega-links">
-                  {PRODUCT.platform.products.map((p) => (
-                    <Link
-                      key={p.slug}
-                      href={`/product/${p.slug}/`}
-                      aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
-                    >
-                      {p.label}
-                      <ArrowUpRight size={14} />
-                    </Link>
+
+                <div className="mega-product-groups">
+                  {productGroups.map((group) => (
+                    <section key={group.label}>
+                      <span>{group.label}</span>
+                      {group.slugs.map((slug) => {
+                        const product = productBySlug(slug);
+                        if (!product) return null;
+                        return (
+                          <Link
+                            key={product.slug}
+                            href={`/product/${product.slug}/`}
+                            aria-current={
+                              isActive(`/product/${product.slug}/`) ? "page" : undefined
+                            }
+                          >
+                            {product.label}
+                          </Link>
+                        );
+                      })}
+                    </section>
                   ))}
+                </div>
+
+                <div className="mega-product-foot">
+                  <Link href="/product/">
+                    Explore the complete platform <ArrowUpRight size={14} />
+                  </Link>
+                  <Link href="/#incident-loop">Follow the incident lifecycle →</Link>
                 </div>
               </div>
             </details>
-            <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>Integrations</Link>
-            <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>Compare</Link>
-            <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>Deploy</Link>
-            <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>Security</Link>
-            <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>Docs</Link>
+
+            <Link
+              href="/integrations/"
+              aria-current={isActive("/integrations/") ? "page" : undefined}
+            >
+              Integrations
+            </Link>
+            <Link
+              href="/compare/"
+              aria-current={isActive("/compare/") ? "page" : undefined}
+            >
+              Compare
+            </Link>
+            <Link
+              href="/deploy/"
+              aria-current={isActive("/deploy/") ? "page" : undefined}
+            >
+              Deploy
+            </Link>
+            <Link
+              href="/security/"
+              aria-current={isActive("/security/") ? "page" : undefined}
+            >
+              Security
+            </Link>
+            <Link
+              className="nav-whats-new"
+              href="/changelog/"
+              aria-current={isActive("/changelog/") ? "page" : undefined}
+            >
+              What’s New
+            </Link>
+            <Link
+              href={BRAND.links.docs}
+              aria-current={isActive(BRAND.links.docs) ? "page" : undefined}
+            >
+              Docs
+            </Link>
+
             <details
               className={`resources-menu ${resourcesActive ? "nav-active" : ""}`}
               name="site-navigation"
               key={`resources-${path}`}
             >
               <summary>
-                Resources <span>⌄</span>
+                Resources
+                <ChevronDown className="nav-chevron" size={14} aria-hidden="true" />
               </summary>
               <div className="site-small-menu">
                 {resources.map(([name, href]) => (
@@ -135,7 +229,15 @@ export function SiteNavigation() {
                     {name}
                   </Link>
                 ))}
-                <Link href={BRAND.links.status}>Live status ↗</Link>
+                <div className="resource-menu-divider" />
+                <a
+                  href={BRAND.links.status}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="live-dot" /> Live status
+                  <ArrowUpRight size={13} />
+                </a>
               </div>
             </details>
           </nav>
@@ -159,6 +261,7 @@ export function SiteNavigation() {
             <Link className="nav-install" href="/deploy/">
               Install <ArrowUpRight size={14} />
             </Link>
+
             <details className="mobile-nav" key={path}>
               <summary aria-label="Open navigation">
                 <span className="mobile-menu-icon" aria-hidden="true">
@@ -166,6 +269,7 @@ export function SiteNavigation() {
                   <span />
                 </span>
               </summary>
+
               <div className="mobile-menu-panel">
                 <div className="mobile-menu-head">
                   <div>
@@ -178,46 +282,44 @@ export function SiteNavigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="live-dot" /> Live OpsKnight status ↗
+                    <span className="live-dot" /> Live status ↗
                   </a>
                 </div>
+
                 <nav aria-label="Mobile navigation" className="mobile-menu-grid">
                   <section className="mobile-menu-section">
                     <span>PRODUCT</span>
-                    <Link href="/" aria-current={isActive("/") ? "page" : undefined}>
-                      Overview
+                    {mobileProductSlugs.map((slug) => {
+                      const product = productBySlug(slug);
+                      if (!product) return null;
+                      return (
+                        <Link
+                          key={product.slug}
+                          href={`/product/${product.slug}/`}
+                          aria-current={
+                            isActive(`/product/${product.slug}/`) ? "page" : undefined
+                          }
+                        >
+                          {product.label}
+                        </Link>
+                      );
+                    })}
+                    <Link href="/product/" className="mobile-more-link">
+                      More products →
                     </Link>
-                    {PRODUCT.platform.products.map((p) => (
-                      <Link
-                        key={p.slug}
-                        href={`/product/${p.slug}/`}
-                        aria-current={isActive(`/product/${p.slug}/`) ? "page" : undefined}
-                      >
-                        {p.label}
-                      </Link>
-                    ))}
                   </section>
+
                   <section className="mobile-menu-section">
                     <span>EXPLORE</span>
-                    <Link href="/integrations/" aria-current={isActive("/integrations/") ? "page" : undefined}>
-                      Integrations
-                    </Link>
-                    <Link href="/compare/" aria-current={isActive("/compare/") ? "page" : undefined}>
-                      Compare
-                    </Link>
-                    <Link href="/deploy/" aria-current={isActive("/deploy/") ? "page" : undefined}>
-                      Deploy
-                    </Link>
-                    <Link href="/security/" aria-current={isActive("/security/") ? "page" : undefined}>
-                      Security
-                    </Link>
-                    <Link href={BRAND.links.docs} aria-current={isActive(BRAND.links.docs) ? "page" : undefined}>
-                      Documentation
-                    </Link>
+                    <Link href="/integrations/">Integrations</Link>
+                    <Link href="/compare/">Compare</Link>
+                    <Link href="/deploy/">Deploy</Link>
+                    <Link href="/security/">Security</Link>
                   </section>
+
                   <section className="mobile-menu-section">
                     <span>RESOURCES</span>
-                    {resources.map(([name, href]) => (
+                    {mobileResources.map(([name, href]) => (
                       <Link
                         key={href}
                         href={href}
@@ -228,6 +330,7 @@ export function SiteNavigation() {
                     ))}
                   </section>
                 </nav>
+
                 <div className="mobile-menu-actions">
                   <Link className="mobile-install" href="/deploy/">
                     Install OpsKnight <ArrowUpRight size={14} />
@@ -257,6 +360,7 @@ export function SiteFooter() {
             </Link>
             <p>Incident operations you control.</p>
           </div>
+
           <div className="footer-links">
             <div>
               <span>PRODUCT</span>
@@ -265,7 +369,6 @@ export function SiteFooter() {
               <Link href="/product/paging/">Paging</Link>
               <Link href="/product/chatops/">ChatOps</Link>
               <Link href="/product/status-pages/">Status</Link>
-              <Link href="/product/analytics/">Analytics</Link>
             </div>
             <div>
               <span>EXPLORE</span>
@@ -273,7 +376,7 @@ export function SiteFooter() {
               <Link href="/compare/">Compare</Link>
               <Link href="/deploy/">Deploy</Link>
               <Link href="/security/">Security</Link>
-              <Link href="/changelog/">What’s new</Link>
+              <Link href="/changelog/">What’s New</Link>
             </div>
             <div>
               <span>RESOURCES</span>
@@ -290,8 +393,18 @@ export function SiteFooter() {
               <Link href={BRAND.links.sponsor}>Sponsor</Link>
               <Link href="/about/">About</Link>
             </div>
+            <div>
+              <span>LEGAL</span>
+              <Link href="/legal/">Legal & policies</Link>
+              <Link href="/privacy/">Privacy</Link>
+              <Link href="/terms/">Terms</Link>
+              <Link href={BRAND.links.license}>License</Link>
+              <Link href={BRAND.links.trademarks}>Trademarks</Link>
+              <Link href={BRAND.links.securityPolicy}>Security policy</Link>
+            </div>
           </div>
         </div>
+
         <div className="footer-bottom">
           <a
             className="footer-live-status"

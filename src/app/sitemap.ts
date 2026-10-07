@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       "/changelog",
       "/integrations",
       "/about",
+      "/legal",
       "/privacy",
       "/terms",
       "/brand",

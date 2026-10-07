@@ -3,44 +3,50 @@ import type { Metadata } from "next";
 import { PRODUCT } from "@/lib/product";
 import { Action, FinalCTA } from "@/components/site/Primitives";
 import { BRAND } from "@/lib/brand";
+import { ChangelogView } from "@/components/changelog/ChangelogView";
+
 const pageMetadata: Metadata = {
-  title: "What’s new",
+  title: "What’s New — OpsKnight release history",
   description:
-    "Release notes generated from the OpsKnight product release metadata.",
+    "Browse OpsKnight releases, new capabilities, security work, fixes, changes and performance improvements.",
   alternates: { canonical: "/changelog/" },
   openGraph: { url: "/changelog/" },
 };
+
 export const metadata = siteMetadata(pageMetadata);
+
 export default function Changelog() {
   return (
     <div className="site-page">
-      <section className="interior-hero site-dark">
+      <section className="interior-hero site-dark changelog-hero">
         <div className="site-container">
           <p className="site-eyebrow">
-            <span className="signal-dot" /> WHAT’S NEW / {PRODUCT.release.date}
+            <span className="signal-dot" /> WHAT’S NEW
           </p>
-          <h1>OpsKnight {PRODUCT.release.tag}.</h1>
+          <h1>
+            Every release.
+            <br />
+            Every meaningful change.
+          </h1>
           <p className="site-description">
-            The latest release. Generated from the product changelog, with the
-            complete details available in the source repository.
+            Follow new capabilities, security work, fixes and operational
+            improvements across the OpsKnight release history.
           </p>
           <div className="site-actions">
-            <Action href={`${BRAND.links.releases}/tag/${PRODUCT.release.tag}`}>
-              Read complete release notes
+            <Action href={"#"+PRODUCT.release.tag}>Latest release</Action>
+            <Action href={BRAND.links.releases} secondary>
+              GitHub Releases ↗
             </Action>
           </div>
         </div>
       </section>
-      <section className="site-section">
-        <div className="site-container release-highlights">
-          {PRODUCT.release.highlights.map((h) => (
-            <article key={h.title}>
-              <h2>{h.title}</h2>
-              <p>{h.description}</p>
-            </article>
-          ))}
+
+      <section className="site-section changelog-section">
+        <div className="site-container">
+          <ChangelogView />
         </div>
       </section>
+
       <FinalCTA />
     </div>
   );
