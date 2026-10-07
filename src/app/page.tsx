@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { PRODUCT, productProof } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
+import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
 import {
   Action,
   SectionIntro,
@@ -60,10 +61,10 @@ export default function Home() {
               Own the incident<span className="hero-period">.</span>
             </h1>
             <p className="hero-subtitle">
-              From first alert to final postmortem.
+              From first signal to final review.
             </p>
             <p className="hero-description">
-              On-call, paging, ChatOps, status and incident operations.
+              Self-hosted on-call, paging, ChatOps, status, analytics and incident management.
               <br className="desktop-break" /> On infrastructure you control.
             </p>
             <div className="site-actions">
@@ -262,34 +263,7 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <div className="ecosystem-line">
-              <strong>
-                OpsKnight
-                <span className="signal-dot" />
-              </strong>
-              <div>
-                {[
-                  "Datadog",
-                  "Prometheus",
-                  "Grafana",
-                  "CloudWatch",
-                  "Sentry",
-                  "GitHub",
-                  "Slack",
-                  "Microsoft Teams",
-                  "Jira",
-                ].map((n) => (
-                  <span key={n}>{n}</span>
-                ))}
-              </div>
-            </div>
-            <div className="section-heading-row" style={{ marginTop: "24px" }}>
-              <p className="site-description" style={{ margin: 0 }}>
-                {PRODUCT.inboundIntegrationCount} inbound monitoring and alerting
-                integrations, verified against the release catalog.
-              </p>
-              <TextLink href="/integrations/">Explore all integrations</TextLink>
-            </div>
+            <HomepageIntegrationFinder />
           </div>
         </div>
       </section>

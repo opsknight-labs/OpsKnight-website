@@ -10,6 +10,13 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
+  await expect(page.getByText("From first signal to final review.")).toBeVisible();
+  const integrationSearch = page.getByRole("searchbox", {
+    name: "Find an OpsKnight integration",
+  });
+  await integrationSearch.fill("Prometheus");
+  await expect(page.getByRole("link", { name: /Prometheus Alertmanager/ })).toBeVisible();
+  await integrationSearch.fill("");
   await page.getByRole("tab", { name: "ChatOps", exact: true }).click();
   await expect(page.locator("#product-proof-panel")).toContainText("ChatOps");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
