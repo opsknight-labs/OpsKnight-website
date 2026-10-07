@@ -49,6 +49,10 @@ test("compare matrix contains 7 vendors and required decision categories", async
   assert.ok(content.includes("DTMF"), "DTMF voice feature missing");
   assert.ok(content.includes("Microsoft Teams"), "Teams feature missing");
   assert.ok(content.includes("SCIM 2.0"), "SCIM feature missing");
+  assert.ok(
+    (content.match(/feature:/g) || []).length >= 30,
+    "Comparison matrix must preserve at least 30 decision dimensions",
+  );
 });
 
 test("live status links are restored in footer, homepage, and product pages", () => {
@@ -236,4 +240,38 @@ test("deployment marketing preserves v2 capacity and support boundaries", () => 
   assert.match(deployPage, /matching benchmark is certified/i);
   assert.match(deployPage, /bundled\s+PostgreSQL\s+is\s+not\s+highly\s+available/i);
   assert.match(deployPage, /No 24×7 coverage or response-time SLA is advertised/);
+});
+
+
+test("marketing evidence stays on the Northstar v2 fixture", () => {
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(root, "src/generated/product-manifest.json"), "utf8")
+  );
+  assert.equal(manifest.screenshots.fixture, "Northstar Systems");
+  for (const name of [
+    "dashboard-overview",
+    "incident-detail",
+    "on-call-schedule-detail",
+    "notification-settings",
+    "analytics-overview",
+    "postmortems",
+    "audit-log",
+    "health-center",
+    "status-pages",
+  ]) {
+    assert.equal(manifest.screenshots.assets[name]?.fixture, "Northstar Systems");
+  }
+  for (const stale of [
+    "incident-triggered",
+    "incident-acknowledged",
+    "teams-chatops-war-room",
+    "mobile",
+  ]) {
+    assert.equal(manifest.screenshots.assets[stale], undefined);
+  }
+  const platform = JSON.parse(
+    fs.readFileSync(path.join(root, "content/product/platform.json"), "utf8")
+  );
+  assert.equal(platform.products.find((item) => item.slug === "chatops")?.screenshot, null);
+  assert.equal(platform.products.find((item) => item.slug === "mobile")?.screenshot, null);
 });

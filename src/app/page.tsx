@@ -1,5 +1,6 @@
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowUpRight,
   ShieldAlert,
@@ -18,7 +19,6 @@ import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegration
 import {
   Action,
   SectionIntro,
-  ProductScreenshot,
   TextLink,
   TrustStrip,
   FeatureCard,
@@ -84,16 +84,24 @@ export default function Home() {
             </a>
             <p className="site-proof">{productProof}</p>
           </div>
-          <div className="hero-product">
+          <div className="hero-product hero-composite">
             <HeroSignal />
-            <ProductScreenshot
-              name="dashboard-overview.png"
-              alt="OpsKnight operations command center showing system health, active incidents and on-call coverage"
-              priority
-            />
+            <figure className="hero-composite-art">
+              <Image
+                src="/product/hero-composite.webp"
+                width={3200}
+                height={1800}
+                alt="Composed OpsKnight v2.0.0 product artwork built from the Northstar Systems synthetic release fixture"
+                priority
+                sizes="(max-width: 768px) 100vw, 1100px"
+              />
+              <figcaption>
+                Composed release artwork generated from the OpsKnight v2.0.0 Northstar capture pipeline.
+              </figcaption>
+            </figure>
             <div className="hero-product-foot">
-              <span>YOUR INFRASTRUCTURE. YOUR COMMAND CENTER.</span>
-              <span>01 — OPERATIONS DASHBOARD</span>
+              <span>COMPOSED V2.0.0 PRODUCT EVIDENCE</span>
+              <span>NORTHSTAR SYSTEMS FIXTURE</span>
             </div>
           </div>
         </div>

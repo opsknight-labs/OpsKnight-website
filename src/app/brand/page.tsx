@@ -137,6 +137,33 @@ export default function Brand() {
         </div>
       </section>
 
+      <section className="site-section site-white">
+        <div className="site-container">
+          <SectionIntro eyebrow="README & DOCS" title="Present OpsKnight consistently.">
+            Use the canonical mark, product name and current-release wording when
+            OpsKnight appears in a README, integration guide or partner document.
+          </SectionIntro>
+          <div className="brand-example-grid">
+            <article>
+              <span>README LOCKUP</span>
+              <h3>Keep the product name and destination obvious.</h3>
+              <pre tabIndex={0}><code>{`![OpsKnight](https://opsknight.com/logo.svg)
+
+**OpsKnight** — self-hosted incident management and on-call.
+
+[Install](https://opsknight.com/deploy/) · [Docs](https://opsknight.com/docs/) · [GitHub](https://github.com/opsknight-labs/OpsKnight)`}</code></pre>
+            </article>
+            <article>
+              <span>INTEGRATION ATTRIBUTION</span>
+              <h3>Describe interoperability without implying endorsement.</h3>
+              <pre tabIndex={0}><code>{`Works with OpsKnight v2.0.0 through the documented webhook/API contract.
+
+OpsKnight is an independent open-source project. Product names and trademarks belong to their respective owners.`}</code></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="site-section">
         <div className="site-container brand-principles-grid">
           <article className="interior-copy">
