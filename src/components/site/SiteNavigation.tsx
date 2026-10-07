@@ -18,6 +18,7 @@ const resources = [
   ["Solutions", "/solutions/"],
   ["Support & Services", "/support/"],
   ["Community", "/community/"],
+  ["What’s New", "/changelog/"],
   ["About", "/about/"],
   ["Brand", "/brand/"],
   ["Contact", "/contact/"],
@@ -66,7 +67,9 @@ export function SiteNavigation() {
       : current === target || current.startsWith(`${target}/`);
   };
 
-  const resourcesActive = resources.some(([, href]) => isActive(href));
+  const resourcesActive = resources.some(
+    ([, href]) => href !== "/changelog/" && isActive(href),
+  );
   const showIncidentSignal = path === "/" || path.startsWith("/product/");
 
   useEffect(() => {

@@ -76,13 +76,23 @@ test("navigation and search", async ({ page }, testInfo) => {
   await expect(page.getByPlaceholder(/Search/).first()).toBeVisible();
   await page.keyboard.press("Escape");
   if (testInfo.project.name === "desktop") {
+    await page.setViewportSize({ width: 1512, height: 982 });
     await page.goto("/changelog/");
+    await expect(page.locator(".nav-whats-new")).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    await expect(page.locator(".nav-whats-new")).toBeVisible();
+
+    await page.setViewportSize({ width: 1366, height: 768 });
+    await page.goto("/changelog/");
+    await expect(page.locator(".nav-whats-new")).toBeHidden();
+    await page.locator(".resources-menu > summary").click();
     await expect(
       page
-        .getByRole("navigation", { name: "Main navigation" })
+        .locator(".resources-menu .site-small-menu")
         .getByRole("link", { name: "What’s New", exact: true }),
     ).toHaveAttribute("aria-current", "page");
-    await expect(page.locator(".resources-menu")).not.toHaveClass(/nav-active/);
 
     await page.goto("/legal/");
     await expect(page.locator(".resources-menu")).toHaveClass(/nav-active/);

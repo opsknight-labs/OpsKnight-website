@@ -5209,3 +5209,48 @@ html {
     grid-template-columns:1fr;
   }
 }
+
+
+/* Responsive navigation ownership: wide desktop gets a top-level changelog link;
+ * compact desktop keeps it discoverable under Resources without crowding the bar. */
+@media (min-width:1491px){
+  .resources-menu .site-small-menu a[href="/changelog/"]{display:none}
+}
+@media (max-width:1490px) and (min-width:1024px){
+  .desktop-nav:has(.nav-whats-new[aria-current="page"]) .resources-menu > summary{
+    color:white;
+  }
+  .desktop-nav:has(.nav-whats-new[aria-current="page"]) .resources-menu > summary::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:3px;
+    height:2px;
+    border-radius:2px;
+    background:var(--site-red);
+  }
+}
+
+/* Final cascade guard for capability diagrams on narrow screens.
+ * These rules intentionally live after the capability-specific desktop grammar. */
+@media (max-width:900px){
+  .product-concept-paging .product-concept-nodes,
+  .product-concept-on-call .product-concept-nodes,
+  .product-concept-analytics .product-concept-nodes{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:520px){
+  .product-concept-paging .product-concept-nodes,
+  .product-concept-on-call .product-concept-nodes,
+  .product-concept-analytics .product-concept-nodes,
+  .product-concept-security .product-concept-nodes{
+    grid-template-columns:1fr;
+  }
+  .product-concept-paging .product-concept-node,
+  .product-concept-on-call .product-concept-node,
+  .product-concept-analytics .product-concept-node{
+    min-width:0;
+  }
+}
