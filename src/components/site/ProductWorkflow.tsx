@@ -191,6 +191,96 @@ const flows: Record<
     },
   ],
 };
+type ProductConcept = {
+  eyebrow: string;
+  headline: string;
+  nodes: string[];
+  detail: string[];
+};
+
+const concepts: Record<string, ProductConcept> = {
+  incidents: {
+    eyebrow: "INCIDENT STATE MACHINE",
+    headline: "One incident record moves through response without losing ownership or evidence.",
+    nodes: ["TRIGGERED", "ACKNOWLEDGED", "RESOLVED"],
+    detail: ["Service context", "Responder ownership", "Timeline + follow-up"],
+  },
+  "on-call": {
+    eyebrow: "EFFECTIVE RESPONDER",
+    headline: "Resolve ownership at execution time, not from how a calendar happens to look.",
+    nodes: ["Service", "Policy", "Schedule", "Rotation", "Responder"],
+    detail: ["Timezone-aware", "Overrides applied", "Empty schedules tested"],
+  },
+  paging: {
+    eyebrow: "DELIVERY CONTROL PLANE",
+    headline: "Separate the logical notification from provider admission, attempts, and evidence.",
+    nodes: ["Incident", "Intent", "Traffic lane", "Provider", "Attempt", "Evidence"],
+    detail: ["Critical", "Transactional", "Public", "Bulk"],
+  },
+  "status-pages": {
+    eyebrow: "PUBLIC INCIDENT STATE",
+    headline: "Project approved customer context without exposing the internal incident record.",
+    nodes: ["Operational", "Investigating", "Monitoring", "Resolved"],
+    detail: ["Components", "Subscribers", "Maintenance"],
+  },
+  analytics: {
+    eyebrow: "RESPONSE MEASUREMENT",
+    headline: "Keep timing metrics attached to the population and filters that produced them.",
+    nodes: ["MTTA", "MTTR", "Incident volume", "SLA"],
+    detail: ["Time window", "Service scope", "Source incidents"],
+  },
+  postmortems: {
+    eyebrow: "LEARNING LOOP",
+    headline: "Move from evidence to an owned, verifiable operational change.",
+    nodes: ["Timeline", "Draft review", "5 Whys", "Action items", "Verify"],
+    detail: ["Facts before hypotheses", "Owner + due date", "Completion evidence"],
+  },
+  mobile: {
+    eyebrow: "MOBILE RESPONSE PATH",
+    headline: "The same OpsKnight identity and incident state, delivered through an installable PWA.",
+    nodes: ["Install PWA", "Register device", "Web Push", "Open incident", "Respond"],
+    detail: ["Browser permission", "Device endpoint", "Product authorization"],
+  },
+  security: {
+    eyebrow: "CONTROL ARCHITECTURE",
+    headline: "Authentication, provisioning, authorization, sessions, and evidence remain separate controls.",
+    nodes: ["OIDC / PKCE", "SCIM 2.0", "RBAC / Auditor", "Session registry", "Audit events"],
+    detail: ["Identity provider", "Least privilege", "Revocation + evidence"],
+  },
+  operations: {
+    eyebrow: "RUNTIME RESPONSIBILITIES",
+    headline: "Split only the responsibility that needs independent scale or failure isolation.",
+    nodes: ["Web", "Scheduler", "Critical", "General", "Bulk", "Status projector"],
+    detail: ["PgBouncer", "PostgreSQL", "Health + Prometheus"],
+  },
+};
+
+function ProductConceptPanel({ slug }: { slug: string }) {
+  const concept = concepts[slug];
+  if (!concept) return null;
+  return (
+    <div className={`product-concept product-concept-${slug}`}>
+      <div className="product-concept-head">
+        <span>{concept.eyebrow}</span>
+        <strong>{concept.headline}</strong>
+      </div>
+      <div className="product-concept-nodes" aria-label={concept.eyebrow}>
+        {concept.nodes.map((node, index) => (
+          <div className="product-concept-node" key={node}>
+            <small>{String(index + 1).padStart(2, "0")}</small>
+            <strong>{node}</strong>
+          </div>
+        ))}
+      </div>
+      <div className="product-concept-meta">
+        {concept.detail.map((item) => (
+          <span key={item}>{item}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ProductWorkflow({ slug }: { slug: string }) {
   const [active, setActive] = useState(0);
   if (slug === "chatops") return <ChatOpsPresentation />;
@@ -199,7 +289,8 @@ export function ProductWorkflow({ slug }: { slug: string }) {
   const selected = choices[active];
   return (
     <div className="product-workflow">
-      <p className="site-eyebrow">ILLUSTRATIVE OPERATIONAL FLOW</p>
+      <ProductConceptPanel slug={slug} />
+      <p className="site-eyebrow workflow-mode-label">EXPLORE A WORKFLOW</p>
       <div
         className="workflow-choices"
         role="group"
