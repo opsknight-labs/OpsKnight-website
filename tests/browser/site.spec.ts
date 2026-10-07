@@ -141,14 +141,14 @@ test("solution journeys use the canonical deployment path", async ({ page }) => 
     "/deploy/",
   );
   await page.goto("/legal/");
-  await expect(page.getByRole("link", { name: "Privacy" })).toHaveAttribute(
+  const policyGrid = page.locator(".legal-index-grid");
+  await expect(policyGrid.getByRole("link", { name: "Privacy" })).toHaveAttribute(
     "href",
     "/privacy/",
   );
-  await expect(page.getByRole("link", { name: "Website terms" })).toHaveAttribute(
-    "href",
-    "/terms/",
-  );
+  await expect(
+    policyGrid.getByRole("link", { name: "Website terms" }),
+  ).toHaveAttribute("href", "/terms/");
 });
 
 test("deployment choices preserve HA boundary", async ({ page }) => {
