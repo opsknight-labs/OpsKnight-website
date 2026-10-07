@@ -309,6 +309,8 @@ test("WCAG AA checks on marketing flows", async ({ page }) => {
     "/compare/",
     "/changelog/",
     "/legal/",
+    "/privacy/",
+    "/terms/",
     "/solutions/",
     "/product/incidents/",
     "/security/",
