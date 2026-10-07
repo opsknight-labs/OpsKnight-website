@@ -355,7 +355,7 @@ test("product pages expose capability-specific workflows", async ({ page }) => {
   await expect(page.locator(".status-live-banner")).toContainText("Live product proof");
   await expect(
     page.locator(".status-live-banner").getByRole("link", { name: /View live status/ }),
-  ).toHaveAttribute("href", "https://status.opsknight.com/");
+  ).toHaveAttribute("href", /^https:\/\/status\.opsknight\.com\/?$/);
 });
 
 test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) => {
