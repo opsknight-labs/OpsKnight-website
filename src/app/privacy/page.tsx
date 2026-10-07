@@ -19,7 +19,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="site-page">
-      <section className="interior-hero site-dark legal-hero">
+      <section className="legal-document-hero">
         <div className="site-container">
           <p className="site-eyebrow">
             <span className="signal-dot" /> LEGAL / PRIVACY

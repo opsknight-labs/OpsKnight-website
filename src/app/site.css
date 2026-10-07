@@ -4154,3 +4154,44 @@ html {
   .home-integration-results{grid-template-columns:1fr}
   .home-integration-results>a,.home-integration-results>a:nth-child(3n),.home-integration-results>a:nth-child(2n){border-right:0}
 }
+
+/* Legal policies intentionally read like documents, not product landing pages. */
+.legal-document-hero{
+  padding:clamp(72px,8vw,112px) 0 clamp(44px,5vw,68px);
+  background:linear-gradient(180deg,#fff 0%,#fbfcfe 100%);
+  border-bottom:1px solid var(--border-light);
+  color:var(--text-primary);
+}
+.legal-document-hero .site-container{
+  max-width:var(--container-wide);
+}
+.legal-document-hero .site-eyebrow{
+  color:var(--site-red);
+}
+.legal-document-hero h1{
+  max-width:860px;
+  margin-top:16px;
+  font-size:clamp(42px,5.6vw,72px);
+  line-height:1.02;
+  letter-spacing:-.055em;
+}
+.legal-document-hero .site-description{
+  max-width:760px;
+  margin-top:22px;
+  color:var(--text-secondary);
+}
+.legal-document-hero .legal-updated{
+  margin-top:24px;
+  color:var(--text-dark-muted);
+  font:10px var(--font-jetbrains-mono),monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+@media(max-width:800px){
+  .legal-document-hero{
+    padding:58px 0 40px;
+  }
+  .legal-document-hero h1{
+    font-size:clamp(38px,11vw,54px);
+  }
+}
