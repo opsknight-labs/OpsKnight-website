@@ -53,7 +53,7 @@ const steps = [
     title: "Find the right person.",
     detail:
       "Schedules and overrides resolve the on-call responder for the escalation policy.",
-    event: "Primary → Anika Rao",
+    event: "Primary → Maya Chen",
     icon: CalendarDays,
   },
   {
@@ -69,7 +69,7 @@ const steps = [
     title: "Someone owns the response.",
     detail:
       "The responder acknowledges the incident and takes ownership of the next step.",
-    event: "Anika Rao acknowledged",
+    event: "Maya Chen acknowledged",
     icon: Check,
   },
   {
@@ -217,7 +217,7 @@ function ResponseCanvas({ active }: { active: number }) {
       <div className="response-canvas-head">
         <div>
           <span className="signal-dot" />
-          ASTER CLOUD / CHECKOUT API
+          NORTHSTAR SYSTEMS / CHECKOUT API
         </div>
         <span className={`response-status status-${status.toLowerCase().replaceAll(" ", "-")}`}>
           {status}
@@ -363,7 +363,7 @@ export function HeroSignal() {
         {[
           "Alert received",
           "Routing",
-          "Anika · on-call",
+          "Maya · on-call",
           "Paging",
           "Acknowledged",
         ].map((s, i) => (
