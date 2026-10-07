@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { PRODUCT } from "@/lib/product";
-import { ProductScreenshot } from "./Primitives";
 const flows: Record<
   string,
   { label: string; stages: string[]; detail: string }[]
@@ -268,10 +267,29 @@ function ChatOpsPresentation() {
             <li>Resolve and complete provider cleanup</li>
           </ol>
         </div>
-        <ProductScreenshot
-          name="teams-chatops-war-room.png"
-          alt="Certified Microsoft Teams war-room product evidence; provider-specific presentation, not a Slack screenshot"
-        />
+        <div className="chatops-provider-panel" aria-label={`${provider} incident collaboration flow`}>
+          <div className="chatops-provider-head">
+            <span className="signal-dot" />
+            <strong>{provider}</strong>
+            <small>INCIDENT COLLABORATION</small>
+          </div>
+          <div className="chatops-provider-incident">
+            <span>P1</span>
+            <div>
+              <strong>Checkout API latency</strong>
+              <small>Northstar Systems · Commerce Reliability</small>
+            </div>
+          </div>
+          <div className="chatops-provider-actions">
+            <span>ACKNOWLEDGE</span>
+            <span>ASSIGN</span>
+            <span>RESOLVE</span>
+          </div>
+          <div className="chatops-provider-foot">
+            <span>Identity + permissions checked before action</span>
+            <span>OpsKnight remains system of record</span>
+          </div>
+        </div>
       </div>
     </div>
   );
