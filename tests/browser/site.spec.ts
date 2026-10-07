@@ -75,6 +75,18 @@ test("navigation and search", async ({ page }, testInfo) => {
   await page.getByRole("button", { name: "Search website" }).click();
   await expect(page.getByPlaceholder(/Search/).first()).toBeVisible();
   await page.keyboard.press("Escape");
+  if (testInfo.project.name === "desktop") {
+    await page.goto("/changelog/");
+    await expect(
+      page
+        .getByRole("navigation", { name: "Main navigation" })
+        .getByRole("link", { name: "What’s New", exact: true }),
+    ).toHaveAttribute("aria-current", "page");
+    await expect(page.locator(".resources-menu")).not.toHaveClass(/nav-active/);
+
+    await page.goto("/legal/");
+    await expect(page.locator(".resources-menu")).toHaveClass(/nav-active/);
+  }
 });
 test("integration catalog distinguishes alert, communication, and issue-tracking connections", async ({ page }) => {
   await page.goto("/integrations/");
@@ -204,6 +216,23 @@ test("every product page exposes the four evaluation layers", async ({ page }) =
     await expect(page.getByText("OPERATIONAL DEPTH", { exact: true })).toBeVisible();
     await expect(page.getByText("KNOW BEFORE PRODUCTION", { exact: true })).toBeVisible();
     await expect(page.locator(".product-readiness-list li")).toHaveCount(3);
+  }
+  const visualConcepts = [
+    ["incidents", 3],
+    ["on-call", 5],
+    ["paging", 6],
+    ["status-pages", 4],
+    ["analytics", 4],
+    ["postmortems", 5],
+    ["mobile", 5],
+    ["security", 5],
+    ["operations", 6],
+  ] as const;
+  for (const [slug, nodes] of visualConcepts) {
+    await page.goto(`/product/${slug}/`);
+    const concept = page.locator(`.product-concept-${slug}`);
+    await expect(concept).toBeVisible();
+    await expect(concept.locator(".product-concept-node")).toHaveCount(nodes);
   }
   await page.goto("/product/chatops/");
   await expect(page.getByRole("button", { name: "Slack", exact: true })).toBeVisible();

@@ -18,10 +18,10 @@ const resources = [
   ["Solutions", "/solutions/"],
   ["Support & Services", "/support/"],
   ["Community", "/community/"],
-  ["What’s New", "/changelog/"],
   ["About", "/about/"],
   ["Brand", "/brand/"],
   ["Contact", "/contact/"],
+  ["Legal & policies", "/legal/"],
 ] as const;
 
 const mobileResources = [
