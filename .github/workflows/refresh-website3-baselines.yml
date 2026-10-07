@@ -39,52 +39,34 @@ jobs:
           git -C "$GITHUB_WORKSPACE" config user.name "github-actions[bot]"
           git -C "$GITHUB_WORKSPACE" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          approved='^(tests/browser/snapshots/linux/(desktop/-(compare|security)-.png|mobile/-(compare|integrations|security)-.png|laptop-1366/-compare-.png|laptop-1440/-compare-.png|desktop-1920/-compare-.png|desktop/-(changelog|legal|solutions)-.png|mobile/-(changelog|legal|solutions)-.png)|\.github/workflows/refresh-website3-baselines.yml)
+          unexpected=""
+          for file in $(git -C "$GITHUB_WORKSPACE" status --short | awk '{print $2}'); do
+            case "$file" in
+              public/social/*) ;;
+              .github/workflows/refresh-website3-baselines.yml) ;;
+              tests/browser/snapshots/linux/desktop/-compare-.png) ;;
+              tests/browser/snapshots/linux/desktop/-security-.png) ;;
+              tests/browser/snapshots/linux/mobile/-compare-.png) ;;
+              tests/browser/snapshots/linux/mobile/-integrations-.png) ;;
+              tests/browser/snapshots/linux/mobile/-security-.png) ;;
+              tests/browser/snapshots/linux/laptop-1366/-compare-.png) ;;
+              tests/browser/snapshots/linux/laptop-1440/-compare-.png) ;;
+              tests/browser/snapshots/linux/desktop-1920/-compare-.png) ;;
+              tests/browser/snapshots/linux/desktop/-changelog-.png) ;;
+              tests/browser/snapshots/linux/desktop/-legal-.png) ;;
+              tests/browser/snapshots/linux/desktop/-solutions-.png) ;;
+              tests/browser/snapshots/linux/mobile/-changelog-.png) ;;
+              tests/browser/snapshots/linux/mobile/-legal-.png) ;;
+              tests/browser/snapshots/linux/mobile/-solutions-.png) ;;
+              *) unexpected="$unexpected $file" ;;
+            esac
+          done
           if [ -n "$unexpected" ]; then
-            echo "Unexpected visual changes:"
-            echo "$unexpected"
+            echo "Unexpected visual changes:$unexpected"
             exit 1
           fi
 
-          git -C "$GITHUB_WORKSPACE" add \
-            tests/browser/snapshots/linux/desktop/-compare-.png \
-            tests/browser/snapshots/linux/mobile/-integrations-.png \
-            tests/browser/snapshots/linux/mobile/-compare-.png \
-            tests/browser/snapshots/linux/desktop/-security-.png \
-            tests/browser/snapshots/linux/mobile/-security-.png \
-            tests/browser/snapshots/linux/laptop-1366/-compare-.png \
-            tests/browser/snapshots/linux/laptop-1440/-compare-.png \
-            tests/browser/snapshots/linux/desktop-1920/-compare-.png \
-            tests/browser/snapshots/linux/desktop/-changelog-.png \
-            tests/browser/snapshots/linux/desktop/-legal-.png \
-            tests/browser/snapshots/linux/desktop/-solutions-.png \
-            tests/browser/snapshots/linux/mobile/-changelog-.png \
-            tests/browser/snapshots/linux/mobile/-legal-.png \
-            tests/browser/snapshots/linux/mobile/-solutions-.png
-          git -C "$GITHUB_WORKSPACE" rm .github/workflows/refresh-website3-baselines.yml
-          git -C "$GITHUB_WORKSPACE" diff --cached --quiet && { echo "No approved baseline changes found"; exit 1; }
-          git -C "$GITHUB_WORKSPACE" commit -m "Refresh approved Website 3 visual baselines"
-          git -C "$GITHUB_WORKSPACE" push origin HEAD:feat/website-v2-redesign
-
-          unexpected="$(git -C "$GITHUB_WORKSPACE" status --short | awk '{print $2}' | grep -Ev '^public/social/' | grep -Ev "$approved" || true)"
-          if [ -n "$unexpected" ]; then
-            echo "Unexpected visual changes:"
-            echo "$unexpected"
-            exit 1
-          fi
-
-          git -C "$GITHUB_WORKSPACE" add \
-            tests/browser/snapshots/linux/desktop/-compare-.png \
-            tests/browser/snapshots/linux/mobile/-integrations-.png \
-            tests/browser/snapshots/linux/laptop-1366/-compare-.png \
-            tests/browser/snapshots/linux/laptop-1440/-compare-.png \
-            tests/browser/snapshots/linux/desktop-1920/-compare-.png \
-            tests/browser/snapshots/linux/desktop/-changelog-.png \
-            tests/browser/snapshots/linux/desktop/-legal-.png \
-            tests/browser/snapshots/linux/desktop/-solutions-.png \
-            tests/browser/snapshots/linux/mobile/-changelog-.png \
-            tests/browser/snapshots/linux/mobile/-legal-.png \
-            tests/browser/snapshots/linux/mobile/-solutions-.png
+          git -C "$GITHUB_WORKSPACE" add             tests/browser/snapshots/linux/desktop/-compare-.png             tests/browser/snapshots/linux/desktop/-security-.png             tests/browser/snapshots/linux/mobile/-compare-.png             tests/browser/snapshots/linux/mobile/-integrations-.png             tests/browser/snapshots/linux/mobile/-security-.png             tests/browser/snapshots/linux/laptop-1366/-compare-.png             tests/browser/snapshots/linux/laptop-1440/-compare-.png             tests/browser/snapshots/linux/desktop-1920/-compare-.png             tests/browser/snapshots/linux/desktop/-changelog-.png             tests/browser/snapshots/linux/desktop/-legal-.png             tests/browser/snapshots/linux/desktop/-solutions-.png             tests/browser/snapshots/linux/mobile/-changelog-.png             tests/browser/snapshots/linux/mobile/-legal-.png             tests/browser/snapshots/linux/mobile/-solutions-.png
           git -C "$GITHUB_WORKSPACE" rm .github/workflows/refresh-website3-baselines.yml
           git -C "$GITHUB_WORKSPACE" diff --cached --quiet && { echo "No approved baseline changes found"; exit 1; }
           git -C "$GITHUB_WORKSPACE" commit -m "Refresh approved Website 3 visual baselines"
