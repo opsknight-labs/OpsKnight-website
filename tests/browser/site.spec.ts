@@ -100,6 +100,12 @@ test("integration filtering and setup routes", async ({ page }) => {
   await page.getByRole("searchbox").fill("x-routing-key");
   await expect(page.locator(".integration-item")).toHaveCount(1);
   await expect(page.locator(".integration-item")).toContainText("PagerDuty");
+  await page.goto("/integrations/webhook/");
+  await expect(page.getByRole("button", { name: "Copy payload.json" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Copy cURL" })).toBeVisible();
+  await page.getByRole("button", { name: "Copy payload.json" }).click();
+  await expect(page.getByRole("button", { name: "Copy payload.json" })).toContainText("Copied");
+  await page.goto("/integrations/");
   await page.getByRole("searchbox").fill("no-provider-by-this-name");
   await expect(page.locator(".empty-result")).toBeVisible();
   await page.getByRole("searchbox").fill("");

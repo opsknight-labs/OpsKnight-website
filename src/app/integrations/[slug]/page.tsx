@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PRODUCT, productDocs } from "@/lib/product";
 import { Action, FinalCTA, TextLink } from "@/components/site/Primitives";
+import { CopySnippet } from "@/components/site/CopySnippet";
 export function generateStaticParams() {
   return PRODUCT.integrations.map((p) => ({ slug: p.id }));
 }
@@ -116,16 +117,29 @@ export default async function Integration({
             <div className="integration-code-example">
               <div>
                 <p className="site-eyebrow">GENERIC WEBHOOK · VERIFIED DEFAULT FIELDS</p>
-                <h3>A minimal payload using the source defaults.</h3>
-                <p>The adapter reads <code>summary</code>, <code>severity</code>, <code>dedup_key</code>, <code>source</code> and <code>status</code> by default.</p>
+                <h3>Start from a source-backed request.</h3>
+                <p>
+                  The generic adapter reads <code>summary</code>, <code>severity</code>,
+                  <code>dedup_key</code>, <code>source</code> and <code>status</code> by default.
+                  Authorization Bearer is one of the accepted integration-key transports.
+                </p>
               </div>
-              <pre>{`{
+              <div className="integration-code-stack">
+                <CopySnippet
+                  label="payload.json"
+                  code={`{
   "summary": "Database connection pool exhausted",
   "severity": "critical",
   "dedup_key": "db-pool-prod",
   "source": "payments-api",
   "status": "triggered"
-}`}</pre>
+}`}
+                />
+                <CopySnippet
+                  label="cURL"
+                  code={`curl -X POST "https://your-opsknight.example/api/integrations/webhook" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer <integration-key>" \\\n  --data @payload.json`}
+                />
+              </div>
             </div>
           ) : null}
 

@@ -4052,3 +4052,11 @@ html {
   .status-live-banner{grid-template-columns:1fr;align-items:start}
   .status-live-banner .site-action{width:max-content}
 }
+
+.integration-code-stack{display:grid;gap:14px;min-width:0}
+.copy-snippet{min-width:0;border:1px solid var(--border-dark-strong);border-radius:8px;overflow:hidden;background:var(--surface-black)}
+.copy-snippet-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 12px;border-bottom:1px solid var(--border-dark-strong);background:#ffffff08}
+.copy-snippet-head>span{color:var(--text-light-muted);font:9px var(--font-jetbrains-mono),monospace;letter-spacing:.08em;text-transform:uppercase}
+.copy-snippet-head button{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:5px 8px;border:0;border-radius:5px;background:#ffffff0c;color:#e8edf5;font-size:11px;cursor:pointer}
+.copy-snippet-head button:hover{background:#ffffff16}
+.copy-snippet pre{margin:0;padding:16px;overflow-x:auto;color:#e8edf5;font:11px/1.7 var(--font-jetbrains-mono),monospace}
