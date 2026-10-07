@@ -91,23 +91,23 @@ export function TextLink({
 export function FinalCTA() {
   return (
     <section className="site-dark final-cta">
-      <div className="site-container">
-        <p className="site-eyebrow">
-          <span className="signal-dot" /> TAKE CONTROL
-        </p>
-        <h2>
-          Your incidents
-          <br />
-          should belong to you.
-        </h2>
-        <p>Run OpsKnight on infrastructure you control.</p>
-        <div className="site-actions">
-          <Action href="/deploy/">Install OpsKnight</Action>
-          <Action href={BRAND.links.github} secondary>
-            View source
-          </Action>
+      <div className="site-container final-cta-grid">
+        <div className="final-cta-copy">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> TAKE CONTROL
+          </p>
+          <h2>Your incidents should belong to you.</h2>
+          <p>Run OpsKnight on infrastructure you control.</p>
+          <p className="site-proof">{productProof}</p>
         </div>
-        <p className="site-proof">{productProof}</p>
+        <div className="final-cta-actions">
+          <div className="site-actions">
+            <Action href="/deploy/">Install OpsKnight</Action>
+            <Action href={BRAND.links.github} secondary>
+              View GitHub
+            </Action>
+          </div>
+        </div>
       </div>
     </section>
   );

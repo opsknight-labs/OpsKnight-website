@@ -57,6 +57,63 @@ export default async function ProductPage({
   if (slug === "mobile")
     boundary =
       "Mobile is an installable progressive web app (PWA). Device and browser notification behavior is documented in the mobile guides.";
+
+  const productionChecks: Record<string, string[]> = {
+    incidents: [
+      "Verify service ownership and responder permissions on a test service.",
+      "Confirm response-policy and support-hours context before interpreting SLA timing.",
+      "Exercise acknowledgement, assignment, resolution and postmortem handoff end to end.",
+    ],
+    "on-call": [
+      "Verify the effective responder across the intended timezone and a DST boundary.",
+      "Test an override plus an empty-schedule condition before relying on the rotation.",
+      "Run a synthetic incident through escalation and inspect delivery evidence.",
+    ],
+    paging: [
+      "Validate every required provider credential and responder endpoint.",
+      "Test admission, retry or rate-limit handling, and a permanent-failure path.",
+      "Monitor critical queue age and provider callbacks separately from provider acceptance.",
+    ],
+    chatops: [
+      "Verify linked identities and OpsKnight permissions for each collaboration provider.",
+      "Test room provisioning, reconciliation, and stale-card behavior on a non-production incident.",
+      "Confirm supported actions by lifecycle phase instead of assuming Slack and Teams parity.",
+    ],
+    "status-pages": [
+      "Verify approved public fields while signed out through the audience hostname.",
+      "Test subscriber or webhook delivery separately from successful page rendering.",
+      "Confirm the one-page-per-install boundary and validate DNS/TLS when using a custom domain.",
+    ],
+    analytics: [
+      "Record the selected time window and service scope with every shared metric.",
+      "Verify the MTTA or MTTR population before drawing conclusions from the number.",
+      "Open the source incidents or postmortems before turning a pattern into a root-cause claim.",
+    ],
+    postmortems: [
+      "Preserve incident evidence links and distinguish observed facts from hypotheses.",
+      "Give every follow-up action a clear owner and due date.",
+      "Verify remediation is complete rather than treating publication as the finish line.",
+    ],
+    mobile: [
+      "Test the actual browser and installed PWA responders are expected to use.",
+      "Verify browser permission, device registration, and product authorization separately.",
+      "Send a test Web Push on the physical device before relying on it for response.",
+    ],
+    security: [
+      "Pilot allowed, denied, deactivated, and existing-account identity cases.",
+      "Verify effective RBAC, session revocation, and audit evidence after provisioning.",
+      "Preserve required encryption keys outside database backups and test recovery.",
+    ],
+    operations: [
+      "Budget PostgreSQL connections before adding worker or web replicas.",
+      "Test backup, restore, and the documented upgrade path before production changes.",
+      "Run a synthetic incident after topology or recovery changes before declaring the platform healthy.",
+    ],
+  };
+  const checks = productionChecks[slug] ?? [];
+  const primaryStory = p.story[0];
+  const operationalStories = p.story.slice(1);
+
   return (
     <div className="site-page">
       <BreadcrumbSchema name={p.label} path={`/product/${slug}/`} />
@@ -83,44 +140,67 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
-      <section className="site-section">
-        <div className="site-container">
-          {p.screenshot ? (
-            <ProductScreenshot
-              name={p.screenshot}
-              alt={`OpsKnight ${p.label.toLowerCase()} product view`}
-              priority
-            />
-          ) : slug === "mobile" ? (
-            <div className="interior-copy">
-              <h2>Install. Enable notifications. Respond.</h2>
-              <p>
-                Use your installation’s mobile routes, register your device for
-                Web Push and keep incident context accessible from your phone.
-              </p>
-              <TextLink
-                href={productDocs("guides/mobile/install-and-notifications")}
-              >
-                Install and configure notifications
+      <section className="site-section product-value-section">
+        <div className="site-container product-value-grid">
+          <div className="product-value-copy">
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> WHAT IT SOLVES
+            </p>
+            <h2>{primaryStory?.title ?? p.headline}</h2>
+            <p>{primaryStory?.body ?? p.description}</p>
+            {primaryStory ? (
+              <TextLink href={productDocs(primaryStory.docs)}>
+                Understand the capability
               </TextLink>
+            ) : null}
+            <div className="product-outcome-list">
+              {p.features.map((feature, index) => (
+                <div key={feature}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{feature}</strong>
+                </div>
+              ))}
             </div>
-          ) : null}
-          <div className="feature-list">
-            {p.features.map((f, i) => (
-              <div key={f}>
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                <h3>{f}</h3>
-              </div>
-            ))}
           </div>
-          {slug === "status-pages" && (
+          <div className="product-value-proof">
+            {p.screenshot ? (
+              <ProductScreenshot
+                name={p.screenshot}
+                alt={`OpsKnight ${p.label.toLowerCase()} product view`}
+                priority
+              />
+            ) : slug === "mobile" ? (
+              <div className="product-no-shot">
+                <span className="site-eyebrow">INSTALLABLE PWA</span>
+                <strong>Install. Enable notifications. Respond.</strong>
+                <p>
+                  Use the same installation identity and incident state from the
+                  device responders already carry.
+                </p>
+                <TextLink
+                  href={productDocs("guides/mobile/install-and-notifications")}
+                >
+                  Configure mobile response
+                </TextLink>
+              </div>
+            ) : (
+              <div className="product-no-shot">
+                <span className="site-eyebrow">PRODUCT WORKFLOW</span>
+                <strong>{p.label}</strong>
+                <p>{p.description}</p>
+              </div>
+            )}
+          </div>
+        </div>
+        {slug === "status-pages" && (
+          <div className="site-container">
             <div className="status-live-banner">
               <span>
                 <span className="live-dot" /> Live product proof
               </span>
               <p>
                 Open the public OpsKnight status page to verify the customer-facing
-                status experience separately from this synthetic product view.
+                experience separately from this synthetic product view.
               </p>
               <a
                 href={BRAND.links.status}
@@ -131,35 +211,70 @@ export default async function ProductPage({
                 View live status ↗
               </a>
             </div>
-          )}
-          {boundary && <p className="site-boundary">{boundary}</p>}
-        </div>
+          </div>
+        )}
       </section>
+
       <section className="site-section site-dark product-workflow-section">
         <div className="site-container">
+          <div className="product-layer-heading">
+            <p className="site-eyebrow">HOW IT WORKS</p>
+            <h2>A concrete operational path, not a feature list.</h2>
+          </div>
           <ProductWorkflow slug={slug} />
         </div>
       </section>
-      {p.story.map((chapter, index) => (
-        <section
-          className={`site-section product-chapter ${index % 2 ? "site-light-alt" : "site-white"}`}
-          key={chapter.title}
-        >
-          <div className="site-container product-chapter-grid">
-            <div className="chapter-marker">
-              <span className="signal-dot" />
-              {String(index + 1).padStart(2, "0")} / {p.label.toUpperCase()}
-            </div>
-            <div className="interior-copy">
-              <h2>{chapter.title}</h2>
-              <p>{chapter.body}</p>
-              <TextLink href={productDocs(chapter.docs)}>
-                Explore the workflow
-              </TextLink>
-            </div>
+
+      <section className="site-section product-depth-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="OPERATIONAL DEPTH"
+            title={`${p.label}, beyond the happy path.`}
+          >
+            The details below are the parts teams need when evaluating how the
+            capability behaves during real response, failure, and handoff.
+          </SectionIntro>
+          <div className="product-depth-grid">
+            {operationalStories.map((chapter, index) => (
+              <article key={chapter.title} className="product-depth-card">
+                <span className="product-depth-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{chapter.title}</h3>
+                <p>{chapter.body}</p>
+                <TextLink href={productDocs(chapter.docs)}>
+                  Read the operational guide
+                </TextLink>
+              </article>
+            ))}
           </div>
-        </section>
-      ))}
+        </div>
+      </section>
+
+      <section className="site-section site-light-alt product-readiness-section">
+        <div className="site-container product-readiness-grid">
+          <div>
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> KNOW BEFORE PRODUCTION
+            </p>
+            <h2>Validate the boundary, not just the happy path.</h2>
+            <p className="site-description">
+              Use a test service and representative provider configuration before
+              treating {p.label.toLowerCase()} as production incident infrastructure.
+            </p>
+            {boundary && <p className="site-boundary">{boundary}</p>}
+          </div>
+          <ol className="product-readiness-list">
+            {checks.map((check, index) => (
+              <li key={check}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{check}</strong>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {slug === "operations" && (
         <section className="site-section site-dark">
           <div className="site-container">
@@ -171,15 +286,12 @@ export default async function ProductPage({
           </div>
         </section>
       )}
-      <section className="site-section site-white">
-        <div className="site-container interior-copy">
-          <p className="site-eyebrow">FROM CAPABILITY TO OPERATIONS</p>
-          <h2>Put it to work in your environment.</h2>
-          <p>
-            The documentation covers setup, authorization, supported workflows
-            and operational limits for {p.label.toLowerCase()}. Start with the
-            guide and validate the behavior on a test service.
-          </p>
+      <section className="product-docs-band site-white">
+        <div className="site-container product-docs-band-inner">
+          <div>
+            <span>DOCUMENTATION</span>
+            <strong>Setup, authorization, limits, and troubleshooting.</strong>
+          </div>
           <TextLink href={productDocs(p.docs)}>
             Explore {p.label.toLowerCase()} documentation
           </TextLink>

@@ -174,6 +174,26 @@ test("deployment choices preserve HA boundary", async ({ page }) => {
     `${docsPrefix}/operate/deploy/kubernetes/`,
   );
 });
+test("product pages expose the four evaluation layers", async ({ page }) => {
+  for (const route of [
+    "/product/incidents/",
+    "/product/paging/",
+    "/product/chatops/",
+    "/product/operations/",
+  ]) {
+    await page.goto(route);
+    await expect(page.getByText("WHAT IT SOLVES", { exact: true })).toBeVisible();
+    await expect(page.getByText("HOW IT WORKS", { exact: true })).toBeVisible();
+    await expect(page.getByText("OPERATIONAL DEPTH", { exact: true })).toBeVisible();
+    await expect(page.getByText("KNOW BEFORE PRODUCTION", { exact: true })).toBeVisible();
+    await expect(page.locator(".product-readiness-list li")).toHaveCount(3);
+  }
+  await page.goto("/product/chatops/");
+  await expect(page.getByRole("button", { name: "Slack", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Microsoft Teams", exact: true }).click();
+  await expect(page.locator(".chatops-provider-panel")).toContainText("Microsoft Teams");
+});
+
 test("reduced motion and product boundaries", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
@@ -214,7 +234,7 @@ test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) 
     { width: 1920, height: 1080 },
     { width: 2560, height: 1440 },
   ];
-  const routes = ["/", "/integrations/", "/compare/", "/deploy/"];
+  const routes = ["/", "/integrations/", "/compare/", "/deploy/", "/product/paging/"];
 
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
