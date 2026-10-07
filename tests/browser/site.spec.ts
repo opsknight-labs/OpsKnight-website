@@ -17,8 +17,8 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await integrationSearch.fill("Prometheus");
   await expect(page.getByRole("link", { name: /Prometheus Alertmanager/ })).toBeVisible();
   await integrationSearch.fill("");
-  await page.getByRole("tab", { name: "ChatOps", exact: true }).click();
-  await expect(page.locator("#product-proof-panel")).toContainText("ChatOps");
+  await page.getByRole("tab", { name: "Operations", exact: true }).click();
+  await expect(page.locator("#product-proof-panel")).toContainText("Operations");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://opsknight.com/",

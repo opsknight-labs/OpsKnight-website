@@ -58,7 +58,7 @@ export function ProductScreenshot({
     >
       <div className="shot-label">
         <span className="signal-dot" /> OPSKNIGHT / PRODUCT VIEW{" "}
-        <span>v{PRODUCT.release.version}</span>
+        <span>{PRODUCT.screenshots.fixture ?? "Synthetic fixture"} · v{PRODUCT.release.version}</span>
       </div>
       <Image
         src={productImage(name)}

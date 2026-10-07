@@ -4304,7 +4304,7 @@ html {
   padding:13px 16px;
   border-bottom:1px solid var(--border-light);
   background:var(--surface-soft);
-  color:var(--text-dark-muted);
+  color:var(--text-secondary-strong);
   font:9px var(--font-jetbrains-mono),monospace;
   letter-spacing:.09em;
   text-transform:uppercase;
@@ -4451,4 +4451,10 @@ html {
     align-items:flex-start;
     flex-direction:column;
   }
+}
+
+.deploy-quickstart-grid pre:focus-visible,
+.deploy-method-grid pre:focus-visible{
+  outline:2px solid var(--site-red);
+  outline-offset:3px;
 }

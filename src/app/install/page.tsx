@@ -156,7 +156,7 @@ export default function DeployPage() {
                 <code> ENCRYPTION_KEY</code>. Other provider or API secrets are
                 conditional on the features you enable.
               </p>
-              <pre><code>{`OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
+              <pre tabIndex={0}><code>{`OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
 POSTGRES_PASSWORD=<unique-password>
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -171,7 +171,7 @@ ENCRYPTION_KEY=<64-hex-character-key>`}</code></pre>
                 Pull the pinned image, wait for health, inspect the services,
                 and require readiness to return HTTP 200 before setup.
               </p>
-              <pre><code>{`docker compose -f deploy/compose/docker-compose.yml pull
+              <pre tabIndex={0}><code>{`docker compose -f deploy/compose/docker-compose.yml pull
 docker compose -f deploy/compose/docker-compose.yml up -d --wait
 docker compose -f deploy/compose/docker-compose.yml ps
 curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'`}</code></pre>
@@ -325,7 +325,7 @@ curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'`}</co
                 convergence, and checks readiness. Routine raw
                 <code> docker stack deploy</code> bypasses those gates.
               </p>
-              <pre><code>{`# Split mode (default)
+              <pre tabIndex={0}><code>{`# Split mode (default)
 ./deploy/swarm/scripts/deploy.sh
 
 # Integrated mode
@@ -345,7 +345,7 @@ SWARM_RUNTIME_MODE=integrated ./deploy/swarm/scripts/deploy.sh`}</code></pre>
                 values. The published v2 docs do not require a hosted chart
                 repository.
               </p>
-              <pre><code>{`helm lint deploy/kubernetes/helm/opsknight -f values.production.yaml
+              <pre tabIndex={0}><code>{`helm lint deploy/kubernetes/helm/opsknight -f values.production.yaml
 helm template opsknight deploy/kubernetes/helm/opsknight \\
   --namespace opsknight -f values.production.yaml > rendered.yaml
 kubectl apply --dry-run=server -f rendered.yaml

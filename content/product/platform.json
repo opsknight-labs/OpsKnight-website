@@ -44,7 +44,7 @@
     {
       "slug": "on-call",
       "label": "On-call & escalation",
-      "headline": "Know who\u2019s responsible before something breaks.",
+      "headline": "Know who’s responsible before something breaks.",
       "description": "Build rotations, schedule overrides and escalation policies around the people responsible for each service.",
       "capability": "on_call",
       "docs": "concepts/schedules",
@@ -140,7 +140,7 @@
       "description": "Coordinate incidents in Slack and Microsoft Teams with incident actions, linked identities and war rooms.",
       "capability": "chatops",
       "docs": "integrations/communication/microsoft-teams",
-      "screenshot": "teams-chatops-war-room.png",
+      "screenshot": null,
       "features": [
         "Acknowledge, assign and resolve",
         "War rooms and participant synchronization",
@@ -195,7 +195,7 @@
         },
         {
           "title": "Publish, verify, correct, resolve.",
-          "body": "Confirm affected components, publish a scoped update and open the page through the audience\u2019s hostname while signed out. Follow with a correcting update or resolution and verify the public state again.",
+          "body": "Confirm affected components, publish a scoped update and open the page through the audience’s hostname while signed out. Follow with a correcting update or resolution and verify the public state again.",
           "docs": "guides/status-pages/publish-update"
         },
         {
@@ -205,7 +205,7 @@
         },
         {
           "title": "Brand the customer-facing surface.",
-          "body": "Configure the installation\u2019s supported status page, service mapping and privacy options. Verify DNS, TLS and the public URL when using a custom domain.",
+          "body": "Configure the installation’s supported status page, service mapping and privacy options. Verify DNS, TLS and the public URL when using a custom domain.",
           "docs": "guides/status-pages/create-and-configure"
         },
         {
@@ -385,7 +385,7 @@
         },
         {
           "title": "Budget database connections before adding replicas.",
-          "body": "Include each role\u2019s replica count and pool size in the connection budget. More workers can exhaust database capacity instead of improving queue latency.",
+          "body": "Include each role’s replica count and pool size in the connection budget. More workers can exhaust database capacity instead of improving queue latency.",
           "docs": "operate/deploy/architecture/database-connections"
         },
         {
