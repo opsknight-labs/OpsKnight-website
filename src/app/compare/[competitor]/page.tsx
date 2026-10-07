@@ -68,230 +68,86 @@ type CompetitorPerspective = {
 const COMPETITOR_PERSPECTIVES: Record<string, CompetitorPerspective> = {
   pagerduty: {
     different: [
-      {
-        title: "Self-hosted in your VPC",
-        desc: "OpsKnight deploys to your Docker Compose, Docker Swarm, or Kubernetes clusters. Raw telemetry, logs, and incident postmortems never leave your network boundary.",
-      },
-      {
-        title: "Zero per-user licensing fees",
-        desc: "100% Free AGPL-3.0 open source. You can grant access to every engineer, product manager, and stakeholder without budgeting per-seat monthly licenses.",
-      },
-      {
-        title: "Direct wholesale Twilio integration",
-        desc: "You connect your own Twilio account with single-key DTMF voice acknowledgment and zero markup on SMS/voice telecom rates.",
-      },
-      {
-        title: "Native bidirectional Microsoft Teams & Slack",
-        desc: "Automated dedicated incident channels and war rooms with synchronized status, rather than one-way webhook alert spam.",
-      },
+      { title: "Self-hosted deployment", desc: "OpsKnight runs on infrastructure you operate; PagerDuty is a managed SaaS product." },
+      { title: "Open-source release", desc: "OpsKnight v2.0.0 is published under AGPL-3.0-only, so the application code can be inspected and modified under that license." },
+      { title: "Deployment data custody", desc: "With OpsKnight, the application database, backups and network boundary remain part of your own operating model." },
+      { title: "Bring-your-own notification providers", desc: "OpsKnight connects to configured providers such as Twilio rather than bundling a PagerDuty-managed delivery service." },
     ],
     stronger: [
-      {
-        title: "700+ turnkey SaaS integration catalog",
-        desc: "PagerDuty maintains an extensive third-party partner ecosystem with automated click-to-connect setup across legacy enterprise tooling.",
-      },
-      {
-        title: "Managed multi-tenant cloud operations",
-        desc: "Zero infrastructure maintenance. No PostgreSQL databases to tune, backup, or upgrade.",
-      },
-      {
-        title: "Native iOS and Android mobile applications",
-        desc: "Dedicated native mobile binaries with custom push notification infrastructure designed to bypass standard mobile OS sleep modes.",
-      },
-      {
-        title: "Multi-service enterprise dependency mapping",
-        desc: "Advanced event orchestration, machine-learning noise reduction, and complex cross-team service topology modeling for global enterprises.",
-      },
+      { title: "Managed operations", desc: "PagerDuty operates the service, so customers do not maintain the application runtime or its PostgreSQL database." },
+      { title: "Native mobile applications", desc: "PagerDuty publishes native iOS and Android applications; OpsKnight v2.0.0 uses an installable PWA." },
+      { title: "Broader commercial integration ecosystem", desc: "PagerDuty publishes a large vendor-maintained integration directory; confirm the exact integration you need in its current catalog." },
+      { title: "Established commercial packaging", desc: "PagerDuty offers paid plans and add-ons with vendor-operated support. Feature availability depends on the selected plan." },
     ],
   },
   "incident-io": {
     different: [
-      {
-        title: "Full data sovereignty & self-hosting",
-        desc: "Deploy in your own private cloud or on-prem environment. Sensitive incident conversations, root causes, and security disclosures stay within your custody.",
-      },
-      {
-        title: "Built-in multi-channel paging engine",
-        desc: "On-call escalation, schedules, SMS, automated phone calls, and web push are included out of the box in the AGPL-3.0 core, not a paid add-on tier.",
-      },
-      {
-        title: "No vendor tier walls",
-        desc: "Features like OIDC/SSO, multi-tier escalation, postmortem templates, and public status pages are available without enterprise sales gates.",
-      },
-      {
-        title: "Transparent, auditable open source",
-        desc: "Every line of code, database migration, and webhook handler is inspectable and modifiable under AGPL-3.0.",
-      },
+      { title: "Self-hosted control", desc: "OpsKnight is operated inside infrastructure you control rather than as a vendor-hosted incident SaaS." },
+      { title: "Open-source release", desc: "OpsKnight v2.0.0 is AGPL-3.0-only and can be inspected directly before adoption." },
+      { title: "Data-location choice", desc: "OpsKnight incident, responder and postmortem data lives in the database and network boundary you operate." },
+      { title: "Integrated deployment model", desc: "On-call, incident response, status pages and the operational control plane ship as one self-hosted release." },
     ],
     stronger: [
-      {
-        title: "Slack-native incident experience",
-        desc: "Deeply polished Slack workflows, customizable canvas modals, and bot commands optimized specifically for modern Slack organizations.",
-      },
-      {
-        title: "Catalog integrations (GitHub, Linear, Jira)",
-        desc: "Turnkey synchronization of engineering entities, pull requests, services, and issue trackers directly into incident timelines.",
-      },
-      {
-        title: "Managed SaaS convenience",
-        desc: "No deployment pipelines, database provisioning, or self-hosted uptime considerations.",
-      },
-      {
-        title: "Rapid collaborative web interface",
-        desc: "Live multi-user timeline editing and collaborative postmortem assembly in a slick, modern web application.",
-      },
+      { title: "Managed SaaS convenience", desc: "incident.io operates the hosted service, eliminating self-hosted application and database operations." },
+      { title: "Collaboration-first product experience", desc: "incident.io documents deep Slack and Microsoft Teams workflows as part of its incident response product." },
+      { title: "Native mobile applications", desc: "incident.io provides native mobile applications for on-call response; OpsKnight v2.0.0 uses a PWA." },
+      { title: "Commercial plan packaging", desc: "incident.io packages response, on-call and enterprise capabilities into paid plans; check current pricing for the exact feature boundary." },
     ],
   },
   opsgenie: {
     different: [
-      {
-        title: "Active long-term open source roadmap",
-        desc: "Atlassian ended new sales of Opsgenie on June 4, 2025 and will sunset support on April 5, 2027. OpsKnight is an actively developed, modern AGPL-3.0 platform.",
-      },
-      {
-        title: "PagerDuty Events API v2 drop-in routing",
-        desc: "Direct endpoint compatibility allows Alertmanager, Datadog, Grafana, and CloudWatch alerts to switch targets with a simple base URL swap.",
-      },
-      {
-        title: "Unified incident & status command",
-        desc: "Combines high-urgency on-call paging, incident coordination, and customer status pages into one cohesive self-hosted deployment.",
-      },
-      {
-        title: "Zero migration deadline pressure",
-        desc: "You own the binary and the database schema. No forced transitions into Jira Service Management or proprietary cloud bundles.",
-      },
+      { title: "Active self-hosted release", desc: "OpsKnight v2.0.0 is a current self-hosted release, while Atlassian has announced the standalone Opsgenie end-of-support date." },
+      { title: "No vendor shutdown dependency", desc: "A published OpsKnight release remains runnable under its license even if the project or commercial services later change." },
+      { title: "Open-source code and schema", desc: "The OpsKnight application and database migrations are inspectable under AGPL-3.0-only." },
+      { title: "Integrated customer status surface", desc: "OpsKnight v2.0.0 includes one supported public/private status page per installation rather than requiring a separate Atlassian Statuspage product." },
     ],
     stronger: [
-      {
-        title: "Deep legacy Jira Cloud integration",
-        desc: "Decade-long integration depth with Atlassian Jira, Jira Service Desk, and Bitbucket workflows.",
-      },
-      {
-        title: "Complex historical routing rules",
-        desc: "Granular multi-criteria alert filtering and routing logic refined across thousands of legacy enterprise configurations.",
-      },
-      {
-        title: "Managed multi-region cloud backing",
-        desc: "Global cloud infrastructure maintained by Atlassian with no server-level sysadmin responsibilities.",
-      },
-      {
-        title: "Proven enterprise footprint",
-        desc: "Years of operational track record in Fortune 500 environments with existing procurement contracts.",
-      },
+      { title: "Existing Atlassian migration path", desc: "Atlassian publishes an official path for existing Opsgenie customers moving capabilities into Jira Service Management." },
+      { title: "Managed service through the announced window", desc: "Existing Opsgenie customers continue to use an Atlassian-operated service through the published support period." },
+      { title: "Atlassian ecosystem familiarity", desc: "Teams already standardized on Jira and related Atlassian workflows may prefer the vendor-supported migration path." },
+      { title: "Native mobile applications", desc: "Opsgenie has native mobile applications; OpsKnight v2.0.0 uses an installable PWA." },
     ],
   },
   grafana: {
     different: [
-      {
-        title: "Dedicated, active open-source codebase",
-        desc: "Grafana Labs archived the open-source Grafana OnCall repository on March 24, 2026. OpsKnight is an actively maintained, production-ready AGPL-3.0 incident response system.",
-      },
-      {
-        title: "Complete standalone operational suite",
-        desc: "Includes native public/private status pages, real-time war room coordination, and postmortem tracking without requiring a Grafana observability stack.",
-      },
-      {
-        title: "Single Docker Compose / Helm deployment",
-        desc: "Straightforward container deployment with standard PostgreSQL. No multi-service microservice sprawl or Celery/Redis fleet management.",
-      },
-      {
-        title: "Single-key DTMF voice acknowledgment",
-        desc: "Built-in Twilio voice dispatcher calls engineers and acknowledges incidents instantly with a single keypad press.",
-      },
+      { title: "Active self-hosted incident codebase", desc: "OpsKnight v2.0.0 is a current AGPL-3.0-only self-hosted release; Grafana documents the OSS OnCall repository as archived." },
+      { title: "Standalone incident platform", desc: "OpsKnight does not require Grafana Cloud or a Grafana observability stack to provide on-call and incident workflows." },
+      { title: "Customer status page included", desc: "OpsKnight v2.0.0 includes one supported public/private status page in the same installation." },
+      { title: "PostgreSQL-centered operations", desc: "OpsKnight publishes Docker/Compose and Kubernetes deployment paths around its documented PostgreSQL runtime." },
     ],
     stronger: [
-      {
-        title: "Unified Grafana Cloud ecosystem",
-        desc: "Seamless correlation between Grafana dashboards, Loki log queries, Mimir metrics, and Tempo distributed traces.",
-      },
-      {
-        title: "Observability-first alerting pipelines",
-        desc: "Direct alerting rules evaluated within the Grafana alert engine with instant drill-down into source panels.",
-      },
-      {
-        title: "Grafana Cloud managed infrastructure",
-        desc: "Included with Grafana Cloud accounts, eliminating host provisioning and maintenance.",
-      },
-      {
-        title: "Dedicated Grafana mobile application",
-        desc: "Mobile client for monitoring dashboard queries alongside on-call notifications.",
-      },
+      { title: "Grafana Cloud integration", desc: "Grafana Cloud IRM is operated alongside Grafana's hosted observability products and alerting workflows." },
+      { title: "Observability context", desc: "Organizations already using Grafana Cloud can keep dashboards, alerts and incident response inside the same vendor ecosystem." },
+      { title: "Managed cloud operations", desc: "Grafana operates Cloud IRM, avoiding self-hosted incident-platform maintenance." },
+      { title: "Native mobile application", desc: "Grafana documents a mobile application for IRM; OpsKnight v2.0.0 uses an installable PWA." },
     ],
   },
   squadcast: {
     different: [
-      {
-        title: "Open source & independent ownership",
-        desc: "Free from corporate acquisitions (Squadcast is now part of SolarWinds). You own your codebase, database, and telemetry pipeline.",
-      },
-      {
-        title: "Direct carrier wholesale pricing",
-        desc: "Bring your own Twilio account. You pay true telecom cost without arbitrary monthly SMS/voice notification limits or plan markups.",
-      },
-      {
-        title: "Complete data residency & privacy",
-        desc: "Keep all infrastructure incidents, postmortems, and internal outage transcripts on your own servers.",
-      },
-      {
-        title: "Community-driven enhancements",
-        desc: "Open GitHub repository where you can inspect code, request features, and contribute integrations.",
-      },
+      { title: "Self-hosted application", desc: "OpsKnight runs on infrastructure you operate; SolarWinds Incident Response / Squadcast is sold as a managed service." },
+      { title: "Open-source release", desc: "OpsKnight v2.0.0 is published under AGPL-3.0-only." },
+      { title: "Deployment data custody", desc: "OpsKnight keeps the application database and incident history within the infrastructure boundary you choose." },
+      { title: "Bring-your-own provider model", desc: "OpsKnight uses configured notification providers, allowing the operator to own those provider accounts and costs." },
     ],
     stronger: [
-      {
-        title: "Turnkey multi-tenant SaaS",
-        desc: "Instant onboarding without spinning up compute or configuring a database.",
-      },
-      {
-        title: "Ready-to-use mobile apps",
-        desc: "Native apps in the Apple App Store and Google Play Store with pre-configured push delivery tokens.",
-      },
-      {
-        title: "Bundled telecom notification allowances",
-        desc: "SMS and voice minutes included in higher subscription tiers without a separate Twilio account.",
-      },
-      {
-        title: "150+ pre-built tool integrations",
-        desc: "Extensive webhook parser library for niche observability and IT service management tools.",
-      },
+      { title: "Managed SaaS operations", desc: "SolarWinds operates the service, so customers do not maintain the incident-platform runtime." },
+      { title: "Native mobile applications", desc: "The commercial service documents mobile applications; OpsKnight v2.0.0 uses an installable PWA." },
+      { title: "Commercial packaging", desc: "Schedules, escalations and notification capabilities are packaged into vendor plans; verify exact limits on the current pricing page." },
+      { title: "Vendor-operated onboarding", desc: "A managed product can be adopted without provisioning the self-hosted application and database infrastructure OpsKnight requires." },
     ],
   },
   splunk: {
     different: [
-      {
-        title: "Lightweight, cloud-native deployment",
-        desc: "Runs cleanly on standard container infrastructure with modest hardware requirements, unlike heavyweight enterprise stacks.",
-      },
-      {
-        title: "Predictable zero-license economics",
-        desc: "Free AGPL-3.0 Community Edition eliminates complex per-host or per-responder commercial licensing.",
-      },
-      {
-        title: "Modern Next.js & React interface",
-        desc: "Fast, modern user experience designed for speed, keyboard navigation, and clear visual hierarchy during high-stress outages.",
-      },
-      {
-        title: "Zero vendor lock-in",
-        desc: "Standard PostgreSQL schema, open REST APIs, and full exportability of all historical incident and paging records.",
-      },
+      { title: "Self-hosted deployment", desc: "OpsKnight runs in infrastructure you operate rather than as Splunk On-Call's vendor-managed service." },
+      { title: "Open-source release", desc: "OpsKnight v2.0.0 is AGPL-3.0-only and can be inspected directly." },
+      { title: "Application data custody", desc: "OpsKnight incident and paging records live in the PostgreSQL deployment and network boundary you control." },
+      { title: "Independent product stack", desc: "OpsKnight does not require Splunk Enterprise or Splunk Observability to provide on-call and incident response." },
     ],
     stronger: [
-      {
-        title: "Splunk Enterprise & Observability integration",
-        desc: "Deep bi-directional integration with Splunk core searches, ITSI, and Splunk APM pipelines.",
-      },
-      {
-        title: "Global enterprise compliance & certifications",
-        desc: "Broad compliance attestations (FedRAMP, HIPAA, SOC 2 Type II) under the Splunk/Cisco enterprise umbrella.",
-      },
-      {
-        title: "Established enterprise support SLAs",
-        desc: "24/7/365 global carrier-grade enterprise support contracts backed by Cisco's global support organization.",
-      },
-      {
-        title: "Mature mobile app ecosystem",
-        desc: "Native VictorOps/Splunk On-Call mobile applications with custom sound profiles and system overrides.",
-      },
+      { title: "Splunk ecosystem integration", desc: "Organizations already using Splunk can keep on-call response close to their existing Splunk products and operational workflows." },
+      { title: "Managed service operations", desc: "Splunk operates the service, avoiding self-hosted application and database maintenance." },
+      { title: "Native mobile applications", desc: "Splunk documents iOS and Android applications; OpsKnight v2.0.0 uses an installable PWA." },
+      { title: "Established commercial support model", desc: "Splunk sells the product as a commercial service; confirm current support and packaging terms directly with the vendor." },
     ],
   },
 };
@@ -357,7 +213,7 @@ export default async function CompareCompetitorPage({
           </h1>
           <p className="site-description">{c.focus}</p>
           <div className="site-actions">
-            <Action href="/install/">Evaluate OpsKnight {PRODUCT.release.tag}</Action>
+            <Action href="/deploy/">Evaluate OpsKnight {PRODUCT.release.tag}</Action>
             <Action href="/compare/" secondary>
               View full 7-vendor matrix
             </Action>
@@ -375,6 +231,9 @@ export default async function CompareCompetitorPage({
               </h2>
               <h3 className="text-xl font-bold text-slate-900 mb-3">{c.name}</h3>
               <p className="text-sm leading-relaxed text-slate-600 mb-4">{c.summary}</p>
+              <p className="text-[11px] font-mono text-slate-400 mb-4">
+                Verified {c.asOf} · primary vendor source
+              </p>
               <TextLink href={c.source}>
                 {c.sourceLabel} <ExternalLink size={13} className="inline ml-1" />
               </TextLink>
@@ -393,7 +252,7 @@ export default async function CompareCompetitorPage({
                 Available 100% free with optional commercial enterprise support and custom implementation services.
               </p>
               <div className="flex items-center gap-3">
-                <TextLink href="/install/">View install topologies</TextLink>
+                <TextLink href="/deploy/">View install topologies</TextLink>
                 <span className="text-slate-300">•</span>
                 <TextLink href="/support/">Support & services</TextLink>
               </div>
@@ -480,8 +339,9 @@ export default async function CompareCompetitorPage({
                 Migrating from PagerDuty to OpsKnight
               </h2>
               <p className="text-sm text-slate-600 mt-2">
-                OpsKnight implements native PagerDuty Events API v2 compatibility. Swap endpoints in your
-                Alertmanager, Datadog, or Terraform configurations with zero disruption.
+                OpsKnight exposes a PagerDuty Events API v2-compatible ingest path. Repoint a pilot sender,
+                verify routing-key handling plus trigger/acknowledge/resolve behavior in staging,
+                then migrate production senders deliberately.
               </p>
             </div>
             <PagerDutyMigrationHelper />
@@ -500,8 +360,9 @@ export default async function CompareCompetitorPage({
                 Transitioning from Sunset Opsgenie
               </h2>
               <p className="text-sm text-slate-600 mt-2">
-                With Opsgenie support concluding April 5, 2027, migrate your alert routes, schedules,
-                and on-call policies to self-hosted OpsKnight today.
+                With standalone Opsgenie support concluding April 5, 2027, map alert routes, schedules,
+                escalation policies and responder contacts into OpsKnight, then validate paging
+                behavior before changing production integrations.
               </p>
             </div>
             <OpsgenieMigrationHelper />
@@ -520,8 +381,8 @@ export default async function CompareCompetitorPage({
                 Moving from Archived Grafana OnCall OSS
               </h2>
               <p className="text-sm text-slate-600 mt-2">
-                Continue running an actively maintained open-source incident management system with direct
-                Grafana webhook and contact point support.
+                Evaluate OpsKnight as a self-hosted destination for Grafana alerting, then validate the
+                supported webhook lifecycle and responder workflow before migrating production routes.
               </p>
             </div>
             <GrafanaMigrationHelper />

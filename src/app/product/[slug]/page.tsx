@@ -75,7 +75,7 @@ export default async function ProductPage({
           <h1>{p.headline}</h1>
           <p className="site-description">{p.description}</p>
           <div className="site-actions">
-            <Action href="/install/">Install OpsKnight</Action>
+            <Action href="/deploy/">Install OpsKnight</Action>
             <Action href={productDocs(p.docs)} secondary>
               Read the documentation
             </Action>
@@ -125,13 +125,11 @@ export default async function ProductPage({
           {boundary && <p className="site-boundary">{boundary}</p>}
         </div>
       </section>
-      {["paging", "on-call", "chatops", "status-pages"].includes(slug) && (
-        <section className="site-section site-dark">
-          <div className="site-container">
-            <ProductWorkflow slug={slug} />
-          </div>
-        </section>
-      )}
+      <section className="site-section site-dark product-workflow-section">
+        <div className="site-container">
+          <ProductWorkflow slug={slug} />
+        </div>
+      </section>
       {p.story.map((chapter, index) => (
         <section
           className={`site-section product-chapter ${index % 2 ? "site-light-alt" : "site-white"}`}

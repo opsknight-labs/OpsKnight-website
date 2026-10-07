@@ -6,50 +6,24 @@ const flows: Record<
   string,
   { label: string; stages: string[]; detail: string }[]
 > = {
-  paging: [
+  incidents: [
     {
-      label: "Critical",
-      stages: [
-        "Triggered incident",
-        "Eligible responder",
-        "Provider admission",
-        "Attempt & feedback",
-      ],
+      label: "Triage",
+      stages: ["Incoming signal", "Service context", "Priority & urgency", "Incident owner"],
       detail:
-        "Time-sensitive responder work retains a stable delivery identity. Provider acceptance is separate from confirmed delivery.",
+        "Start with the signal, attach it to the affected service, classify the incident and make ownership explicit before the response fragments across tools.",
     },
     {
-      label: "Transactional",
-      stages: [
-        "Account operation",
-        "Verified endpoint",
-        "Provider admission",
-        "Attempt & feedback",
-      ],
+      label: "Response",
+      stages: ["Acknowledge", "Assign responder", "Investigate", "Record timeline"],
       detail:
-        "Authentication, invitations and verification work have a distinct traffic class.",
+        "Acknowledgement changes the response state; assignment identifies the current owner. Notes, watchers and timeline entries preserve the operational record.",
     },
     {
-      label: "Public incident",
-      stages: [
-        "Published incident",
-        "Audience projection",
-        "Provider admission",
-        "Subscriber outcome",
-      ],
+      label: "Recovery",
+      stages: ["Service restored", "Resolve incident", "Preserve evidence", "Create follow-up"],
       detail:
-        "Customer-facing incident work has its own delivery precedence and audience boundary.",
-    },
-    {
-      label: "Bulk",
-      stages: [
-        "Broad broadcast",
-        "Eligible audience",
-        "Capacity admission",
-        "Delivery evidence",
-      ],
-      detail:
-        "Bulk work respects provider capacity and should be monitored separately from critical response work.",
+        "Resolution closes the active response but keeps the timeline, delivery evidence and follow-up work available for learning.",
     },
   ],
   "on-call": [
@@ -61,59 +35,160 @@ const flows: Record<
     },
     {
       label: "Override",
-      stages: [
-        "Defined interval",
-        "Temporary coverage",
-        "Effective schedule",
-        "Responder",
-      ],
+      stages: ["Defined interval", "Temporary coverage", "Effective schedule", "Responder"],
       detail:
         "An override changes coverage for its interval. Validate the resulting target before relying on the swap.",
     },
     {
       label: "Escalation",
-      stages: [
-        "Primary target",
-        "Configured delay",
-        "Backup target",
-        "Viable final target",
-      ],
+      stages: ["Primary target", "Configured delay", "Backup target", "Viable final target"],
       detail:
         "Validate delays, channels and available endpoints with a synthetic incident, including an empty schedule scenario.",
+    },
+  ],
+  paging: [
+    {
+      label: "Critical",
+      stages: ["Triggered incident", "Eligible responder", "Provider admission", "Attempt & feedback"],
+      detail:
+        "Time-sensitive responder work retains a stable delivery identity. Provider acceptance is separate from confirmed delivery.",
+    },
+    {
+      label: "Transactional",
+      stages: ["Account operation", "Verified endpoint", "Provider admission", "Attempt & feedback"],
+      detail:
+        "Authentication, invitations and verification work have a distinct traffic class.",
+    },
+    {
+      label: "Public incident",
+      stages: ["Published incident", "Audience projection", "Provider admission", "Subscriber outcome"],
+      detail:
+        "Customer-facing incident work has its own delivery precedence and audience boundary.",
+    },
+    {
+      label: "Bulk",
+      stages: ["Broad broadcast", "Eligible audience", "Capacity admission", "Delivery evidence"],
+      detail:
+        "Bulk work respects provider capacity and should be monitored separately from critical response work.",
     },
   ],
   "status-pages": [
     {
       label: "Publication",
-      stages: [
-        "Internal incident",
-        "Approved public fields",
-        "Status projection",
-        "Customer page",
-      ],
+      stages: ["Internal incident", "Approved public fields", "Status projection", "Customer page"],
       detail:
         "Selected fields cross the privacy boundary. Verify the public page while signed out.",
     },
     {
       label: "Delivery",
-      stages: [
-        "Published update",
-        "Eligible subscribers",
-        "Asynchronous attempts",
-        "Delivery evidence",
-      ],
+      stages: ["Published update", "Eligible subscribers", "Asynchronous attempts", "Delivery evidence"],
       detail:
         "Successful page rendering does not prove subscriber or webhook delivery.",
     },
     {
       label: "Resolution",
-      stages: [
-        "Service restored",
-        "Resolution update",
-        "Public verification",
-        "Preserved history",
-      ],
+      stages: ["Service restored", "Resolution update", "Public verification", "Preserved history"],
       detail: `${PRODUCT.release.version} supports one status page per installation. This is a technical limit.`,
+    },
+  ],
+  analytics: [
+    {
+      label: "Response time",
+      stages: ["Select time window", "Filter population", "Inspect MTTA", "Inspect MTTR"],
+      detail:
+        "Timing metrics only make sense with the selected incident population and time window visible. Use them to identify a pattern, not to infer root cause automatically.",
+    },
+    {
+      label: "Service trend",
+      stages: ["Choose service", "Review incident volume", "Compare response trend", "Open source incidents"],
+      detail:
+        "Service-level trends help locate repeated operational friction while preserving a path back to the incidents that produced the numbers.",
+    },
+    {
+      label: "Review",
+      stages: ["Identify pattern", "Validate evidence", "Create follow-up", "Track improvement"],
+      detail:
+        "Analytics should feed an owned operational change. Keep the evidence and scope attached to the decision.",
+    },
+  ],
+  postmortems: [
+    {
+      label: "Evidence",
+      stages: ["Resolved incident", "Timeline", "Impact & detection", "Contributing factors"],
+      detail:
+        "Begin with the incident record and distinguish observed facts from hypotheses before writing the review.",
+    },
+    {
+      label: "Review",
+      stages: ["Draft", "5 Whys / analysis", "Team review", "Publish"],
+      detail:
+        "Use the review to explain system behavior and response friction rather than assigning blame to an individual.",
+    },
+    {
+      label: "Action",
+      stages: ["Create action", "Assign owner", "Set due date", "Verify completion"],
+      detail:
+        "A postmortem is useful when the follow-up work has a clear owner and can be verified as complete.",
+    },
+  ],
+  security: [
+    {
+      label: "Identity",
+      stages: ["OIDC provider", "PKCE / sign-in", "JIT or SCIM", "Effective role"],
+      detail:
+        "Authentication, provisioning and authorization are separate controls. Validate the effective role after identity mapping.",
+    },
+    {
+      label: "Access",
+      stages: ["Role policy", "Resource scope", "Session", "Audit event"],
+      detail:
+        "Review what the identity can actually read or change, then verify the session and audit trail produced by the action.",
+    },
+    {
+      label: "Operations",
+      stages: ["Secrets", "TLS / proxy", "Backups", "Key recovery"],
+      detail:
+        "Self-hosting keeps control with the operator and also makes secret management, recovery and network hardening operator responsibilities.",
+    },
+  ],
+  operations: [
+    {
+      label: "Integrated",
+      stages: ["Web + background work", "PostgreSQL", "Health Center", "Metrics & logs"],
+      detail:
+        "The integrated runtime is the simplest operating model. Monitor database capacity, provider health and background work together.",
+    },
+    {
+      label: "Split",
+      stages: ["Web", "Scheduler", "Worker roles", "Shared PostgreSQL"],
+      detail:
+        "Split runtime roles let you scale constrained responsibilities independently, but splitting processes is not the same thing as high availability.",
+    },
+    {
+      label: "Recovery",
+      stages: ["Backup", "Restore test", "Upgrade plan", "Synthetic validation"],
+      detail:
+        "Treat recovery as a tested workflow: restore data, preserve required keys, validate migrations and run a synthetic incident before declaring the platform healthy.",
+    },
+  ],
+  mobile: [
+    {
+      label: "Install",
+      stages: ["Supported browser", "Install PWA", "Sign in", "Open incident"],
+      detail:
+        "OpsKnight mobile is an installable PWA rather than a separate App Store or Play Store application.",
+    },
+    {
+      label: "Push",
+      stages: ["Grant permission", "Register device", "Send test", "Inspect delivery"],
+      detail:
+        "Browser permission, device registration and product authorization are separate checks. Test on the actual device you expect responders to use.",
+    },
+    {
+      label: "Respond",
+      stages: ["Receive page", "Open incident", "Acknowledge / triage", "Continue response"],
+      detail:
+        "Mobile response keeps the same installation identity and incident state as the desktop experience; browser and OS behavior still affect notification delivery.",
     },
   ],
 };

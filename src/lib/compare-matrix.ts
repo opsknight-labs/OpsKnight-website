@@ -3,9 +3,10 @@ import { BRAND } from "@/lib/brand";
 /**
  * Comparison matrix for OpsKnight and common on-call products.
  *
- * OpsKnight feature cells are grounded primarily in the last published v1.4.0
- * application/docs unless a row explicitly describes the v1.5 development line.
- * License/current-line metadata reflects the active v1.5 Community transition.
+ * OpsKnight feature cells are grounded in the pinned v2.0.0 release catalog,
+ * application routes and published v2.0.0 documentation. Competitor cells are
+ * summaries of the public vendor sources listed below and should be re-verified
+ * when vendors change packaging, product status or pricing.
  */
 
 export type CompareVendorId =
@@ -123,22 +124,22 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       {
         feature: "Commercial model",
         category: "deployment",
-        source: "OpsKnight: 100% Free Open Source Community Edition; enterprise support & custom implementation services available. Vendor pricing references should be confirmed on vendor sites.",
+        source: "OpsKnight v2.0.0: AGPL-3.0-only open source with optional commercial support and implementation services. Vendor packaging changes over time; use the linked vendor pricing pages for current terms.",
         values: {
-          opsknight: "100% Free AGPL-3.0 OSS; commercial support & services available",
-          pagerduty: "Professional $25/user/mo or $21 annual; Business/Enterprise and add-ons vary",
-          incidentio: "Per-seat responder/on-call plans; packaging varies by tier",
-          opsgenie: "No new sales; capabilities moving to Jira Service Management",
-          squadcast: "Per-user commercial plans",
-          splunk: "Commercial Splunk On-Call plans",
-          grafana: "Grafana Cloud IRM commercial usage/user pricing",
+          opsknight: "AGPL-3.0-only open source; optional commercial support & services",
+          pagerduty: "Free / paid Incident Management and Reliability Platform plans; add-ons vary",
+          incidentio: "Free and paid Incident Response plans; On-call packaging varies by plan",
+          opsgenie: "No new standalone sales; capabilities are moving to Jira Service Management",
+          squadcast: "Commercial SolarWinds Incident Response plans",
+          splunk: "Commercial Splunk On-Call service",
+          grafana: "Commercial Grafana Cloud IRM service",
         },
       },
       {
         feature: "Incident data location",
         category: "deployment",
         values: {
-          opsknight: "Your Postgres / VPC (100% data sovereignty, zero external beacons)",
+          opsknight: "Application database and backups stay in infrastructure you operate; configured external providers receive only the traffic you enable",
           pagerduty: "PagerDuty cloud",
           incidentio: "Vendor cloud",
           opsgenie: "Atlassian cloud",
@@ -159,6 +160,48 @@ export const COMPARE_SECTIONS: CompareSection[] = [
           squadcast: "Actively sold (SolarWinds Incident Response)",
           splunk: "Actively sold",
           grafana: "OnCall OSS archived 24 Mar 2026. Current: Grafana Cloud IRM",
+        },
+      },
+      {
+        feature: "Runtime topology choice",
+        category: "deployment",
+        source: "OpsKnight v2.0.0 documents integrated and split runtime roles across Compose, Kubernetes and Swarm. SaaS competitors operate their application runtime for customers.",
+        values: {
+          opsknight: "Integrated runtime or independently scalable Web, Scheduler, General, Critical, Bulk and Status roles",
+          pagerduty: "Vendor-operated SaaS runtime",
+          incidentio: "Vendor-operated SaaS runtime",
+          opsgenie: "Vendor-operated Atlassian Cloud runtime",
+          squadcast: "Vendor-operated SolarWinds runtime",
+          splunk: "Vendor-operated Splunk runtime",
+          grafana: "Vendor-operated Grafana Cloud runtime",
+        },
+      },
+      {
+        feature: "Release / upgrade control",
+        category: "deployment",
+        source: "OpsKnight operators pin container/chart/source releases and choose upgrade timing. SaaS vendors control production rollout timing for their hosted service.",
+        values: {
+          opsknight: "Operator pins the release and schedules upgrades",
+          pagerduty: "Vendor-managed rollout",
+          incidentio: "Vendor-managed rollout",
+          opsgenie: "Vendor-managed rollout through end-of-support / migration path",
+          squadcast: "Vendor-managed rollout",
+          splunk: "Vendor-managed rollout",
+          grafana: "Vendor-managed rollout",
+        },
+      },
+      {
+        feature: "Database & backup responsibility",
+        category: "deployment",
+        source: "OpsKnight is self-hosted around PostgreSQL and published backup/recovery guidance. SaaS vendors operate their service storage layer.",
+        values: {
+          opsknight: "Operator manages PostgreSQL, backups, restore testing and capacity",
+          pagerduty: "Vendor operated",
+          incidentio: "Vendor operated",
+          opsgenie: "Vendor operated",
+          squadcast: "Vendor operated",
+          splunk: "Vendor operated",
+          grafana: "Vendor operated",
         },
       },
     ],

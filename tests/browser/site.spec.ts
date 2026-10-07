@@ -106,8 +106,21 @@ test("integration filtering and setup routes", async ({ page }) => {
     .click();
   await expect(page.locator(".integration-item")).toHaveCount(2);
 });
+
+test("changelog restores release filters and version navigation", async ({ page }) => {
+  await page.goto("/changelog/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every release");
+  await expect(page.getByRole("tab", { name: "All", exact: true })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Changes", exact: true })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Performance", exact: true })).toBeVisible();
+  await expect(page.locator(".release-article").first()).toContainText("v2.0.0");
+  await expect(page.locator(".release-command").first()).toContainText("docker pull");
+  await page.getByRole("tab", { name: "Security", exact: true }).click();
+  await expect(page.locator(".release-article").first()).toBeVisible();
+  await expect(page.locator(".change-kind-security").first()).toBeVisible();
+});
 test("deployment choices preserve HA boundary", async ({ page }) => {
-  await page.goto("/install/");
+  await page.goto("/deploy/");
   await page.getByLabel("High availability", { exact: true }).check();
   await expect(page.locator(".deployment-result")).toContainText(
     "split runtime alone does not provide high availability",
@@ -140,6 +153,42 @@ test("reduced motion and product boundaries", async ({ page }) => {
     "no manual escalation control in Web",
   );
 });
+test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  test.setTimeout(180000);
+
+  const viewports = [
+    { width: 360, height: 800 },
+    { width: 390, height: 844 },
+    { width: 430, height: 932 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1366, height: 768 },
+    { width: 1440, height: 900 },
+    { width: 1512, height: 982 },
+    { width: 1920, height: 1080 },
+    { width: 2560, height: 1440 },
+  ];
+  const routes = ["/", "/integrations/", "/compare/", "/deploy/"];
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+      }));
+      expect(
+        dimensions.scroll,
+        route + " overflows at " + viewport.width + "x" + viewport.height,
+      ).toBeLessThanOrEqual(dimensions.viewport + 1);
+    }
+  }
+});
+
 test("visual coverage for key pages", async ({ page }, testInfo) => {
   test.setTimeout(120000);
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -147,7 +196,7 @@ test("visual coverage for key pages", async ({ page }, testInfo) => {
     "/",
     "/product/incidents/",
     "/integrations/",
-    "/install/",
+    "/deploy/",
     "/compare/",
   ];
   const fullVisualRoutes = [
@@ -206,8 +255,12 @@ test("WCAG AA checks on marketing flows", async ({ page }) => {
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   for (const route of [
     "/",
-    "/install/",
+    "/deploy/",
     "/integrations/",
+    "/compare/",
+    "/changelog/",
+    "/legal/",
+    "/solutions/",
     "/product/incidents/",
     "/security/",
     "/support/",
