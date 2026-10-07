@@ -168,6 +168,7 @@ export function SiteNavigation() {
                   <Link href="/product/">
                     Explore the complete platform <ArrowUpRight size={14} />
                   </Link>
+                  <Link href="/solutions/">Solutions by operating model →</Link>
                   <Link href="/#incident-loop">Follow the incident lifecycle →</Link>
                 </div>
               </div>

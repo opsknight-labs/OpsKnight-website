@@ -217,6 +217,19 @@ test("reduced motion and product boundaries", async ({ page }) => {
     "no manual escalation control in Web",
   );
 });
+test("security evaluation exposes explicit outbound trust boundaries", async ({ page }) => {
+  await page.goto("/security/");
+  await expect(page.getByRole("heading", { name: "Control boundaries you can verify." })).toBeVisible();
+  await expect(page.getByText("Self-hosted does not mean “no egress.”")).toBeVisible();
+  await expect(page.getByText(/zero external telemetry/i)).toHaveCount(0);
+
+  const productMenu = page.getByRole("group", { name: /Product/i });
+  if (await productMenu.count()) {
+    // Covered by the navigation visual contract; keep the route discoverable in source and rendered UI.
+    await expect(page.getByRole("link", { name: /Solutions by operating model/ })).toHaveAttribute("href", "/solutions/");
+  }
+});
+
 test("incident signal rail appears only on product storytelling surfaces", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".incident-signal-rail")).toHaveCount(1);

@@ -13,9 +13,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = siteMetadata({
-  title: "Security, Identity & Compliance Architecture — OpsKnight",
+  title: "Security & Identity Architecture — OpsKnight",
   description:
-    "OpsKnight security architecture: self-hosted custody, OIDC PKCE, SCIM 2.0 user lifecycle, AES-256-GCM encryption, immutable audit trails, and zero external telemetry beacons.",
+    "OpsKnight security architecture: self-hosted data custody, OIDC PKCE, SCIM 2.0 lifecycle controls, RBAC, AES-256-GCM encrypted configuration, sessions, audit evidence, and explicit outbound trust boundaries.",
   alternates: { canonical: "/security/" },
   openGraph: { url: "/security/" },
 });
@@ -27,7 +27,7 @@ export default function Security() {
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">
-            <span className="signal-dot" /> SECURITY &amp; COMPLIANCE ARCHITECTURE
+            <span className="signal-dot" /> SECURITY / IDENTITY / OPERATIONS
           </p>
           <h1>
             Your infrastructure.
@@ -35,9 +35,10 @@ export default function Security() {
             Your users. Your keys.
           </h1>
           <p className="site-description">
-            Keep the incident management plane self-hosted. Connect enterprise identity via OIDC
-            and SCIM 2.0, enforce role-based access with dedicated auditor privileges, encrypt credentials
-            at rest with AES-256-GCM, and inspect comprehensive audit logs with zero external telemetry.
+            Keep the incident management plane self-hosted, connect enterprise identity deliberately,
+            enforce role-based access, encrypt sensitive configuration at rest, and preserve audit evidence.
+            External identity, notification, ChatOps, webhook, and observability providers remain explicit
+            trust boundaries that you configure and operate.
           </p>
           <div className="site-actions">
             <Action href={productDocs("operate/security/hardening")}>Read the Hardening Guide</Action>
@@ -48,157 +49,122 @@ export default function Security() {
         </div>
       </section>
 
-      {/* Technical Evaluator Architectural Pillars */}
-      <section id="evaluator-breakdown" className="site-section">
-        <div className="site-container space-y-12">
-          <div className="max-w-3xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#d21a1b]">
-              Technical Evaluator Deep-Dive
-            </span>
-            <h2 className="text-2xl font-bold text-slate-900 mt-1">
-              Engineered for Enterprise Defense-in-Depth
-            </h2>
-            <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-              Security in OpsKnight is rooted in architectural boundaries. By self-hosting on your own
-              VPC or bare metal, incident details, vulnerability discussions, and infrastructure
-              topologies never traverse multi-tenant SaaS environments.
+      {/* Trust-center style evaluator architecture */}
+      <section id="evaluator-breakdown" className="site-section security-trust-section">
+        <div className="site-container">
+          <div className="security-trust-intro">
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> TECHNICAL EVALUATION
+            </p>
+            <h2>Control boundaries you can verify.</h2>
+            <p>
+              Self-hosting keeps the application and primary incident database inside infrastructure
+              you operate. It does not make every workflow air-gapped: the providers you configure
+              for identity, notifications, ChatOps, webhooks, email, voice, or observability create
+              deliberate external dependencies that should be reviewed and restricted.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Identity & Access */}
-            <div className="rounded-[16px] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-red-100 p-2 text-[#d21a1b]">
-                  <KeyRound size={20} />
+          <div className="security-control-stack">
+            <article>
+              <div className="security-control-title">
+                <KeyRound size={22} aria-hidden="true" />
+                <div>
+                  <span>01 / IDENTITY &amp; PROVISIONING</span>
+                  <h3>Authenticate, provision, then authorize.</h3>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  Identity &amp; Automated Lifecycle (OIDC + SCIM 2.0)
-                </h3>
               </div>
-              <p className="text-xs leading-relaxed text-slate-600 mb-4">
-                Integrate with your central identity provider (Okta, Microsoft Entra ID, Google
-                Workspace, Keycloak) using standard OpenID Connect with PKCE authorization code flow.
-                SCIM 2.0 endpoints automate user provisioning, group mapping, and instant de-provisioning.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-700 mb-4">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>OIDC PKCE with signed state verification and session binding</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>SCIM 2.0 user &amp; group push with automated role assignment</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Central administrator revocation of active signed-in sessions</span>
-                </li>
-              </ul>
-              <TextLink href={productDocs("guides/identity/configure-oidc")}>
-                Configure OIDC documentation ↗
-              </TextLink>
-            </div>
+              <div className="security-control-body">
+                <p>
+                  OIDC with PKCE handles sign-in. SCIM 2.0 can manage user and group lifecycle.
+                  Effective OpsKnight permissions still come from the role and scope applied after identity mapping.
+                </p>
+                <ul>
+                  <li><CheckCircle2 size={14} /> Pilot allowed, denied, deactivated, and existing-account paths.</li>
+                  <li><CheckCircle2 size={14} /> Verify effective RBAC after provisioning or group changes.</li>
+                  <li><CheckCircle2 size={14} /> Preserve a tested break-glass access path before enforcing SSO-only policy.</li>
+                </ul>
+                <TextLink href={productDocs("guides/identity/configure-oidc")}>
+                  Configure identity
+                </TextLink>
+              </div>
+            </article>
 
-            {/* Cryptography & Data at Rest */}
-            <div className="rounded-[16px] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-red-100 p-2 text-[#d21a1b]">
-                  <Lock size={20} />
+            <article>
+              <div className="security-control-title">
+                <Lock size={22} aria-hidden="true" />
+                <div>
+                  <span>02 / SECRETS &amp; CRYPTOGRAPHY</span>
+                  <h3>Protect encrypted configuration and the keys that unlock it.</h3>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  Authenticated Cryptography (AES-256-GCM)
-                </h3>
               </div>
-              <p className="text-xs leading-relaxed text-slate-600 mb-4">
-                Sensitive third-party credentials—including Twilio auth tokens, Slack bot tokens, and
-                webhook signing secrets—are encrypted before database insertion using authenticated
-                AES-256-GCM encryption with unique per-record initialization vectors (IV).
-              </p>
-              <ul className="space-y-2 text-xs text-slate-700 mb-4">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>AES-256-GCM at rest with Galois message authentication tag verification</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Dual-key keyring rotation supported via <code>ENCRYPTION_KEYS</code></span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Zero plain-text credential persistence in logs or database tables</span>
-                </li>
-              </ul>
-              <TextLink href={productDocs("operate/security/hardening")}>
-                Security hardening guide ↗
-              </TextLink>
-            </div>
+              <div className="security-control-body">
+                <p>
+                  Sensitive configuration is stored with authenticated AES-256-GCM encryption.
+                  Key rotation and recovery are operational responsibilities: encryption keys must be
+                  preserved outside database backups and restored with the data that depends on them.
+                </p>
+                <ul>
+                  <li><CheckCircle2 size={14} /> Use high-entropy session and encryption keys.</li>
+                  <li><CheckCircle2 size={14} /> Rotate through the documented keyring procedure.</li>
+                  <li><CheckCircle2 size={14} /> Test restore with the required keys before relying on backup recovery.</li>
+                </ul>
+                <TextLink href={productDocs("operate/security/hardening")}>
+                  Review hardening
+                </TextLink>
+              </div>
+            </article>
 
-            {/* Granular RBAC & Auditor Role */}
-            <div className="rounded-[16px] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-red-100 p-2 text-[#d21a1b]">
-                  <UserCheck size={20} />
+            <article>
+              <div className="security-control-title">
+                <UserCheck size={22} aria-hidden="true" />
+                <div>
+                  <span>03 / AUTHORIZATION &amp; EVIDENCE</span>
+                  <h3>Least privilege is an effective-permission question.</h3>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  Granular RBAC &amp; Dedicated Auditor Role
-                </h3>
               </div>
-              <p className="text-xs leading-relaxed text-slate-600 mb-4">
-                Enforce least-privilege access across your engineering organization. In addition to
-                Admin and Responder roles, OpsKnight includes a dedicated read-only <strong>Auditor</strong> role
-                designed specifically for internal compliance, security, and external audit teams.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-700 mb-4">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Auditor role: view incidents, schedules, and audit trails without modify rights</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Scoped service permissions: isolate team paging schedules and alert routing</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>API token scoping: generate narrow-scope tokens for specific automation jobs</span>
-                </li>
-              </ul>
-              <TextLink href={productDocs("concepts/permissions")}>
-                Permission concepts &amp; roles ↗
-              </TextLink>
-            </div>
+              <div className="security-control-body">
+                <p>
+                  Admin, responder, user, and auditor behavior should be validated against the resources
+                  each role can actually read or change. Session revocation and audit events provide evidence
+                  for access reviews; they do not replace your wider compliance program.
+                </p>
+                <ul>
+                  <li><CheckCircle2 size={14} /> Test the dedicated auditor path as read-only evidence access.</li>
+                  <li><CheckCircle2 size={14} /> Revoke active sessions when identity or access changes require it.</li>
+                  <li><CheckCircle2 size={14} /> Export and retain evidence according to your own policy.</li>
+                </ul>
+                <TextLink href={productDocs("concepts/permissions")}>
+                  Review roles &amp; permissions
+                </TextLink>
+              </div>
+            </article>
 
-            {/* Network Isolation & Zero External Beacons */}
-            <div className="rounded-[16px] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-red-100 p-2 text-[#d21a1b]">
-                  <Network size={20} />
+            <article>
+              <div className="security-control-title">
+                <Network size={22} aria-hidden="true" />
+                <div>
+                  <span>04 / NETWORK &amp; OUTBOUND TRUST</span>
+                  <h3>Self-hosted does not mean “no egress.”</h3>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  Network Isolation &amp; Zero External Telemetry
-                </h3>
               </div>
-              <p className="text-xs leading-relaxed text-slate-600 mb-4">
-                OpsKnight respects strict air-gap and private VPC requirements. The binary executes
-                with <strong>zero outbound phone-home telemetry</strong>, license validation pings, or usage
-                tracking beacons to OpsKnight servers.
-              </p>
-              <ul className="space-y-2 text-xs text-slate-700 mb-4">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>0 phone-home beacons, 0 analytics scripts, 0 third-party cookies</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Egress restricted exclusively to your configured notification providers</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-                  <span>Runs entirely inside private subnets with internal PostgreSQL clustering</span>
-                </li>
-              </ul>
-              <TextLink href="/deploy/architecture/">Explore runtime network model ↗</TextLink>
-            </div>
+              <div className="security-control-body">
+                <p>
+                  OpsKnight does not require a vendor-hosted incident control plane, but enabled features
+                  can call systems outside the application network. Put PostgreSQL behind private network
+                  controls, terminate HTTPS at the supported edge, and allow outbound traffic only to
+                  providers your deployment actually uses.
+                </p>
+                <ul>
+                  <li><CheckCircle2 size={14} /> Inventory identity, notification, ChatOps, webhook, and observability destinations.</li>
+                  <li><CheckCircle2 size={14} /> Restrict database exposure and review proxy/TLS boundaries.</li>
+                  <li><CheckCircle2 size={14} /> Verify provider failures and rate limits without weakening critical-response traffic.</li>
+                </ul>
+                <TextLink href="/deploy/">
+                  Review deployment boundaries
+                </TextLink>
+              </div>
+            </article>
           </div>
         </div>
       </section>
