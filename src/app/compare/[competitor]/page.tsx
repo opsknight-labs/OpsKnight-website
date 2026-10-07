@@ -198,7 +198,7 @@ export default async function CompareCompetitorPage({
           <div className="mb-4">
             <Link
               href="/compare/"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-white transition-colors"
             >
               <ArrowLeft size={14} /> Back to all comparisons
             </Link>
@@ -231,7 +231,7 @@ export default async function CompareCompetitorPage({
               </h2>
               <h3 className="text-xl font-bold text-slate-900 mb-3">{c.name}</h3>
               <p className="text-sm leading-relaxed text-slate-600 mb-4">{c.summary}</p>
-              <p className="text-[11px] font-mono text-slate-400 mb-4">
+              <p className="text-[11px] font-mono text-slate-500 mb-4">
                 Verified {c.asOf} · primary vendor source
               </p>
               <TextLink href={c.source}>
@@ -427,7 +427,7 @@ export default async function CompareCompetitorPage({
                       <div className="md:col-span-4">
                         <h4 className="text-sm font-bold text-slate-900">{row.feature}</h4>
                         {row.source && (
-                          <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
+                          <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
                             {row.source}
                           </p>
                         )}
@@ -491,7 +491,7 @@ export default async function CompareCompetitorPage({
                 className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-3 text-xs font-medium text-slate-700 hover:border-slate-300 hover:text-slate-900 transition-all shadow-sm"
               >
                 <span className="truncate pr-2">{link.label}</span>
-                <ExternalLink size={12} className="shrink-0 text-slate-400" />
+                <ExternalLink size={12} className="shrink-0 text-slate-500" />
               </a>
             ))}
           </div>

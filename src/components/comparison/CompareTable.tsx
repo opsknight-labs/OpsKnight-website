@@ -63,7 +63,7 @@ export function CompareTable() {
     <div className="space-y-6">
       {/* Category filter pills */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mr-1">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mr-1">
           <Filter size={13} /> Filter:
         </span>
         {CATEGORIES.map((cat) => {
@@ -116,7 +116,7 @@ export function CompareTable() {
                     <div>
                       <h4 className="text-sm font-bold text-slate-900">{row.feature}</h4>
                       {row.source && (
-                        <p className="mt-0.5 text-[11px] text-slate-400">{row.source}</p>
+                        <p className="mt-0.5 text-[11px] text-slate-500">{row.source}</p>
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-3 pt-1">
@@ -179,7 +179,7 @@ export function CompareTable() {
                     <td className="sticky left-0 z-10 bg-white px-4 py-3.5 align-top">
                       <p className="text-sm font-semibold text-slate-900">{row.feature}</p>
                       {row.source ? (
-                        <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-slate-400">{row.source}</p>
+                        <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-slate-500">{row.source}</p>
                       ) : null}
                     </td>
                     {COMPARE_VENDORS.map((vendor) => (
