@@ -142,7 +142,12 @@ export function CompareTable() {
       </div>
 
       {/* Desktop matrix: 7-vendor full table */}
-      <div className="hidden lg:block overflow-x-auto rounded-[14px] border border-slate-200 bg-white shadow-sm">
+      <div
+        className="hidden lg:block overflow-x-auto rounded-[14px] border border-slate-200 bg-white shadow-sm"
+        role="region"
+        aria-label="Seven-vendor capability comparison"
+        tabIndex={0}
+      >
         <table className="w-full min-w-[1080px] border-collapse text-left">
           <thead>
             <tr className="border-b border-slate-200">

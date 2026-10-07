@@ -1695,8 +1695,7 @@ html {
   .mobile-nav { display: block; }
   
   /* Layouts that should go single-column on tablet */
-  .product-chapter-grid { grid-template-columns: 1fr; gap: 40px; }
-  .chatops-presentation { grid-template-columns: 1fr; gap: 32px; }
+    .chatops-presentation { grid-template-columns: 1fr; gap: 32px; }
   .paging-layout { grid-template-columns: 1fr; }
   .status-composition { grid-template-columns: 1fr; }
   .security-story { grid-template-columns: 1fr; gap: 32px; }
@@ -2280,10 +2279,6 @@ html {
 .signal-trail { height: 100%; width: 1px; background: var(--ok-red); transform: scaleY(var(--signal-progress)); transform-origin: top; }
 .incident-signal-rail > .signal-dot { position: absolute; left: -3px; top: calc(var(--signal-progress) * 100%); box-shadow: 0 0 15px var(--ok-red); }
 .rail-label { position: absolute; top: calc(100% + 24px); left: -9px; writing-mode: vertical-rl; color: #0f172a; background: #ffffff; padding: 6px 2px; border-radius: 4px; border: 1px solid var(--border-light); font: 9px var(--font-jetbrains-mono),monospace; letter-spacing: .18em; }
-.product-chapter-grid { display: grid; grid-template-columns: .7fr 1.3fr; gap: 80px; align-items: start; }
-.chapter-marker { display: flex; align-items: center; gap: 12px; color: var(--text-secondary); font: 11px var(--font-jetbrains-mono),monospace; letter-spacing: .1em; }
-.product-chapter .interior-copy { max-width: 760px; }
-.product-chapter h2 { font-size: clamp(30px,3vw,46px); line-height: 1.15; }
 .product-workflow { border: 1px solid var(--border-dark); padding: 42px; border-radius: 20px; background: var(--surface-elevated); }
 .workflow-choices { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 40px; }
 .workflow-choices button { min-height: 44px; padding: 10px 20px; border: 1px solid var(--border-dark-strong); border-radius: 30px; color: var(--text-light-secondary); cursor: pointer; }
@@ -2704,7 +2699,7 @@ html {
 
 @media (max-width: 1023px) { .incident-signal-rail { display: none; } }
 @media (max-width: 767px) {
-  .product-chapter-grid,.chatops-presentation { grid-template-columns: 1fr; gap: 28px; }
+  .chatops-presentation { grid-template-columns: 1fr; gap: 28px; }
   .product-workflow { padding: 24px; }
   .product-signal-flow { grid-template-columns: repeat(2,1fr); }
   .product-signal-flow strong { font-size: 16px; }

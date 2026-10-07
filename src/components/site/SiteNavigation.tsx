@@ -39,7 +39,7 @@ const productGroups = [
     slugs: ["incidents", "on-call", "paging"],
   },
   {
-    label: "COLLABORATE",
+    label: "COORDINATE",
     slugs: ["chatops", "status-pages", "postmortems", "analytics"],
   },
   {

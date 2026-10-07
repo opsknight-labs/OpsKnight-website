@@ -253,6 +253,47 @@ test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) 
   }
 });
 
+test("1366 laptop density stays compact", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.goto("/product/paging/");
+
+  const hero = page.locator(".interior-hero");
+  const heroBox = await hero.boundingBox();
+  expect(heroBox?.height ?? Infinity).toBeLessThan(500);
+
+  const titleSize = await hero.locator("h1").evaluate((node) =>
+    Number.parseFloat(getComputedStyle(node).fontSize),
+  );
+  expect(titleSize).toBeLessThanOrEqual(54);
+
+  const sectionPad = await page.locator(".site-section").first().evaluate((node) =>
+    Number.parseFloat(getComputedStyle(node).paddingTop),
+  );
+  expect(sectionPad).toBeLessThanOrEqual(82);
+
+  const finalCta = page.locator(".final-cta");
+  await finalCta.scrollIntoViewIfNeeded();
+  const ctaBox = await finalCta.boundingBox();
+  expect(ctaBox?.height ?? Infinity).toBeLessThan(360);
+
+  const footerPad = await page.locator(".site-footer").evaluate((node) =>
+    Number.parseFloat(getComputedStyle(node).paddingTop),
+  );
+  expect(footerPad).toBeLessThanOrEqual(44);
+});
+
+test("desktop comparison matrix is keyboard focusable", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  await page.goto("/compare/");
+  const matrix = page.getByRole("region", {
+    name: "Seven-vendor capability comparison",
+  });
+  await expect(matrix).toHaveAttribute("tabindex", "0");
+  await matrix.focus();
+  await expect(matrix).toBeFocused();
+});
+
 test("visual coverage for key pages", async ({ page }, testInfo) => {
   test.setTimeout(120000);
   await page.emulateMedia({ reducedMotion: "reduce" });
