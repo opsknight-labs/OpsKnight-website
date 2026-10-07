@@ -49,7 +49,7 @@ jobs:
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           npx playwright test
           mkdir -p test-results
-          CHROME_PATH="$(node -e "const { chromium } = require('@playwright/test'); process.stdout.write(chromium.executablePath())")"
+          export CHROME_PATH="$(node -e "const { chromium } = require('@playwright/test'); process.stdout.write(chromium.executablePath())")"
           for target in "home:/" "integrations:/integrations/" "compare:/compare/"; do
             name="${target%%:*}"
             route="${target#*:}"
