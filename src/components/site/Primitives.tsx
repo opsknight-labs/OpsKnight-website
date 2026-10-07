@@ -60,33 +60,16 @@ export function ProductScreenshot({
         <span className="signal-dot" /> OPSKNIGHT / PRODUCT VIEW{" "}
         <span>v{PRODUCT.release.version}</span>
       </div>
-      <picture>
-        <source
-          type="image/webp"
-          srcSet={[
-            ...[400, 800, 1200]
-              .filter((width) => width < evidence.width)
-              .map(
-                (width) =>
-                  `${productImage(name).replace(/\.webp$/, `-${width}.webp`)} ${width}w`,
-              ),
-            `${productImage(name)} ${evidence.width}w`,
-          ].join(", ")}
-          sizes={
-            name === "mobile.png" ? "390px" : "(max-width: 768px) 100vw, 1200px"
-          }
-        />
-        <Image
-          src={productImage(name)}
-          width={evidence.width}
-          height={evidence.height}
-          alt={alt}
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
-          style={{ aspectRatio: `${evidence.width} / ${evidence.height}` }}
-          sizes="(max-width: 768px) 100vw, 1200px"
-        />
-      </picture>
+      <Image
+        src={productImage(name)}
+        width={evidence.width}
+        height={evidence.height}
+        alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        style={{ aspectRatio: `${evidence.width} / ${evidence.height}` }}
+        sizes={name === "mobile.png" ? "390px" : "(max-width: 768px) 100vw, 1200px"}
+      />
       <figcaption>{alt}</figcaption>
     </figure>
   );

@@ -262,6 +262,10 @@ test("visual coverage for key pages", async ({ page }, testInfo) => {
         if (await image.isVisible()) {
           await image.scrollIntoViewIfNeeded();
           await expect(image).toHaveJSProperty("complete", true);
+          const naturalWidth = await image.evaluate(
+            (node) => (node as HTMLImageElement).naturalWidth,
+          );
+          expect(naturalWidth, "visible image failed to load").toBeGreaterThan(0);
         }
       } catch {
         // Element may have re-rendered or unmounted
