@@ -32,15 +32,15 @@ export default function ComparePage() {
             <span className="signal-dot" /> COMPREHENSIVE MARKET COMPARISON · {COMPARE_AS_OF}
           </p>
           <h1>
-            OpsKnight next to the
+            Compare the operating model,
             <br />
-            rest of the on-call market.
+            not just the feature list.
           </h1>
           <p className="site-description">
-            The OpsKnight column is what ships in v{BRAND.version}: self-hosted on your VPC,
-            on-call rotations, Twilio voice paging, Slack and Teams war rooms, status page, {BRAND.integrationCountLabel} inbound
-            parsers, and {BRAND.license}. Other columns are taken from each vendor’s public docs,
-            dated product manuals, and published pricing.
+            Evaluate OpsKnight v{BRAND.version} against PagerDuty, incident.io, Opsgenie,
+            Squadcast, Splunk On-Call, and Grafana Cloud IRM across deployment ownership,
+            response workflows, identity, notification channels, and commercial model.
+            OpsKnight values come from the pinned release; vendor values are tied to dated public sources.
           </p>
         </div>
       </section>

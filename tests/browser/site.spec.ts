@@ -185,11 +185,17 @@ test("deployment choices preserve HA boundary", async ({ page }) => {
     `${docsPrefix}/operate/deploy/kubernetes/`,
   );
 });
-test("product pages expose the four evaluation layers", async ({ page }) => {
+test("every product page exposes the four evaluation layers", async ({ page }) => {
   for (const route of [
     "/product/incidents/",
+    "/product/on-call/",
     "/product/paging/",
     "/product/chatops/",
+    "/product/status-pages/",
+    "/product/analytics/",
+    "/product/postmortems/",
+    "/product/mobile/",
+    "/product/security/",
     "/product/operations/",
   ]) {
     await page.goto(route);

@@ -1,0 +1,36 @@
+name: Generate visual baseline candidates
+
+on:
+  push:
+    branches: [feat/website-v2-redesign]
+
+permissions:
+  contents: read
+
+jobs:
+  candidates:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: feat/website-v2-redesign
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Generate candidate baselines
+        shell: bash
+        run: |
+          PORT=5001 node scripts/serve-static.mjs &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          npx playwright test --grep "visual coverage for key pages" --update-snapshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baseline-candidates
+          path: tests/browser/snapshots/linux/
