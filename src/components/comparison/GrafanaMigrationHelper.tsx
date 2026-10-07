@@ -27,18 +27,18 @@ export function GrafanaMigrationHelper({ className = "" }: { className?: string 
   > = {
     contact_point: {
       title: "Grafana Contact Point",
-      filename: "grafana-contact-point.json",
-      language: "json",
-      notes: "Add a Webhook Contact Point using the generated OpsKnight URL. Keep Grafana's default alert JSON; optional HMAC verification applies only when a matching signature secret is configured.",
-      code: `{
-  "name": "OpsKnight-OnCall",
-  "type": "webhook",
-  "settings": {
-    "url": "https://opsknight.yourcompany.com/api/integrations/grafana?integrationId=YOUR_INTEGRATION_ID",
-    "httpMethod": "POST",
-    "maxAlerts": 10
-  }
-}`,
+      filename: "grafana-contact-point.txt",
+      language: "text",
+      notes: "Configure these fields in Grafana Alerting → Contact points. Keep Grafana's default Alerting / Alertmanager JSON intact.",
+      code: `Type: Webhook
+URL: https://opsknight.yourcompany.com/api/integrations/grafana?integrationId=YOUR_INTEGRATION_ID
+Method: POST
+Resolved messages: enabled
+Payload: default Grafana / Alertmanager JSON
+
+Optional HMAC verification:
+If you configure an OpsKnight signature secret, configure the matching Grafana
+HMAC signature so X-Grafana-Signature can be verified.`,
     },
     alertmanager: {
       title: "Grafana Alertmanager / Mimir",

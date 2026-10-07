@@ -16,113 +16,87 @@ import { latestDocsHref } from "@/lib/docs/paths";
 import { BRAND } from "@/lib/brand";
 import { copyText } from "@/lib/client-clipboard";
 
-type SnippetTab = "alertmanager" | "terraform" | "datadog" | "curl";
+type SnippetTab = "contract" | "datadog" | "prometheus" | "curl";
 
 export function PagerDutyMigrationHelper({ className = "" }: { className?: string }) {
-  const [activeTab, setActiveTab] = useState<SnippetTab>("alertmanager");
+  const [activeTab, setActiveTab] = useState<SnippetTab>("contract");
   const [copied, setCopied] = useState(false);
 
   const snippets: Record<SnippetTab, { title: string; filename: string; language: string; code: string; notes: string }> = {
-    alertmanager: {
-      title: "Prometheus Alertmanager",
-      filename: "alertmanager.yml",
-      language: "yaml",
-      notes: "Point your existing Alertmanager pagerduty_configs receiver directly to your self-hosted OpsKnight instance.",
-      code: `receivers:
-  - name: 'opsknight-oncall'
-    webhook_configs:
-      # Swap endpoint to your self-hosted OpsKnight instance
-      - url: 'https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue'
-        send_resolved: true
-        http_config:
-          authorization:
-            # Your OpsKnight integration routing key
-            credentials: 'YOUR_OPSKNIGHT_ROUTING_KEY'
+    contract: {
+      title: "Events API v2 contract",
+      filename: "events-api-v2.txt",
+      language: "text",
+      notes: "Use this compatibility path only when the sender already emits PagerDuty Events API v2 JSON. Otherwise use OpsKnight's native adapter for that provider.",
+      code: `POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue
 
-route:
-  receiver: 'opsknight-oncall'
-  routes:
-    - match:
-        severity: critical
-      receiver: 'opsknight-oncall'`,
-    },
-    terraform: {
-      title: "Terraform / OpenTofu",
-      filename: "main.tf",
-      language: "hcl",
-      notes: "Keep your existing monitoring infrastructure code — route alerts via standard webhook endpoints.",
-      code: `# Point existing webhook definitions or custom monitors to OpsKnight
-resource "datadog_webhook" "opsknight_pagerduty_adapter" {
-  name = "opsknight-alerts"
-  url  = "https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue"
-  
-  custom_headers = jsonencode({
-    "Authorization" = "Token token=\${var.opsknight_routing_key}"
-  })
+Required lifecycle fields
+routing_key   = YOUR_OPSKNIGHT_ROUTING_KEY
+event_action = trigger | acknowledge | resolve
+dedup_key    = stable identity reused across lifecycle events
 
-  payload = jsonencode({
-    "routing_key"  = var.opsknight_routing_key
-    "event_action" = "trigger"
-    "dedup_key"    = "$ID"
-    "payload" = {
-      "summary"  = "$EVENT_TITLE"
-      "severity" = "critical"
-      "source"   = "datadog-monitor"
-    }
-  })
-}`,
+Trigger payload also requires payload.summary, payload.severity and payload.source.
+Validate trigger, acknowledge and resolve behavior before repointing production.`,
     },
     datadog: {
-      title: "Datadog Webhook",
+      title: "Datadog native adapter",
       filename: "datadog-webhook.json",
       language: "json",
-      notes: "If you keep the PagerDuty-compatible path, validate Datadog's rendered Events API v2 payload before switching production. For new setups, prefer OpsKnight's native Datadog adapter.",
+      notes: "For Datadog, prefer the native v2.0.0 adapter rather than translating Datadog into PagerDuty payloads.",
       code: `{
-  "name": "OpsKnight-PagerDuty-Adapter",
-  "url": "https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue",
-  "custom_headers": {
-    "Content-Type": "application/json"
+  "url": "https://opsknight.yourcompany.com/api/integrations/datadog?integrationId=YOUR_INTEGRATION_ID",
+  "headers": {
+    "x-integration-key": "YOUR_OPSKNIGHT_INTEGRATION_KEY"
   },
   "payload": {
-    "routing_key": "YOUR_OPSKNIGHT_ROUTING_KEY",
-    "event_action": "$EVENT_TYPE",
-    "dedup_key": "$ALERT_ID",
-    "payload": {
-      "summary": "$EVENT_TITLE",
-      "severity": "error",
-      "source": "$HOSTNAME",
-      "custom_details": {
-        "metric": "$METRIC",
-        "scope": "$SCOPE",
-        "link": "$LINK"
-      }
+    "title": "$EVENT_TITLE",
+    "text": "$TEXT_ONLY_MSG",
+    "alert_type": "$ALERT_TYPE",
+    "aggregation_key": "$ALERT_CYCLE_KEY",
+    "host": "$HOSTNAME",
+    "source_type_name": "datadog",
+    "alert": {
+      "id": "$ALERT_ID",
+      "title": "$EVENT_TITLE",
+      "status": "$ALERT_STATUS",
+      "message": "$TEXT_ONLY_MSG"
     }
   }
 }`,
     },
+    prometheus: {
+      title: "Prometheus native adapter",
+      filename: "alertmanager.yml",
+      language: "yaml",
+      notes: "For Alertmanager, use the native Prometheus integration and keep the standard Alertmanager body intact.",
+      code: `receivers:
+  - name: 'opsknight-primary'
+    webhook_configs:
+      - url: 'https://opsknight.yourcompany.com/api/integrations/prometheus?integrationId=YOUR_INTEGRATION_ID'
+        send_resolved: true
+
+route:
+  receiver: 'opsknight-primary'`,
+    },
     curl: {
-      title: "cURL / CLI Trigger & Resolve",
+      title: "Events API v2 trigger & resolve",
       filename: "events-api-v2.sh",
       language: "bash",
-      notes: "Standard Events API v2 JSON shape with trigger, acknowledge, and resolve lifecycle support.",
-      code: `# 1. Trigger an incident
-curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue \\
-  -H "Content-Type: application/json" \\
-  -d '{
+      notes: "Use one stable dedup_key for the trigger and recovery test before changing production senders.",
+      code: `# Trigger
+curl -X POST "https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue" \\\n  -H "Content-Type: application/json" \\\n  -d '{
     "routing_key": "YOUR_OPSKNIGHT_ROUTING_KEY",
     "event_action": "trigger",
     "dedup_key": "disk-usage-srv-01",
     "payload": {
-      "summary": "Disk usage exceeded 95% on /dev/sda1",
+      "summary": "Disk usage exceeded 95%",
       "severity": "critical",
       "source": "srv-01.prod.internal"
     }
   }'
 
-# 2. Resolve the incident (closes automatically in OpsKnight)
-curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue \\
-  -H "Content-Type: application/json" \\
-  -d '{
+# Resolve with the same dedup_key
+curl -X POST "https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue" \\\n  -H "Content-Type: application/json" \\\n  -d '{
     "routing_key": "YOUR_OPSKNIGHT_ROUTING_KEY",
     "event_action": "resolve",
     "dedup_key": "disk-usage-srv-01"
@@ -183,10 +157,10 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
           <div className="space-y-1.5">
             {(
               [
-                { id: "alertmanager", label: "Prometheus Alertmanager", icon: Layers },
-                { id: "terraform", label: "Terraform / OpenTofu", icon: Code2 },
-                { id: "datadog", label: "Datadog Webhook", icon: Zap },
-                { id: "curl", label: "cURL / Shell Scripts", icon: Terminal },
+                { id: "contract", label: "Events API v2", icon: Layers },
+                { id: "datadog", label: "Datadog native", icon: Zap },
+                { id: "prometheus", label: "Prometheus native", icon: Code2 },
+                { id: "curl", label: "cURL validation", icon: Terminal },
               ] as const
             ).map((item) => {
               const Icon = item.icon;

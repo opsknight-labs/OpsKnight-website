@@ -15,7 +15,7 @@ import {
 import { latestDocsHref } from "@/lib/docs/paths";
 import { copyText } from "@/lib/client-clipboard";
 
-type SnippetTab = "alertmanager" | "concept_map" | "terraform" | "curl";
+type SnippetTab = "alertmanager" | "concept_map" | "datadog" | "curl";
 
 export function OpsgenieMigrationHelper({ className = "" }: { className?: string }) {
   const [activeTab, setActiveTab] = useState<SnippetTab>("alertmanager");
@@ -63,28 +63,30 @@ route:
 | **Incoming Alert Rules**   | **Adapter correlation key** | Provider-specific integration   |
 | **Slack App**              | **Slack ChatOps integration**      | Settings → Integrations   |`,
     },
-    terraform: {
-      title: "Terraform / OpenTofu",
-      filename: "main.tf",
-      language: "hcl",
-      notes: "Route monitoring webhooks directly to OpsKnight using standard webhook resources.",
-      code: `# Route alerts to OpsKnight webhook endpoint
-resource "datadog_webhook" "opsknight_alerts" {
-  name = "opsknight-sre-oncall"
-  url  = "https://opsknight.yourcompany.com/api/integrations/datadog?integrationId=YOUR_INTEGRATION_ID"
-
-  custom_headers = jsonencode({
-    "x-integration-key" = var.opsknight_service_key
-    "Content-Type"      = "application/json"
-  })
-
-  payload = jsonencode({
-    "event_type" = "$EVENT_TYPE"
-    "alert_id"   = "$ALERT_ID"
-    "title"      = "$EVENT_TITLE"
-    "body"       = "$EVENT_MSG"
-    "hostname"   = "$HOSTNAME"
-  })
+    datadog: {
+      title: "Datadog native adapter",
+      filename: "datadog-webhook.json",
+      language: "json",
+      notes: "Route Datadog directly to the v2.0.0 Datadog adapter and send the integration key as a hidden header.",
+      code: `{
+  "url": "https://opsknight.yourcompany.com/api/integrations/datadog?integrationId=YOUR_INTEGRATION_ID",
+  "headers": {
+    "x-integration-key": "YOUR_OPSKNIGHT_INTEGRATION_KEY"
+  },
+  "payload": {
+    "title": "$EVENT_TITLE",
+    "text": "$TEXT_ONLY_MSG",
+    "alert_type": "$ALERT_TYPE",
+    "aggregation_key": "$ALERT_CYCLE_KEY",
+    "host": "$HOSTNAME",
+    "source_type_name": "datadog",
+    "alert": {
+      "id": "$ALERT_ID",
+      "title": "$EVENT_TITLE",
+      "status": "$ALERT_STATUS",
+      "message": "$TEXT_ONLY_MSG"
+    }
+  }
 }`,
     },
     curl: {
@@ -94,7 +96,7 @@ resource "datadog_webhook" "opsknight_alerts" {
       notes: "Send a sample test payload to verify inbound webhook ingestion and escalation triggering.",
       code: `curl -X POST https://opsknight.yourcompany.com/api/integrations/webhook?integrationId=YOUR_INTEGRATION_ID \\
   -H "Content-Type: application/json" \\
-  -H "x-integration-key: YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY" \\
+  -H "x-integration-key: YOUR_OPSKNIGHT_INTEGRATION_KEY" \\
   -d '{
     "summary": "Database connection pool saturated",
     "source": "payments-api",
@@ -151,7 +153,7 @@ resource "datadog_webhook" "opsknight_alerts" {
             [
               { id: "alertmanager", label: "Alertmanager", icon: Layers },
               { id: "concept_map", label: "Concept Mapping", icon: Code2 },
-              { id: "terraform", label: "Terraform", icon: Code2 },
+              { id: "datadog", label: "Datadog native", icon: Code2 },
               { id: "curl", label: "Test cURL", icon: Terminal },
             ] as const
           ).map((tab) => {
