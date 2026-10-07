@@ -214,6 +214,7 @@ jobs:
         working-directory: site
         shell: bash
         run: |
+          npx playwright install --with-deps chromium
           npm run build
           PORT=5001 node scripts/serve-static.mjs &
           SERVER_PID=$!
