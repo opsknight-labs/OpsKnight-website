@@ -201,3 +201,31 @@ test("migration helpers use current v2 integration routes", () => {
   const pagerduty = fs.readFileSync(path.join(root, helperPaths[0]), "utf8");
   assert.match(pagerduty, /\/api\/integrations\/pagerduty\/v2\/enqueue/);
 });
+
+test("deployment marketing preserves v2 capacity and support boundaries", () => {
+  const deployPage = fs.readFileSync(
+    path.join(root, "src/app/install/page.tsx"),
+    "utf8",
+  );
+  for (const unsupported of [
+    "300 - 2,000+ alerts/min",
+    "50 - 300 alerts/min",
+    "helm repo add opsknight",
+    "docker stack deploy -c deploy/swarm/docker-stack.yml",
+    "24/7 escalation coverage",
+    "High-Volume / Enterprise",
+  ]) {
+    assert.equal(
+      deployPage.includes(unsupported),
+      false,
+      `deploy page must not publish unsupported claim: ${unsupported}`,
+    );
+  }
+  assert.match(deployPage, /Capacity status/);
+  assert.match(deployPage, /Not certified/);
+  assert.match(deployPage, /deploy\/swarm\/scripts\/deploy\.sh/);
+  assert.match(deployPage, /deploy\/kubernetes\/helm\/opsknight/);
+  assert.match(deployPage, /matching benchmark is certified/i);
+  assert.match(deployPage, /bundled\s+PostgreSQL\s+is\s+not\s+highly\s+available/i);
+  assert.match(deployPage, /No 24×7 coverage or response-time SLA is advertised/);
+});
