@@ -146,12 +146,13 @@ test("solution journeys use the canonical deployment path", async ({ page }) => 
   );
   await page.goto("/legal/");
   const policyGrid = page.locator(".legal-index-grid");
-  await expect(policyGrid.getByRole("link", { name: "Privacy" })).toHaveAttribute(
-    "href",
-    "/privacy/",
-  );
+  const privacyPolicy = policyGrid.locator("article").filter({ hasText: "Privacy" });
+  const termsPolicy = policyGrid.locator("article").filter({ hasText: "Website terms" });
   await expect(
-    policyGrid.getByRole("link", { name: "Website terms" }),
+    privacyPolicy.getByRole("link", { name: "Open policy" }),
+  ).toHaveAttribute("href", "/privacy/");
+  await expect(
+    termsPolicy.getByRole("link", { name: "Open policy" }),
   ).toHaveAttribute("href", "/terms/");
 });
 

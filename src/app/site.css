@@ -4080,8 +4080,8 @@ html {
 }
 .home-integration-finder-head>div{display:grid;gap:4px}
 .home-integration-finder-head span{
-  color:var(--text-dark-muted);
-  font:8px var(--font-jetbrains-mono),monospace;
+  color:var(--text-secondary);
+  font:9px var(--font-jetbrains-mono),monospace;
   letter-spacing:.12em;
 }
 .home-integration-finder-head strong{font-size:13px;color:var(--text-primary)}
