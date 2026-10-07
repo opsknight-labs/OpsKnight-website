@@ -81,7 +81,7 @@
    * Replaces the abrupt 112px → 72px jump at the 800px breakpoint.
    * Now scales smoothly across all viewport widths.
    * =================================================================== */
-  --section-pad: clamp(var(--space-16), 5.5vw, 108px);
+  --section-pad: clamp(var(--space-16), 5vw, 108px);
   --section-pad-sm: clamp(44px, 4.25vw, 72px);
 
   /* ===================================================================
