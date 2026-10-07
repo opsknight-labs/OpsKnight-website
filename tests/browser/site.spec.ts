@@ -299,6 +299,65 @@ test("incident signal rail appears only on product storytelling surfaces", async
   }
 });
 
+test("compact laptop density stays below hero-scale proportions", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.goto("/product/paging/");
+
+  const density = await page.evaluate(() => {
+    const hero = document.querySelector<HTMLElement>(".interior-hero");
+    const title = document.querySelector<HTMLElement>(".interior-hero h1");
+    const cta = document.querySelector<HTMLElement>(".final-cta");
+    const footer = document.querySelector<HTMLElement>(".site-footer");
+    const section = document.querySelector<HTMLElement>(".site-section");
+    if (!hero || !title || !cta || !footer || !section) {
+      throw new Error("density probe target missing");
+    }
+    const heroStyle = getComputedStyle(hero);
+    const titleStyle = getComputedStyle(title);
+    const ctaStyle = getComputedStyle(cta);
+    const footerStyle = getComputedStyle(footer);
+    const sectionStyle = getComputedStyle(section);
+    return {
+      heroTop: parseFloat(heroStyle.paddingTop),
+      heroBottom: parseFloat(heroStyle.paddingBottom),
+      title: parseFloat(titleStyle.fontSize),
+      ctaTop: parseFloat(ctaStyle.paddingTop),
+      footerTop: parseFloat(footerStyle.paddingTop),
+      sectionTop: parseFloat(sectionStyle.paddingTop),
+    };
+  });
+
+  expect(density.heroTop).toBeLessThanOrEqual(58);
+  expect(density.heroBottom).toBeLessThanOrEqual(50);
+  expect(density.title).toBeLessThanOrEqual(56);
+  expect(density.ctaTop).toBeLessThanOrEqual(52);
+  expect(density.footerTop).toBeLessThanOrEqual(40);
+  expect(density.sectionTop).toBeLessThanOrEqual(78);
+});
+
+test("product pages expose capability-specific workflows", async ({ page }) => {
+  await page.goto("/product/paging/");
+  await page.getByRole("button", { name: "Bulk", exact: true }).click();
+  await expect(page.locator(".product-signal-flow")).toContainText("Broad broadcast");
+  await expect(page.locator(".product-signal-flow")).toContainText("Delivery evidence");
+
+  await page.goto("/product/chatops/");
+  await page.getByRole("button", { name: "Microsoft Teams", exact: true }).click();
+  await expect(page.locator(".chatops-presentation")).toContainText(
+    "Microsoft Teams. Connected to the incident.",
+  );
+  await expect(page.locator(".chatops-presentation")).toContainText(
+    "OpsKnight remains system of record",
+  );
+
+  await page.goto("/product/status-pages/");
+  await expect(page.locator(".status-live-banner")).toContainText("Live product proof");
+  await expect(
+    page.locator(".status-live-banner").getByRole("link", { name: /View live status/ }),
+  ).toHaveAttribute("href", "https://status.opsknight.com/");
+});
+
 test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
   test.setTimeout(180000);
