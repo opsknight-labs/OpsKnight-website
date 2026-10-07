@@ -119,7 +119,7 @@ export function CompareTable() {
                       {row.source && (
                         <>
                           <p className="mt-0.5 text-[11px] text-slate-500">{row.source}</p>
-                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-600">
                             Verified {compareRowVerifiedAt(row)}
                           </p>
                         </>
@@ -192,7 +192,7 @@ export function CompareTable() {
                       {row.source ? (
                         <>
                           <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-slate-500">{row.source}</p>
-                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-600">
                             Verified {compareRowVerifiedAt(row)}
                           </p>
                         </>

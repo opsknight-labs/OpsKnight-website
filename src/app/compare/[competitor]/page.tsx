@@ -432,7 +432,7 @@ export default async function CompareCompetitorPage({
                             <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
                               {row.source}
                             </p>
-                            <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                            <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-600">
                               Verified {compareRowVerifiedAt(row)}
                             </p>
                           </>
