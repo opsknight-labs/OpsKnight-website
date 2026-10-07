@@ -349,6 +349,9 @@ test("visual coverage for key pages", async ({ page }, testInfo) => {
   ];
   const fullVisualRoutes = [
     ...coreVisualRoutes,
+    "/changelog/",
+    "/legal/",
+    "/solutions/",
     "/security/",
     "/support/",
     "/contact/",
