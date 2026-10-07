@@ -1,7 +1,8 @@
 name: Upgrade Next security release
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [feat/website-v2-redesign]
 
 permissions:
   contents: write
@@ -25,6 +26,10 @@ jobs:
       - name: Apply non-breaking production audit fixes
         run: npm audit fix --omit=dev --audit-level=high
       - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - name: Restore development dependencies for verification
+        run: npm install --include=dev
+      - name: Re-check production dependencies after restoring dev tooling
         run: npm audit --omit=dev --audit-level=high
       - run: npm run product:verify-source
       - run: npm run product:check
