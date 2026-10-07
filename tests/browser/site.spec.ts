@@ -133,6 +133,9 @@ test("changelog restores release filters and version navigation", async ({ page 
   await page.getByRole("tab", { name: "Security", exact: true }).click();
   await expect(page.locator(".release-article").first()).toBeVisible();
   await expect(page.locator(".change-kind-security").first()).toBeVisible();
+  await page.getByRole("tab", { name: "Changes", exact: true }).click();
+  await expect(page.locator(".release-article").first()).toContainText("2.0 Release Boundaries");
+  await expect(page.locator(".release-article").first()).toContainText("One supported status page");
 });
 test("solution journeys use the canonical deployment path", async ({ page }) => {
   await page.goto("/solutions/sre/");

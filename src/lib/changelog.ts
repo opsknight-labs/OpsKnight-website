@@ -55,7 +55,7 @@ export const releases: ReleaseItem[] = [
         items: [
           "Split production runtime: independently scalable Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector processes.",
           "Docker Swarm deployment stacks (integrated and split) with Raft secrets, zero-downtime topology switching, and direct-database lifecycle.",
-          "PgBouncer pooling overlays and certified sizing profiles (Small, Medium, Large, Storm).",
+          "PgBouncer pooling overlays, published sizing profiles (Small, Medium, Large, Storm), and load/correctness scenarios for deployment planning. Benchmark results are planning evidence, not guaranteed capacity.",
         ],
       },
       {
@@ -86,6 +86,18 @@ export const releases: ReleaseItem[] = [
           "Responder-grade installable mobile PWA with per-device Web Push registration and iOS recovery flows.",
           "Custom dashboard templates, configurable widgets, live refresh, PDF export, and fullscreen NOC mode.",
           "First stable release distributed under AGPL-3.0-only; historical v1.4.0 and earlier artifacts retain Apache-2.0.",
+        ],
+      },
+      {
+        type: "changed",
+        title: "2.0 Release Boundaries",
+        items: [
+          "One supported status page per installation; multiple independent status pages are not a released 2.0 capability.",
+          "Service Objectives/SLO UI is deferred and its route redirects; it is not advertised as a released feature.",
+          "Mobile is an installable PWA with Web Push, not a native App Store or Google Play application.",
+          "Voice paging is for initial triggered-incident alerting and responder acknowledgement; later lifecycle updates do not place additional calls.",
+          "OpsKnight remains self-hosted; v2.0.0 does not introduce a hosted OpsKnight Cloud service.",
+          "The 28 inbound contracts are the total supported inbound catalog, not 28 integrations newly introduced in 2.0.",
         ],
       },
     ],
