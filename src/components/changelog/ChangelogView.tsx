@@ -8,6 +8,7 @@ import {
   type ReleaseItem,
   releases,
 } from "@/lib/changelog";
+import { copyText } from "@/lib/client-clipboard";
 
 const FILTERS: { id: "all" | ChangeKind; label: string }[] = [
   { id: "all", label: "All" },
@@ -37,7 +38,8 @@ function CopyPull({ tag }: { tag: string }) {
       <button
         type="button"
         onClick={async () => {
-          await navigator.clipboard.writeText(command);
+          const ok = await copyText(command);
+          if (!ok) return;
           setCopied(true);
           window.setTimeout(() => setCopied(false), 1600);
         }}

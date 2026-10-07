@@ -13,6 +13,7 @@ import {
   GitBranch,
 } from "lucide-react";
 import { latestDocsHref } from "@/lib/docs/paths";
+import { copyText } from "@/lib/client-clipboard";
 
 type SnippetTab = "alertmanager" | "concept_map" | "terraform" | "curl";
 
@@ -32,10 +33,8 @@ export function OpsgenieMigrationHelper({ className = "" }: { className?: string
       code: `receivers:
   - name: 'opsknight-primary'
     webhook_configs:
-      - url: 'https://opsknight.yourcompany.com/api/v1/webhooks/prometheus'
+      - url: 'https://opsknight.yourcompany.com/api/integrations/prometheus?integrationId=YOUR_INTEGRATION_ID'
         send_resolved: true
-        http_config:
-          bearer_token: 'YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY'
 
 route:
   receiver: 'opsknight-primary'
@@ -57,13 +56,12 @@ route:
 
 | Opsgenie Primitive         | OpsKnight Equivalent           | Configuration Location         |
 | -------------------------- | ------------------------------ | ------------------------------ |
-| **Team**                   | **Team / Workspace**           | Console → Teams                |
-| **Escalation Policy**      | **Escalation Policy**          | Console → Escalation Policies  |
-| **Schedule / Rotations**   | **On-Call Schedule Layers**    | Console → Schedules            |
-| **Integrations / API Key** | **Inbound Service Webhooks**   | Console → Services → Webhooks  |
-| **Heartbeat Monitoring**   | **Heartbeat Dead-Man Snitch**  | /api/v1/heartbeats/:id         |
-| **Incoming Alert Rules**   | **Deduplication Fingerprints** | Auto-calculated per incident   |
-| **Slack App**              | **Self-Hosted Slack Bot**      | Settings → Providers → Slack   |`,
+| **Team**                   | **Team**           | Teams                |
+| **Escalation Policy**      | **Escalation Policy**          | Escalation Policies  |
+| **Schedule / Rotations**   | **On-Call Schedule**    | Schedules            |
+| **Integrations / API Key** | **Service Integration**   | Services → Integrations  |
+| **Incoming Alert Rules**   | **Adapter correlation key** | Provider-specific integration   |
+| **Slack App**              | **Slack ChatOps integration**      | Settings → Integrations   |`,
     },
     terraform: {
       title: "Terraform / OpenTofu",
@@ -73,7 +71,7 @@ route:
       code: `# Route alerts to OpsKnight webhook endpoint
 resource "datadog_webhook" "opsknight_alerts" {
   name = "opsknight-sre-oncall"
-  url  = "https://opsknight.yourcompany.com/api/v1/webhooks/datadog"
+  url  = "https://opsknight.yourcompany.com/api/integrations/datadog?integrationId=YOUR_INTEGRATION_ID"
 
   custom_headers = jsonencode({
     "x-integration-key" = var.opsknight_service_key
@@ -94,24 +92,22 @@ resource "datadog_webhook" "opsknight_alerts" {
       filename: "test-alert.sh",
       language: "bash",
       notes: "Send a sample test payload to verify inbound webhook ingestion and escalation triggering.",
-      code: `curl -X POST https://opsknight.yourcompany.com/api/v1/webhooks/generic \\
+      code: `curl -X POST https://opsknight.yourcompany.com/api/integrations/webhook?integrationId=YOUR_INTEGRATION_ID \\
   -H "Content-Type: application/json" \\
   -H "x-integration-key: YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY" \\
   -d '{
-    "title": "Database Connection Pool Saturated",
+    "summary": "Database connection pool saturated",
+    "source": "payments-api",
     "severity": "critical",
-    "dedup_key": "db-pool-exhausted-prod",
-    "details": {
-      "pool_size": 100,
-      "active_connections": 100,
-      "cluster": "primary-eu-west-1"
-    }
+    "status": "triggered",
+    "dedup_key": "db-pool-exhausted-prod"
   }'`,
     },
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(snippets[activeTab].code);
+  const handleCopy = async () => {
+    const ok = await copyText(snippets[activeTab].code);
+    if (!ok) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -134,7 +130,7 @@ resource "datadog_webhook" "opsknight_alerts" {
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Migrate off deprecating SaaS tiers to an independent on-call stack you control.
+              Map Opsgenie concepts to OpsKnight, then validate schedules, routing and paging before changing production senders.
             </p>
           </div>
         </div>

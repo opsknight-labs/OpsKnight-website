@@ -108,6 +108,7 @@ test("integration filtering and setup routes", async ({ page }) => {
   await expect(page.locator(".integration-item")).toHaveCount(1);
   await expect(page.locator(".integration-item")).toContainText("PagerDuty");
   await page.goto("/integrations/webhook/");
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await expect(page.getByRole("button", { name: "Copy payload.json" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Copy cURL" })).toBeVisible();
   await page.getByRole("button", { name: "Copy payload.json" }).click();

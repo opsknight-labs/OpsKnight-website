@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { copyText } from "@/lib/client-clipboard";
 
 export function CopySnippet({
   label,
@@ -19,7 +20,8 @@ export function CopySnippet({
         <button
           type="button"
           onClick={async () => {
-            await navigator.clipboard.writeText(code);
+            const ok = await copyText(code);
+            if (!ok) return;
             setCopied(true);
             window.setTimeout(() => setCopied(false), 1600);
           }}

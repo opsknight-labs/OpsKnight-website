@@ -22,6 +22,7 @@ import {
 import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
+import { copyText } from "@/lib/client-clipboard";
 const steps = [
   {
     label: "Detect",
@@ -687,7 +688,8 @@ export function IntegrationExplorer() {
   const [copiedContract, setCopiedContract] = useState<string | null>(null);
 
   const copyContract = async (label: string, value: string) => {
-    await navigator.clipboard.writeText(value);
+    const ok = await copyText(value);
+    if (!ok) return;
     setCopiedContract(label);
     window.setTimeout(() => setCopiedContract(null), 1400);
   };

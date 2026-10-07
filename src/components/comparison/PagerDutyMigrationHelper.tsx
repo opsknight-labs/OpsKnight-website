@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { latestDocsHref } from "@/lib/docs/paths";
 import { BRAND } from "@/lib/brand";
+import { copyText } from "@/lib/client-clipboard";
 
 type SnippetTab = "alertmanager" | "terraform" | "datadog" | "curl";
 
@@ -75,7 +76,7 @@ resource "datadog_webhook" "opsknight_pagerduty_adapter" {
       title: "Datadog Webhook",
       filename: "datadog-webhook.json",
       language: "json",
-      notes: "Configure Datadog Webhook to send Events API v2 payloads to OpsKnight with zero alert template changes.",
+      notes: "If you keep the PagerDuty-compatible path, validate Datadog's rendered Events API v2 payload before switching production. For new setups, prefer OpsKnight's native Datadog adapter.",
       code: `{
   "name": "OpsKnight-PagerDuty-Adapter",
   "url": "https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enqueue",
@@ -131,8 +132,9 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
 
   const currentSnippet = snippets[activeTab];
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(currentSnippet.code);
+  const handleCopy = async () => {
+    const ok = await copyText(currentSnippet.code);
+    if (!ok) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -150,14 +152,14 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-semibold text-white sm:text-base">
-                  Zero-Code Migration: Events API v2 Ingest Adapter
+                  Validated Events API v2 transition
                 </h3>
                 <span className="rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-400">
-                  Drop-in Endpoint
+                  Compatibility Endpoint
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Keep your existing alert payloads. Just change the destination URL to OpsKnight.
+                Reuse an existing Events API v2 payload only after validating the sender, routing key and lifecycle behavior in staging.
               </p>
             </div>
           </div>
@@ -212,7 +214,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
 
           <div className="rounded-xl border border-slate-800 bg-[#0f172a] p-3.5 text-xs text-slate-300 space-y-2">
             <p className="font-semibold text-white flex items-center gap-1.5">
-              <span>Why zero-code migration?</span>
+              <span>Migration guidance</span>
             </p>
             <p className="text-[11px] leading-relaxed text-slate-400">
               {currentSnippet.notes}
@@ -269,7 +271,7 @@ curl -X POST https://opsknight.yourcompany.com/api/integrations/pagerduty/v2/enq
           <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400" />
           <p>
             <strong className="font-semibold text-slate-400">Trademark &amp; Compatibility Notice:</strong>{" "}
-            PagerDuty® is a registered trademark of PagerDuty, Inc. OpsKnight Community is an independent
+            PagerDuty® is a registered trademark of PagerDuty, Inc. OpsKnight is an independent
             open-source project licensed under {BRAND.license} and is not affiliated with, endorsed by, or
             sponsored by PagerDuty, Inc. Compatibility refers solely to an ingest adapter supporting the
             public Events API v2 JSON payload schema.

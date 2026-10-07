@@ -179,3 +179,25 @@ test("integration manifest preserves release-backed request contracts", () => {
   assert.equal(byId.slack.kind, "workflow");
   assert.equal(byId.slack.endpoint, null);
 });
+
+test("migration helpers use current v2 integration routes", () => {
+  const helperPaths = [
+    "src/components/comparison/PagerDutyMigrationHelper.tsx",
+    "src/components/comparison/OpsgenieMigrationHelper.tsx",
+    "src/components/comparison/GrafanaMigrationHelper.tsx",
+  ];
+  for (const relative of helperPaths) {
+    const source = fs.readFileSync(path.join(root, relative), "utf8");
+    assert.doesNotMatch(source, /\/api\/v1\/webhooks\//);
+    assert.doesNotMatch(source, /\/api\/v1\/heartbeats/);
+    assert.doesNotMatch(source, /zero[- ]code|zero alert template changes/i);
+  }
+  const opsgenie = fs.readFileSync(path.join(root, helperPaths[1]), "utf8");
+  assert.match(opsgenie, /\/api\/integrations\/prometheus\?integrationId=/);
+  assert.match(opsgenie, /\/api\/integrations\/datadog\?integrationId=/);
+  assert.match(opsgenie, /\/api\/integrations\/webhook\?integrationId=/);
+  const grafana = fs.readFileSync(path.join(root, helperPaths[2]), "utf8");
+  assert.match(grafana, /\/api\/integrations\/grafana\?integrationId=/);
+  const pagerduty = fs.readFileSync(path.join(root, helperPaths[0]), "utf8");
+  assert.match(pagerduty, /\/api\/integrations\/pagerduty\/v2\/enqueue/);
+});
