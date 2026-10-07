@@ -122,7 +122,7 @@ test("changelog restores release filters and version navigation", async ({ page 
   await expect(page.locator(".change-kind-security").first()).toBeVisible();
 });
 test("solution journeys use the canonical deployment path", async ({ page }) => {
-  await page.goto("/solutions/sre-teams/");
+  await page.goto("/solutions/sre/");
   await expect(page.getByRole("link", { name: "Deploy OpsKnight" })).toHaveAttribute(
     "href",
     "/deploy/",

@@ -77,7 +77,7 @@ export default function Support() {
             >
               Discuss your requirements
             </Action>
-            <Action href="/install/" secondary>
+            <Action href="/deploy/" secondary>
               Self-host OpsKnight
             </Action>
           </div>
