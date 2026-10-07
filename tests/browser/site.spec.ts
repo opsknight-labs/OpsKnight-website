@@ -76,6 +76,17 @@ test("navigation and search", async ({ page }, testInfo) => {
   await expect(page.getByPlaceholder(/Search/).first()).toBeVisible();
   await page.keyboard.press("Escape");
 });
+test("integration catalog distinguishes alert, communication, and issue-tracking connections", async ({ page }) => {
+  await page.goto("/integrations/");
+  const breakdown = page.getByLabel("Integration catalog breakdown");
+  await expect(breakdown).toContainText("28");
+  await expect(breakdown).toContainText("Alert sources");
+  await expect(breakdown).toContainText("2");
+  await expect(breakdown).toContainText("Communication");
+  await expect(breakdown).toContainText("1");
+  await expect(breakdown).toContainText("Issue tracking");
+});
+
 test("integration filtering and setup routes", async ({ page }) => {
   await page.goto("/integrations/");
   for (const image of await page.locator(".integration-item img").all()) {

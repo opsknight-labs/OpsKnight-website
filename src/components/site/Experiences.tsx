@@ -718,6 +718,12 @@ export function IntegrationExplorer() {
   const selected = PRODUCT.integrations.find(
     (provider) => provider.id === selectedId,
   );
+  const communicationCount = PRODUCT.integrations.filter(
+    (provider) => provider.category === "communication",
+  ).length;
+  const issueTrackingCount = PRODUCT.integrations.filter(
+    (provider) => provider.category === "issue-tracking",
+  ).length;
 
   return (
     <div className="integration-explorer">
@@ -731,9 +737,19 @@ export function IntegrationExplorer() {
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
-        <div className="integration-count">
-          <strong>{PRODUCT.inboundIntegrationCount}</strong>
-          <span>release-verified inbound integrations</span>
+        <div className="integration-count-breakdown" aria-label="Integration catalog breakdown">
+          <div>
+            <strong>{PRODUCT.inboundIntegrationCount}</strong>
+            <span>Alert sources</span>
+          </div>
+          <div>
+            <strong>{communicationCount}</strong>
+            <span>Communication</span>
+          </div>
+          <div>
+            <strong>{issueTrackingCount}</strong>
+            <span>Issue tracking</span>
+          </div>
         </div>
       </div>
 
@@ -752,7 +768,7 @@ export function IntegrationExplorer() {
       </div>
 
       <p className="results-count" aria-live="polite">
-        {filtered.length} connections match this view · {PRODUCT.inboundIntegrationCount} inbound alert sources + 3 workflow connections
+        {filtered.length} connections match this view · {PRODUCT.inboundIntegrationCount} alert sources · {communicationCount} communication · {issueTrackingCount} issue tracking
       </p>
 
       <div className="integration-results">

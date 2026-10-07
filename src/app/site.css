@@ -4938,3 +4938,35 @@ html {
 .security-control-body li{display:flex;align-items:flex-start;gap:10px;color:var(--text-secondary-strong);font-size:12px;line-height:1.6}
 .security-control-body li svg{margin-top:3px;color:#059669;flex:0 0 auto}
 @media(max-width:800px){.security-trust-intro,.security-control-stack article{grid-template-columns:1fr;gap:24px}.security-control-stack article{padding:28px 0}}
+
+.integration-count-breakdown{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(92px,1fr));
+  gap:10px;
+  align-items:stretch;
+}
+.integration-count-breakdown>div{
+  display:grid;
+  align-content:center;
+  justify-items:end;
+  min-height:62px;
+  padding:10px 12px;
+  border-left:1px solid var(--border-light);
+}
+.integration-count-breakdown strong{
+  color:var(--ok-red);
+  font-size:24px;
+  line-height:1;
+}
+.integration-count-breakdown span{
+  margin-top:6px;
+  color:var(--text-secondary);
+  font:8px var(--font-jetbrains-mono),monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .integration-count-breakdown{grid-template-columns:repeat(3,1fr)}
+  .integration-count-breakdown>div{justify-items:start;border-left:0;border-top:1px solid var(--border-light);padding-inline:0}
+}
