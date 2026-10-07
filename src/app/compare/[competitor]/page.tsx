@@ -10,6 +10,7 @@ import { Action, FinalCTA, TextLink } from "@/components/site/Primitives";
 import {
   COMPARE_SECTIONS,
   COMPARE_SOURCE_LINKS,
+  compareRowVerifiedAt,
   type CompareCell,
   type CompareVendorId,
 } from "@/lib/compare-matrix";
@@ -427,9 +428,14 @@ export default async function CompareCompetitorPage({
                       <div className="md:col-span-4">
                         <h4 className="text-sm font-bold text-slate-900">{row.feature}</h4>
                         {row.source && (
-                          <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
-                            {row.source}
-                          </p>
+                          <>
+                            <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
+                              {row.source}
+                            </p>
+                            <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                              Verified {compareRowVerifiedAt(row)}
+                            </p>
+                          </>
                         )}
                       </div>
 

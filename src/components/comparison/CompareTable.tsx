@@ -5,6 +5,7 @@ import { Check, Minus, Filter } from "lucide-react";
 import {
   COMPARE_SECTIONS,
   COMPARE_VENDORS,
+  compareRowVerifiedAt,
   type CompareCell,
   type CompareVendorId,
 } from "@/lib/compare-matrix";
@@ -116,7 +117,12 @@ export function CompareTable() {
                     <div>
                       <h4 className="text-sm font-bold text-slate-900">{row.feature}</h4>
                       {row.source && (
-                        <p className="mt-0.5 text-[11px] text-slate-500">{row.source}</p>
+                        <>
+                          <p className="mt-0.5 text-[11px] text-slate-500">{row.source}</p>
+                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                            Verified {compareRowVerifiedAt(row)}
+                          </p>
+                        </>
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-3 pt-1">
@@ -184,7 +190,12 @@ export function CompareTable() {
                     <td className="sticky left-0 z-10 bg-white px-4 py-3.5 align-top">
                       <p className="text-sm font-semibold text-slate-900">{row.feature}</p>
                       {row.source ? (
-                        <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-slate-500">{row.source}</p>
+                        <>
+                          <p className="mt-1 max-w-[14rem] text-[11px] leading-snug text-slate-500">{row.source}</p>
+                          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                            Verified {compareRowVerifiedAt(row)}
+                          </p>
+                        </>
                       ) : null}
                     </td>
                     {COMPARE_VENDORS.map((vendor) => (

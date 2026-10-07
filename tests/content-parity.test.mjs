@@ -275,3 +275,11 @@ test("marketing evidence stays on the Northstar v2 fixture", () => {
   assert.equal(platform.products.find((item) => item.slug === "chatops")?.screenshot, null);
   assert.equal(platform.products.find((item) => item.slug === "mobile")?.screenshot, null);
 });
+
+test("comparison rows expose source and verification metadata", () => {
+  const matrix = fs.readFileSync(path.join(root, "src/lib/compare-matrix.ts"), "utf8");
+  const table = fs.readFileSync(path.join(root, "src/components/comparison/CompareTable.tsx"), "utf8");
+  assert.ok(matrix.includes("verifiedAt?: string"));
+  assert.ok(matrix.includes("compareRowVerifiedAt"));
+  assert.ok(table.includes("Verified {compareRowVerifiedAt(row)}"));
+});

@@ -50,8 +50,12 @@ export type CompareRow = {
   feature: string;
   category?: CompareCategory;
   source?: string;
+  verifiedAt?: string;
   values: Record<CompareVendorId, CompareCell>;
 };
+
+export const compareRowVerifiedAt = (row: CompareRow) =>
+  row.verifiedAt ?? COMPARE_AS_OF;
 
 export type CompareSection = {
   title: string;
