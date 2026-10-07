@@ -19,7 +19,7 @@ python3 -m http.server 5002 --directory out
 PREVIEW_URL=http://localhost:5002 npm run test:browser
 ```
 
-The contract tests deliberately reject release drift, stale integration counts, unsupported capabilities, missing docs, modified evidence and incorrect status/mobile/voice boundaries. The exported-link check validates every HTML page, local reference, marketing canonical and sitemap entry. Browser tests cover desktop/mobile navigation, filters, deployment recommendations, keyboard tabs, reduced motion, WCAG AA rules and screenshot baselines.
+The contract tests deliberately reject release drift, stale integration counts, unsupported capabilities, missing docs, modified evidence and incorrect status/mobile/voice boundaries. The exported-link check validates every HTML page, local reference, marketing canonical and sitemap entry. Browser tests cover desktop/mobile navigation, filters, deployment recommendations, keyboard tabs, reduced motion, WCAG AA rules and snapshot baselines using Playwright `toHaveScreenshot()` visual-regression assertions.
 
 `npm run test:visual:update` explicitly updates visual baselines. Review changed images before committing them. The portable Chromium baselines allow a small rasterization tolerance; CI retains screenshots and traces when a check fails.
 
@@ -71,4 +71,4 @@ Manrope and JetBrains Mono are self-hosted by Next's font build. Product images 
 
 Field targets remain LCP <2.5 seconds, CLS <0.1 and INP <200ms. Local Lighthouse results are lab evidence, not a claim about production field performance. Measure the Cloudflare preview before rollout and monitor real-user vitals after launch.
 
-Local verification on October 5, 2026: static build passed with the separate demo containers stopped; 13 contract tests and 14 desktop/mobile browser tests passed. The export checker validated 860 HTML pages and 50,506 local references. Lighthouse mobile lab scores were 96 performance, 100 accessibility and 100 SEO, with LCP 2.74s, CLS 0 and TBT 30.5ms. LCP remains above the 2.5s target and needs verification on the Cloudflare preview. No production deployment was performed.
+Verification on October 7, 2026: static build passed with 872 static routes rendered; 27 contract and content parity tests passed; 43 Playwright browser tests passed across desktop, mobile, and responsive viewport projects with `expect(page).toHaveScreenshot()` visual regression assertions. The export checker validated 865 HTML pages and 54,183 local references. 100% WCAG AA contrast compliance across all 14 marketing flows. No production deployment was performed.
