@@ -1,87 +1,75 @@
 {
-  "source": "Isolated Docker Compose marketing demo, actual v2.0.0 release",
-  "capturedAt": "2026-10-05T05:24:34.938Z",
+  "source": "OpsKnight v2.0.0 documentation evidence runtime",
+  "capturedAt": "2026-10-07T05:11:01.068Z",
   "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
   "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
   "assets": {
     "dashboard-overview": {
-      "width": 2400,
-      "height": 1290,
-      "sha256": "e3269e78d58e1a26b1db60b485556419a41e4dfe979e0d06b70bb2d0f17b5af5",
+      "width": 1440,
+      "height": 900,
+      "sha256": "1bdc30af4c468cd74a909d5f8cfd89d81e6da343e10aed4331c03013c7c2f713",
+      "fixture": "Northstar Systems",
       "route": "/"
     },
-    "incident-triggered": {
-      "width": 1440,
-      "height": 900,
-      "sha256": "54aebd73b8ef50497897f2536cb1ded65d59c926ea2f062a55c48a29de61526c",
-      "route": "/incidents/new"
-    },
-    "incident-acknowledged": {
-      "width": 1440,
-      "height": 900,
-      "sha256": "e23c0dbf4d75bb25228c52d18cce63707a36f01d1f21414653f20b8a080a694b",
-      "route": "/incidents/cmurz14gx0032ytbwj5tolfat"
-    },
     "incident-detail": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "b0ef76b41433d0abede8a5463190f646d9f9a8ba9dfb946973333635cb05c0e5",
-      "route": "/incidents/cmurz14gx0032ytbwj5tolfat"
+      "width": 1440,
+      "height": 900,
+      "sha256": "12fd593756a016961639d85b646dd8258ceae2dffd8bd4f61c4d7b1e57126f3a",
+      "fixture": "Northstar Systems",
+      "route": "/incidents/[northstar-incident]"
     },
     "on-call-schedule-detail": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "8b58c9df6e14249cdb00d8c46692de512e81c9795dbdc7cf61daad0225f07359",
-      "route": "/schedules/cmurz14fv001yytbwuhmp8tvd"
+      "width": 1440,
+      "height": 900,
+      "sha256": "b1583e47b927507cc76e0c4a8b700e9806f15b9eb4042543c56b629fa8272128",
+      "fixture": "Northstar Systems",
+      "route": "/schedules/[commerce-primary-on-call]"
     },
     "analytics-overview": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "23eb25e529dea646436c8548aff744a68dfe783240e045cfe95f240b82d3ca5f",
+      "width": 1440,
+      "height": 900,
+      "sha256": "d15f0ebb67d085387cde1e090117ba1ca26f6cd8d12572eceb9d1da1d66326d5",
+      "fixture": "Northstar Systems",
       "route": "/analytics"
     },
     "postmortems": {
-      "width": 1304,
-      "height": 944,
-      "sha256": "ebba4fce0165537f27a64ddc86b4810de90cb02c348e7dad8b126957592da9f1",
+      "width": 1440,
+      "height": 900,
+      "sha256": "544647a4207f9f2bb57d9eecbb341e3aa2538966384cfbcde04ec953053ae138",
+      "fixture": "Northstar Systems",
       "route": "/postmortems"
     },
     "audit-log": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "0f490c9fb44adef41ff2b1fd3d8d58ecd08c202cfb5f26b4491d6549779dd0a4",
+      "width": 1440,
+      "height": 900,
+      "sha256": "fbfddaa6382ccdcb396826641a7cb0645916566b3490a7b50c659e4c13e906a3",
+      "fixture": "Northstar Systems",
       "route": "/audit"
     },
     "notification-settings": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "d3bf84ab273d2f369e0a9e0b4fd4999b3b880ff33898dedd705e3ab071b012dc",
+      "width": 1440,
+      "height": 900,
+      "sha256": "bb9620474f386573ec5697c8a941f5e162d4c7c7194a5d17ef94da28ff8519ae",
+      "fixture": "Northstar Systems",
       "route": "/settings/notifications"
     },
     "health-center": {
-      "width": 1304,
-      "height": 897,
-      "sha256": "233dde4bf3fc857efbf386f724d6591ed144eaf55880d7f2b3f21458c11834fb",
+      "width": 1440,
+      "height": 900,
+      "sha256": "cf3c4bb24acbb95aaafa6b9cada15957eec68f8ea5d492e139b842c72889e632",
+      "fixture": "Northstar Systems",
       "route": "/settings/system/health"
     },
     "status-pages": {
-      "width": 1520,
-      "height": 1000,
-      "sha256": "99cc68676d66009cd46b8461e6201a33cd13fdb4044c575e6eac08a234db4d64",
-      "route": "/status/aster-cloud",
-      "authenticated": false
-    },
-    "teams-chatops-war-room": {
-      "width": 1600,
-      "height": 1081,
-      "sha256": "f256bf409b4619375acfe41695fb7dc82622dda12d59ba7fcc1513fd8de70ac9",
-      "route": "Certified Teams collaboration evidence"
-    },
-    "mobile": {
-      "width": 390,
-      "height": 844,
-      "sha256": "34fd1021581db110ed52e0c7ab471d38e9be706c8196f82f882375ba174a428d",
-      "route": "/m"
+      "width": 1440,
+      "height": 900,
+      "sha256": "7df24262431b75a0215a8b383882e78e1d778bfefcdd18e5af75cd4e00834aca",
+      "fixture": "Northstar Systems",
+      "route": "/settings/status-pages",
+      "authenticated": true,
+      "publicProof": "https://status.opsknight.com"
     }
-  }
+  },
+  "capturePipeline": "OpsKnight v2.0.0 docs evidence journey",
+  "fixture": "Northstar Systems"
 }
