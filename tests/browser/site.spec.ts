@@ -365,6 +365,31 @@ test("1366 laptop density stays compact", async ({ page }, testInfo) => {
   expect(footerPad).toBeLessThanOrEqual(44);
 });
 
+test("desktop density scales intentionally across 1440 and 1920", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  const profiles = [
+    { width: 1440, height: 900, section: [70, 74], cta: [44, 48] },
+    { width: 1920, height: 1080, section: [94, 98], cta: [56, 60] },
+  ];
+
+  for (const profile of profiles) {
+    await page.setViewportSize({ width: profile.width, height: profile.height });
+    await page.goto("/product/paging/");
+    const values = await page.evaluate(() => ({
+      section: Number.parseFloat(
+        getComputedStyle(document.querySelector(".site-section")!).paddingTop,
+      ),
+      cta: Number.parseFloat(
+        getComputedStyle(document.querySelector(".final-cta")!).paddingTop,
+      ),
+    }));
+    expect(values.section).toBeGreaterThanOrEqual(profile.section[0]);
+    expect(values.section).toBeLessThanOrEqual(profile.section[1]);
+    expect(values.cta).toBeGreaterThanOrEqual(profile.cta[0]);
+    expect(values.cta).toBeLessThanOrEqual(profile.cta[1]);
+  }
+});
+
 test("desktop comparison matrix is keyboard focusable", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
   await page.goto("/compare/");
