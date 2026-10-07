@@ -3733,8 +3733,9 @@ html {
 .legal-meta-facts span,
 .legal-meta nav > span{
   margin-top:10px;
-  color:var(--text-dark-muted);
+  color:var(--text-secondary-strong);
   font:8px var(--font-jetbrains-mono),monospace;
+  font-weight:700;
   letter-spacing:.13em;
 }
 .legal-meta-facts strong,
