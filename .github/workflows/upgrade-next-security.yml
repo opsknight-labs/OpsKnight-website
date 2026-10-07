@@ -1,8 +1,7 @@
 name: Upgrade Next security release
 
 on:
-  push:
-    branches: [feat/website-v2-redesign]
+  workflow_dispatch:
 
 permissions:
   contents: write

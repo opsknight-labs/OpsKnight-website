@@ -294,7 +294,7 @@
       "description": "Install the progressive web app and acknowledge, triage and follow incidents from your phone.",
       "capability": "mobile",
       "docs": "concepts/mobile",
-      "screenshot": "mobile.png",
+      "screenshot": null,
       "features": [
         "Installable progressive web app",
         "Per-device Web Push registration",
