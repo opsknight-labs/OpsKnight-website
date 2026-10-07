@@ -14,6 +14,8 @@ import {
 } from "@/components/site/Primitives";
 import { ProductWorkflow } from "@/components/site/ProductWorkflow";
 import { ArchitectureViewer } from "@/components/site/Experiences";
+import { IncidentLifecycleSwitcher } from "@/components/site/IncidentLifecycleSwitcher";
+import Image from "next/image";
 export function generateStaticParams() {
   return PRODUCT.platform.products.map((p) => ({ slug: p.slug }));
 }
@@ -163,26 +165,50 @@ export default async function ProductPage({
             </div>
           </div>
           <div className="product-value-proof">
-            {p.screenshot ? (
+            {slug === "incidents" ? (
+              <IncidentLifecycleSwitcher />
+            ) : slug === "mobile" ? (
+              <figure className="product-shot">
+                <div className="shot-label">
+                  <span className="signal-dot" /> OPSKNIGHT MOBILE PWA{" "}
+                  <span>iOS &amp; Android · Light &amp; Dark · Push Paging</span>
+                </div>
+                <Image
+                  src="/product/mobile.webp"
+                  width={2400}
+                  height={1350}
+                  alt="OpsKnight mobile PWA on iPhone: responder home and incident triage in light mode, push notifications on the lock screen, incident response and on-call in dark mode"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                />
+                <figcaption>
+                  OpsKnight mobile PWA: responder home, triage, push notifications, incident response and on-call.
+                </figcaption>
+              </figure>
+            ) : slug === "status-pages" ? (
+              <figure className="product-shot">
+                <div className="shot-label">
+                  <span className="signal-dot" /> PUBLIC STATUS PAGE{" "}
+                  <span>Real-time uptime, components, history and maintenance</span>
+                </div>
+                <Image
+                  src="/product/status-page.webp"
+                  width={1920}
+                  height={1080}
+                  alt="OpsKnight public status page displaying real-time system status, operational services, uptime history, and active incident announcements"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                />
+                <figcaption>
+                  OpsKnight public status page displaying real-time system status, operational services, uptime history, and active incident announcements.
+                </figcaption>
+              </figure>
+            ) : p.screenshot ? (
               <ProductScreenshot
                 name={p.screenshot}
                 alt={`OpsKnight ${p.label.toLowerCase()} product view`}
                 priority
               />
-            ) : slug === "mobile" ? (
-              <div className="product-no-shot">
-                <span className="site-eyebrow">INSTALLABLE PWA</span>
-                <strong>Install. Enable notifications. Respond.</strong>
-                <p>
-                  Use the same installation identity and incident state from the
-                  device responders already carry.
-                </p>
-                <TextLink
-                  href={productDocs("guides/mobile/install-and-notifications")}
-                >
-                  Configure mobile response
-                </TextLink>
-              </div>
             ) : (
               <div className="product-no-shot">
                 <span className="site-eyebrow">PRODUCT WORKFLOW</span>

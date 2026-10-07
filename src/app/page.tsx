@@ -88,20 +88,20 @@ export default function Home() {
             <HeroSignal />
             <figure className="hero-composite-art">
               <Image
-                src="/product/hero-composite.webp"
-                width={3200}
-                height={1800}
-                alt="Composed OpsKnight v2.0.0 product artwork built from the Northstar Systems synthetic release fixture"
+                src="/product/command-center.webp"
+                width={2400}
+                height={1290}
+                alt="OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns"
                 priority
                 sizes="(max-width: 768px) 100vw, 1100px"
               />
               <figcaption>
-                Composed release artwork generated from the OpsKnight v2.0.0 Northstar capture pipeline.
+                OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns.
               </figcaption>
             </figure>
             <div className="hero-product-foot">
-              <span>COMPOSED V2.0.0 PRODUCT EVIDENCE</span>
-              <span>NORTHSTAR SYSTEMS FIXTURE</span>
+              <span>REAL-TIME INCIDENT OPERATIONS &amp; TRIAGE</span>
+              <span>OPSKNIGHT COMMAND CENTER</span>
             </div>
           </div>
         </div>
