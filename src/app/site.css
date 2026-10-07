@@ -4195,3 +4195,16 @@ html {
     font-size:clamp(38px,11vw,54px);
   }
 }
+
+.legal-meta-fact{
+  display:grid;
+  gap:6px;
+  min-width:0;
+}
+.legal-meta-fact > span{
+  margin-top:0;
+}
+.legal-meta-fact > strong{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
