@@ -17,6 +17,7 @@ import {
   Terminal,
   X,
   ExternalLink,
+  Copy,
 } from "lucide-react";
 import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
@@ -683,6 +684,13 @@ export function IntegrationExplorer() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [copiedContract, setCopiedContract] = useState<string | null>(null);
+
+  const copyContract = async (label: string, value: string) => {
+    await navigator.clipboard.writeText(value);
+    setCopiedContract(label);
+    window.setTimeout(() => setCopiedContract(null), 1400);
+  };
   const categories = Array.from(
     new Set(PRODUCT.integrations.map((provider) => provider.category)),
   );
@@ -847,12 +855,51 @@ export function IntegrationExplorer() {
                   <p>{readableToken(selected.signature)}</p>
                 </section>
                 {selected.endpoint ? (
-                  <section>
-                    <span>ENDPOINT</span>
-                    <code className="integration-contract-code">
-                      {selected.method ?? "POST"} {selected.endpoint}
-                    </code>
-                  </section>
+                  <>
+                    <section>
+                      <span>ENDPOINT</span>
+                      <div className="integration-copy-row">
+                        <code className="integration-contract-code">
+                          {selected.method ?? "POST"} {selected.endpoint}
+                        </code>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyContract(
+                              "endpoint",
+                              `${selected.method ?? "POST"} ${selected.endpoint}`,
+                            )
+                          }
+                        >
+                          <Copy size={14} />
+                          {copiedContract === "endpoint" ? "Copied" : "Copy"}
+                        </button>
+                      </div>
+                    </section>
+                    <section>
+                      <span>REQUEST STARTER</span>
+                      <div className="integration-copy-row">
+                        <code className="integration-contract-code">
+                          curl -X {selected.method ?? "POST"} https://your-opsknight.example{selected.endpoint}
+                        </code>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyContract(
+                              "curl",
+                              `curl -X ${selected.method ?? "POST"} "https://your-opsknight.example${selected.endpoint}"`,
+                            )
+                          }
+                        >
+                          <Copy size={14} />
+                          {copiedContract === "curl" ? "Copied" : "Copy"}
+                        </button>
+                      </div>
+                      <p className="integration-starter-note">
+                        Starter only. Add the provider-specific credentials and payload from the setup guide.
+                      </p>
+                    </section>
+                  </>
                 ) : null}
                 {selected.acceptedCredentials.length ? (
                   <section>

@@ -3959,3 +3959,58 @@ html {
 @media (max-height: 760px) and (min-width: 801px) {
   .site-section { padding: var(--section-pad) 0; }
 }
+
+/* Subtle menu reveal and source-backed integration copy controls. */
+.site-mega,
+.site-small-menu{
+  transform-origin:top center;
+}
+.desktop-nav details[open] > .site-mega,
+.desktop-nav details[open] > .site-small-menu{
+  animation:nav-menu-enter 180ms var(--site-ease) both;
+}
+@keyframes nav-menu-enter{
+  from{opacity:0;transform:translateY(-5px)}
+  to{opacity:1;transform:none}
+}
+.integration-copy-row{
+  display:flex;
+  align-items:stretch;
+  gap:8px;
+}
+.integration-copy-row .integration-contract-code{
+  flex:1;
+  min-width:0;
+}
+.integration-copy-row button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-width:74px;
+  padding:8px 10px;
+  border:1px solid var(--border-light);
+  border-radius:6px;
+  background:var(--surface-white);
+  color:var(--text-secondary);
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+.integration-copy-row button:hover{
+  border-color:var(--text-dark-muted);
+  color:var(--text-primary);
+}
+.integration-starter-note{
+  margin-top:8px!important;
+  color:var(--text-dark-muted)!important;
+  font-size:10px!important;
+}
+@media (max-width:600px){
+  .integration-copy-row{align-items:stretch;flex-direction:column}
+  .integration-copy-row button{align-self:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  .desktop-nav details[open] > .site-mega,
+  .desktop-nav details[open] > .site-small-menu{animation:none}
+}

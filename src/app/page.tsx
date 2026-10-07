@@ -123,8 +123,9 @@ export default function Home() {
               eyebrow="PRODUCT PILLARS"
               title="Built for the entire incident lifecycle."
             >
-              Every capability runs on your infrastructure, connects to your
-              identity, and keeps your operational data strictly yours.
+              The core incident platform runs on your infrastructure, connects
+              to your identity, and keeps the application data plane under your
+              operating control.
             </SectionIntro>
             <TextLink href="/product/incidents/">Browse all features</TextLink>
           </div>
@@ -365,7 +366,7 @@ export default function Home() {
           <div className="paired-links">
             <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
             <TextLink href="/changelog/">Read release notes</TextLink>
-            <TextLink href="/support/">Enterprise Support & Services</TextLink>
+            <TextLink href="/support/">Commercial Support & Services</TextLink>
             <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
           </div>
         </div>

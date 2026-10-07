@@ -1,3 +1,6 @@
+import { PRODUCT } from "@/lib/product";
+import { BRAND } from "@/lib/brand";
+
 export type ChangeKind =
   | "added"
   | "security"
@@ -32,15 +35,19 @@ export const CHANGE_KIND_LABEL: Record<ChangeKind, string> = {
 
 export const releases: ReleaseItem[] = [
   {
-    version: "v2.0.0",
-    slug: "v2.0.0",
+    version: PRODUCT.release.tag,
+    slug: PRODUCT.release.tag,
     badge: "Latest",
-    date: "October 2, 2026",
+    date: new Intl.DateTimeFormat("en", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(new Date(PRODUCT.release.date + "T00:00:00Z")),
     summary:
       "A major milestone release introducing split production runtimes, Microsoft Teams ChatOps, Twilio voice paging, incident response policy engine, SCIM 2.0 provisioning, Docker Swarm HA, ManageEngine ingestion, and a durable notification delivery control plane.",
-    dockerTag: "ghcr.io/opsknight-labs/opsknight:2.0.0",
-    githubReleaseUrl:
-      "https://github.com/opsknight-labs/OpsKnight/releases/tag/v2.0.0",
+    dockerTag: `ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}`,
+    githubReleaseUrl: `${BRAND.links.releases}/tag/${PRODUCT.release.tag}`,
     categories: [
       {
         type: "added",

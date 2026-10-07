@@ -87,6 +87,8 @@ test("integration filtering and setup routes", async ({ page }) => {
   await expect(drawer).toContainText("AUTHENTICATION");
   await expect(drawer).toContainText("SIGNATURE BEHAVIOR");
   await expect(drawer).toContainText("POST /api/integrations/datadog");
+  await expect(drawer).toContainText("REQUEST STARTER");
+  await expect(drawer.getByRole("button", { name: "Copy", exact: true })).toHaveCount(2);
   await expect(drawer).toContainText("100 requests / 60s / integration");
   await expect(drawer).toContainText("CORRELATION & RECOVERY");
   await drawer.getByRole("link", { name: /Open Datadog integration/ }).click();

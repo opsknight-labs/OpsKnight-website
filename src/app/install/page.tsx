@@ -34,7 +34,7 @@ export default function Install() {
           </h1>
           <p className="site-description">
             OpsKnight deploys entirely inside your VPC or private cloud. Start with an integrated
-            single-node container, scale across a Docker Swarm, or deploy to enterprise Kubernetes
+            single-node container, scale across a Docker Swarm, or deploy to production Kubernetes
             with isolated worker roles and PgBouncer connection pooling.
           </p>
           <div className="site-actions">
