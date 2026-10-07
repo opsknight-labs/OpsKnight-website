@@ -157,6 +157,7 @@ export default function Security() {
                 </p>
                 <ul>
                   <li><CheckCircle2 size={14} /> Inventory identity, notification, ChatOps, webhook, and observability destinations.</li>
+                  <li><CheckCircle2 size={14} /> Keep platform and PostgreSQL telemetry under operator control; any external observability exporter is an explicit outbound trust boundary.</li>
                   <li><CheckCircle2 size={14} /> Restrict database exposure and review proxy/TLS boundaries.</li>
                   <li><CheckCircle2 size={14} /> Verify provider failures and rate limits without weakening critical-response traffic.</li>
                 </ul>
