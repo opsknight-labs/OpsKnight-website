@@ -23,6 +23,8 @@ jobs:
           cache: npm
       - name: Upgrade Next.js Active LTS security release
         run: npm install --save-exact next@16.3.8 eslint-config-next@16.3.8
+      - name: Apply non-breaking production audit fixes
+        run: npm audit fix --omit=dev
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
       - run: npm run product:verify-source
