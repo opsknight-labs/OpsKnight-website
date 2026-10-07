@@ -67,6 +67,7 @@ export function SiteNavigation() {
   };
 
   const resourcesActive = resources.some(([, href]) => isActive(href));
+  const showIncidentSignal = path === "/" || path.startsWith("/product/");
 
   useEffect(() => {
     function closeMenus(event: Event) {
@@ -103,7 +104,7 @@ export function SiteNavigation() {
 
   return (
     <>
-      <IncidentSignal />
+      {showIncidentSignal ? <IncidentSignal /> : null}
       <header className="site-nav" ref={header}>
         <a className="site-skip" href="#main-content">
           Skip to content

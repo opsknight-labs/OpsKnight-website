@@ -217,6 +217,19 @@ test("reduced motion and product boundaries", async ({ page }) => {
     "no manual escalation control in Web",
   );
 });
+test("incident signal rail appears only on product storytelling surfaces", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".incident-signal-rail")).toHaveCount(1);
+
+  await page.goto("/product/paging/");
+  await expect(page.locator(".incident-signal-rail")).toHaveCount(1);
+
+  for (const route of ["/integrations/", "/compare/", "/deploy/", "/security/", "/about/", "/legal/"]) {
+    await page.goto(route);
+    await expect(page.locator(".incident-signal-rail")).toHaveCount(0);
+  }
+});
+
 test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
   test.setTimeout(180000);
