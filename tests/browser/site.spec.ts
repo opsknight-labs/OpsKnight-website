@@ -121,6 +121,23 @@ test("changelog restores release filters and version navigation", async ({ page 
   await expect(page.locator(".release-article").first()).toBeVisible();
   await expect(page.locator(".change-kind-security").first()).toBeVisible();
 });
+test("solution journeys use the canonical deployment path", async ({ page }) => {
+  await page.goto("/solutions/sre-teams/");
+  await expect(page.getByRole("link", { name: "Deploy OpsKnight" })).toHaveAttribute(
+    "href",
+    "/deploy/",
+  );
+  await page.goto("/legal/");
+  await expect(page.getByRole("link", { name: "Privacy" })).toHaveAttribute(
+    "href",
+    "/privacy/",
+  );
+  await expect(page.getByRole("link", { name: "Website terms" })).toHaveAttribute(
+    "href",
+    "/terms/",
+  );
+});
+
 test("deployment choices preserve HA boundary", async ({ page }) => {
   await page.goto("/deploy/");
   await page.getByLabel("High availability", { exact: true }).check();

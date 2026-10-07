@@ -51,7 +51,7 @@ export default async function Solution({
           <h1>{solution.headline}</h1>
           <p className="site-description">{solution.description}</p>
           <div className="site-actions">
-            <Action href="/install/">Deploy OpsKnight</Action>
+            <Action href="/deploy/">Deploy OpsKnight</Action>
             <Action href="/integrations/" secondary>
               Explore integrations
             </Action>

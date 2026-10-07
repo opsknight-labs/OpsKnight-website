@@ -244,12 +244,12 @@ export default async function CompareCompetitorPage({
                 The OpsKnight Model
               </h2>
               <h3 className="text-xl font-bold text-slate-900 mb-3">
-                Self-Hosted Freedom ({BRAND.license})
+                Self-hosted operating model ({BRAND.license})
               </h3>
               <p className="text-sm leading-relaxed text-slate-600 mb-4">
                 OpsKnight {PRODUCT.release.tag} is self-hosted under {PRODUCT.release.license}.
-                You maintain complete custody of alert telemetry, customer data, and postmortems.
-                Available 100% free with optional commercial enterprise support and custom implementation services.
+                You operate the application, database, backups and network boundary. Optional
+                commercial support and implementation services do not gate product features.
               </p>
               <div className="flex items-center gap-3">
                 <TextLink href="/deploy/">View install topologies</TextLink>
@@ -273,8 +273,8 @@ export default async function CompareCompetitorPage({
                 Where OpsKnight is intentionally different.
               </h2>
               <p className="text-sm text-slate-600 mt-2">
-                We make explicit design and distribution choices that favor engineering sovereignty,
-                transparent costs, and self-hosted control.
+                The comparison focuses on deployment ownership, data custody, release inspectability
+                and the operational trade-offs of a self-hosted model.
               </p>
             </div>
 
