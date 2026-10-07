@@ -4014,3 +4014,41 @@ html {
   .desktop-nav details[open] > .site-mega,
   .desktop-nav details[open] > .site-small-menu{animation:none}
 }
+
+/* Product status proof */
+.status-live-banner{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:18px;
+  margin:24px 0;
+  padding:16px 18px;
+  border:1px solid var(--border-light);
+  border-radius:10px;
+  background:var(--surface-soft);
+}
+.status-live-banner>span{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text-primary);
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.status-live-banner>p{
+  margin:0;
+  color:var(--text-secondary);
+  font-size:12px;
+  line-height:1.55;
+}
+.status-live-banner .site-action{
+  min-height:40px;
+  padding:8px 14px;
+  font-size:12px;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .status-live-banner{grid-template-columns:1fr;align-items:start}
+  .status-live-banner .site-action{width:max-content}
+}

@@ -42,10 +42,29 @@ jobs:
         with:
           name: cloudflare-pages-static
           path: out/
-      - name: Test the exported site
+      - name: Test the exported site and performance budgets
         run: |
           PORT=5001 node scripts/serve-static.mjs &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           npx playwright test
+          mkdir -p test-results
+          CHROME_PATH="$(node -e "const { chromium } = require('@playwright/test'); process.stdout.write(chromium.executablePath())")"
+          for target in "home:/" "integrations:/integrations/" "compare:/compare/"; do
+            name="${target%%:*}"
+            route="${target#*:}"
+            npx lighthouse "http://127.0.0.1:5001${route}" \
+              --chrome-path="$CHROME_PATH" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="test-results/lighthouse-${name}.json" \
+              --quiet
+          done
+          node scripts/check-lighthouse.mjs \
+            test-results/lighthouse-home.json \
+            test-results/lighthouse-integrations.json \
+            test-results/lighthouse-compare.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

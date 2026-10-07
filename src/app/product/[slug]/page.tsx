@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PRODUCT, productDocs } from "@/lib/product";
+import { BRAND } from "@/lib/brand";
 import {
   Action,
   ProductScreenshot,
@@ -113,12 +114,21 @@ export default async function ProductPage({
             ))}
           </div>
           {slug === "status-pages" && (
-            <div className="status-live-banner" style={{ margin: "24px 0", padding: "16px 20px", background: "var(--surface-soft)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-              <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-primary)" }}>
-                🟢 See a live OpsKnight-powered status page in production
+            <div className="status-live-banner">
+              <span>
+                <span className="live-dot" /> Live product proof
               </span>
-              <a href="https://status.opsknight.com" target="_blank" rel="noopener noreferrer" className="site-action secondary" style={{ fontSize: "12px", padding: "8px 16px" }}>
-                View a live OpsKnight-powered status page ↗
+              <p>
+                Open the public OpsKnight status page to verify the customer-facing
+                status experience separately from this synthetic product view.
+              </p>
+              <a
+                href={BRAND.links.status}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="site-action secondary"
+              >
+                View live status ↗
               </a>
             </div>
           )}

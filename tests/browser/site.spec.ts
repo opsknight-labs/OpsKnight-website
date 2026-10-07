@@ -165,6 +165,10 @@ test("reduced motion and product boundaries", async ({ page }) => {
   ).toBe("none");
   await page.goto("/product/status-pages/");
   await expect(page.locator(".site-boundary")).toContainText("1 status page");
+  await expect(page.locator(".status-live-banner a")).toHaveAttribute(
+    "href",
+    "https://status.opsknight.com",
+  );
   await page.goto("/product/mobile/");
   await expect(page.locator(".site-boundary")).toContainText("PWA");
   await page.goto("/product/on-call/");
