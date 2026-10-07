@@ -130,7 +130,7 @@ export default function Security() {
                   for access reviews; they do not replace your wider compliance program.
                 </p>
                 <ul>
-                  <li><CheckCircle2 size={14} /> Test the dedicated auditor path as read-only evidence access.</li>
+                  <li><CheckCircle2 size={14} /> Test the dedicated Auditor role as read-only evidence access.</li>
                   <li><CheckCircle2 size={14} /> Revoke active sessions when identity or access changes require it.</li>
                   <li><CheckCircle2 size={14} /> Export and retain evidence according to your own policy.</li>
                 </ul>
