@@ -1,4 +1,5 @@
 import { BRAND } from "@/lib/brand";
+import comparisons from "@/../content/product/comparisons.json";
 
 /**
  * Comparison matrix for OpsKnight and common on-call products.
@@ -30,7 +31,7 @@ export type CompareCategory =
 
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "5 Oct 2026";
+export const COMPARE_AS_OF = comparisons[0]?.asOf ?? "2026-10-05";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;

@@ -1,5 +1,7 @@
 {
   "version": "2.0.0",
   "license": "AGPL-3.0-only",
-  "hostedSaaS": false
+  "hostedSaaS": false,
+  "publishedAt": "2026-10-03T05:02:04Z",
+  "tagCreatedAt": "2026-10-02T23:36:01Z"
 }

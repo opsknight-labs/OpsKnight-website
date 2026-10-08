@@ -19,6 +19,7 @@
     "social:generate": "node scripts/social-images.mjs",
     "test:visual": "playwright test --grep \"visual coverage\"",
     "test:visual:update": "playwright test --grep \"visual coverage\" --update-snapshots",
+    "docs:search:test": "node scripts/check-docs-search.mjs",
     "preview": "node scripts/serve-static.mjs"
   },
   "dependencies": {

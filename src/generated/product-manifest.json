@@ -3,7 +3,10 @@
     "version": "2.0.0",
     "license": "AGPL-3.0-only",
     "hostedSaaS": false,
-    "date": "2026-10-02",
+    "publishedAt": "2026-10-03T05:02:04Z",
+    "tagCreatedAt": "2026-10-02T23:36:01Z",
+    "date": "2026-10-03",
+    "changelogDate": "2026-10-02",
     "tag": "v2.0.0",
     "sourceCommit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
     "highlights": [

@@ -49,6 +49,7 @@ jobs:
           PORT=5001 node scripts/serve-static.mjs &
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          export PREVIEW_URL=http://127.0.0.1:5001
           npx playwright test
           mkdir -p test-results
           export CHROME_PATH="$(node -e "const { chromium } = require('@playwright/test'); process.stdout.write(chromium.executablePath())")"

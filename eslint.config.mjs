@@ -2,10 +2,12 @@ import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import nextTypeScript from "eslint-config-next/typescript";
 
 const config = [
+  {
+    ignores: [".next/**", "out/**", "build/**", ".vercel/**", "next-env.d.ts"],
+  },
   ...nextCoreWebVitals,
   ...nextTypeScript,
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
     rules: {
       // These React Compiler rules are new in eslint-config-next 16. Keep the
       // existing runtime behavior while follow-up refactors adopt them.

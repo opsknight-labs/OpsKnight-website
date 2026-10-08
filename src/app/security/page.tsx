@@ -248,7 +248,7 @@ export default function Security() {
               ],
               [
                 "Software licence",
-                `${PRODUCT.release.tag} is distributed under ${PRODUCT.release.license}. Complete commercial freedom with source code auditability.`,
+                `Open-source under ${PRODUCT.release.license}. Commercial use is permitted subject to the licence terms.`,
                 BRAND.links.license,
               ],
             ].map(([title, description, href]) => (
@@ -267,7 +267,7 @@ export default function Security() {
               Email about your security questionnaire
             </TextLink>
             <TextLink href="/contact/#security">Report a vulnerability privately</TextLink>
-            <TextLink href="/support/">Enterprise commercial support</TextLink>
+            <TextLink href="/support/">Commercial support</TextLink>
           </div>
 
           <p className="site-boundary">

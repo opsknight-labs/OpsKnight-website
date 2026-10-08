@@ -188,7 +188,10 @@ for (const p of platform.products)
 const manifest = {
   release: {
     ...release,
-    date: m[1],
+    date: release.publishedAt ? release.publishedAt.slice(0, 10) : "2026-10-03",
+    publishedAt: release.publishedAt ?? provenance.publishedAt ?? "2026-10-03T05:02:04Z",
+    tagCreatedAt: release.tagCreatedAt ?? provenance.tagCreatedAt ?? "2026-10-02T23:36:01Z",
+    changelogDate: m[1],
     tag: provenance.tag,
     sourceCommit: provenance.commit,
     highlights,

@@ -2,6 +2,8 @@
   "repository": "https://github.com/opsknight-labs/OpsKnight",
   "tag": "v2.0.0",
   "commit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+  "tagCreatedAt": "2026-10-02T23:36:01Z",
+  "publishedAt": "2026-10-03T05:02:04Z",
   "sha256": {
     "versions.json": "04facc04370f3ba206be5926b59167d98eeb1ce5b3975f3ad032b97852f1152a",
     "capabilities.yaml": "b2785b3707ae07a000d2a8f9e70a32fb02d5ef41f154be3eecf7026681663b7e",

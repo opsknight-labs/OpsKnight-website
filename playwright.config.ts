@@ -10,6 +10,13 @@ export default defineConfig({
     baseURL: process.env.PREVIEW_URL ?? "http://localhost:5001",
     trace: "retain-on-failure",
   },
+  webServer: process.env.PREVIEW_URL
+    ? undefined
+    : {
+        command: "PORT=5001 node scripts/serve-static.mjs",
+        port: 5001,
+        reuseExistingServer: true,
+      },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     {

@@ -15,7 +15,7 @@ import { FinalCTA } from "@/components/site/Primitives";
 const pageMetadata: Metadata = {
   title: "Compare Incident Management Platforms — OpsKnight vs The Market",
   description:
-    "Compare OpsKnight v2.0.0 with PagerDuty, incident.io, Opsgenie, Squadcast, Splunk and Grafana Cloud IRM across deployment, on-call, voice paging, ChatOps and pricing.",
+    "Compare OpsKnight v2.0.0 with PagerDuty, incident.io, Opsgenie, Squadcast, Splunk and Grafana Cloud IRM across deployment, on-call, voice paging, ChatOps and commercial model.",
   alternates: { canonical: "/compare/" },
   openGraph: { url: "/compare/" },
 };

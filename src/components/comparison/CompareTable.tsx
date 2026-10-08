@@ -85,8 +85,8 @@ export function CompareTable() {
         })}
       </div>
 
-      {/* Mobile comparison: Dropdown selector + 2-column cards */}
-      <div className="block lg:hidden">
+      {/* Mobile & tablet comparison: Dropdown selector + 2-column cards */}
+      <div className="block xl:hidden">
         <div className="mb-4 rounded-[14px] border border-slate-200 bg-white p-4">
           <label htmlFor="mobile-vendor-select" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
             Compare OpsKnight with:
@@ -147,9 +147,9 @@ export function CompareTable() {
         </div>
       </div>
 
-      {/* Desktop matrix: 7-vendor full table */}
+      {/* Desktop matrix: 7-vendor full table (>=1280px) */}
       <div
-        className="hidden lg:block overflow-x-auto rounded-[14px] border border-slate-200 bg-white shadow-sm"
+        className="hidden xl:block overflow-x-auto rounded-[14px] border border-slate-200 bg-white shadow-sm"
         role="region"
         aria-label="Seven-vendor capability comparison"
         tabIndex={0}

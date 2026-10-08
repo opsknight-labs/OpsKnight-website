@@ -358,24 +358,36 @@ test("product pages expose capability-specific workflows", async ({ page }) => {
   ).toHaveAttribute("href", /^https:\/\/status\.opsknight\.com\/?$/);
 });
 
-test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) => {
+test("tier a: core marketing routes responsive verification across key viewports", async ({
+  page,
+}, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
   test.setTimeout(180000);
 
   const viewports = [
-    { width: 360, height: 800 },
     { width: 390, height: 844 },
-    { width: 430, height: 932 },
     { width: 768, height: 1024 },
-    { width: 1024, height: 768 },
-    { width: 1280, height: 720 },
     { width: 1366, height: 768 },
-    { width: 1440, height: 900 },
-    { width: 1512, height: 982 },
     { width: 1920, height: 1080 },
-    { width: 2560, height: 1440 },
   ];
-  const routes = ["/", "/integrations/", "/compare/", "/deploy/", "/product/paging/"];
+  const routes = [
+    "/",
+    "/product/incidents/",
+    "/integrations/",
+    "/compare/",
+    "/deploy/",
+    "/security/",
+    "/solutions/",
+    "/changelog/",
+    "/support/",
+    "/about/",
+    "/brand/",
+    "/contact/",
+    "/community/",
+    "/legal/",
+    "/privacy/",
+    "/terms/",
+  ];
 
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
@@ -392,6 +404,227 @@ test("responsive matrix has no horizontal overflow", async ({ page }, testInfo) 
       ).toBeLessThanOrEqual(dimensions.viewport + 1);
     }
   }
+});
+
+test("tier b: component-heavy routes full viewport matrix from 320px to ultrawide", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  test.setTimeout(240000);
+
+  const viewports = [
+    { width: 320, height: 640 },
+    { width: 360, height: 800 },
+    { width: 390, height: 844 },
+    { width: 430, height: 932 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+    { width: 1280, height: 720 },
+    { width: 1366, height: 768 },
+    { width: 1440, height: 900 },
+    { width: 1512, height: 982 },
+    { width: 1920, height: 1080 },
+    { width: 2560, height: 1440 },
+    { width: 3440, height: 1440 },
+    { width: 3840, height: 1600 },
+  ];
+  const routes = ["/", "/integrations/", "/compare/", "/deploy/", "/product/paging/", "/changelog/", "/legal/"];
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+      }));
+      expect(
+        dimensions.scroll,
+        route + " overflows at " + viewport.width + "x" + viewport.height,
+      ).toBeLessThanOrEqual(dimensions.viewport + 1);
+    }
+  }
+});
+
+test("tier c: dynamic route families responsive smoke test", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  test.setTimeout(240000);
+
+  const viewports = [
+    { width: 390, height: 844 },
+    { width: 1366, height: 768 },
+    { width: 1920, height: 1080 },
+  ];
+
+  const productRoutes = [
+    "incidents",
+    "on-call",
+    "paging",
+    "chatops",
+    "status-pages",
+    "analytics",
+    "postmortems",
+    "mobile",
+    "security",
+    "operations",
+  ].map((s) => `/product/${s}/`);
+
+  const solutionRoutes = [
+    "self-hosted-incident-management",
+    "sre",
+    "platform-engineering",
+    "devops",
+    "soc2-compliance",
+    "msp",
+  ].map((s) => `/solutions/${s}/`);
+
+  const compareRoutes = [
+    "pagerduty",
+    "incident-io",
+    "opsgenie",
+    "squadcast",
+    "splunk",
+    "grafana",
+  ].map((s) => `/compare/${s}/`);
+
+  const allDynamicRoutes = [...productRoutes, ...solutionRoutes, ...compareRoutes];
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    for (const route of allDynamicRoutes) {
+      await page.goto(route);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+      }));
+      expect(
+        dimensions.scroll,
+        route + " overflows at " + viewport.width + "x" + viewport.height,
+      ).toBeLessThanOrEqual(dimensions.viewport + 1);
+    }
+  }
+});
+
+test("ultrawide and 4k display layout integrity", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  const ultrawideProfiles = [
+    { width: 3440, height: 1440 },
+    { width: 3840, height: 1600 },
+    { width: 3840, height: 2160 },
+  ];
+  const sampleRoutes = ["/", "/integrations/", "/compare/", "/deploy/", "/product/incidents/"];
+
+  for (const profile of ultrawideProfiles) {
+    await page.setViewportSize(profile);
+    for (const route of sampleRoutes) {
+      await page.goto(route);
+      const metrics = await page.evaluate(() => {
+        const container = document.querySelector(".site-container");
+        const h1 = document.querySelector("h1");
+        return {
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+          containerWidth: container ? container.getBoundingClientRect().width : 0,
+          h1FontSize: h1 ? Number.parseFloat(getComputedStyle(h1).fontSize) : 0,
+        };
+      });
+
+      expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 1);
+      // Container max-width maintains readable proportion
+      expect(metrics.containerWidth).toBeLessThanOrEqual(1440);
+      // Hero / h1 font size stays bounded and doesn't explode infinitely
+      expect(metrics.h1FontSize).toBeLessThanOrEqual(120);
+    }
+  }
+});
+
+test("integration drawer responsive open state and interactions", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  const drawerSizes = [
+    { width: 320, height: 640 },
+    { width: 360, height: 800 },
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+    { width: 1366, height: 768 },
+  ];
+
+  for (const size of drawerSizes) {
+    await page.setViewportSize(size);
+    await page.goto("/integrations/");
+    const datadogCard = page.locator(".integration-item").filter({ hasText: "Datadog" });
+    await expect(datadogCard).toBeVisible();
+    await datadogCard.click();
+
+    const drawer = page.locator(".integration-drawer");
+    await expect(drawer).toBeVisible();
+
+    const drawerBox = await drawer.boundingBox();
+    expect(drawerBox?.width ?? 0).toBeLessThanOrEqual(size.width + 1);
+
+    const closeBtn = page.locator(".integration-drawer-close");
+    await expect(closeBtn).toBeVisible();
+
+    const noOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+    );
+    expect(noOverflow).toBe(true);
+
+    // Escape closes the drawer
+    await page.keyboard.press("Escape");
+    await expect(drawer).toBeHidden();
+  }
+});
+
+test("mobile navigation open state at tablet and mobile", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  const navSizes = [
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 768 },
+  ];
+
+  for (const size of navSizes) {
+    await page.setViewportSize(size);
+    await page.goto("/");
+    const menuBtn = page.getByLabel("Open navigation");
+    await expect(menuBtn).toBeVisible();
+    await menuBtn.click();
+
+    const menu = page.getByRole("navigation", { name: "Mobile navigation" });
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Incident command", exact: true })).toBeVisible();
+
+    // Close menu by clicking summary again
+    await menuBtn.click();
+    await expect(menu.locator(".mobile-menu-panel")).toBeHidden();
+  }
+});
+
+test("changelog sticky filter layout at 1366 laptop", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.goto("/changelog/");
+
+  await page.evaluate(() => window.scrollTo(0, 1000));
+  const filters = page.locator(".changelog-filters");
+  await expect(filters).toBeVisible();
+
+  const filterBox = await filters.boundingBox();
+  // Filter is sticky below nav
+  expect(filterBox?.y ?? 0).toBeGreaterThanOrEqual(40);
+  expect(filterBox?.y ?? 0).toBeLessThanOrEqual(90);
+
+  // Content remains readable
+  await expect(page.locator(".release-article").first()).toBeVisible();
 });
 
 test("1366 laptop density stays compact", async ({ page }, testInfo) => {
@@ -451,6 +684,7 @@ test("desktop density scales intentionally across 1440 and 1920", async ({ page 
 
 test("desktop comparison matrix is keyboard focusable", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/compare/");
   const matrix = page.getByRole("region", {
     name: "Seven-vendor capability comparison",
