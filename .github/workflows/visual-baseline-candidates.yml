@@ -13,8 +13,24 @@ permissions:
   contents: read
 
 jobs:
-  candidates:
+  build:
     if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-pages-static-candidates
+          path: out/
+
+  candidates:
+    needs: build
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
@@ -25,7 +41,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - uses: actions/download-artifact@v4
+        with:
+          name: cloudflare-pages-static-candidates
+          path: out/
       - name: Generate candidate baselines
         shell: bash
         run: |
