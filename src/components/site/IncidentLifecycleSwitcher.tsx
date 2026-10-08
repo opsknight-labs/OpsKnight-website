@@ -22,11 +22,11 @@ const INCIDENT_STATES = [
   },
   {
     id: "resolved",
-    label: "Workspace & Resolved",
-    image: "/product/incident-response.webp",
-    badge: "INCIDENT RECORD",
+    label: "Resolved",
+    image: "/product/incident-resolved.webp",
+    badge: "RESOLVED · SLA MET",
     badgeColor: "#10b981",
-    summary: "Complete response timeline sealed with postmortem handoff, action items, and audit trail.",
+    summary: "Root cause remediated, SLA metrics met, timeline sealed with postmortem handoff and audit trail.",
   },
 ] as const;
 
@@ -62,8 +62,8 @@ export function IncidentLifecycleSwitcher() {
         </div>
         <Image
           src={current.image}
-          width={activeTab === 2 ? 2400 : 1440}
-          height={activeTab === 2 ? 1290 : 900}
+          width={2400}
+          height={1500}
           alt={`OpsKnight incident lifecycle view: ${current.label}`}
           priority
           sizes="(max-width: 768px) 100vw, 1200px"
