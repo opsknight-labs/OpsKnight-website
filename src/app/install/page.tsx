@@ -152,7 +152,7 @@ export default function DeployPage() {
               <p>
                 Use an explicit {PRODUCT.release.version} image tag or immutable
                 digest. Configure the database password, public URL values,
-                <code> NEXTAUTH_SECRET</code> and the stable 64-hex-character
+                <code> NEXTAUTH_SECRET</code>, <code> API_KEY_SECRET</code>, and the stable 64-hex-character
                 <code> ENCRYPTION_KEY</code>. Other provider or API secrets are
                 conditional on the features you enable.
               </p>
@@ -161,6 +161,7 @@ POSTGRES_PASSWORD=<unique-password>
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXTAUTH_SECRET=<random-base64-secret>
+API_KEY_SECRET=<separate-base64-secret>
 ENCRYPTION_KEY=<64-hex-character-key>`}</code></pre>
             </article>
 
@@ -325,10 +326,11 @@ curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'`}</co
                 convergence, and checks readiness. Routine raw
                 <code> docker stack deploy</code> bypasses those gates.
               </p>
-              <pre tabIndex={0}><code>{`# Split mode (default)
+              <pre tabIndex={0}><code>{`# Split mode (default; requires explicit release image)
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
 ./deploy/swarm/scripts/deploy.sh
 
-# Integrated mode
+# Integrated mode (defaults to 2.0.0 image)
 SWARM_RUNTIME_MODE=integrated ./deploy/swarm/scripts/deploy.sh`}</code></pre>
               <TextLink href={productDocs("operate/deploy/swarm/install")}>
                 Swarm installation guide

@@ -161,6 +161,7 @@ cd OpsKnight/deploy/swarm
 # Initialize Docker Swarm (if not already active)
 docker swarm init
 # Deploy multi-node HA cluster with automatic Raft secrets & validation
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:${PRODUCT_VERSION}"
 ./scripts/deploy.sh`,
     split: `git clone https://github.com/opsknight-labs/OpsKnight.git
 cd OpsKnight

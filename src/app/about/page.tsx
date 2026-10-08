@@ -351,51 +351,50 @@ export default function About() {
         </div>
       </section>
 
-      {/* 7. Product Evolution & Milestones */}
+      {/* 7. Core Operating Principles */}
       <section className="site-section site-canvas">
         <div className="site-container">
           <SectionIntro
-            eyebrow="EVOLUTION & ROADMAP"
-            title="The journey to sovereign incident response."
+            eyebrow="OPERATING PRINCIPLES"
+            title="Guiding disciplines for resilient response."
           >
-            OpsKnight evolved from a developer’s frustration with per-seat alerting taxes into a
-            production-grade enterprise operations platform.
+            Engineering standards that ensure OpsKnight remains dependable, inspectable, and sovereign when production is under stress.
           </SectionIntro>
 
           <div className="about-milestones-grid">
             <article className="milestone-card">
-              <span className="milestone-tag">PHASE 01 / ORIGIN</span>
-              <h4>The Spark</h4>
+              <span className="milestone-tag">PRINCIPLE 01</span>
+              <h4>Deterministic Execution</h4>
               <p>
-                Frustrated by compounding per-seat SaaS bills and opaque alerting, the initial open-source
-                prototype explored self-hosted on-call rotations and basic webhook ingestion.
+                Alert correlation, escalation steps, and responder paging execute with predictable certainty.
+                We reject black-box heuristics and opaque algorithms in the critical paging path.
               </p>
             </article>
 
             <article className="milestone-card">
-              <span className="milestone-tag">PHASE 02 / v1.4.0</span>
-              <h4>Core Platform</h4>
+              <span className="milestone-tag">PRINCIPLE 02</span>
+              <h4>Zero Telemetry Tracking</h4>
               <p>
-                Added multi-step escalation policies, Twilio voice &amp; SMS delivery, Slack &amp; Teams ChatOps
-                integrations, and basic status page publishing under Apache-2.0.
+                OpsKnight contains no phone-home analytics, tracking pixels, or outbound reporting.
+                Your incident records, responder contact details, and postmortems stay strictly inside your network boundary.
               </p>
             </article>
 
             <article className="milestone-card">
-              <span className="milestone-tag">PHASE 03 / v2.0.0</span>
-              <h4>Enterprise Release</h4>
+              <span className="milestone-tag">PRINCIPLE 03</span>
+              <h4>Permanent Open Source</h4>
               <p>
-                Relicensed to AGPL-3.0 for permanent openness. Added 28 HMAC inbound sources, split worker runtime,
-                mobile PWA responder, 90-day status history, and blameless 5-Whys postmortems.
+                Protected by AGPL-3.0-only copyleft, OpsKnight cannot be enclosed into a proprietary cloud tier.
+                Every database migration, background worker queue, and API contract is open to audit and review.
               </p>
             </article>
 
             <article className="milestone-card">
-              <span className="milestone-tag">PHASE 04 / FORWARD</span>
-              <h4>The Road Ahead</h4>
+              <span className="milestone-tag">PRINCIPLE 04</span>
+              <h4>Predictable Operations</h4>
               <p>
-                Active engineering focuses on native OpenTelemetry signal ingestion, automated executable runbooks,
-                expanded enterprise OIDC identity providers, and bidirectional Jira issue synchronization.
+                Deploy what you need: from single-node Docker Compose for simple setups to clustered Swarm or Kubernetes
+                for high availability, with zero per-seat licensing penalties as your engineering team grows.
               </p>
             </article>
           </div>
