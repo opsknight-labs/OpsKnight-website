@@ -2560,21 +2560,21 @@
   ],
   "screenshots": {
     "source": "OpsKnight v2.0.0 documentation evidence runtime",
-    "capturedAt": "2026-10-08T03:33:03.795Z",
+    "capturedAt": "2026-10-08T16:54:58.631Z",
     "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
     "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
     "assets": {
       "dashboard-overview": {
-        "width": 1440,
-        "height": 900,
-        "sha256": "1bdc30af4c468cd74a909d5f8cfd89d81e6da343e10aed4331c03013c7c2f713",
+        "width": 2400,
+        "height": 1290,
+        "sha256": "7e9d05809e669586dbb7d2942f2ce2c8c1b55fe1279e9e6e61b52ce9fc7c2fd3",
         "fixture": "Northstar Systems",
         "route": "/"
       },
       "incident-detail": {
-        "width": 1440,
-        "height": 900,
-        "sha256": "12fd593756a016961639d85b646dd8258ceae2dffd8bd4f61c4d7b1e57126f3a",
+        "width": 2400,
+        "height": 1500,
+        "sha256": "3b03816cdf54dc349be0a1e0fd708bf3819e6f415f0187906048350d811bbfd0",
         "fixture": "Northstar Systems",
         "route": "/incidents/[northstar-incident]"
       },
@@ -2621,12 +2621,12 @@
         "route": "/settings/system/health"
       },
       "status-pages": {
-        "width": 1440,
-        "height": 900,
-        "sha256": "7df24262431b75a0215a8b383882e78e1d778bfefcdd18e5af75cd4e00834aca",
+        "width": 1920,
+        "height": 1080,
+        "sha256": "fff555894f93c8005960b8dae1e4ba9604edaef45236d7b83016375c6ba30e6d",
         "fixture": "Northstar Systems",
-        "route": "/settings/status-pages",
-        "authenticated": true,
+        "route": "/status/northstar-systems",
+        "authenticated": false,
         "publicProof": "https://status.opsknight.com"
       }
     },

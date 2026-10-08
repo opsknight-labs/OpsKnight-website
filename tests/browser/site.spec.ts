@@ -17,7 +17,13 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await integrationSearch.fill("Prometheus");
   await expect(page.getByRole("link", { name: /Prometheus Alertmanager/ })).toBeVisible();
   await integrationSearch.fill("");
-  await page.getByRole("tab", { name: "Operations", exact: true }).click();
+  const proofTabCC = page.locator("#proof-tab-command-center");
+  await proofTabCC.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator("#proof-tab-incidents")).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("#proof-tab-incidents")).toBeFocused();
+  await page.keyboard.press("End");
+  await expect(page.locator("#proof-tab-operations")).toHaveAttribute("aria-selected", "true");
   await expect(page.locator("#product-proof-panel")).toContainText("Operations");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",

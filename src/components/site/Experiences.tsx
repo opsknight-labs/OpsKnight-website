@@ -489,23 +489,23 @@ const PRODUCT_PROOFS = [
     label: "Command Center",
     image: "dashboard-overview.png",
     href: "/product/",
-    summary: "Northstar Systems operational overview for active incidents, health and response context.",
-    alt: "OpsKnight Command Center in the Northstar Systems v2.0.0 synthetic fixture",
+    summary: "Live triage, active alerts, workload distribution, and SLA countdowns across Northstar services.",
+    alt: "OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns",
   },
   {
     id: "incidents",
     label: "Incidents",
     image: "incident-detail.png",
     href: "/product/incidents/",
-    summary: "Checkout API incident ownership, responders, service context and timeline in one command view.",
-    alt: "OpsKnight incident detail for the Northstar Systems Checkout API synthetic incident",
+    summary: "Checkout API incident in acknowledged state: assigned responder, active investigation, and live event timeline.",
+    alt: "OpsKnight Checkout API incident in acknowledged state: assigned responder, active investigation, and live event timeline",
   },
   {
     id: "on-call",
     label: "On-call",
     image: "on-call-schedule-detail.png",
     href: "/product/on-call/",
-    summary: "Commerce Primary On-Call coverage from the same v2.0.0 fixture.",
+    summary: "Commerce Primary On-Call rotation and schedule detail from the Northstar Systems fixture.",
     alt: "OpsKnight Commerce Primary On-Call schedule in the Northstar Systems fixture",
   },
   {
@@ -513,16 +513,16 @@ const PRODUCT_PROOFS = [
     label: "Paging",
     image: "notification-settings.png",
     href: "/product/paging/",
-    summary: "Notification configuration and delivery controls from the same seeded installation.",
-    alt: "OpsKnight notification settings in the Northstar Systems v2.0.0 fixture",
+    summary: "Multi-channel paging and escalation policy with on-call rotation targets and delivery rules.",
+    alt: "OpsKnight escalation policy and multi-channel paging in the Northstar Systems fixture",
   },
   {
     id: "status",
     label: "Status",
     image: "status-pages.png",
     href: "/product/status-pages/",
-    summary: "Status-page administration from the Northstar fixture, paired with the live OpsKnight public status proof.",
-    alt: "OpsKnight status-page administration in the Northstar Systems fixture",
+    summary: "Real-time system status, operational services, uptime history and active incident announcements.",
+    alt: "OpsKnight public status page displaying real-time system status, operational services, uptime history, and active incident announcements",
     live: true,
   },
   {
@@ -530,7 +530,7 @@ const PRODUCT_PROOFS = [
     label: "Analytics",
     image: "analytics-overview.png",
     href: "/product/analytics/",
-    summary: "Response metrics and operational trends from the same Northstar incident dataset.",
+    summary: "MTTA/MTTR response metrics, incident volume, and operational trends from the Northstar dataset.",
     alt: "OpsKnight analytics overview for the Northstar Systems synthetic fixture",
   },
   {
@@ -538,7 +538,7 @@ const PRODUCT_PROOFS = [
     label: "Operations",
     image: "health-center.png",
     href: "/product/operations/",
-    summary: "Health Center evidence for the runtime that powers incident response.",
+    summary: "System Health Center diagnostics, background worker status, and runtime telemetry.",
     alt: "OpsKnight System Health Center in the Northstar Systems v2.0.0 fixture",
   },
 ] as const;
@@ -552,10 +552,30 @@ export function ProductProofShowcase() {
   const active =
     PRODUCT_PROOFS.find((proof) => proof.id === activeId) ?? PRODUCT_PROOFS[0];
 
+  const handleKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
+    let targetIndex: number | null = null;
+    if (e.key === "ArrowRight") {
+      targetIndex = (currentIndex + 1) % PRODUCT_PROOFS.length;
+    } else if (e.key === "ArrowLeft") {
+      targetIndex = (currentIndex - 1 + PRODUCT_PROOFS.length) % PRODUCT_PROOFS.length;
+    } else if (e.key === "Home") {
+      targetIndex = 0;
+    } else if (e.key === "End") {
+      targetIndex = PRODUCT_PROOFS.length - 1;
+    }
+
+    if (targetIndex !== null) {
+      e.preventDefault();
+      const target = PRODUCT_PROOFS[targetIndex];
+      setActiveId(target.id);
+      document.getElementById(`proof-tab-${target.id}`)?.focus();
+    }
+  };
+
   return (
     <div className="product-proof-experience">
       <div className="product-proof-tabs" role="tablist" aria-label="OpsKnight product views">
-        {PRODUCT_PROOFS.map((proof) => (
+        {PRODUCT_PROOFS.map((proof, idx) => (
           <button
             key={proof.id}
             id={`proof-tab-${proof.id}`}
@@ -563,7 +583,9 @@ export function ProductProofShowcase() {
             role="tab"
             aria-selected={active.id === proof.id}
             aria-controls="product-proof-panel"
+            tabIndex={active.id === proof.id ? 0 : -1}
             onClick={() => setActiveId(proof.id)}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
           >
             {proof.label}
           </button>
@@ -573,6 +595,7 @@ export function ProductProofShowcase() {
         id="product-proof-panel"
         className="product-proof-panel"
         role="tabpanel"
+        tabIndex={0}
         aria-labelledby={`proof-tab-${active.id}`}
       >
         <ProductScreenshot name={active.image} alt={active.alt} />
