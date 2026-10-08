@@ -1,6 +1,6 @@
 {
   "source": "OpsKnight v2.0.0 documentation evidence runtime",
-  "capturedAt": "2026-10-07T05:11:01.068Z",
+  "capturedAt": "2026-10-08T03:33:03.795Z",
   "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
   "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
   "assets": {
@@ -21,42 +21,42 @@
     "on-call-schedule-detail": {
       "width": 1440,
       "height": 900,
-      "sha256": "b1583e47b927507cc76e0c4a8b700e9806f15b9eb4042543c56b629fa8272128",
+      "sha256": "612cb12f8d92ae29d1a511735e60cd7a9b44f0d93cd0daf53f6a3e4fb90fe22e",
       "fixture": "Northstar Systems",
       "route": "/schedules/[commerce-primary-on-call]"
     },
     "analytics-overview": {
       "width": 1440,
       "height": 900,
-      "sha256": "d15f0ebb67d085387cde1e090117ba1ca26f6cd8d12572eceb9d1da1d66326d5",
+      "sha256": "90b63ae6ca01fd72624c3a9050e828597e15e3c3f9b54175fa09c85358c41c48",
       "fixture": "Northstar Systems",
       "route": "/analytics"
     },
     "postmortems": {
       "width": 1440,
       "height": 900,
-      "sha256": "544647a4207f9f2bb57d9eecbb341e3aa2538966384cfbcde04ec953053ae138",
+      "sha256": "c2092c3561c677cd8ea2eee6a25251d28aebeef592db5394dddb691ccd5d92f1",
       "fixture": "Northstar Systems",
       "route": "/postmortems"
     },
     "audit-log": {
       "width": 1440,
       "height": 900,
-      "sha256": "fbfddaa6382ccdcb396826641a7cb0645916566b3490a7b50c659e4c13e906a3",
+      "sha256": "62fb54db3aad8476e72f1e0b00779f30c322cf0b717f0893be2cbf32bdad4f81",
       "fixture": "Northstar Systems",
       "route": "/audit"
     },
     "notification-settings": {
       "width": 1440,
       "height": 900,
-      "sha256": "bb9620474f386573ec5697c8a941f5e162d4c7c7194a5d17ef94da28ff8519ae",
+      "sha256": "5f3a034eac2dd6c9c93d443137815b80b8f65f02cadb82fecfd890fb037fb54d",
       "fixture": "Northstar Systems",
       "route": "/settings/notifications"
     },
     "health-center": {
       "width": 1440,
       "height": 900,
-      "sha256": "cf3c4bb24acbb95aaafa6b9cada15957eec68f8ea5d492e139b842c72889e632",
+      "sha256": "1764f1ca258afc51ba6708ed7f4602eea66147a15542fd746e3b07f8a9f78067",
       "fixture": "Northstar Systems",
       "route": "/settings/system/health"
     },
