@@ -5457,3 +5457,334 @@ html {
   text-overflow: ellipsis;
 }
 
+/* ============================================================================
+ * About / Why OpsKnight page
+ * ============================================================================ */
+.about-facts-strip {
+  background: var(--surface-slate);
+  border-bottom: 1px solid var(--border-dark);
+  padding: 24px 0;
+}
+.about-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.about-fact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.about-fact-card strong {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--surface-white);
+  letter-spacing: -0.02em;
+}
+.about-fact-card span {
+  font-size: 12px;
+  color: var(--text-light-muted);
+}
+
+.about-manifesto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+.manifesto-card {
+  padding: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.manifesto-card.saas {
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+}
+.manifesto-card.sovereign {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-dark-strong);
+  color: var(--surface-white);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+}
+.manifesto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: fit-content;
+}
+.manifesto-card.saas .manifesto-badge {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid rgba(190, 18, 60, 0.2);
+}
+.manifesto-card.sovereign .manifesto-badge {
+  background: rgba(5, 150, 105, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+}
+.manifesto-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.manifesto-points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.manifesto-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.manifesto-card.saas .manifesto-points li {
+  color: var(--text-secondary-strong);
+}
+.manifesto-card.sovereign .manifesto-points li {
+  color: var(--text-light-secondary);
+}
+
+.about-fit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+.about-fit-card {
+  padding: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+}
+.about-fit-card.positive {
+  border-top: 3px solid var(--success);
+}
+.about-fit-card.negative {
+  border-top: 3px solid var(--warning);
+}
+.about-fit-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.fit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+.fit-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.fit-list li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+.about-pillar-card {
+  padding: 28px;
+  border-radius: var(--radius-md);
+  background: var(--surface-slate);
+  border: 1px solid var(--border-dark);
+  color: var(--surface-white);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.about-pillar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(210, 26, 27, 0.12);
+  color: var(--ok-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(210, 26, 27, 0.2);
+}
+.about-pillar-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--surface-white);
+  margin: 0;
+}
+.about-pillar-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-light-muted);
+  margin: 0;
+}
+
+.about-governance-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+.about-governance-card {
+  padding: 36px;
+  border-radius: var(--radius-md);
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.about-maintainer-card {
+  padding: 36px;
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.maintainer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  color: var(--ok-red);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.about-milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 36px;
+}
+.milestone-card {
+  padding: 24px;
+  border-radius: var(--radius-md);
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.milestone-tag {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ok-red);
+  letter-spacing: 0.05em;
+}
+.milestone-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+.milestone-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.about-commercial-banner {
+  margin-top: 48px;
+  padding: 36px;
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+.about-commercial-copy h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+.about-commercial-copy p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0;
+}
+
+@media (max-width: 1023px) {
+  .about-facts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .about-manifesto-grid,
+  .about-fit-grid,
+  .about-governance-layout {
+    grid-template-columns: 1fr;
+  }
+  .about-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-milestones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-commercial-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-facts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .about-pillars-grid,
+  .about-milestones-grid {
+    grid-template-columns: 1fr;
+  }
+  .manifesto-card,
+  .about-fit-card,
+  .about-governance-card,
+  .about-maintainer-card,
+  .about-commercial-banner {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 479px) {
+  .about-facts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
