@@ -356,6 +356,23 @@ test("product pages expose capability-specific workflows", async ({ page }) => {
   await expect(
     page.locator(".status-live-banner").getByRole("link", { name: /View live status/ }),
   ).toHaveAttribute("href", /^https:\/\/status\.opsknight\.com\/?$/);
+
+  await page.goto("/product/incidents/");
+  const triggeredTab = page.locator("#lifecycle-tab-triggered");
+  await expect(triggeredTab).toHaveAttribute("aria-selected", "true");
+  await triggeredTab.focus();
+  await page.keyboard.press("ArrowRight");
+  const ackTab = page.locator("#lifecycle-tab-acknowledged");
+  await expect(ackTab).toHaveAttribute("aria-selected", "true");
+  await expect(ackTab).toBeFocused();
+  await page.keyboard.press("ArrowRight");
+  const resTab = page.locator("#lifecycle-tab-resolved");
+  await expect(resTab).toHaveAttribute("aria-selected", "true");
+  await expect(resTab).toBeFocused();
+  await expect(page.locator("#lifecycle-panel-resolved")).toBeVisible();
+  await expect(page.locator("#lifecycle-panel-resolved")).toContainText(
+    "Service restored and incident resolved",
+  );
 });
 
 test("tier a: core marketing routes responsive verification across key viewports", async ({
@@ -447,11 +464,11 @@ test("tier b: component-heavy routes full viewport matrix from 320px to ultrawid
   }
 });
 
-test("tier c: dynamic route families responsive smoke test", async ({
+test("tier c: route-family responsive certification across dynamic families, detail routes, and docs templates", async ({
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
-  test.setTimeout(240000);
+  test.setTimeout(360000);
 
   const viewports = [
     { width: 390, height: 844 },
@@ -490,11 +507,26 @@ test("tier c: dynamic route families responsive smoke test", async ({
     "grafana",
   ].map((s) => `/compare/${s}/`);
 
-  const allDynamicRoutes = [...productRoutes, ...solutionRoutes, ...compareRoutes];
+  const deployDetailRoutes = [
+    ...manifest.deployments.models.map((m) => `/deploy/${m.id}/`),
+    "/deploy/architecture/",
+  ];
+
+  const integrationDetailRoutes = manifest.integrations.map(
+    (p) => `/integrations/${p.id}/`,
+  );
+
+  const allRouteFamilyPages = [
+    ...productRoutes,
+    ...solutionRoutes,
+    ...compareRoutes,
+    ...deployDetailRoutes,
+    ...integrationDetailRoutes,
+  ];
 
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
-    for (const route of allDynamicRoutes) {
+    for (const route of allRouteFamilyPages) {
       await page.goto(route);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       const dimensions = await page.evaluate(() => ({
@@ -504,6 +536,38 @@ test("tier c: dynamic route families responsive smoke test", async ({
       expect(
         dimensions.scroll,
         route + " overflows at " + viewport.width + "x" + viewport.height,
+      ).toBeLessThanOrEqual(dimensions.viewport + 1);
+    }
+  }
+
+  // Representative docs templates at mobile, tablet, and laptop viewports
+  const docsViewports = [
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1366, height: 768 },
+  ];
+
+  const representativeDocsTemplates = [
+    `/docs/${manifest.release.tag}/`, // docs home
+    `/docs/${manifest.release.tag}/concepts/incidents/`, // long conceptual article
+    `/docs/${manifest.release.tag}/start/quickstart/`, // code-heavy guide
+    `/docs/${manifest.release.tag}/reference/configuration/`, // table-heavy reference
+    `/docs/${manifest.release.tag}/integrations/monitoring/datadog/`, // integration guide
+    `/docs/${manifest.release.tag}/operate/deploy/compose/`, // deployment guide
+  ];
+
+  for (const viewport of docsViewports) {
+    await page.setViewportSize(viewport);
+    for (const route of representativeDocsTemplates) {
+      await page.goto(route);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+      }));
+      expect(
+        dimensions.scroll,
+        "docs route " + route + " overflows at " + viewport.width + "x" + viewport.height,
       ).toBeLessThanOrEqual(dimensions.viewport + 1);
     }
   }

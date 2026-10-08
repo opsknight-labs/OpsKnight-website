@@ -107,7 +107,7 @@ export default function ComparePage() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#d21a1b] hover:underline"
+                    className="inline-flex items-center min-h-[28px] py-1 text-[#d21a1b] hover:underline"
                   >
                     ↳ {link.label}
                   </a>

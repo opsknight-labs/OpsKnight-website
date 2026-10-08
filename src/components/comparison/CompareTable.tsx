@@ -73,7 +73,7 @@ export function CompareTable() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+              className={`rounded-full px-3.5 py-1.5 min-h-[32px] text-xs font-medium transition-all ${
                 active
                   ? "bg-[#d21a1b] text-white shadow-sm"
                   : "bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-slate-50"
@@ -108,9 +108,9 @@ export function CompareTable() {
         <div className="space-y-6">
           {filteredSections.map((section) => (
             <div key={section.title} className="rounded-[14px] border border-slate-200 bg-white overflow-hidden shadow-sm">
-              <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-semibold text-xs uppercase tracking-wider text-slate-600">
+              <h3 className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-semibold text-xs uppercase tracking-wider text-slate-600">
                 {section.title}
-              </div>
+              </h3>
               <div className="divide-y divide-slate-100">
                 {section.rows.map((row) => (
                   <div key={row.feature} className="p-4 space-y-3">

@@ -4,8 +4,9 @@
     "license": "AGPL-3.0-only",
     "hostedSaaS": false,
     "publishedAt": "2026-10-03T05:02:04Z",
-    "tagCreatedAt": "2026-10-02T23:36:01Z",
+    "releaseCreatedAt": "2026-10-02T23:36:01Z",
     "date": "2026-10-03",
+    "tagCreatedAt": "2026-10-02T23:36:01Z",
     "changelogDate": "2026-10-02",
     "tag": "v2.0.0",
     "sourceCommit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
@@ -512,8 +513,66 @@
           }
         ]
       }
+    ],
+    "lifecycle": [
+      {
+        "id": "triggered",
+        "label": "Triggered",
+        "image": "/product/incident-triggered.webp",
+        "badge": "OPEN · P1",
+        "badgeColor": "#f43f5e",
+        "summary": "The incoming signal is correlated to its service and enters incident response; ownership and escalation resolve from the service configuration.",
+        "docs": "concepts/incidents"
+      },
+      {
+        "id": "acknowledged",
+        "label": "Acknowledged",
+        "image": "/product/incident-acknowledged.webp",
+        "badge": "ACKNOWLEDGED",
+        "badgeColor": "#f59e0b",
+        "summary": "Responder takes ownership, investigates root cause, updates timeline, and stops next-tier paging.",
+        "docs": "guides/incidents/respond-to-an-incident"
+      },
+      {
+        "id": "resolved",
+        "label": "Resolved",
+        "image": "/product/incident-resolved.webp",
+        "badge": "RESOLVED",
+        "badgeColor": "#10b981",
+        "summary": "Service restored and incident resolved. Response timing, timeline evidence and postmortem follow-up remain available for review.",
+        "docs": "concepts/incidents"
+      }
     ]
   },
+  "lifecycle": [
+    {
+      "id": "triggered",
+      "label": "Triggered",
+      "image": "/product/incident-triggered.webp",
+      "badge": "OPEN · P1",
+      "badgeColor": "#f43f5e",
+      "summary": "The incoming signal is correlated to its service and enters incident response; ownership and escalation resolve from the service configuration.",
+      "docs": "concepts/incidents"
+    },
+    {
+      "id": "acknowledged",
+      "label": "Acknowledged",
+      "image": "/product/incident-acknowledged.webp",
+      "badge": "ACKNOWLEDGED",
+      "badgeColor": "#f59e0b",
+      "summary": "Responder takes ownership, investigates root cause, updates timeline, and stops next-tier paging.",
+      "docs": "guides/incidents/respond-to-an-incident"
+    },
+    {
+      "id": "resolved",
+      "label": "Resolved",
+      "image": "/product/incident-resolved.webp",
+      "badge": "RESOLVED",
+      "badgeColor": "#10b981",
+      "summary": "Service restored and incident resolved. Response timing, timeline evidence and postmortem follow-up remain available for review.",
+      "docs": "concepts/incidents"
+    }
+  ],
   "notifications": {
     "channels": [
       "Voice",

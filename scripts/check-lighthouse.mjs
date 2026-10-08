@@ -2,7 +2,7 @@ import fs from "node:fs";
 
 const thresholds = {
   performance: 0.9,
-  accessibility: 0.95,
+  accessibility: 1.0,
   "best-practices": 0.9,
   seo: 0.95,
 };

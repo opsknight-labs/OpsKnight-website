@@ -727,6 +727,7 @@ export function IntegrationExplorer() {
 
   return (
     <div className="integration-explorer">
+      <h2 className="sr-only">Integration catalog</h2>
       <div className="integration-tools">
         <label className="integration-search">
           Search integrations
@@ -778,15 +779,15 @@ export function IntegrationExplorer() {
             key={provider.id}
             type="button"
             onClick={() => setSelectedId(provider.id)}
-            aria-label={`Inspect ${provider.title} integration`}
+            aria-labelledby={`integration-title-${provider.id}`}
           >
             <div className="integration-letter">
               <Image src={integrationLogos[provider.id]} alt="" width={36} height={36} />
             </div>
             <div>
-              <h3>
+              <h3 id={`integration-title-${provider.id}`}>
                 {provider.title}
-                <ArrowRight size={17} />
+                <ArrowRight size={17} aria-hidden="true" />
               </h3>
               <p>
                 {INTEGRATION_CATEGORY_LABELS[provider.category] ??
