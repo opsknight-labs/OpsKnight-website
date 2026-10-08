@@ -5937,4 +5937,45 @@ html {
   }
 }
 
+/* Contact page direct email box */
+.contact-direct-wrap {
+  margin-top: 48px;
+}
+
+.contact-direct-card {
+  padding: 32px;
+  border-radius: 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-direct-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-direct-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+@media (max-width: 767px) {
+  .contact-direct-card {
+    padding: 24px;
+  }
+  .contact-direct-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+
 

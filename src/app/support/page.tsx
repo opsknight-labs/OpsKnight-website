@@ -18,7 +18,6 @@ const services = [
       "OpsKnight is independently maintained. Sponsorship funds release infrastructure, cloud environments for production-style testing, security work, documentation and continued open-source development.",
     href: BRAND.links.sponsor,
     action: "Sponsor development",
-    email: null,
   },
   {
     title: "Commercial Support",
@@ -26,7 +25,6 @@ const services = [
       "Discuss deployment help, upgrades, troubleshooting, architecture guidance and security-questionnaire assistance. Engagement scope, availability and any service commitments are agreed in writing before work starts.",
     href: enquiryHref("OpsKnight commercial support enquiry"),
     action: "Discuss support",
-    email: BRAND.links.email,
   },
   {
     title: "Implementation / Consulting",
@@ -34,7 +32,6 @@ const services = [
       "Connect your monitoring platforms to OpsKnight and design the operational workflow around your services. Get help with integrations, on-call rotations, escalation policies, production deployment, high availability and hardening.",
     href: enquiryHref("OpsKnight implementation and consulting enquiry"),
     action: "Discuss an implementation",
-    email: BRAND.links.email,
   },
 ];
 
@@ -77,13 +74,7 @@ export default function Support() {
           <p className="site-description">
             OpsKnight is open-source software, free to self-host under{" "}
             {BRAND.license}. Organizations can sponsor development or engage
-            support, migration, and implementation assistance directly by emailing{" "}
-            <a
-              href={enquiryHref("OpsKnight support and services enquiry")}
-              className="text-white font-semibold underline underline-offset-4 hover:text-red-400"
-            >
-              {BRAND.links.email}
-            </a>.
+            commercial support, migration, and implementation assistance for their own infrastructure.
           </p>
           <div className="site-actions">
             <Action
@@ -94,13 +85,6 @@ export default function Support() {
             <Action href="/deploy/" secondary>
               Self-host OpsKnight
             </Action>
-          </div>
-          <div className="support-hero-email-badge">
-            <Mail size={14} className="text-red-500" />
-            <span>Direct support email:</span>
-            <a href={enquiryHref("OpsKnight support and services enquiry")}>
-              {BRAND.links.email}
-            </a>
           </div>
         </div>
       </section>
@@ -118,21 +102,7 @@ export default function Support() {
               <article key={service.title}>
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
-                <div className="flex flex-col gap-2">
-                  <TextLink href={service.href}>{service.action}</TextLink>
-                  {service.email ? (
-                    <span className="text-xs text-slate-700 flex items-center gap-1.5 pt-1 font-medium">
-                      <Mail size={12} className="text-red-700" />
-                      Direct inbox:{" "}
-                      <a
-                        href={service.href}
-                        className="font-semibold text-slate-900 underline underline-offset-2 hover:text-red-700"
-                      >
-                        {service.email}
-                      </a>
-                    </span>
-                  ) : null}
-                </div>
+                <TextLink href={service.href}>{service.action}</TextLink>
               </article>
             ))}
           </div>
@@ -176,8 +146,8 @@ export default function Support() {
             eyebrow="DIRECT ENGAGEMENT"
             title="Start with your environment."
           >
-            Email {BRAND.links.email} directly with your current monitoring platforms,
-            deployment topology, services, team size and the assistance you need.
+            Share your current monitoring platforms, deployment topology, team size,
+            and the assistance you need to discuss scope and timelines.
           </SectionIntro>
 
           <div className="support-contact-grid">
@@ -211,7 +181,7 @@ export default function Support() {
 
               <div className="pt-2">
                 <Action href={enquiryHref("OpsKnight support and services enquiry")}>
-                  Email {BRAND.links.email}
+                  Discuss an engagement
                 </Action>
               </div>
 

@@ -1,6 +1,8 @@
 import { BRAND } from "@/lib/brand";
 import { enquiryHref } from "@/lib/contact";
 import { Action, TextLink } from "@/components/site/Primitives";
+import { Mail } from "lucide-react";
+
 const paths = [
   {
     id: "community",
@@ -43,6 +45,7 @@ const paths = [
     action: "Email about your evaluation",
   },
 ];
+
 export default function Contact() {
   return (
     <div className="site-page">
@@ -58,8 +61,14 @@ export default function Contact() {
           </h1>
           <p className="site-description">
             Community, professional assistance and corporate evaluation each
-            have a clear path. Contact {BRAND.links.email} directly for support,
-            implementation or procurement enquiries.
+            have a clear path. Reach us directly at{" "}
+            <a
+              href={enquiryHref("OpsKnight enquiry")}
+              className="text-white font-semibold underline underline-offset-4 hover:text-red-400"
+            >
+              {BRAND.links.email}
+            </a>{" "}
+            for support, implementation, or procurement enquiries.
           </p>
           <div className="site-actions">
             <Action href={enquiryHref("OpsKnight enquiry")}>
@@ -71,6 +80,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
       <section className="site-section">
         <div className="site-container security-sections">
           {paths.map((path) => (
@@ -95,6 +105,38 @@ export default function Contact() {
               )}
             </article>
           ))}
+        </div>
+
+        <div className="site-container contact-direct-wrap">
+          <div className="contact-direct-card">
+            <div className="contact-direct-header">
+              <div className="support-mail-icon-wrap">
+                <Mail size={22} className="text-red-600" />
+              </div>
+              <div>
+                <p className="site-eyebrow mb-0">DIRECT INBOX</p>
+                <h3 className="text-xl font-bold">General &amp; Commercial Enquiries</h3>
+              </div>
+            </div>
+            <p className="text-sm text-slate-700 leading-relaxed max-w-xl mb-0">
+              Prefer writing directly instead of GitHub? Send architecture reviews,
+              vendor security questionnaires, or commercial support requests straight to our team.
+            </p>
+            <div className="contact-direct-actions">
+              <div className="support-email-box py-2 px-3">
+                <span className="text-xs font-bold tracking-wider uppercase text-slate-700">Official Contact</span>
+                <a
+                  href={enquiryHref("OpsKnight enquiry")}
+                  className="support-email-address text-base"
+                >
+                  {BRAND.links.email}
+                </a>
+              </div>
+              <Action href={enquiryHref("OpsKnight enquiry")}>
+                Send an email
+              </Action>
+            </div>
+          </div>
         </div>
       </section>
       <section className="site-section site-light-alt">
