@@ -2,12 +2,15 @@ import { siteMetadata } from "@/lib/site-metadata";
 import { BRAND } from "@/lib/brand";
 import { enquiryHref } from "@/lib/contact";
 import { Action, SectionIntro, TextLink } from "@/components/site/Primitives";
+import { Mail } from "lucide-react";
+
 export const metadata = siteMetadata({
   title: "Support & Services",
   description:
     "Sponsor OpsKnight or discuss commercial support, monitoring integrations, implementation and production architecture guidance.",
   alternates: { canonical: "/support/" },
 });
+
 const services = [
   {
     title: "Sponsor OpsKnight",
@@ -15,6 +18,7 @@ const services = [
       "OpsKnight is independently maintained. Sponsorship funds release infrastructure, cloud environments for production-style testing, security work, documentation and continued open-source development.",
     href: BRAND.links.sponsor,
     action: "Sponsor development",
+    email: null,
   },
   {
     title: "Commercial Support",
@@ -22,6 +26,7 @@ const services = [
       "Discuss deployment help, upgrades, troubleshooting, architecture guidance and security-questionnaire assistance. Engagement scope, availability and any service commitments are agreed in writing before work starts.",
     href: enquiryHref("OpsKnight commercial support enquiry"),
     action: "Discuss support",
+    email: BRAND.links.email,
   },
   {
     title: "Implementation / Consulting",
@@ -29,8 +34,10 @@ const services = [
       "Connect your monitoring platforms to OpsKnight and design the operational workflow around your services. Get help with integrations, on-call rotations, escalation policies, production deployment, high availability and hardening.",
     href: enquiryHref("OpsKnight implementation and consulting enquiry"),
     action: "Discuss an implementation",
+    email: BRAND.links.email,
   },
 ];
+
 const steps = [
   [
     "Monitoring & alerting architecture",
@@ -53,6 +60,7 @@ const steps = [
     "Review redundancy, recovery, least privilege, secrets and operational readiness together.",
   ],
 ];
+
 export default function Support() {
   return (
     <div className="site-page">
@@ -69,7 +77,13 @@ export default function Support() {
           <p className="site-description">
             OpsKnight is open-source software, free to self-host under{" "}
             {BRAND.license}. Organizations can sponsor development or engage
-            support and implementation expertise for their own infrastructure.
+            support, migration, and implementation assistance directly by emailing{" "}
+            <a
+              href={enquiryHref("OpsKnight support and services enquiry")}
+              className="text-white font-semibold underline underline-offset-4 hover:text-red-400"
+            >
+              {BRAND.links.email}
+            </a>.
           </p>
           <div className="site-actions">
             <Action
@@ -81,8 +95,16 @@ export default function Support() {
               Self-host OpsKnight
             </Action>
           </div>
+          <div className="support-hero-email-badge">
+            <Mail size={14} className="text-red-500" />
+            <span>Direct support email:</span>
+            <a href={enquiryHref("OpsKnight support and services enquiry")}>
+              {BRAND.links.email}
+            </a>
+          </div>
         </div>
       </section>
+
       <section className="site-section">
         <div className="site-container">
           <SectionIntro
@@ -96,7 +118,21 @@ export default function Support() {
               <article key={service.title}>
                 <h2>{service.title}</h2>
                 <p>{service.description}</p>
-                <TextLink href={service.href}>{service.action}</TextLink>
+                <div className="flex flex-col gap-2">
+                  <TextLink href={service.href}>{service.action}</TextLink>
+                  {service.email ? (
+                    <span className="text-xs text-slate-700 flex items-center gap-1.5 pt-1 font-medium">
+                      <Mail size={12} className="text-red-700" />
+                      Direct inbox:{" "}
+                      <a
+                        href={service.href}
+                        className="font-semibold text-slate-900 underline underline-offset-2 hover:text-red-700"
+                      >
+                        {service.email}
+                      </a>
+                    </span>
+                  ) : null}
+                </div>
               </article>
             ))}
           </div>
@@ -108,6 +144,7 @@ export default function Support() {
           </p>
         </div>
       </section>
+
       <section className="site-section site-light-alt">
         <div className="site-container interior-copy">
           <h2>From monitoring signals to a production response.</h2>
@@ -132,28 +169,99 @@ export default function Support() {
           </div>
         </div>
       </section>
+
       <section className="site-section">
-        <div className="site-container interior-copy">
-          <h2>Start with your environment.</h2>
-          <p>
-            Email {BRAND.links.email} with your current monitoring platforms,
-            deployment topology, services, team size and the assistance you
-            need. We can discuss a suitable scope and next steps. Remove secrets
-            and private incident data before sharing material.
-          </p>
-          <TextLink
-            href={enquiryHref(
-              "OpsKnight implementation and consulting enquiry",
-            )}
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="DIRECT ENGAGEMENT"
+            title="Start with your environment."
           >
-            Contact about an engagement
-          </TextLink>
-          <p>
-            For community discussions and product issues, visit the{" "}
-            <a href="/community/">community</a>. Procurement and supplier
-            questionnaires have a{" "}
-            <a href="/contact/#procurement">direct contact path</a>.
-          </p>
+            Email {BRAND.links.email} directly with your current monitoring platforms,
+            deployment topology, services, team size and the assistance you need.
+          </SectionIntro>
+
+          <div className="support-contact-grid">
+            <div className="support-contact-card">
+              <div className="support-contact-header">
+                <div className="support-mail-icon-wrap">
+                  <Mail size={22} className="text-red-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Direct Support Inbox</h3>
+                  <p className="text-sm text-slate-700">
+                    Reach the core maintainers directly for commercial support and architecture assistance.
+                  </p>
+                </div>
+              </div>
+
+              <div className="support-email-box">
+                <span className="text-xs font-bold tracking-wider uppercase text-slate-700">Official Contact Email</span>
+                <a
+                  href={enquiryHref("OpsKnight support and services enquiry")}
+                  className="support-email-address"
+                >
+                  {BRAND.links.email}
+                </a>
+              </div>
+
+              <p className="text-sm text-slate-600 leading-relaxed">
+                We discuss suitable engagement scopes, review high-availability deployment topology,
+                plan migrations from legacy SaaS, or assist with procurement security questionnaires.
+              </p>
+
+              <div className="pt-2">
+                <Action href={enquiryHref("OpsKnight support and services enquiry")}>
+                  Email {BRAND.links.email}
+                </Action>
+              </div>
+
+              <p className="support-security-notice">
+                <strong>Data protection:</strong> Please remove secrets, API keys, database credentials, encryption tokens, and private incident data before sharing material.
+              </p>
+            </div>
+
+            <div className="support-checklist-card">
+              <h4 className="text-base font-bold mb-4 flex items-center gap-2">
+                <span className="signal-dot" />
+                What to include in your email:
+              </h4>
+              <ul className="support-checklist-items">
+                <li>
+                  <strong>Current monitoring stack</strong>
+                  <span>Alert sources in use (e.g., Datadog, Prometheus, Grafana, AWS CloudWatch, New Relic) and estimated signal volume.</span>
+                </li>
+                <li>
+                  <strong>Target deployment model</strong>
+                  <span>Preferred runtime topology: single-node Docker Compose, Swarm HA cluster, or Kubernetes with Helm charts.</span>
+                </li>
+                <li>
+                  <strong>Responders &amp; channels</strong>
+                  <span>Team size, on-call rotations, and required paging channels (Voice phone calls, SMS, Slack, Microsoft Teams).</span>
+                </li>
+                <li>
+                  <strong>Goals &amp; timeline</strong>
+                  <span>Greenfield rollout, migration from PagerDuty/Opsgenie/Squadcast, or dedicated production hardening review.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="support-alternate-paths">
+            <p>
+              Looking for open-source community discussions or product issues? Visit the{" "}
+              <a href="/community/">community</a>. Corporate supplier review and security questionnaires have a{" "}
+              <a href="/contact/#procurement">direct procurement path</a>.
+            </p>
+            <div className="pt-2">
+              <TextLink
+                href={enquiryHref(
+                  "OpsKnight implementation and consulting enquiry",
+                )}
+              >
+                Contact about an engagement
+              </TextLink>
+            </div>
+          </div>
         </div>
       </section>
     </div>

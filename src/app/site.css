@@ -5788,3 +5788,153 @@ html {
   }
 }
 
+/* Support page direct contact & email styling */
+.support-hero-email-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 13px;
+  color: var(--text-light-secondary);
+  width: fit-content;
+}
+.support-hero-email-badge a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.support-hero-email-badge a:hover {
+  color: #f87171;
+}
+
+.support-contact-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+
+.support-contact-card {
+  padding: 32px;
+  border-radius: 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.support-contact-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.support-mail-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.support-email-box {
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.support-email-address {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ok-red);
+  text-decoration: none;
+  font-family: var(--font-jetbrains-mono), monospace;
+  letter-spacing: -0.02em;
+}
+
+.support-email-address:hover {
+  text-decoration: underline;
+}
+
+.support-security-notice {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+  padding-top: 14px;
+  margin: 0;
+}
+
+.support-checklist-card {
+  padding: 32px;
+  border-radius: 12px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+}
+
+.support-checklist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.support-checklist-items li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.support-checklist-items strong {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.support-alternate-paths {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+@media (max-width: 1023px) {
+  .support-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .support-contact-card,
+  .support-checklist-card {
+    padding: 24px;
+  }
+  .support-email-address {
+    font-size: 16px;
+    word-break: break-all;
+  }
+}
+
+
