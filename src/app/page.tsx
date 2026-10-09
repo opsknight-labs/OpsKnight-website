@@ -52,10 +52,21 @@ export default function Home() {
                   Explore the platform
                 </Action>
               </div>
-              <a className="hero-release-link" href="/changelog/">
-                See what&apos;s new in {PRODUCT.release.tag}
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
+              <div className="hero-secondary-links">
+                <a className="hero-release-link" href="/changelog/">
+                  What&apos;s new in {PRODUCT.release.tag}
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+                <a
+                  className="hero-status-link"
+                  href={BRAND.links.status}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Live OpsKnight status
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+              </div>
             </div>
 
             <figure className="hero-product hero-framed">
