@@ -393,6 +393,7 @@ export function ProductProofShowcase() {
             <span>Expand</span>
           </button>
         </div>
+        <p className="proof-pan-hint">Swipe horizontally to explore the screenshot · use Inspect fullscreen for the complete view.</p>
 
         {/* Contextual Editorial Insight (replacing repeated 3-box cards) */}
         <div className="product-proof-insight-strip">
