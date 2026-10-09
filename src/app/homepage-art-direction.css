@@ -1099,10 +1099,10 @@
     background: #0b1019;
   }
   .site-page--home .hero-editorial-product img {
-    width: 420%;
+    width: 490%;
     height: auto;
     max-width: none;
-    transform: translate(-38.1%, -8%);
+    transform: translate(-39.8%, -12%);
   }
   .site-page--home .trust-strip > .site-container {
     display: grid;
