@@ -80,10 +80,7 @@
   margin-top: 18px;
 }
 .site-page:not(.site-page--home) .section-intro .site-eyebrow .signal-dot {
-  width: 4px;
-  height: 12px;
-  border-radius: 0;
-  box-shadow: none;
+  display: none;
 }
 .site-page:not(.site-page--home) .site-action { border-radius: 3px; }
 .site-page:not(.site-page--home) .site-text-link {
