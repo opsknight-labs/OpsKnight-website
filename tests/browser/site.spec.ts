@@ -10,7 +10,7 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
-  await expect(page.getByText("From first signal to final review.")).toBeVisible();
+  await expect(page.getByText("Every signal. One clear response.")).toBeVisible();
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
   });
@@ -60,6 +60,35 @@ test("homepage workflow, architecture, metadata and layout", async ({
     fullPage: true,
   });
 });
+test("hero aligns first-screen copy and Command Center across viewports", async ({ page }) => {
+  await page.goto("/");
+  const heading = page.getByRole("heading", { level: 1, name: /Own the incident/ });
+  const product = page.locator(".hero-image-window");
+  const picture = product.locator("img");
+  await expect(heading).toBeVisible();
+  await expect(product).toBeVisible();
+  await expect(picture).toHaveJSProperty("complete", true);
+  expect(await picture.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+
+  const copyBox = await page.locator(".hero-copy").boundingBox();
+  const imageBox = await product.boundingBox();
+  const viewport = page.viewportSize();
+  expect(copyBox).not.toBeNull();
+  expect(imageBox).not.toBeNull();
+  if (!copyBox || !imageBox || !viewport) return;
+  expect(imageBox.y, "Product must enter the first viewport").toBeLessThan(viewport.height * .78);
+  expect(imageBox.width, "Product must have usable scale").toBeGreaterThan(viewport.width * .30);
+  if (viewport.width >= 981) {
+    expect(imageBox.x, "Product should align beside the copy").toBeGreaterThan(copyBox.x + copyBox.width - 3);
+    expect(Math.abs(imageBox.y + imageBox.height / 2 - (copyBox.y + copyBox.height / 2)))
+      .toBeLessThan(115);
+  } else {
+    expect(imageBox.y, "Stacked product belongs below the copy").toBeGreaterThan(copyBox.y + copyBox.height - 3);
+  }
+  await expect(page.locator(".hero-signal")).toHaveCount(0);
+  await expect(page.locator(".hero-frame-bar")).toHaveCount(0);
+});
+
 test("homepage product evidence is inspectable by touch and keyboard", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("tab", { name: /On-call/i }).first()).toHaveAttribute("aria-selected", "true");
