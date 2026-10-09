@@ -56,21 +56,22 @@ export default function Home() {
           </div>
 
           <figure className="hero-editorial-product">
-            <div
+            <a
               className="hero-editorial-viewport"
-              role="region"
-              aria-label="OpsKnight Command Center screenshot; scroll horizontally on narrow screens to inspect it"
-              tabIndex={0}
+              href="/product/command-center.webp"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open full-size OpsKnight Command Center screenshot"
             >
               <Image
                 src="/product/command-center.webp"
-                width={1200}
-                height={600}
-                alt="OpsKnight Command Center showing the incident banner, real-time alerts, triage and SLA work queues, with explanatory callouts"
+                width={1120}
+                height={602}
+                alt="OpsKnight Command Center showing the incident banner, live alerts, incident triage, workload signals and SLA alerts with explanatory callouts"
                 priority
-                sizes="(max-width: 599px) 760px, (max-width: 1499px) 96vw, 1450px"
+                sizes="(max-width: 599px) 720px, (max-width: 1499px) 96vw, 1450px"
               />
-            </div>
+            </a>
             <figcaption className="sr-only">
               OpsKnight Command Center, with demonstration data. The same original image is shown at every screen size.
             </figcaption>
