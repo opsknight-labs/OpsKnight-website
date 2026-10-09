@@ -368,9 +368,9 @@ export function ProductProofShowcase() {
             type="button"
             className="frame-bar-inspect-btn"
             onClick={() => setLightboxOpen(true)}
-            aria-label={`Inspect ${active.label} screenshot fullscreen`}
+            aria-label={`Inspect fullscreen: ${active.label} screenshot`}
           >
-            <Maximize2 size={13} />
+            <Maximize2 size={13} aria-hidden="true" />
             <span>Inspect fullscreen</span>
           </button>
         </div>
@@ -379,15 +379,6 @@ export function ProductProofShowcase() {
         <div
           className="product-proof-shot-wrap"
           onClick={() => setLightboxOpen(true)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setLightboxOpen(true);
-            }
-          }}
-          aria-label={`Click to expand ${active.label} screenshot`}
         >
           <ProductScreenshot name={active.image} alt={active.alt} />
         </div>
@@ -436,6 +427,9 @@ export function ProductProofShowcase() {
             className="proof-lightbox-content"
             aria-label={`${active.label} screenshot inspection`}
           >
+            <Dialog.Description className="sr-only">
+              Full-resolution view of {active.headline}
+            </Dialog.Description>
             <div className="proof-lightbox-head">
               <div className="flex items-center gap-3">
                 <span className="signal-dot" />

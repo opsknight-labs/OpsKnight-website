@@ -76,7 +76,7 @@ export default function Home() {
             <HeroSignal />
             <figure className="hero-screenshot-frame">
               <div className="hero-frame-bar">
-                <div className="frame-dots">
+                <div className="frame-dots" aria-hidden="true">
                   <span className="frame-dot" />
                   <span className="frame-dot" />
                   <span className="frame-dot" />
@@ -183,7 +183,7 @@ export default function Home() {
                 <div className="editorial-capability-copy">
                   <div className="editorial-capability-head">
                     <span className="editorial-capability-num">02</span>
-                    <h4>On-Call &amp; Escalation</h4>
+                    <h3>On-Call &amp; Escalation</h3>
                   </div>
                   <p>
                     Design timezone-aware primary and secondary rotations with DST-safe
@@ -197,7 +197,7 @@ export default function Home() {
                 <div className="editorial-capability-copy">
                   <div className="editorial-capability-head">
                     <span className="editorial-capability-num">03</span>
-                    <h4>Multi-Channel Paging</h4>
+                    <h3>Multi-Channel Paging</h3>
                   </div>
                   <p>
                     Dispatch urgent pages across voice calls, push notifications, SMS,
@@ -211,7 +211,7 @@ export default function Home() {
                 <div className="editorial-capability-copy">
                   <div className="editorial-capability-head">
                     <span className="editorial-capability-num">04</span>
-                    <h4>Slack &amp; Teams ChatOps</h4>
+                    <h3>Slack &amp; Teams ChatOps</h3>
                   </div>
                   <p>
                     Coordinate in native chat channels with automated war rooms,
@@ -225,7 +225,7 @@ export default function Home() {
                 <div className="editorial-capability-copy">
                   <div className="editorial-capability-head">
                     <span className="editorial-capability-num">05</span>
-                    <h4>Decoupled Status Pages</h4>
+                    <h3>Decoupled Status Pages</h3>
                   </div>
                   <p>
                     Publish real-time service health, 90-day availability history,
@@ -239,7 +239,7 @@ export default function Home() {
                 <div className="editorial-capability-copy">
                   <div className="editorial-capability-head">
                     <span className="editorial-capability-num">06</span>
-                    <h4>Analytics &amp; Postmortems</h4>
+                    <h3>Analytics &amp; Postmortems</h3>
                   </div>
                   <p>
                     Track MTTA/MTTR response velocity, pinpoint noisy monitor flapping,
@@ -298,7 +298,7 @@ export default function Home() {
           <div className="security-architecture-grid">
             <div className="security-pillar-item">
               <span className="security-pillar-num">01 / IDENTITY</span>
-              <h4>OIDC &amp; SCIM 2.0</h4>
+              <h3>OIDC &amp; SCIM 2.0</h3>
               <p>
                 Federated authentication with Okta, Microsoft Entra, Google, and Auth0.
                 Automated JIT user creation and SCIM 2.0 group provisioning.
@@ -306,7 +306,7 @@ export default function Home() {
             </div>
             <div className="security-pillar-item">
               <span className="security-pillar-num">02 / ACCESS</span>
-              <h4>RBAC &amp; Auditor Role</h4>
+              <h3>RBAC &amp; Auditor Role</h3>
               <p>
                 Least-privilege authorization with workspace roles, scoped API tokens,
                 and a canonical signed-in session registry with one-click revocation.
@@ -314,7 +314,7 @@ export default function Home() {
             </div>
             <div className="security-pillar-item">
               <span className="security-pillar-num">03 / ENCRYPTION</span>
-              <h4>AES-256-GCM Envelope</h4>
+              <h3>AES-256-GCM Envelope</h3>
               <p>
                 Integration secrets and notification credentials encrypted at rest.
                 All operational state stored in your self-hosted PostgreSQL database.
@@ -322,7 +322,7 @@ export default function Home() {
             </div>
             <div className="security-pillar-item">
               <span className="security-pillar-num">04 / AUDIT</span>
-              <h4>Evidence Ledgers</h4>
+              <h3>Evidence Ledgers</h3>
               <p>
                 Immutable operator event stream, DSAR export and erasure tooling,
                 retention holds, and verifiable evidence export packages.

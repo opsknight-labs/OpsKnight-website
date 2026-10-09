@@ -2529,6 +2529,7 @@ html {
   font: 700 12px var(--font-jetbrains-mono), monospace;
   color: #b91c1c;
 }
+.editorial-capability-head h3,
 .editorial-capability-head h4 {
   font-size: 18px;
   font-weight: 700;
@@ -2580,6 +2581,7 @@ html {
   color: #b91c1c;
   margin-bottom: 10px;
 }
+.security-pillar-item h3,
 .security-pillar-item h4 {
   font-size: 16px;
   font-weight: 700;

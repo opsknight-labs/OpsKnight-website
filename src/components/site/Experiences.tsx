@@ -860,7 +860,7 @@ export function ArchitectureViewer() {
             </div>
           </div>
 
-          <div className="arch-diagram-arrow">↓</div>
+          <div className="arch-diagram-arrow" aria-hidden="true">↓</div>
 
           {/* Tier 2: Runtime Roles */}
           <div className="arch-tier-runtime">
@@ -886,7 +886,7 @@ export function ArchitectureViewer() {
             </div>
           </div>
 
-          <div className="arch-diagram-arrow">↓</div>
+          <div className="arch-diagram-arrow" aria-hidden="true">↓</div>
 
           {/* Tier 3: Storage & Connection Pooling */}
           <div className="arch-tier-storage">
