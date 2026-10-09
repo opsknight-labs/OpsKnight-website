@@ -219,6 +219,106 @@ export default function Security() {
             </p>
           </div>
 
+          {/* Enterprise Evaluation Framework: 3 Core Questions */}
+          <div className="security-eval-framework">
+            <div className="security-eval-header">
+              <span className="site-eyebrow">
+                <span className="signal-dot" /> ENTERPRISE EVALUATION FRAMEWORK
+              </span>
+              <h3 className="text-xl font-bold text-slate-900">
+                Three questions enterprise buyers ask
+              </h3>
+            </div>
+            <div className="security-eval-grid">
+              <div className="security-eval-card">
+                <span className="security-eval-step">QUESTION 01</span>
+                <h4>What does OpsKnight do?</h4>
+                <p>
+                  A complete, unified incident management and on-call platform: multi-signal alert
+                  ingestion across 28 integrations, automated deduplication, 24/7 follow-the-sun
+                  rotations, multi-channel paging (Voice phone calls, SMS, Push, Slack, Teams), decoupled
+                  public status pages, and structured 5-Whys postmortems.
+                </p>
+              </div>
+              <div className="security-eval-card">
+                <span className="security-eval-step">QUESTION 02</span>
+                <h4>Can we operate it safely?</h4>
+                <p>
+                  100% perimeter data custody: zero vendor cloud lock-in and zero phone-home telemetry.
+                  Sensitive configuration is protected by authenticated AES-256-GCM encryption at rest,
+                  enterprise OIDC PKCE authentication, SCIM 2.0 lifecycle deprovisioning, fine-grained RBAC
+                  with read-only Auditor roles, and reproducible SBOM release provenance.
+                </p>
+              </div>
+              <div className="security-eval-card">
+                <span className="security-eval-step">QUESTION 03</span>
+                <h4>Who helps adopt it?</h4>
+                <p>
+                  Direct maintainer commercial support: scoped enterprise support agreements,
+                  production architecture reviews, turnkey migration assistance from legacy SaaS
+                  (PagerDuty, Opsgenie, Squadcast), and prompt supplier security questionnaire reviews.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Technical Procurement Pre-Flight Checklist */}
+          <div className="procurement-checklist-card">
+            <div className="procurement-checklist-header">
+              <span className="site-eyebrow">
+                <span className="signal-dot" /> TECHNICAL READINESS
+              </span>
+              <h3 className="text-xl font-bold text-slate-900">
+                Technical Procurement Pre-Flight Checklist
+              </h3>
+              <p className="text-sm text-slate-600 mt-1">
+                Evaluate infrastructure and identity dependencies prior to deployment rollout:
+              </p>
+            </div>
+            <div className="procurement-checklist-grid">
+              {[
+                {
+                  id: "01",
+                  title: "Compute & Orchestration",
+                  detail: "Host running Docker Compose, Docker Swarm (3+ managers), or Kubernetes 1.28+ with Helm 3.12+.",
+                },
+                {
+                  id: "02",
+                  title: "Data Persistence",
+                  detail: "Dedicated PostgreSQL 16+ (with pgcrypto) & Redis 7.0+ / Valkey for decoupled worker queues.",
+                },
+                {
+                  id: "03",
+                  title: "Enterprise Identity",
+                  detail: "OIDC PKCE client (Okta, Microsoft Entra ID, Google Workspace, Keycloak) + optional SCIM 2.0 endpoint.",
+                },
+                {
+                  id: "04",
+                  title: "Carrier API Credentials",
+                  detail: "Twilio, AWS SNS, SendGrid, or direct SMTP accounts for outbound paging and status broadcast alerts.",
+                },
+                {
+                  id: "05",
+                  title: "Key Management Vault",
+                  detail: "High-entropy 32-byte ENCRYPTION_KEY & NEXTAUTH_SECRET preserved in enterprise secrets manager.",
+                },
+                {
+                  id: "06",
+                  title: "Network & Ingress Controls",
+                  detail: "HTTPS edge reverse proxy with explicit outbound egress allowlists restricted only to configured APIs.",
+                },
+              ].map((item) => (
+                <div key={item.id} className="procurement-check-item">
+                  <span className="procurement-check-num">{item.id}</span>
+                  <div>
+                    <strong>{item.title}</strong>
+                    <p>{item.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="security-sections">
             {[
               [
@@ -262,7 +362,10 @@ export default function Security() {
 
           <div className="paired-links pt-4">
             <TextLink
-              href={enquiryHref("OpsKnight supplier and security questionnaire enquiry")}
+              href={enquiryHref(
+                "OpsKnight supplier and security questionnaire enquiry",
+                "Organization / Security Team:\nProduct version under evaluation (e.g., v2.0.0):\nQuestionnaire format (SIG, CAIQ, custom vendor assessment):\nTarget submission deadline:\nAdditional requirements:",
+              )}
             >
               Email about your security questionnaire
             </TextLink>

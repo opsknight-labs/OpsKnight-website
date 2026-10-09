@@ -708,7 +708,7 @@ html {
   font-size: 14px;
 }
 .escalation-rail .site-eyebrow {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-light-muted);
 }
 .site-boundary {
@@ -816,7 +816,7 @@ html {
   margin-top: 8px;
 }
 .phone small {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-light-muted);
 }
 .phone-keypad {
@@ -892,7 +892,7 @@ html {
   color: var(--text-dark-muted);
 }
 .chat-story > .site-eyebrow {
-  font-size: 9px;
+  font-size: 11px;
   margin: 10px 0;
 }
 .chat-story h3 {
@@ -926,7 +926,7 @@ html {
 }
 .chat-message small {
   color: var(--text-dark-muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 .chat-message p {
   color: var(--text-secondary);
@@ -1018,7 +1018,7 @@ html {
   margin-top: 32px;
 }
 .status-update .site-eyebrow {
-  font-size: 9px;
+  font-size: 11px;
   margin-bottom: 10px;
 }
 .status-update h3 {
@@ -1160,7 +1160,7 @@ html {
 .architecture-db small {
   margin-left: 12px;
   color: var(--text-light-muted);
-  font-size: 9px;
+  font-size: 11px;
 }
 .architecture-note {
   font-size: 11px;
@@ -1301,7 +1301,7 @@ html {
 }
 .final-cta .site-proof {
   margin-top: 15px;
-  font-size: 9px;
+  font-size: 11px;
 }
 .final-cta-actions .site-actions {
   margin-top: 0;
@@ -1758,13 +1758,13 @@ html {
     padding: 64px 0;
   }
   .hero-topline {
-    font-size: 8px;
+    font-size: 11px;
   }
   .hero-topline > span {
     letter-spacing: 0;
   }
   .hero-topline > a {
-    font-size: 9px;
+    font-size: 11px;
   }
   .hero-copy {
     padding: 64px 0 42px;
@@ -1780,7 +1780,7 @@ html {
     font-size: 14px;
   }
   .hero-copy .site-proof {
-    font-size: 9px;
+    font-size: 11px;
     max-width: 320px;
     margin: 24px auto 0;
   }
@@ -1788,7 +1788,7 @@ html {
     padding: 17px 15px;
   }
   .signal-track > div {
-    font-size: 8px;
+    font-size: 11px;
     gap: 6px;
     flex-direction: column;
     padding: 0;
@@ -1815,7 +1815,7 @@ html {
     transform: none;
   }
   .hero-product-foot {
-    font-size: 7px;
+    font-size: 11px;
   }
   .hero-product-foot > span:last-child {
     display: none;
@@ -1824,7 +1824,7 @@ html {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 19px 10px;
-    font-size: 9px;
+    font-size: 11px;
     padding-block: 24px;
     text-align: center;
   }
@@ -1839,7 +1839,7 @@ html {
     margin-top: 20px;
   }
   .site-eyebrow {
-    font-size: 9px;
+    font-size: 11px;
     margin-bottom: 18px;
   }
   .section-heading-row {
@@ -2004,7 +2004,7 @@ html {
     justify-content: flex-start;
   }
   .final-cta .site-proof {
-    font-size: 9px;
+    font-size: 11px;
   }
   .footer-top {
     display: block;
@@ -2079,7 +2079,7 @@ html {
   .hero-copy h1 { font-size: clamp(36px, 10vw, 48px); }
   .hero-subtitle { font-size: 18px; }
   .section-intro h2 { font-size: 32px; }
-  .trust-strip > .site-container { grid-template-columns: repeat(2, 1fr); font-size: 8px; }
+  .trust-strip > .site-container { grid-template-columns: repeat(2, 1fr); font-size: 11px; }
   .annotation-strip { grid-template-columns: 1fr; }
   .footer-links { grid-template-columns: 1fr 1fr; }
   .architecture-roles { grid-template-columns: 1fr; }
@@ -2925,6 +2925,52 @@ html {
   border-radius:0;
 }
 .product-proof-panel .product-shot figcaption { display:none; }
+.product-proof-annotations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 18px 26px;
+  border-top: 1px solid var(--border-dark);
+  background: rgba(15, 23, 42, 0.45);
+}
+.proof-annotation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.proof-annotation-card:hover {
+  border-color: rgba(210, 26, 27, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+}
+.proof-annotation-badge {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(210, 26, 27, 0.15);
+  border: 1px solid rgba(210, 26, 27, 0.3);
+  color: #ff6b6b;
+  font: 11px var(--font-jetbrains-mono), monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.proof-annotation-title {
+  color: #f1f5f9;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.proof-annotation-detail {
+  color: var(--text-light-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+}
 .product-proof-meta {
   display:flex;
   justify-content:space-between;
@@ -2936,7 +2982,7 @@ html {
 .product-proof-meta > div:first-child { max-width:720px; }
 .product-proof-meta span {
   color:var(--text-light-muted);
-  font:9px var(--font-jetbrains-mono),monospace;
+  font:11px var(--font-jetbrains-mono),monospace;
   letter-spacing:.12em;
 }
 .product-proof-meta strong {
@@ -3115,6 +3161,11 @@ html {
   to { opacity:1; }
 }
 @media (max-width:700px) {
+  .product-proof-annotations {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 16px 20px;
+  }
   .product-proof-meta {
     align-items:flex-start;
     flex-direction:column;
@@ -5960,6 +6011,283 @@ html {
   }
   .ops-console-address {
     font-size: 14px;
+  }
+}
+
+/* First-Deployment Verification Checklist */
+.deploy-checklist-section {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border-light);
+}
+
+.deploy-checklist-header {
+  max-width: 680px;
+  margin-bottom: 24px;
+}
+
+.deploy-checklist-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 6px 0 8px;
+  color: var(--text-primary);
+}
+
+.deploy-checklist-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.deploy-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 20px;
+  min-width: 0;
+}
+
+.deploy-gate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 10px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.deploy-gate-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.deploy-gate-head {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.deploy-gate-head > div {
+  min-width: 0;
+}
+
+.deploy-gate-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font: 700 12px var(--font-jetbrains-mono), monospace;
+}
+
+.deploy-gate-head h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.deploy-gate-head p {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+}
+
+.deploy-gate-code {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.deploy-gate-code-label,
+.deploy-gate-expected-label {
+  font: 700 11px var(--font-jetbrains-mono), monospace;
+  color: #475569;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.deploy-gate-code pre {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #0b1120;
+  border: 1px solid #1e293b;
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.deploy-gate-code code {
+  color: #e2e8f0;
+  font: 11px/1.55 var(--font-jetbrains-mono), monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.deploy-gate-expected {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.deploy-gate-expected p {
+  margin: 0;
+  font: 11px/1.5 var(--font-jetbrains-mono), monospace;
+  color: #047857;
+  word-break: break-word;
+}
+
+/* Enterprise Evaluation Framework on /security/ */
+.security-eval-framework {
+  padding: 28px;
+  border-radius: 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  min-width: 0;
+}
+
+.security-eval-header {
+  margin-bottom: 22px;
+}
+
+.security-eval-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  min-width: 0;
+}
+
+.security-eval-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  min-width: 0;
+}
+
+.security-eval-step {
+  font: 700 11px var(--font-jetbrains-mono), monospace;
+  color: #b91c1c;
+  letter-spacing: 0.06em;
+}
+
+.security-eval-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  word-break: break-word;
+}
+
+.security-eval-card p {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.6;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* Technical Procurement Pre-Flight Checklist */
+.procurement-checklist-card {
+  padding: 28px;
+  border-radius: 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  min-width: 0;
+}
+
+.procurement-checklist-header {
+  margin-bottom: 22px;
+}
+
+.procurement-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  min-width: 0;
+}
+
+.procurement-check-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.procurement-check-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #0f172a;
+  font: 700 11px var(--font-jetbrains-mono), monospace;
+}
+
+.procurement-check-item > div {
+  min-width: 0;
+}
+
+.procurement-check-item strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.procurement-check-item p {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+  word-break: break-word;
+}
+
+
+@media (max-width: 900px) {
+  .security-eval-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .procurement-checklist-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 

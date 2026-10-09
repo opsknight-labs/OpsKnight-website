@@ -443,6 +443,79 @@ helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
             ))}
           </div>
 
+          <div className="deploy-checklist-section">
+            <div className="deploy-checklist-header">
+              <span className="site-eyebrow">
+                <span className="signal-dot" /> VERIFICATION GATES
+              </span>
+              <h3>First-deployment verification checklist</h3>
+              <p>
+                Run these five operational smoke tests before redirecting production monitoring signals to your new instance.
+              </p>
+            </div>
+
+            <div className="deploy-checklist-grid">
+              {[
+                {
+                  step: "01",
+                  title: "Bootstrap & Health Probe",
+                  objective: "Verify API gateway readiness, database pool connectivity, and Redis cache health.",
+                  command: "curl -fsSL https://opsknight.internal/api/v1/health | jq .",
+                  expected: '{"status":"healthy","database":"connected","redis":"connected","version":"2.0.0"}',
+                },
+                {
+                  step: "02",
+                  title: "Inbound Webhook Verification",
+                  objective: "Simulate a signed Prometheus Alertmanager or Datadog alert payload.",
+                  command: `curl -X POST https://opsknight.internal/api/v1/webhooks/raw-synthetic \\
+  -H "Content-Type: application/json" \\
+  -H "X-OpsKnight-Signature: $SYNTHETIC_HMAC" \\
+  -d '{"event":"ping","service":"checkout","severity":"sev1"}'`,
+                  expected: "HTTP/2 202 Accepted · Event acknowledged and routed into Command Center triage stream.",
+                },
+                {
+                  step: "03",
+                  title: "On-Call Paging Carrier Test",
+                  objective: "Dispatch a high-priority paging test through configured Twilio/carrier routes to primary responder.",
+                  command: "curl -X POST https://opsknight.internal/api/v1/schedules/primary/test-page \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
+                  expected: "Dispatched carrier notification token. Primary handset rings in <5s with acknowledgment prompt.",
+                },
+                {
+                  step: "04",
+                  title: "ChatOps War Room Handshake",
+                  objective: "Confirm Slack or Microsoft Teams webhook handshake and slash command interactivity.",
+                  command: "/opsknight ack INC-2026-0042",
+                  expected: 'Bidirectional sync: thread updated with "Acknowledged by @responder. Auto-escalation halted."',
+                },
+                {
+                  step: "05",
+                  title: "Operations Queue Diagnostics",
+                  objective: "Probe background worker pools, BullMQ queue depths, and database connection overhead.",
+                  command: "curl -fsSL https://opsknight.internal/api/v1/operations/queues \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
+                  expected: '{"critical_queue":{"waiting":0,"active":1},"bulk_queue":{"waiting":0},"delayed":0}',
+                },
+              ].map((gate) => (
+                <article key={gate.step} className="deploy-gate-card">
+                  <div className="deploy-gate-head">
+                    <span className="deploy-gate-step">{gate.step}</span>
+                    <div>
+                      <h4>{gate.title}</h4>
+                      <p>{gate.objective}</p>
+                    </div>
+                  </div>
+                  <div className="deploy-gate-code">
+                    <div className="deploy-gate-code-label">PROBE COMMAND</div>
+                    <pre tabIndex={0}><code>{gate.command}</code></pre>
+                  </div>
+                  <div className="deploy-gate-expected">
+                    <span className="deploy-gate-expected-label">EXPECTED RESULT</span>
+                    <p>{gate.expected}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
           <div className="deploy-support-note">
             <div>
               <p className="site-eyebrow">OPTIONAL PROFESSIONAL HELP</p>

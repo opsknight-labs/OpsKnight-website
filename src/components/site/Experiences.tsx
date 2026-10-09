@@ -20,9 +20,7 @@ import {
   Copy,
   CheckCircle2,
 } from "lucide-react";
-import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
-import { BRAND } from "@/lib/brand";
 import { copyText } from "@/lib/client-clipboard";
 const steps = [
   {
@@ -828,144 +826,13 @@ export function ArchitectureViewer() {
   );
 }
 
-const PRODUCT_PROOFS = [
-  {
-    id: "command-center",
-    label: "Command Center",
-    image: "dashboard-overview.png",
-    href: "/product/",
-    summary: "Live triage, active alerts, workload distribution, and SLA countdowns across Northstar services.",
-    alt: "OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns",
-  },
-  {
-    id: "incidents",
-    label: "Incidents",
-    image: "incident-detail.png",
-    href: "/product/incidents/",
-    summary: "Checkout API incident in acknowledged state: assigned responder, active investigation, and live event timeline.",
-    alt: "OpsKnight Checkout API incident in acknowledged state: assigned responder, active investigation, and live event timeline",
-  },
-  {
-    id: "on-call",
-    label: "On-call",
-    image: "on-call-schedule-detail.png",
-    href: "/product/on-call/",
-    summary: "Commerce Primary On-Call rotation and schedule detail from the Northstar Systems fixture.",
-    alt: "OpsKnight Commerce Primary On-Call schedule in the Northstar Systems fixture",
-  },
-  {
-    id: "paging",
-    label: "Paging",
-    image: "notification-settings.png",
-    href: "/product/paging/",
-    summary: "Multi-channel paging and escalation policy with on-call rotation targets and delivery rules.",
-    alt: "OpsKnight escalation policy and multi-channel paging in the Northstar Systems fixture",
-  },
-  {
-    id: "status",
-    label: "Status",
-    image: "status-pages.png",
-    href: "/product/status-pages/",
-    summary: "Real-time system status, operational services, uptime history and active incident announcements.",
-    alt: "OpsKnight public status page displaying real-time system status, operational services, uptime history, and active incident announcements",
-    live: true,
-  },
-  {
-    id: "analytics",
-    label: "Analytics",
-    image: "analytics-overview.png",
-    href: "/product/analytics/",
-    summary: "MTTA/MTTR response metrics, incident volume, and operational trends from the Northstar dataset.",
-    alt: "OpsKnight analytics overview for the Northstar Systems synthetic fixture",
-  },
-  {
-    id: "operations",
-    label: "Operations",
-    image: "health-center.png",
-    href: "/product/operations/",
-    summary: "System Health Center diagnostics, background worker status, and runtime telemetry.",
-    alt: "OpsKnight System Health Center in the Northstar Systems v2.0.0 fixture",
-  },
-] as const;
+export {
+  ProductProofShowcase,
+  PRODUCT_PROOFS,
+  type ProductProofAnnotation,
+  type ProductProofItem,
+} from "./ProductProofShowcase";
 
-type ProductProofId = (typeof PRODUCT_PROOFS)[number]["id"];
-
-export function ProductProofShowcase() {
-  const [activeId, setActiveId] = useState<ProductProofId>(
-    PRODUCT_PROOFS[0].id,
-  );
-  const active =
-    PRODUCT_PROOFS.find((proof) => proof.id === activeId) ?? PRODUCT_PROOFS[0];
-
-  const handleKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
-    let targetIndex: number | null = null;
-    if (e.key === "ArrowRight") {
-      targetIndex = (currentIndex + 1) % PRODUCT_PROOFS.length;
-    } else if (e.key === "ArrowLeft") {
-      targetIndex = (currentIndex - 1 + PRODUCT_PROOFS.length) % PRODUCT_PROOFS.length;
-    } else if (e.key === "Home") {
-      targetIndex = 0;
-    } else if (e.key === "End") {
-      targetIndex = PRODUCT_PROOFS.length - 1;
-    }
-
-    if (targetIndex !== null) {
-      e.preventDefault();
-      const target = PRODUCT_PROOFS[targetIndex];
-      setActiveId(target.id);
-      document.getElementById(`proof-tab-${target.id}`)?.focus();
-    }
-  };
-
-  return (
-    <div className="product-proof-experience">
-      <div className="product-proof-tabs" role="tablist" aria-label="OpsKnight product views">
-        {PRODUCT_PROOFS.map((proof, idx) => (
-          <button
-            key={proof.id}
-            id={`proof-tab-${proof.id}`}
-            type="button"
-            role="tab"
-            aria-selected={active.id === proof.id}
-            aria-controls="product-proof-panel"
-            tabIndex={active.id === proof.id ? 0 : -1}
-            onClick={() => setActiveId(proof.id)}
-            onKeyDown={(e) => handleKeyDown(e, idx)}
-          >
-            {proof.label}
-          </button>
-        ))}
-      </div>
-      <div
-        id="product-proof-panel"
-        className="product-proof-panel"
-        role="tabpanel"
-        tabIndex={0}
-        aria-labelledby={`proof-tab-${active.id}`}
-      >
-        <ProductScreenshot name={active.image} alt={active.alt} />
-        <div className="product-proof-meta">
-          <div>
-            <span>REAL OPSKNIGHT UI · v{PRODUCT.release.version}</span>
-            <strong>{active.label}</strong>
-            <p>{active.summary}</p>
-          </div>
-          <div className="product-proof-actions">
-            <Link href={active.href}>
-              Explore {active.label} <ArrowRight size={16} />
-            </Link>
-            {"live" in active && active.live ? (
-              <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
-                <span className="live-dot" /> View live status
-                <ExternalLink size={14} />
-              </a>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function DeploymentChooser() {
   const [environment, setEnvironment] = useState("docker");

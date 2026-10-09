@@ -1010,8 +1010,8 @@
     display: none;
   }
   .act-nav-num {
-    font-size: 9px;
-    padding: 2px 5px;
+    font-size: 11px;
+    padding: 2px 6px;
   }
   .act-nav-label {
     font-size: 12px;
@@ -1065,7 +1065,7 @@
     padding-block: 10px;
   }
   .scenario-pill {
-    font-size: 8px;
+    font-size: 11px;
     text-align: center;
   }
 }

@@ -23,14 +23,20 @@ const services = [
     title: "Commercial Support",
     description:
       "Discuss deployment help, upgrades, troubleshooting, architecture guidance and security-questionnaire assistance. Engagement scope, availability and any service commitments are agreed in writing before work starts.",
-    href: enquiryHref("OpsKnight commercial support enquiry"),
+    href: enquiryHref(
+      "OpsKnight commercial support enquiry",
+      "Organization / Team:\nNumber of responders:\nPlanned runtime topology (Docker Compose / Swarm / Kubernetes):\nPriority areas (deployment review, upgrade planning, SLA scoping):\nTarget timeline:",
+    ),
     action: "Discuss support",
   },
   {
     title: "Implementation / Consulting",
     description:
       "Connect your monitoring platforms to OpsKnight and design the operational workflow around your services. Get help with integrations, on-call rotations, escalation policies, production deployment, high availability and hardening.",
-    href: enquiryHref("OpsKnight implementation and consulting enquiry"),
+    href: enquiryHref(
+      "OpsKnight implementation and consulting enquiry",
+      "Organization / Team:\nCurrent monitoring sources (e.g., Datadog, Prometheus, Grafana):\nCurrent paging tool being replaced (PagerDuty, Opsgenie, etc.):\nKey integrations needed:\nPreferred deployment target:\nTarget kickoff date:",
+    ),
     action: "Discuss an implementation",
   },
 ];
@@ -78,7 +84,10 @@ export default function Support() {
           </p>
           <div className="site-actions">
             <Action
-              href={enquiryHref("OpsKnight support and services enquiry")}
+              href={enquiryHref(
+                "OpsKnight support and services enquiry",
+                "Organization:\nScope of interest (commercial support / migration / architecture review):\nEnvironment scale (services, responders):\nTimeline and questions:",
+              )}
             >
               Discuss your requirements
             </Action>
@@ -180,7 +189,10 @@ export default function Support() {
                 <div className="ops-email-console-body">
                   <Mail size={16} className="text-red-500 shrink-0" />
                   <a
-                    href={enquiryHref("OpsKnight support and services enquiry")}
+                    href={enquiryHref(
+                      "OpsKnight support and services enquiry",
+                      "Organization / Team:\nTopic of enquiry:\nDeployment environment:\nQuestions or scope:",
+                    )}
                     className="ops-console-address"
                   >
                     {BRAND.links.email}
@@ -189,7 +201,12 @@ export default function Support() {
               </div>
 
               <div className="pt-1">
-                <Action href={enquiryHref("OpsKnight support and services enquiry")}>
+                <Action
+                  href={enquiryHref(
+                    "OpsKnight support and services enquiry",
+                    "Organization / Team:\nTopic of enquiry:\nDeployment environment:\nQuestions or scope:",
+                  )}
+                >
                   Discuss an engagement
                 </Action>
               </div>
