@@ -101,7 +101,7 @@ export default async function DocsIndexPage({
   const editUrl = `${BRAND.links.github}/blob/main/docs/${version}/README.md`;
 
   return (
-    <div className="space-y-10">
+    <div className="docs-editorial-index space-y-10">
       <section>
         <p className="mb-3 font-mono text-[11px] text-slate-500">
           {BRAND.name} · {version}

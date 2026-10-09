@@ -167,9 +167,9 @@ export default function Support() {
                 </div>
                 <div>
                   <p className="site-eyebrow mb-0">
-                    <span className="signal-dot" /> DIRECT TRANSMISSION
+                    <span className="signal-dot" /> CONTACT THE MAINTAINERS
                   </p>
-                  <h3 className="text-xl font-bold">Direct Support Inbox</h3>
+                  <h3 className="text-xl font-bold">Contact the OpsKnight team</h3>
                 </div>
               </div>
 
@@ -182,9 +182,9 @@ export default function Support() {
               <div className="ops-email-console">
                 <div className="ops-email-console-head">
                   <span className="ops-console-pill">
-                    <span className="signal-dot" /> OFFICIAL INBOX
+                    <span className="signal-dot" /> EMAIL CONTACT
                   </span>
-                  <span className="ops-console-protocol">DIRECT SMTP</span>
+                  <span className="ops-console-protocol">SUPPORT &amp; SERVICES</span>
                 </div>
                 <div className="ops-email-console-body">
                   <Mail size={16} className="text-red-500 shrink-0" />

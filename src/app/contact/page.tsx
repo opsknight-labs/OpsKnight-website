@@ -111,7 +111,7 @@ export default function Contact() {
           <div className="contact-direct-card">
             <div className="contact-direct-main">
               <p className="site-eyebrow mb-1">
-                <span className="signal-dot" /> DIRECT TRANSMISSION
+                <span className="signal-dot" /> LET’S TALK
               </p>
               <h3 className="text-2xl font-bold tracking-tight">General &amp; Commercial Enquiries</h3>
               <p className="text-sm text-slate-600 leading-relaxed max-w-xl mb-0">
@@ -124,10 +124,10 @@ export default function Contact() {
                   <span className="signal-dot" /> Maintainer monitored
                 </span>
                 <span className="contact-badge-item">
-                  Zero sales spam
+                  Direct contact
                 </span>
                 <span className="contact-badge-item">
-                  Direct engineering response
+                  Project maintainer
                 </span>
               </div>
             </div>
@@ -136,9 +136,9 @@ export default function Contact() {
               <div className="ops-email-console">
                 <div className="ops-email-console-head">
                   <span className="ops-console-pill">
-                    <span className="signal-dot" /> OFFICIAL INBOX
+                    <span className="signal-dot" /> EMAIL CONTACT
                   </span>
-                  <span className="ops-console-protocol">DIRECT SMTP</span>
+                  <span className="ops-console-protocol">GENERAL ENQUIRIES</span>
                 </div>
                 <div className="ops-email-console-body">
                   <Mail size={16} className="text-red-500 shrink-0" />
