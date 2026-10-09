@@ -588,3 +588,129 @@
     padding-bottom: 70px;
   }
 }
+
+
+/* ── Documentation: practical technical publication, never an illustration ── */
+.docs-editorial-shell {
+  background: #f7f7f4;
+}
+.docs-editorial-shell > header {
+  background: #111923;
+  border-bottom-color: #394758;
+}
+.docs-editorial-shell > .relative.mx-auto {
+  max-width: 1512px;
+}
+.docs-editorial-index {
+  max-width: 1290px;
+  margin-inline: auto;
+}
+.docs-editorial-index > section:first-child {
+  max-width: 920px;
+  padding: clamp(16px, 3vw, 42px) 0 16px;
+}
+.docs-editorial-index > section:first-child h1 {
+  font-size: clamp(37px, 4.3vw, 58px);
+  font-weight: 700;
+  line-height: 1.09;
+  letter-spacing: -.058em;
+}
+.docs-editorial-index > section:first-child p.text-lg {
+  max-width: 680px;
+  color: #465363;
+  font-size: 16px;
+  line-height: 1.76;
+}
+.docs-editorial-index > section:first-child a {
+  border-radius: 3px;
+}
+.docs-editorial-task-grid { gap: 0 32px; }
+.docs-editorial-task-link {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  padding: 24px 0 26px;
+  border: 0;
+  border-top: 1px solid #acb7c1;
+  border-radius: 0;
+  background: transparent;
+  transition: border-color 140ms ease;
+}
+.docs-editorial-task-link:hover {
+  border-color: #b3282e;
+  background: transparent;
+}
+.docs-editorial-task-link h2 {
+  font-size: 19px;
+  letter-spacing: -.035em;
+}
+.docs-editorial-task-link p { max-width: 380px; }
+.docs-editorial-task-link span:last-child { margin-top: auto; padding-top: 17px; }
+.docs-editorial-task-link:focus-visible {
+  outline: 3px solid #b3282e;
+  outline-offset: 4px;
+}
+.docs-editorial-article {
+  align-items: start;
+}
+.docs-editorial-heading,
+.docs-editorial-body,
+.docs-editorial-contribute {
+  border-radius: 2px;
+  box-shadow: none;
+}
+.docs-editorial-heading {
+  border-color: #c4cbd1;
+  border-top: 3px solid #263a4e;
+}
+.docs-editorial-heading > div:first-child {
+  background: #f1f1ee;
+  border-bottom-color: #d5d9dc;
+}
+.docs-editorial-heading h1 {
+  font-size: clamp(29px, 3.3vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -.048em;
+  font-weight: 700;
+}
+.docs-editorial-heading span.rounded-full {
+  border-radius: 2px;
+  background: transparent;
+  border-color: #b8c3cc;
+}
+.docs-editorial-body {
+  border-color: #c8cdd2;
+  background: #fff;
+}
+.docs-editorial-body :is(h2,h3,h4) {
+  scroll-margin-top: 98px;
+  letter-spacing: -.025em;
+}
+.docs-editorial-body :is(pre,blockquote) { border-radius: 3px; }
+.docs-editorial-body img {
+  max-width: 100%;
+  height: auto;
+}
+.docs-editorial-contribute {
+  border-color: #c9d0d5;
+  background: transparent;
+}
+@media (max-width: 800px) {
+  .docs-editorial-shell > .relative.mx-auto { padding: 18px; }
+  .docs-editorial-index > section:first-child { padding-top: 6px; }
+  .docs-editorial-task-grid { gap: 0 20px; }
+  .docs-editorial-task-link { min-height: 0; }
+  .docs-editorial-article { gap: 20px; }
+  .docs-editorial-heading > div:last-child { padding: 22px; }
+  .docs-editorial-body { padding: 24px 20px; }
+}
+@media (max-width: 470px) {
+  .docs-editorial-task-grid { grid-template-columns: 1fr; }
+  .docs-editorial-shell > .relative.mx-auto { padding: 14px; }
+  .docs-editorial-heading h1 { font-size: 30px; }
+  .docs-editorial-heading > div:first-child nav { flex-wrap: wrap; }
+  .docs-editorial-contribute { gap: 12px; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .docs-editorial-task-link { transition: none; }
+}
