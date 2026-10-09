@@ -70,7 +70,7 @@ export function SiteNavigation() {
   const resourcesActive = resources.some(
     ([, href]) => href !== "/changelog/" && isActive(href),
   );
-  const showIncidentSignal = path === "/" || path.startsWith("/product/");
+  const showIncidentSignal = path.startsWith("/product/");
 
   useEffect(() => {
     function closeMenus(event: Event) {
