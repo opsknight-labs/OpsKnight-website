@@ -11,7 +11,7 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "Own the incident",
   );
   await expect(page.getByText(/Know what happened, who is responding/)).toBeVisible();
-  await expect(page.locator(".hero-editorial-product img")).toHaveAttribute("src", "/product/incident-acknowledged.webp");
+  await expect(page.locator(".hero-editorial-product img")).toHaveAttribute("src", "/product/command-center.webp");
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
   });
@@ -61,7 +61,7 @@ test("homepage workflow, architecture, metadata and layout", async ({
     fullPage: true,
   });
 });
-test("editorial hero presents a legible, authentic incident workspace", async ({ page }) => {
+test("editorial hero uses one original Command Center asset at every screen size", async ({ page }) => {
   await page.goto("/");
   const heading = page.getByRole("heading", { level: 1, name: /Own the incident/ });
   const masthead = page.locator(".hero-editorial-masthead");
@@ -75,11 +75,10 @@ test("editorial hero presents a legible, authentic incident workspace", async ({
   const viewport = page.viewportSize();
   if (!viewport) return;
   const imageSrc = await picture.evaluate((img: HTMLImageElement) => img.currentSrc);
-  if (viewport.width <= 599) {
-    expect(imageSrc).toContain("/product/mobile.webp");
-  } else {
-    expect(imageSrc).toContain("/product/incident-acknowledged.webp");
-  }
+  expect(imageSrc).toContain("/product/command-center.webp");
+  await expect(stage.locator("source")).toHaveCount(0);
+  await expect(stage.getByRole("link", { name: /Open full-size OpsKnight Command Center screenshot/ }))
+    .toHaveAttribute("href", "/product/command-center.webp");
   const textBox = await masthead.boundingBox();
   const stageBox = await stage.boundingBox();
   expect(textBox).not.toBeNull();
