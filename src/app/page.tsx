@@ -32,8 +32,8 @@ export const metadata = siteMetadata(pageMetadata);
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. The first screen: editorial message and real incident response. */}
-      <section className="site-hero site-hero--editorial" aria-labelledby="home-hero-title">
+      {/* 1. Single-image Command Center introduction. */}
+      <section className="site-hero site-hero--editorial site-dark" aria-labelledby="home-hero-title">
         <div className="site-container hero-editorial-container">
           <div className="hero-editorial-masthead">
             <div className="hero-editorial-statement">
@@ -44,7 +44,7 @@ export default function Home() {
             <div className="hero-editorial-introduction">
               <p>
                 Know what happened, who is responding, and what comes next.
-                All in one open-source platform you host and control.
+                One open-source platform you host and control.
               </p>
               <div className="site-actions">
                 <Action href="/deploy/">Install OpsKnight</Action>
@@ -56,23 +56,23 @@ export default function Home() {
           </div>
 
           <figure className="hero-editorial-product">
-            <picture>
-              <source
-                media="(max-width: 599px)"
-                srcSet="/product/mobile.webp"
-                type="image/webp"
-              />
+            <div
+              className="hero-editorial-viewport"
+              role="region"
+              aria-label="OpsKnight Command Center screenshot; scroll horizontally on narrow screens to inspect it"
+              tabIndex={0}
+            >
               <Image
-                src="/product/incident-acknowledged.webp"
-                width={2400}
-                height={1500}
-                alt="Real OpsKnight incident workspace showing an acknowledged Checkout API incident, ownership, response timers and incident context. On phones the hero shows the responder mobile interface."
+                src="/product/command-center.webp"
+                width={1200}
+                height={600}
+                alt="OpsKnight Command Center showing the incident banner, real-time alerts, triage and SLA work queues, with explanatory callouts"
                 priority
-                sizes="(max-width: 599px) 850px, (max-width: 1199px) 100vw, 1600px"
+                sizes="(max-width: 599px) 760px, (max-width: 1499px) 96vw, 1450px"
               />
-            </picture>
+            </div>
             <figcaption className="sr-only">
-              OpsKnight v2 incident response and mobile interfaces, using demonstration data.
+              OpsKnight Command Center, with demonstration data. The same original image is shown at every screen size.
             </figcaption>
           </figure>
         </div>
