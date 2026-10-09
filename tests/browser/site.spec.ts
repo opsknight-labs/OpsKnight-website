@@ -81,6 +81,29 @@ test("homepage product evidence is inspectable by touch and keyboard", async ({ 
   await expect(page.getByRole("dialog")).not.toBeVisible();
 });
 
+test("editorial page families stay readable without page-level overflow", async ({ page }, testInfo) => {
+  test.skip(!["desktop", "mobile"].includes(testInfo.project.name));
+  test.setTimeout(150000);
+  const pages = [
+    "/", "/product/", "/product/paging/", "/integrations/", "/integrations/datadog/",
+    "/deploy/", "/compare/", "/solutions/", "/security/", "/about/",
+    "/support/", "/contact/", "/brand/", "/changelog/", "/community/", "/legal/",
+    "/docs/v2.0.0/",
+  ];
+  for (const route of pages) {
+    await page.goto(route);
+    await expect(page.getByRole("heading", { level: 1 }).first(), route).toBeVisible();
+    const geometry = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+    }));
+    expect(geometry.scrollWidth, `Horizontal document overflow on ${route}`).toBeLessThanOrEqual(geometry.viewportWidth + 1);
+  }
+  await page.goto("/");
+  await expect(page.getByText("FIELD NOTES")).toHaveCount(0);
+  await expect(page.getByText("01 / INCIDENT RESPONSE")).toHaveCount(0);
+});
+
 test("navigation and search", async ({ page }, testInfo) => {
   await page.goto("/");
   if (testInfo.project.name === "mobile") {
