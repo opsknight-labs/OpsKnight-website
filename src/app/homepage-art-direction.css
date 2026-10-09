@@ -861,6 +861,7 @@
    ========================================================================== */
 .site-page--home .site-hero.site-hero--editorial {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
   min-height: calc(100vh - var(--nav-height));
   min-height: calc(100svh - var(--nav-height));
