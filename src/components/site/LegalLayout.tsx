@@ -26,7 +26,7 @@ export function LegalLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--legal site-page--legal-document">
       <section className="legal-document-hero">
         <div className="site-container">
           <p className="site-eyebrow">

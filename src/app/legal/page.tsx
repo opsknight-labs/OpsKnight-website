@@ -49,7 +49,7 @@ const policies = [
 
 export default function LegalPage() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--legal site-page--legal-index">
       <section className="interior-hero site-dark legal-hero">
         <div className="site-container">
           <p className="site-eyebrow">

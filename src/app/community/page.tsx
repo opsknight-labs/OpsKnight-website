@@ -9,7 +9,7 @@ import { BRAND } from "@/lib/brand";
 import { Action, TextLink } from "@/components/site/Primitives";
 export default function Community() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--community">
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">
