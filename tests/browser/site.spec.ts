@@ -86,9 +86,10 @@ test("editorial page families stay readable without page-level overflow", async 
   test.setTimeout(150000);
   const pages = [
     "/", "/product/", "/product/paging/", "/integrations/", "/integrations/datadog/",
-    "/deploy/", "/compare/", "/solutions/", "/security/", "/about/",
-    "/support/", "/contact/", "/brand/", "/changelog/", "/community/", "/legal/",
-    "/docs/v2.0.0/",
+    "/deploy/", "/deploy/architecture/", "/compare/", "/compare/pagerduty/",
+    "/solutions/", "/solutions/sre/", "/security/", "/about/", "/support/",
+    "/contact/", "/brand/", "/changelog/", "/community/", "/legal/",
+    "/privacy/", "/terms/", "/docs/v2.0.0/", "/docs/v2.0.0/start/quickstart/",
   ];
   for (const route of pages) {
     await page.goto(route);
