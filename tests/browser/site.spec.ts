@@ -71,6 +71,11 @@ test("hero uses an immersive full-width product stage", async ({ page }) => {
   await expect(stage).toBeVisible();
   await expect(picture).toHaveJSProperty("complete", true);
   expect(await picture.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  if ((page.viewportSize()?.width ?? 0) <= 479) {
+    expect(await picture.evaluate((img: HTMLImageElement) => img.currentSrc)).toContain("/product/mobile.webp");
+  } else {
+    expect(await picture.evaluate((img: HTMLImageElement) => img.currentSrc)).toContain("/product/command-center.webp");
+  }
 
   const introBox = await intro.boundingBox();
   const stageBox = await stage.boundingBox();
