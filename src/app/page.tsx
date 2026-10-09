@@ -46,10 +46,6 @@ export default function Home() {
             </a>
           </div>
           <div className="hero-copy">
-            <div className="hero-editorial-mark" aria-hidden="true">
-              <span>FIELD NOTES</span>
-              <span>01 / INCIDENT RESPONSE</span>
-            </div>
             <h1>
               Own the incident<span className="hero-period">.</span>
             </h1>

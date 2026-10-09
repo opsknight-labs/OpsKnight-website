@@ -460,21 +460,6 @@
    No third-party assets, motion packages, or persistent scroll observers.
    ============================================================================ */
 
-/* The folio adds a human editorial cue rather than more status pills. */
-.site-page .hero-editorial-mark {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: 495px;
-  margin-bottom: 35px;
-  padding-bottom: 13px;
-  border-bottom: 1px solid #354150;
-  color: #bbc6d5;
-  font: 10px/1.6 var(--font-jetbrains-mono), monospace;
-  letter-spacing: .095em;
-}
-.site-page .hero-editorial-mark span:first-child { color: #ed817c; }
 .site-page .hero-copy h1 {
   line-height: 1.01;
   letter-spacing: -.079em;
@@ -528,7 +513,6 @@
 .site-page .hero-product-caption a:hover { color: #ffaba6; }
 .site-page .hero-product-caption a:focus-visible { outline: 2px solid #f0807b; outline-offset: 3px; }
 .site-page .hero-copy h1,
-.site-page .hero-editorial-mark,
 .site-page .hero-copy .hero-subtitle,
 .site-page .hero-copy .hero-description {
   animation: home-enter 680ms cubic-bezier(.2,.78,.28,1) both;
@@ -711,8 +695,7 @@
   .site-page .open-source-heading-label { margin-bottom: 21px; }
 }
 @media (max-width: 767px) {
-  .site-page .hero-editorial-mark { margin: 0 auto 24px; }
-  .site-page .hero-copy h1 { line-height: 1.1; }
+    .site-page .hero-copy h1 { line-height: 1.1; }
   .site-page .hero-product.hero-framed { margin-top: 18px; }
   .site-page .hero-product.hero-framed .hero-signal { padding: 12px 11px; }
   .site-page .hero-screenshot-frame img {
@@ -823,15 +806,13 @@
   .site-page .recover-metric { padding-inline: 0; }
 }
 @media (max-width: 380px) {
-  .site-page .hero-editorial-mark { font-size: 9px; }
-  .site-page .channels-grid { grid-template-columns: 1fr; }
+    .site-page .channels-grid { grid-template-columns: 1fr; }
   .site-page .channel-chip { border-right: 0; }
   .site-page .open-source-story .release-strip { grid-template-columns: 1fr 1fr; gap: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .site-page .hero-copy h1,
-  .site-page .hero-editorial-mark,
-  .site-page .hero-copy .hero-subtitle,
+    .site-page .hero-copy .hero-subtitle,
   .site-page .hero-copy .hero-description { animation: none; }
 }
 
