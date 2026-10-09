@@ -376,11 +376,16 @@ export function ProductProofShowcase() {
         </div>
 
         {/* Screenshot (clickable to open fullscreen) */}
-        <div
-          className="product-proof-shot-wrap"
-          onClick={() => setLightboxOpen(true)}
-        >
+        <div className="product-proof-shot-wrap">
           <ProductScreenshot name={active.image} alt={active.alt} />
+          <button
+            type="button"
+            className="product-proof-shot-open"
+            onClick={() => setLightboxOpen(true)}
+            aria-label={`Inspect fullscreen: ${active.label} screenshot`}
+          >
+            <span className="sr-only">Open image at full size</span>
+          </button>
         </div>
 
         {/* Contextual Editorial Insight (replacing repeated 3-box cards) */}

@@ -306,6 +306,28 @@
 .site-page .editorial-capability-row:hover h3 { color: #aa1f27; }
 .site-page .product-proof-panel { border-radius: 2px; }
 .site-page .product-proof-frame-bar { background: #121922; }
+.site-page .frame-bar-indicator { display: none; }
+.site-page .proof-insight-facts { gap: 8px 18px; }
+.site-page .proof-fact-chip {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 10px;
+}
+.site-page .proof-fact-chip::before { content: "—"; margin-right: 7px; color: #e9817a; }
+.site-page .product-proof-shot-open {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.site-page .product-proof-shot-open:focus-visible { outline-offset: -5px; }
 .site-page .product-proof-tabs button { border-radius: 2px; }
 
 /* A readable operational topology, rather than six interchangeable tiles. */
