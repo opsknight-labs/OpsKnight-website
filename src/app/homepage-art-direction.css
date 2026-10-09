@@ -452,3 +452,385 @@
   .site-page .signal-active .signal-track::after { animation: none; transform: none; }
   .site-page .act-section::before { transition: none; }
 }
+
+
+/* ============================================================================
+   Art direction II / Hierarchy & pace
+   These are homepage-only. Product pages retain their established layouts.
+   No third-party assets, motion packages, or persistent scroll observers.
+   ============================================================================ */
+
+/* The folio adds a human editorial cue rather than more status pills. */
+.site-page .hero-editorial-mark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 495px;
+  margin-bottom: 35px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #354150;
+  color: #bbc6d5;
+  font: 10px/1.6 var(--font-jetbrains-mono), monospace;
+  letter-spacing: .095em;
+}
+.site-page .hero-editorial-mark span:first-child { color: #ed817c; }
+.site-page .hero-copy h1 {
+  line-height: 1.01;
+  letter-spacing: -.079em;
+  text-wrap: balance;
+}
+.site-page .hero-subtitle {
+  font-weight: 500;
+  letter-spacing: -.04em;
+  color: #f2f0ef;
+}
+.site-page .hero-description { line-height: 1.72; }
+.site-page .hero-product.hero-framed {
+  position: relative;
+  isolation: isolate;
+}
+.site-page .hero-product.hero-framed::before {
+  content: "OPSKNIGHT / CONTROL ROOM";
+  position: absolute;
+  left: -34px;
+  top: 6px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #7f91aa;
+  font: 9px var(--font-jetbrains-mono), monospace;
+  letter-spacing: .11em;
+}
+.site-page .hero-frame-bar .frame-title { color: #b4c0d1; }
+.site-page .hero-product.hero-framed .hero-screenshot-frame {
+  border-color: #354150;
+}
+.site-page .hero-screenshot-frame .hero-product-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px 24px;
+  padding: 12px 17px;
+  border-top: 1px solid #354150;
+  background: #101721;
+  color: #9eacbf;
+  font: 10px/1.55 var(--font-jetbrains-mono), monospace;
+}
+.site-page .hero-product-caption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.site-page .hero-product-caption a:hover { color: #ffaba6; }
+.site-page .hero-product-caption a:focus-visible { outline: 2px solid #f0807b; outline-offset: 3px; }
+.site-page .hero-copy h1,
+.site-page .hero-editorial-mark,
+.site-page .hero-copy .hero-subtitle,
+.site-page .hero-copy .hero-description {
+  animation: home-enter 680ms cubic-bezier(.2,.78,.28,1) both;
+}
+.site-page .hero-copy h1 { animation-delay: 50ms; }
+.site-page .hero-copy .hero-subtitle { animation-delay: 110ms; }
+.site-page .hero-copy .hero-description { animation-delay: 170ms; }
+@keyframes home-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Make architecture a genuine diagram instead of an evenly spaced card system. */
+.site-page .arch-tier-ingress,
+.site-page .arch-tier-runtime,
+.site-page .arch-tier-storage { position: relative; }
+.site-page .arch-tier-runtime {
+  padding: 22px 24px 20px;
+  border: 1px solid #394653;
+  background: #0a1018;
+}
+.site-page .arch-tier-runtime .arch-tier-label { color: #eee4df; }
+.site-page .arch-tier-runtime > .flex { gap: 12px; flex-wrap: wrap; }
+.site-page .arch-diagram-arrow {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+  color: #ee817a;
+}
+.site-page .arch-node { border-color: #465362; }
+.site-page .arch-tier-ingress .arch-node,
+.site-page .arch-tier-storage .arch-node { background: #131e2b; }
+
+/* A full editorial contrast chapter, with one deliberately different type voice. */
+.site-page .homepage-compare {
+  position: relative;
+  background: #151c26;
+  border: 0;
+}
+.site-page .homepage-compare .site-eyebrow { color: #d3ad9e; }
+.site-page .homepage-compare h2 {
+  max-width: 640px;
+  font-size: clamp(42px, 4.8vw, 72px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -.058em;
+}
+.site-page .homepage-compare h2 em {
+  display: block;
+  margin-top: 8px;
+  color: #ffa6a0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.055em;
+  line-height: 1.05;
+}
+.site-page .homepage-compare .site-description {
+  max-width: 520px;
+  color: #c2cddd;
+}
+.site-page .homepage-compare .compare-vendors span {
+  color: #c5ceda;
+  border-color: #5c6877;
+}
+.site-page .homepage-compare .compare-difference-stack {
+  border-top-color: #46505d;
+}
+.site-page .homepage-compare .compare-difference-stack article {
+  padding: 27px 0 31px;
+  border-bottom-color: #46505d;
+  grid-template-columns: 46px 1fr;
+}
+.site-page .homepage-compare .compare-difference-stack article > span {
+  color: #f7a49d;
+}
+.site-page .homepage-compare .compare-difference-stack strong {
+  font-size: clamp(19px, 2vw, 24px);
+  letter-spacing: -.035em;
+  color: #f7f9fc;
+}
+.site-page .homepage-compare .compare-difference-stack p {
+  max-width: 460px;
+  color: #bbc6d5;
+  font-size: 14px;
+}
+.site-page .homepage-compare .site-text-link { color: #fff; }
+.site-page .homepage-compare .site-text-link:hover { color: #ffa6a0; }
+
+/* Source and release, styled as an actual changelog spread / label sheet. */
+.site-page .homepage-open-source {
+  background: #f3f1eb;
+  color: #121922;
+  border-top: 1px solid #dbd8ce;
+}
+.site-page .open-source-story {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, .98fr) minmax(0, 1.02fr);
+  gap: clamp(45px, 7vw, 105px);
+  align-items: start;
+}
+.site-page .open-source-heading-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 35px;
+  color: #303a49;
+}
+.site-page .open-source-heading-label > span {
+  font: 10px/1.55 var(--font-jetbrains-mono), monospace;
+  letter-spacing: .1em;
+}
+.site-page .open-source-intro .section-intro { margin: 0; }
+.site-page .open-source-intro .site-eyebrow {
+  margin-bottom: 14px;
+  color: #a61f26;
+}
+.site-page .open-source-intro .site-eyebrow .signal-dot { display: none; }
+.site-page .open-source-intro .section-intro h2 {
+  max-width: 650px;
+  font-size: clamp(37px, 4.3vw, 64px);
+  line-height: 1.07;
+  letter-spacing: -.063em;
+}
+.site-page .open-source-intro .site-description {
+  max-width: 520px;
+  margin-top: 22px;
+  color: #4a5564;
+  line-height: 1.75;
+}
+.site-page .open-source-details {
+  border-top: 3px solid #b3262b;
+  padding-top: 18px;
+}
+.site-page .open-source-ledger-label {
+  color: #6b7179;
+  font: 10px/1.6 var(--font-jetbrains-mono), monospace;
+  letter-spacing: .1em;
+}
+.site-page .open-source-story .release-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 20px 0 0;
+  padding: 26px 0 30px;
+  border-block: 1px solid #c9c8c3;
+}
+.site-page .open-source-story .release-strip > div { min-width: 0; gap: 8px; }
+.site-page .open-source-story .release-strip small {
+  color: #68717e;
+}
+.site-page .open-source-story .release-strip strong {
+  color: #192130;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.site-page .open-source-story .paired-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 22px;
+  margin-top: 12px;
+}
+.site-page .open-source-story .paired-links a {
+  border-bottom: 1px solid #cfcdc6;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-size: 12px;
+}
+.site-page .open-source-story .paired-links a:hover { color: #a21b25; }
+
+/* On phones, content must be readable. Fitting tiny desktop screenshots is not UX. */
+@media (max-width: 1023px) {
+  .site-page .hero-product.hero-framed::before { display: none; }
+  .site-page .open-source-story {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .site-page .open-source-heading-label { margin-bottom: 21px; }
+}
+@media (max-width: 767px) {
+  .site-page .hero-editorial-mark { margin: 0 auto 24px; }
+  .site-page .hero-copy h1 { line-height: 1.1; }
+  .site-page .hero-product.hero-framed { margin-top: 18px; }
+  .site-page .hero-product.hero-framed .hero-signal { padding: 12px 11px; }
+  .site-page .hero-screenshot-frame img {
+    width: 175%;
+    max-width: none;
+    height: auto;
+    transform: translateX(-21.4%);
+  }
+  .site-page .hero-screenshot-frame .hero-product-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+    padding: 11px 13px;
+    font-size: 9px;
+  }
+  .site-page .hero-product-caption a { min-height: 36px; }
+  .site-page .hero-frame-bar { gap: 8px; }
+  .site-page .hero-frame-bar .frame-title { font-size: 9px; }
+  .site-page .frame-badge { font-size: 8px; }
+  .site-page .hero-description { font-size: 14px; }
+  .site-page .product-proof-shot-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #78879b #0d121a;
+  }
+  .site-page .product-proof-shot-wrap > .product-shot {
+    width: 700px;
+    min-width: 700px;
+    max-width: none;
+    scroll-snap-align: start;
+  }
+  .site-page .product-proof-shot-wrap > .product-shot img {
+    max-width: none;
+    width: 100%;
+  }
+  .site-page .product-proof-shot-wrap::after {
+    content: "SWIPE TO INSPECT THE FULL PRODUCT VIEW →";
+    display: block;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    padding: 8px 14px;
+    width: fit-content;
+    color: #d7e0ec;
+    background: #0d1624;
+    font: 9px var(--font-jetbrains-mono), monospace;
+    letter-spacing: .06em;
+  }
+  .site-page .product-proof-shot-open {
+    position: sticky;
+    left: 100%;
+    margin-top: -40px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    z-index: 2;
+  }
+  .site-page .arch-node {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .site-page .arch-node small { margin: 0; line-height: 1.5; }
+  .site-page .arch-tier-runtime { padding: 18px 15px; }
+  .site-page .arch-context-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-page .arch-context-footer .site-text-link { align-self: flex-start; }
+  .site-page .homepage-compare h2 {
+    font-size: clamp(36px, 10vw, 50px);
+    line-height: 1.08;
+  }
+  .site-page .homepage-compare h2 em { margin-top: 5px; }
+  .site-page .homepage-compare .compare-difference-stack article { grid-template-columns: 28px 1fr; gap: 16px; }
+  .site-page .open-source-story .paired-links { grid-template-columns: 1fr; }
+  .site-page .open-source-story .release-strip { gap: 8px; }
+  .site-page .open-source-story .release-strip strong { font-size: 11px; }
+  /* Preserve useful incident context without 4x oversized stacked mini-cards. */
+  .site-page .act-section { padding: 29px 0 36px; }
+  .site-page .act-card-head {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px 14px;
+  }
+  .site-page .detect-node,
+  .site-page .responder-profile-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .site-page .detect-node-icon,
+  .site-page .incident-node-badge {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+  .site-page .detect-node-content,
+  .site-page .responder-info { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+  .site-page .channels-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-page .channel-chip:nth-child(2) { border-right: 0; }
+  .site-page .channel-chip { gap: 6px; }
+  .site-page .act-section::before { top: 28px; }
+  .site-page .recover-metrics-badges { gap: 10px 16px; }
+  .site-page .recover-metric { padding-inline: 0; }
+}
+@media (max-width: 380px) {
+  .site-page .hero-editorial-mark { font-size: 9px; }
+  .site-page .channels-grid { grid-template-columns: 1fr; }
+  .site-page .channel-chip { border-right: 0; }
+  .site-page .open-source-story .release-strip { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-page .hero-copy h1,
+  .site-page .hero-editorial-mark,
+  .site-page .hero-copy .hero-subtitle,
+  .site-page .hero-copy .hero-description { animation: none; }
+}
