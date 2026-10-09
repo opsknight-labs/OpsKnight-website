@@ -372,7 +372,7 @@ test("security evaluation exposes explicit outbound trust boundaries", async ({ 
 
 test("incident signal rail appears only on product storytelling surfaces", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator(".incident-signal-rail")).toHaveCount(1);
+  await expect(page.locator(".incident-signal-rail")).toHaveCount(0);
 
   await page.goto("/product/paging/");
   await expect(page.locator(".incident-signal-rail")).toHaveCount(1);
