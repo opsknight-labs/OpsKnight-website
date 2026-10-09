@@ -98,6 +98,11 @@ test("editorial hero presents a legible, authentic incident workspace", async ({
   if (viewport.width >= 1100) {
     expect(stageBox.x, "Desktop product evidence must align with the page grid").toBeGreaterThanOrEqual(24);
   }
+  const navContentBox = await page.locator(".site-nav .site-container").first().boundingBox();
+  if (navContentBox && viewport.width >= 600) {
+    expect(Math.abs(textBox.x - navContentBox.x), "Editorial text must align with the navigation grid")
+      .toBeLessThanOrEqual(5);
+  }
   await expect(page.locator(".hero-signal, .hero-frame-bar, .incident-signal-rail")).toHaveCount(0);
 });
 
