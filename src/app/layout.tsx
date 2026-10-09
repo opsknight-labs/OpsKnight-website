@@ -46,7 +46,7 @@ const structuredData = [
     url: `${baseUrl}/`,
     codeRepository: BRAND.links.github,
     downloadUrl: `${BRAND.links.github}/releases/tag/${PRODUCT.release.tag}`,
-    softwareRequirements: "PostgreSQL 14+, Redis 7+",
+    softwareRequirements: "PostgreSQL; Docker Compose or a supported container orchestration platform",
     description: BRAND.seo.description,
   },
 ];

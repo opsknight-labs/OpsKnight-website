@@ -283,7 +283,7 @@ export function IncidentLoop() {
       </nav>
 
       {/* 2. Act 01: Detect */}
-      <section className="act-section act-detect" id="act-detect">
+      <section className={`act-section act-detect${activeAct === 0 ? " act-in-view" : ""}`} id="act-detect">
         <div className="act-story-copy">
           <div className="act-header-tag">
             <span className="act-num">{acts[0].eyebrow}</span>
@@ -355,7 +355,7 @@ export function IncidentLoop() {
       </section>
 
       {/* 3. Act 02: Respond */}
-      <section className="act-section act-respond" id="act-respond">
+      <section className={`act-section act-respond${activeAct === 1 ? " act-in-view" : ""}`} id="act-respond">
         <div className="act-story-copy">
           <div className="act-header-tag">
             <span className="act-num">{acts[1].eyebrow}</span>
@@ -444,7 +444,7 @@ export function IncidentLoop() {
       </section>
 
       {/* 4. Act 03: Coordinate */}
-      <section className="act-section act-coordinate" id="act-coordinate">
+      <section className={`act-section act-coordinate${activeAct === 2 ? " act-in-view" : ""}`} id="act-coordinate">
         <div className="act-story-copy">
           <div className="act-header-tag">
             <span className="act-num">{acts[2].eyebrow}</span>
@@ -521,7 +521,7 @@ export function IncidentLoop() {
       </section>
 
       {/* 5. Act 04: Recover */}
-      <section className="act-section act-recover" id="act-recover">
+      <section className={`act-section act-recover${activeAct === 3 ? " act-in-view" : ""}`} id="act-recover">
         <div className="act-story-copy">
           <div className="act-header-tag">
             <span className="act-num">{acts[3].eyebrow}</span>
