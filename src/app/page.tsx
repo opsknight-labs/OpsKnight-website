@@ -32,60 +32,48 @@ export const metadata = siteMetadata(pageMetadata);
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. Hero: a single balanced introduction, with the product visible immediately. */}
+      {/* 1. Hero: the real product is the focal point, not a composite illustration. */}
       <section className="site-hero site-dark" aria-labelledby="home-hero-title">
         <div className="site-container">
           <div className="hero-layout">
             <div className="hero-copy">
-              <p className="hero-lead-in">Self-hosted incident operations</p>
+              <p className="hero-lead-in">Open-source incident management</p>
               <h1 id="home-hero-title">
                 Own the incident<span className="hero-period">.</span>
               </h1>
-              <p className="hero-subtitle">Every signal. One clear response.</p>
               <p className="hero-description">
-                Bring on-call, paging, incident response and ChatOps together
-                in a platform that runs on your infrastructure.
+                On-call, paging, incident response and ChatOps in one
+                self-hosted platform. Built to run on your infrastructure.
               </p>
               <div className="site-actions">
                 <Action href="/deploy/">Install OpsKnight</Action>
-                <Action href="#incident-loop" secondary>
-                  Explore the platform
+                <Action href="#product-proof" secondary>
+                  Explore the product
                 </Action>
               </div>
-              <div className="hero-secondary-links">
-                <a className="hero-release-link" href="/changelog/">
-                  What&apos;s new in {PRODUCT.release.tag}
-                  <ArrowUpRight size={15} aria-hidden="true" />
-                </a>
-                <a
-                  className="hero-status-link"
-                  href={BRAND.links.status}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Live OpsKnight status
-                  <ArrowUpRight size={15} aria-hidden="true" />
-                </a>
-              </div>
+              <a
+                className="hero-status-link"
+                href={BRAND.links.status}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live OpsKnight status
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
             </div>
-
             <figure className="hero-product hero-framed">
               <div className="hero-image-window">
                 <Image
-                  src="/product/hero-composite.webp"
+                  src="/product/command-center.webp"
                   width={2400}
-                  height={1350}
-                  alt="OpsKnight Command Center with incident overview and mobile responder interfaces, showing representative demo data"
+                  height={1290}
+                  alt="Actual OpsKnight Command Center with incident filters, live alert metrics and on-call operational overview, shown with demo data"
                   priority
-                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 90vw, (max-width: 1440px) 54vw, 710px"
+                  sizes="(max-width: 640px) 680px, (max-width: 980px) 95vw, (max-width: 1440px) 58vw, 785px"
                 />
               </div>
-              <figcaption className="hero-image-caption">
-                <span><strong>OpsKnight Command Center</strong> · Product preview using demo data</span>
-                <a href="#product-proof">
-                  View more product screens
-                  <ArrowUpRight size={15} aria-hidden="true" />
-                </a>
+              <figcaption className="sr-only">
+                OpsKnight Command Center product interface using demonstration data.
               </figcaption>
             </figure>
           </div>
