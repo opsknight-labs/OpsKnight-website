@@ -1,3 +1,4 @@
+import "./homepage-art-direction.css";
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -84,7 +85,7 @@ export default function Home() {
                 <span className="frame-title">
                   OpsKnight Command Center · v{PRODUCT.release.version}
                 </span>
-                <span className="frame-badge">PRODUCTION</span>
+                <span className="frame-badge">PRODUCT VIEW</span>
               </div>
               <Image
                 src="/product/command-center.webp"

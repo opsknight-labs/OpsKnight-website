@@ -700,7 +700,7 @@ export function HeroSignal() {
       aria-label="Illustrative incident workflow: alert, routing, on-call, paging, acknowledgement"
     >
       <span className="hero-signal-label">
-        LIVE WORKFLOW <span className="signal-dot" />
+        RESPONSE PATH · ILLUSTRATIVE <span className="signal-dot" />
       </span>
       <div className="signal-track">
         {[

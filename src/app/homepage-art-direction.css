@@ -1,0 +1,415 @@
+/*
+ * OpsKnight homepage / editorial art direction.
+ * Scope intentionally restricted to the homepage, so product/docs pages keep
+ * their own information density. No images, libraries or scroll handlers added.
+ */
+
+/* A typographic opening, not a centered SaaS template. */
+.site-page .site-hero { background: #090d14; }
+.site-page .hero-topline {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #2b3440;
+}
+.site-page .hero-topline > span > .signal-dot {
+  width: 3px;
+  height: 16px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.site-page .hero-copy h1 {
+  max-width: 1100px;
+  text-wrap: balance;
+  letter-spacing: -.075em;
+}
+.site-page .hero-description { max-width: 640px; }
+.site-page .hero-product.hero-framed {
+  max-width: 1100px;
+}
+.site-page .hero-product.hero-framed .hero-signal {
+  border-radius: 0;
+  background: #121923;
+  padding: 19px 28px 17px;
+}
+.site-page .hero-product.hero-framed .hero-screenshot-frame {
+  border-radius: 0;
+  box-shadow: 0 26px 68px #0007;
+}
+.site-page .hero-frame-bar {
+  background: #151c26;
+  padding: 10px 18px;
+}
+.site-page .frame-dots { gap: 4px; }
+.site-page .frame-dot { width: 5px; height: 5px; border-radius: 1px; background: #64748b; }
+.site-page .frame-badge {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  color: #b5bfcd;
+}
+.site-page .hero-signal-label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+}
+.site-page .hero-signal-label .signal-dot { display: none; }
+.site-page .signal-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+}
+.site-page .signal-track::before {
+  top: 12px;
+  left: 0;
+  right: 0;
+  background: #414b59;
+}
+.site-page .signal-track::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 0;
+  height: 1px;
+  background: #ee5b58;
+  pointer-events: none;
+}
+.site-page .signal-active .signal-track::after {
+  animation: homepage-signal-ink 1850ms cubic-bezier(.25,.7,.3,1) 200ms both;
+}
+@keyframes homepage-signal-ink { to { width: 100%; } }
+.site-page .signal-track > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 12px 0 0;
+  text-align: left;
+  background: transparent;
+  color: #d2dae5;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.site-page .signal-track > div:last-child { padding-right: 0; }
+.site-page .track-point {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 3px;
+  border: 0;
+  border-radius: 0;
+  background: #121923;
+  color: #f1b1ad;
+  font-size: 11px;
+}
+.site-page .signal-active .track-point { animation: none; }
+.site-page .signal-track > div:last-child .track-point { color: #8ee0b8; }
+
+/* Section labels act as folios. Repeating glowy dots is not a design system. */
+.site-page .section-intro .signal-dot,
+.site-page .homepage-compare .signal-dot,
+.site-page .security-integrations-head .signal-dot,
+.site-page .final-cta .signal-dot { display: none; }
+.site-page .section-intro .site-eyebrow,
+.site-page .homepage-compare .site-eyebrow {
+  gap: 0;
+  letter-spacing: .13em;
+  font-weight: 600;
+}
+.site-page .section-intro h2 { text-wrap: balance; }
+.site-page .trust-strip { border-bottom: 1px solid #dde2e7; }
+.site-page .trust-strip > .site-container { color: #424d5d; }
+.site-page .trust-strip > .site-container span { letter-spacing: -.015em; }
+
+/* Four acts should read like one incident dossier, not four nested dashboards. */
+.site-page .incident-story-section { background: #090d14; }
+.site-page .incident-story-meta-bar { justify-content: flex-start; }
+.site-page .scenario-pill {
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1.7;
+  color: #aeb9c9;
+  letter-spacing: .055em;
+}
+.site-page .scenario-pill .signal-dot { display: none; }
+.site-page .acts-nav-bar {
+  border: 0;
+  border-top: 1px solid #35404c;
+  border-bottom: 1px solid #35404c;
+  border-radius: 0;
+  padding: 0;
+  gap: 0;
+  box-shadow: none;
+  background: #090d14;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.site-page .act-nav-tab {
+  position: relative;
+  border: 0;
+  border-radius: 0;
+  padding: 15px 12px;
+  gap: 11px;
+  background: transparent;
+  box-shadow: none;
+  min-height: 68px;
+}
+.site-page .act-nav-tab + .act-nav-tab { border-left: 1px solid #27313d; }
+.site-page .act-nav-tab:hover,
+.site-page .act-nav-tab.is-active {
+  border-color: #27313d;
+  background: #141b25;
+  box-shadow: none;
+}
+.site-page .act-nav-tab.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e14c4b;
+}
+.site-page .act-nav-num,
+.site-page .act-nav-tab.is-active .act-nav-num {
+  padding: 0;
+  border-radius: 0;
+  color: #f2a29d;
+  background: transparent;
+}
+.site-page .act-section {
+  border-bottom-color: #313b47;
+}
+.site-page .act-heading { max-width: 500px; text-wrap: balance; }
+.site-page .act-stages-strip { gap: 8px 18px; }
+.site-page .act-stage-pill,
+.site-page .act-stage-pill.is-active,
+.site-page .act-stage-pill.green.is-active {
+  border: 0;
+  border-bottom: 1px solid #5a6572;
+  border-radius: 0;
+  padding: 5px 0;
+  background: transparent;
+  color: #c6cfda;
+  font-size: 10px;
+}
+.site-page .act-stage-pill.is-active { color: #fff; border-bottom-color: #ef6d6a; }
+.site-page .act-stage-pill.green.is-active { border-bottom-color: #4db88b; }
+.site-page .act-stage-pill .signal-dot { box-shadow: none; }
+.site-page .act-card,
+.site-page .coordinate-card {
+  border-color: #34404d;
+  border-radius: 2px;
+  box-shadow: none;
+}
+.site-page .act-card-head { background: #161d27; }
+.site-page .detect-node,
+.site-page .responder-profile-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 12px 0;
+}
+.site-page .detect-node-icon,
+.site-page .incident-node-badge {
+  border-radius: 2px;
+}
+.site-page .detect-connector {
+  border-left: 1px solid #9e4a4d;
+  margin-left: 21px;
+  justify-content: flex-start;
+}
+.site-page .connector-badge {
+  padding: 4px 0 4px 13px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.site-page .channels-grid { gap: 0; border-block: 1px solid #35404c; }
+.site-page .channel-chip,
+.site-page .channel-chip.active {
+  padding: 14px 10px;
+  border: 0;
+  border-right: 1px solid #35404c;
+  border-radius: 0;
+  background: transparent;
+}
+.site-page .channel-chip:last-child { border-right: 0; }
+.site-page .respond-footer {
+  border-radius: 0;
+  border: 0;
+  border-left: 2px solid #40a87a;
+  background: #182823;
+}
+.site-page .recover-metric {
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+.site-page .recover-metric strong { font-size: 17px; }
+.site-page .recover-deck-card {
+  border: 0;
+  border-top: 1px solid #49535f;
+  border-radius: 0;
+  background: transparent;
+  padding: 15px 0;
+}
+
+/* Product evidence belongs on the page, not inside another marketing card. */
+.site-page .capability-featured-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.site-page .capability-featured-header { padding: 0 0 16px 23px; border-left: 3px solid #c81e26; }
+.site-page .capability-featured-badge {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #a41c23;
+  font-size: 10px;
+}
+.site-page .capability-featured-header h3 { font-size: clamp(26px, 2.8vw, 36px); }
+.site-page .capability-featured-visual {
+  border-radius: 2px;
+  border-color: #c8d0d9;
+  margin-top: 0;
+}
+.site-page .editorial-capability-row:hover { background: transparent; }
+.site-page .editorial-capability-row:hover h3 { color: #aa1f27; }
+.site-page .product-proof-panel { border-radius: 2px; }
+.site-page .product-proof-frame-bar { background: #121922; }
+.site-page .product-proof-tabs button { border-radius: 2px; }
+
+/* A readable operational topology, rather than six interchangeable tiles. */
+.site-page .architecture-viewer { border-radius: 2px; }
+.site-page .arch-roles-grid {
+  counter-reset: homepage-runtime-role;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 0;
+}
+.site-page .arch-role-card {
+  counter-increment: homepage-runtime-role;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 4px 12px;
+  border: 0;
+  border-bottom: 1px solid #364350;
+  border-radius: 0;
+  padding: 17px 4px 17px 0;
+  background: transparent;
+}
+.site-page .arch-role-card::before {
+  content: counter(homepage-runtime-role, decimal-leading-zero);
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  color: #ee8881;
+  font: 11px var(--font-jetbrains-mono), monospace;
+}
+.site-page .arch-role-card > div,
+.site-page .arch-role-card > small { grid-column: 2; min-width: 0; }
+.site-page .arch-role-card .signal-dot { display: none; }
+.site-page .arch-role-card:hover { border-bottom-color: #db6463; }
+.site-page .arch-node { border-radius: 2px; }
+
+/* Trust communicated like a technical specification, not four selling cards. */
+.site-page .security-architecture-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 42px;
+  margin-top: 45px;
+}
+.site-page .security-pillar-item {
+  border: 0;
+  border-top: 1px solid #acb7c2;
+  border-radius: 0;
+  padding: 24px 0 28px;
+  background: transparent;
+  transition: none;
+}
+.site-page .security-pillar-item:hover { border-color: #acb7c2; }
+.site-page .security-pillar-num { margin-bottom: 13px; }
+.site-page .security-pillar-item h3 { font-size: 23px; line-height: 1.3; }
+.site-page .security-pillar-item p { max-width: 510px; font-size: 14px; line-height: 1.72; }
+
+/* Comparison labels are taxonomy, not a badge collection. */
+.site-page .compare-vendors { gap: 10px 18px; }
+.site-page .compare-vendors span {
+  min-height: 0;
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 1px solid #9da8b5;
+  border-radius: 0;
+  background: transparent;
+  color: #354254;
+  font-size: 11px;
+}
+.site-page .compare-difference-stack strong { font-size: 21px; }
+
+/* Keyboard and reduced-motion behavior are inherited from the site defaults. */
+@media (min-width: 1024px) {
+  .site-page .hero-copy {
+    max-width: 900px;
+    padding: clamp(62px, 8vw, 112px) 0 64px;
+    text-align: left;
+  }
+  .site-page .hero-copy h1 { font-size: clamp(64px, 7vw, 104px); }
+  .site-page .hero-copy .site-actions { justify-content: flex-start; }
+  .site-page .hero-copy .site-proof { margin-left: 0; margin-right: 0; }
+  .site-page .hero-product.hero-framed { margin-left: auto; margin-right: 0; }
+}
+@media (min-width: 1001px) {
+  .site-page #act-respond,
+  .site-page #act-recover { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
+  .site-page #act-respond .act-story-copy,
+  .site-page #act-recover .act-story-copy { grid-column: 2; grid-row: 1; }
+  .site-page #act-respond .act-visual-wrapper,
+  .site-page #act-recover .act-visual-wrapper { grid-column: 1; grid-row: 1; }
+}
+@media (max-width: 767px) {
+  .site-page .hero-copy { padding: 52px 0 35px; }
+  .site-page .hero-product.hero-framed .hero-signal { padding: 16px 12px; }
+  .site-page .hero-signal-label { font-size: 9px; }
+  .site-page .signal-track > div {
+    align-items: center;
+    padding: 0 3px;
+    gap: 7px;
+    text-align: center;
+    font-size: 9px;
+    overflow-wrap: anywhere;
+  }
+  .site-page .track-point { justify-content: center; padding: 0; }
+  .site-page .trust-strip > .site-container { padding-block: 19px; }
+  .site-page .architecture-panel { padding: 20px 16px; }
+  .site-page .arch-roles-grid { grid-template-columns: 1fr; }
+  .site-page .security-architecture-grid { grid-template-columns: 1fr; }
+  .site-page .security-pillar-item { padding: 22px 0; }
+  .site-page .capability-featured-header { padding-left: 17px; }
+  .site-page .act-nav-tab { padding: 12px 7px; min-height: 55px; gap: 5px; }
+  .site-page .act-nav-num { font-size: 9px; }
+  .site-page .act-nav-summary { display: none; }
+  .site-page .scenario-pill { font-size: 9px; }
+  .site-page .channel-chip { padding-inline: 7px; }
+}
+@media (max-width: 390px) {
+  .site-page .hero-frame-bar { padding-inline: 8px; }
+  .site-page .frame-title { font-size: 9px; }
+  .site-page .frame-badge { font-size: 8px; }
+  .site-page .signal-track > div { font-size: 8px; }
+  .site-page .act-nav-label { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-page .signal-active .signal-track::after { animation: none; width: 100%; }
+}
