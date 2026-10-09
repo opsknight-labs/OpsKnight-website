@@ -32,56 +32,58 @@ export const metadata = siteMetadata(pageMetadata);
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. Hero: the real product is the focal point, not a composite illustration. */}
+      {/* 1. A single immersive introduction: message first, product as the stage. */}
       <section className="site-hero site-dark" aria-labelledby="home-hero-title">
-        <div className="site-container">
-          <div className="hero-layout">
-            <div className="hero-copy">
-              <p className="hero-lead-in">Open-source incident management</p>
-              <h1 id="home-hero-title">
-                Own the incident<span className="hero-period">.</span>
-              </h1>
-              <p className="hero-description">
-                On-call, paging, incident response and ChatOps in one
-                self-hosted platform. Built to run on your infrastructure.
-              </p>
-              <div className="site-actions">
-                <Action href="/deploy/">Install OpsKnight</Action>
-                <Action href="#product-proof" secondary>
-                  Explore the product
-                </Action>
-              </div>
-              <a
-                className="hero-status-link"
-                href={BRAND.links.status}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Live OpsKnight status
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
+        <div className="site-container hero-scene">
+          <div className="hero-intro">
+            <h1 id="home-hero-title">
+              Own the incident<span className="hero-period">.</span>
+            </h1>
+            <p className="hero-description">
+              Every alert, every responder, every decision.
+              <span> One self-hosted incident platform.</span>
+            </p>
+            <div className="site-actions">
+              <Action href="/deploy/">Install OpsKnight</Action>
+              <Action href="#product-proof" secondary>
+                Explore the product
+              </Action>
             </div>
-            <figure className="hero-product hero-framed">
-              <div className="hero-image-window">
+          </div>
+          <div className="hero-stage">
+            <figure className="hero-stage-screen">
+              <div className="hero-stage-viewport">
                 <Image
                   src="/product/command-center.webp"
                   width={2400}
                   height={1290}
-                  alt="Actual OpsKnight Command Center with incident filters, live alert metrics and on-call operational overview, shown with demo data"
+                  alt="OpsKnight Command Center product interface with incident metrics, triage and on-call operations, presented with demonstration data"
                   priority
-                  sizes="(max-width: 640px) 680px, (max-width: 980px) 95vw, (max-width: 1440px) 58vw, 785px"
+                  sizes="(max-width: 640px) 760px, (max-width: 1024px) 115vw, (max-width: 1600px) 1360px, 1540px"
                 />
               </div>
               <figcaption className="sr-only">
-                OpsKnight Command Center product interface using demonstration data.
+                Real OpsKnight Command Center interface, using representative demo data.
               </figcaption>
             </figure>
           </div>
+          <a className="hero-scroll-link" href="#incident-loop">
+            Explore incident response
+            <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </section>
 
       {/* 2. Trust Strip */}
       <TrustStrip />
+      <div className="home-status-utility">
+        <div className="site-container">
+          <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer">
+            Live OpsKnight status
+            <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
 
       {/* 3. The OpsKnight Experience: One Incident. Four Acts. */}
       <section id="incident-loop" className="site-section site-dark incident-story-section">
