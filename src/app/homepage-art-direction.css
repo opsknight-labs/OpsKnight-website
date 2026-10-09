@@ -1148,3 +1148,27 @@
     min-height: 32px;
   }
 }
+
+
+/* Final image framing after screenshot review: never slice the device silhouettes.
+   Desktop presents all three product surfaces; mobile deliberately focuses on
+   the dashboard interior and cuts away the outer devices altogether. */
+@media (min-width: 641px) {
+  .site-page--home .hero-image-window { aspect-ratio: 16 / 9; }
+  .site-page--home .hero-image-window img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    transform: none;
+  }
+}
+@media (max-width: 640px) {
+  .site-page--home .hero-image-window { aspect-ratio: 1.32 / 1; }
+  .site-page--home .hero-image-window img {
+    width: 178%;
+    height: auto;
+    max-width: none;
+    transform: translate(-21.9%, -10.5%);
+  }
+}
