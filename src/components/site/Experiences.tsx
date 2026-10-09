@@ -26,84 +26,147 @@ import { BRAND } from "@/lib/brand";
 import { copyText } from "@/lib/client-clipboard";
 const steps = [
   {
+    num: "01",
     label: "Detect",
-    title: "Something broke.",
+    title: "Inbound signal detected.",
     detail:
-      "Datadog reports elevated checkout latency. The alert reaches the Checkout API service.",
-    event: "Checkout p95 > 4.5s",
+      "Datadog reports elevated checkout latency. An alert is ingested via configured integration credentials and matched against alert rules.",
+    stage: "Detect",
+    state: "SIGNAL RECEIVED",
+    statusBadge: "DETECT",
+    statusType: "signal",
+    context: "Datadog → Checkout API",
+    event: "Checkout p95 > 4.5s (threshold: 2.0s)",
     icon: Activity,
   },
   {
+    num: "02",
     label: "Correlate",
     title: "One signal. Clear context.",
     detail:
-      "Provider correlation keys help group related events instead of opening an incident for every repeat.",
-    event: "Related events → same incident",
+      "A matching provider correlation key groups related telemetry events to the active service context, preventing redundant alert storms.",
+    stage: "Correlate",
+    state: "RELATED SIGNAL PROCESSED",
+    statusBadge: "CORRELATE",
+    statusType: "signal",
+    context: "Correlation key: checkout-api-latency",
+    event: "Related events grouped → checkout-api-latency",
     icon: Radio,
   },
   {
+    num: "03",
     label: "Create",
     title: "Give the incident a home.",
     detail:
-      "Create an incident with service context, priority and a timeline of what happened.",
+      "Incident INC-1042 is created with service context, P1 severity, initial timeline capture, and automated responder routing.",
+    stage: "Create",
+    state: "INCIDENT TRIGGERED",
+    statusBadge: "TRIGGERED",
+    statusType: "triggered",
+    context: "INC-1042 · Checkout API",
     event: "INC-1042 · Checkout API · P1",
     icon: Bell,
   },
   {
+    num: "04",
     label: "On-call",
     title: "Find the right person.",
     detail:
-      "Schedules and overrides resolve the on-call responder for the escalation policy.",
-    event: "Primary → Maya Chen",
+      "On-call schedules and active overrides resolve Maya Chen as the primary responder for Tier 1 Commerce escalation.",
+    stage: "On-call",
+    state: "TRIGGERED · PAGING IN PROGRESS",
+    statusBadge: "PAGING",
+    statusType: "paging",
+    context: "INC-1042 · Primary → Maya Chen",
+    event: "Primary → Maya Chen (Americas Rotation)",
     icon: CalendarDays,
   },
   {
+    num: "05",
     label: "Page",
     title: "Reach the responder.",
     detail:
-      "Configured channels deliver the page. Operators can inspect attempts and delivery outcomes.",
+      "Configured paging channels attempt delivery across voice, push, SMS, and Teams, recording delivery outcomes for audit.",
+    stage: "Page",
+    state: "TRIGGERED · PAGING IN PROGRESS",
+    statusBadge: "PAGING",
+    statusType: "paging",
+    context: "INC-1042 · Multi-channel dispatch",
     event: "Voice · Push · SMS · Teams",
     icon: PhoneCall,
   },
   {
+    num: "06",
     label: "Acknowledge",
     title: "Someone owns the response.",
     detail:
-      "The responder acknowledges the incident and takes ownership of the next step.",
-    event: "Maya Chen acknowledged",
+      "Maya Chen acknowledges the page within 1m 24s. Response ownership is established and escalation timeout is canceled.",
+    stage: "Acknowledge",
+    state: "ACKNOWLEDGED",
+    statusBadge: "ACKNOWLEDGED",
+    statusType: "ack",
+    context: "INC-1042 · Owned by Maya Chen",
+    event: "Maya Chen acknowledged (00:01:24)",
     icon: Check,
   },
   {
+    num: "07",
     label: "Coordinate",
     title: "Bring the team together.",
     detail:
-      "A Slack or Teams war room keeps responders and incident context in the same conversation.",
-    event: "#inc-1042-checkout",
+      "Responders investigate in a dedicated ChatOps war room with real-time logs, automated trace links, and team visibility.",
+    stage: "Coordinate",
+    state: "ACKNOWLEDGED · COORDINATING",
+    statusBadge: "ACKNOWLEDGED",
+    statusType: "ack",
+    context: "INC-1042 · War room #inc-1042-checkout",
+    event: "#inc-1042-checkout · ChatOps",
     icon: MessageSquare,
   },
   {
+    num: "08",
     label: "Communicate",
     title: "Keep customers informed.",
-    detail: "Publish a scoped update to the installation’s status page.",
-    event: "Checkout → Degraded performance",
+    detail:
+      "Authorized operators publish a scoped operational update to the public status page without duplicate tooling.",
+    stage: "Communicate",
+    state: "ACKNOWLEDGED · COMMUNICATING",
+    statusBadge: "ACKNOWLEDGED",
+    statusType: "ack",
+    context: "INC-1042 · Public Status Page",
+    event: "Checkout API → Degraded performance",
     icon: Globe,
   },
   {
+    num: "09",
     label: "Resolve",
     title: "Close the loop.",
-    detail: "Resolve the incident and preserve the operational timeline.",
-    event: "Checkout API recovered",
+    detail:
+      "Downstream pool isolated and service restored. The incident resolves and response timeline is preserved for postmortem review.",
+    stage: "Resolve",
+    state: "RESOLVED",
+    statusBadge: "RESOLVED",
+    statusType: "resolved",
+    context: "INC-1042 · Checkout API Restored",
+    event: "Checkout API recovered (14:38 UTC)",
     icon: Check,
   },
   {
+    num: "10",
     label: "Learn",
     title: "Make next time better.",
     detail:
-      "Review the timeline, explore response metrics and assign postmortem action items.",
-    event: "Postmortem → owned follow-up",
+      "Review response metrics against service objectives, conduct a blameless 5-Whys analysis, and track follow-up action items.",
+    stage: "Learn",
+    state: "RESOLVED · POSTMORTEM",
+    statusBadge: "RESOLVED",
+    statusType: "resolved",
+    context: "INC-1042 · Continuous Improvement",
+    event: "Postmortem → owned follow-up actions",
     icon: Activity,
   },
 ];
+
 const acts = [
   {
     id: "act-detect",
@@ -114,7 +177,7 @@ const acts = [
     subtag: "NORTHSTAR SYSTEMS",
     heading: "A signal becomes something actionable.",
     description:
-      "An incoming alert reaches the service through an HMAC-authenticated webhook. A matching provider correlation key connects related events into a single incident, preserving service context and response evidence.",
+      "An incoming alert reaches the service through configured integration credentials and optional signature verification. A matching provider correlation key connects related signals into one incident, preserving service context and telemetry evidence.",
     stages: ["01 Detect", "02 Correlate", "03 Create"],
   },
   {
@@ -126,7 +189,7 @@ const acts = [
     subtag: "ON-CALL & PAGING",
     heading: "The right person. The right moment.",
     description:
-      "Live schedules determine the current primary responder without guesswork. Configured paging channels deliver multi-modal alerts across voice calls, push notifications, and ChatOps. On acknowledgement, ownership transitions seamlessly.",
+      "Live schedules resolve the current primary responder without guesswork. Configured paging channels attempt delivery across voice, push, and ChatOps, recording delivery outcomes for operational audit. On acknowledgement, ownership transitions seamlessly.",
     stages: ["04 On-call", "05 Page", "06 Acknowledge"],
   },
   {
@@ -138,7 +201,7 @@ const acts = [
     subtag: "INTERNAL & EXTERNAL",
     heading: "Internal response. Public clarity.",
     description:
-      "Engineers investigate in dedicated ChatOps channels while customers stay informed through the integrated public status page. Both live in the same unified incident system without manual status duplication.",
+      "Responders investigate in dedicated ChatOps channels while authorized operators publish scoped public status updates without duplicate tools. Internal triage and customer communication remain synchronized in the same incident system.",
     stages: ["07 Coordinate", "08 Communicate"],
   },
   {
@@ -150,20 +213,26 @@ const acts = [
     subtag: "CONTINUOUS IMPROVEMENT",
     heading: "Resolution sealed. Experience preserved.",
     description:
-      "Service is restored and the incident resolved. Complete response evidence, timing metrics, and postmortem follow-up action items remain permanently preserved.",
+      "Service is restored and the incident resolved. Complete response timeline, MTTA/MTTR metrics, and postmortem follow-up actions remain preserved according to retention and governance controls.",
     stages: ["09 Resolve", "10 Learn"],
   },
 ];
 
 export function IncidentLoop() {
   const [activeAct, setActiveAct] = useState(0);
-  const [activeStep, setActiveStep] = useState(4);
+  const [activeStep, setActiveStep] = useState(0);
 
   const scrollToAct = (index: number) => {
     setActiveAct(index);
     const target = document.getElementById(acts[index].id);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const prefersReducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -189,7 +258,15 @@ export function IncidentLoop() {
 
   return (
     <div className="incident-story-container">
-      {/* 1. Act Navigation / Scrubber */}
+      {/* Scenario metadata disclaimer */}
+      <div className="incident-story-meta-bar">
+        <span className="scenario-pill">
+          <span className="signal-dot" />
+          ILLUSTRATIVE INCIDENT SCENARIO · NORTHSTAR SYSTEMS v2.0.0 FIXTURE
+        </span>
+      </div>
+
+      {/* 1. Act Navigation / Progress Scrubber */}
       <nav className="acts-nav-bar" aria-label="Four Acts of an Incident">
         {acts.map((act, index) => (
           <button
@@ -199,10 +276,10 @@ export function IncidentLoop() {
             onClick={() => scrollToAct(index)}
           >
             <span className="act-nav-num">{act.num}</span>
-            <div className="act-nav-text">
+            <span className="act-nav-text">
               <strong className="act-nav-label">{act.label}</strong>
               <span className="act-nav-summary">{act.summary}</span>
-            </div>
+            </span>
           </button>
         ))}
       </nav>
@@ -211,15 +288,11 @@ export function IncidentLoop() {
       <section className="act-section act-detect" id="act-detect">
         <div className="act-story-copy">
           <div className="act-header-tag">
-            <span className="act-num">01 / DETECT</span>
-            <span className="act-subtag">NORTHSTAR SYSTEMS</span>
+            <span className="act-num">{acts[0].eyebrow}</span>
+            <span className="act-subtag">{acts[0].subtag}</span>
           </div>
-          <h3 className="act-heading">A signal becomes something actionable.</h3>
-          <p className="act-description">
-            An alert reaches the service through an HMAC-authenticated webhook.
-            A matching provider correlation key connects related events into a single incident,
-            preserving service context and response evidence.
-          </p>
+          <h3 className="act-heading">{acts[0].heading}</h3>
+          <p className="act-description">{acts[0].description}</p>
           <div className="act-stages-strip">
             <span className="act-stage-pill is-active">
               <span className="signal-dot" /> 01 Detect
@@ -232,11 +305,15 @@ export function IncidentLoop() {
         <div className="act-visual-wrapper">
           <div className="act-card detect-card">
             <div className="act-card-head">
-              <div className="flex items-center gap-2">
-                <span className="signal-dot" />
-                <span className="act-meta-tag">INGRESS · CHECKOUT API</span>
+              <div className="incident-identity-strip">
+                <span className="incident-id-badge">INC-1042</span>
+                <span className="incident-service-tag">Checkout API</span>
+                <span className="incident-sev-badge">P1</span>
               </div>
-              <span className="act-badge-red">P1 · TRIGGERED</span>
+              <div className="act-status-badge status-ingress">
+                <span className="signal-dot pulse" />
+                <span>INGRESS · SIGNAL CORRELATED</span>
+              </div>
             </div>
 
             <div className="detect-visual-flow">
@@ -256,7 +333,7 @@ export function IncidentLoop() {
 
               <div className="detect-connector">
                 <div className="connector-badge">
-                  <Radio size={13} className="text-red-500" />
+                  <Radio size={13} className="text-red-400" />
                   <span>Provider correlation: <code>checkout-api-latency</code></span>
                 </div>
               </div>
@@ -283,20 +360,16 @@ export function IncidentLoop() {
       <section className="act-section act-respond" id="act-respond">
         <div className="act-story-copy">
           <div className="act-header-tag">
-            <span className="act-num">02 / RESPOND</span>
-            <span className="act-subtag">ON-CALL &amp; PAGING</span>
+            <span className="act-num">{acts[1].eyebrow}</span>
+            <span className="act-subtag">{acts[1].subtag}</span>
           </div>
-          <h3 className="act-heading">The right person. The right moment.</h3>
-          <p className="act-description">
-            Live schedules determine the current primary responder without guesswork.
-            Configured paging channels deliver multi-modal alerts across voice calls, push notifications,
-            and ChatOps. On acknowledgement, ownership transitions seamlessly.
-          </p>
+          <h3 className="act-heading">{acts[1].heading}</h3>
+          <p className="act-description">{acts[1].description}</p>
           <div className="act-stages-strip">
             <span className="act-stage-pill">04 On-call</span>
             <span className="act-stage-pill">05 Page</span>
             <span className="act-stage-pill is-active">
-              <span className="signal-dot" /> 06 Acknowledge
+              <span className="signal-dot ack" /> 06 Acknowledge
             </span>
           </div>
         </div>
@@ -304,11 +377,15 @@ export function IncidentLoop() {
         <div className="act-visual-wrapper">
           <div className="act-card respond-card">
             <div className="act-card-head">
-              <div className="flex items-center gap-2">
-                <span className="signal-dot" />
-                <span className="act-meta-tag">ESCALATION POLICY · TIER 1</span>
+              <div className="incident-identity-strip">
+                <span className="incident-id-badge">INC-1042</span>
+                <span className="incident-service-tag">Checkout API</span>
+                <span className="incident-sev-badge">P1</span>
               </div>
-              <span className="act-badge-ack">ACKNOWLEDGED · 00:01:24</span>
+              <div className="act-status-badge status-ack">
+                <span className="signal-dot ack" />
+                <span>ACKNOWLEDGED · 00:01:24</span>
+              </div>
             </div>
 
             <div className="respond-visual-body">
@@ -372,18 +449,14 @@ export function IncidentLoop() {
       <section className="act-section act-coordinate" id="act-coordinate">
         <div className="act-story-copy">
           <div className="act-header-tag">
-            <span className="act-num">03 / COORDINATE</span>
-            <span className="act-subtag">INTERNAL &amp; EXTERNAL</span>
+            <span className="act-num">{acts[2].eyebrow}</span>
+            <span className="act-subtag">{acts[2].subtag}</span>
           </div>
-          <h3 className="act-heading">Internal response. Public clarity.</h3>
-          <p className="act-description">
-            Engineers investigate in dedicated ChatOps channels while customers stay
-            informed through the integrated public status page. Both live in the same
-            unified incident system without manual status duplication.
-          </p>
+          <h3 className="act-heading">{acts[2].heading}</h3>
+          <p className="act-description">{acts[2].description}</p>
           <div className="act-stages-strip">
             <span className="act-stage-pill is-active">
-              <span className="signal-dot" /> 07 Coordinate
+              <span className="signal-dot live" /> 07 Coordinate
             </span>
             <span className="act-stage-pill">08 Communicate</span>
           </div>
@@ -392,10 +465,10 @@ export function IncidentLoop() {
         <div className="act-visual-wrapper">
           <div className="coordinate-split-grid">
             <div className="coordinate-card internal-room">
-              <div className="coordinate-card-head">
-                <div className="flex items-center gap-2">
-                  <MessageSquare size={13} className="text-red-400" />
-                  <span className="act-meta-tag">WAR ROOM · #inc-1042-checkout</span>
+              <div className="act-card-head">
+                <div className="incident-identity-strip">
+                  <span className="incident-id-badge">INC-1042</span>
+                  <span className="incident-service-tag">War Room</span>
                 </div>
                 <span className="channel-badge">CHAT OPS</span>
               </div>
@@ -425,10 +498,10 @@ export function IncidentLoop() {
             </div>
 
             <div className="coordinate-card public-status">
-              <div className="coordinate-card-head">
-                <div className="flex items-center gap-2">
-                  <Globe size={13} className="text-amber-400" />
-                  <span className="act-meta-tag">PUBLIC STATUS PAGE</span>
+              <div className="act-card-head">
+                <div className="incident-identity-strip">
+                  <span className="incident-id-badge">INC-1042</span>
+                  <span className="incident-service-tag">Status Page</span>
                 </div>
                 <span className="status-pill-degraded">DEGRADED</span>
               </div>
@@ -453,15 +526,11 @@ export function IncidentLoop() {
       <section className="act-section act-recover" id="act-recover">
         <div className="act-story-copy">
           <div className="act-header-tag">
-            <span className="act-num">04 / RECOVER &amp; LEARN</span>
-            <span className="act-subtag">CONTINUOUS IMPROVEMENT</span>
+            <span className="act-num">{acts[3].eyebrow}</span>
+            <span className="act-subtag">{acts[3].subtag}</span>
           </div>
-          <h3 className="act-heading">Resolution sealed. Experience preserved.</h3>
-          <p className="act-description">
-            Service restored and incident resolved. Complete response evidence,
-            timing metrics, and postmortem follow-up action items remain permanently
-            preserved to prevent repeat regressions.
-          </p>
+          <h3 className="act-heading">{acts[3].heading}</h3>
+          <p className="act-description">{acts[3].description}</p>
           <div className="act-stages-strip">
             <span className="act-stage-pill is-active green">
               <span className="signal-dot success" /> 09 Resolve
@@ -473,11 +542,15 @@ export function IncidentLoop() {
         <div className="act-visual-wrapper">
           <div className="act-card recover-card">
             <div className="act-card-head recover-head">
-              <div className="flex items-center gap-2">
-                <span className="signal-dot success" />
-                <span className="act-meta-tag text-emerald-400">RESOLUTION &amp; AUDIT TRAIL</span>
+              <div className="incident-identity-strip">
+                <span className="incident-id-badge resolved">INC-1042</span>
+                <span className="incident-service-tag">Checkout API</span>
+                <span className="incident-sev-badge resolved">P1</span>
               </div>
-              <span className="act-badge-resolved">RESOLVED · 14:38 UTC</span>
+              <div className="act-status-badge status-resolved">
+                <span className="signal-dot success" />
+                <span>RESOLVED · 14:38 UTC</span>
+              </div>
             </div>
 
             <div className="recover-body">
@@ -509,7 +582,7 @@ export function IncidentLoop() {
                     <strong className="text-sm text-white">Timeline</strong>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed mb-0">
-                    Immutable timestamped audit log preserved with all webhook payloads and actions.
+                    Timestamped incident timeline and available audit evidence preserved for review.
                   </p>
                 </div>
                 <div className="recover-deck-card">
@@ -518,7 +591,7 @@ export function IncidentLoop() {
                     <strong className="text-sm text-white">Metrics</strong>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed mb-0">
-                    TTN, TTA, and TTR analytics evaluated against historical baselines.
+                    MTTA and MTTR response timing recorded and evaluated against service reliability objectives.
                   </p>
                 </div>
                 <div className="recover-deck-card">
@@ -527,7 +600,7 @@ export function IncidentLoop() {
                     <strong className="text-sm text-white">Actions</strong>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed mb-0">
-                    2 blameless postmortem follow-up action items created and assigned.
+                    Blameless postmortem follow-up action items created with assigned owners and progress tracking.
                   </p>
                 </div>
               </div>
@@ -538,13 +611,13 @@ export function IncidentLoop() {
 
       {/* 6. Explore all 10 steps disclosure */}
       <div className="ten-steps-wrapper">
-        <details className="ten-steps-disclosure" open>
+        <details id="ten-steps-disclosure" className="ten-steps-disclosure">
           <summary className="ten-steps-summary">
             <div className="flex items-center gap-3">
               <span className="signal-dot" />
               <strong className="text-white">Explore all 10 granular incident lifecycle steps</strong>
             </div>
-            <span className="ten-steps-hint">Release contract &amp; technical routing</span>
+            <span className="ten-steps-hint">Release contract &amp; technical routing (Click to expand)</span>
           </summary>
 
           <div className="ten-steps-drawer-body">
@@ -556,7 +629,7 @@ export function IncidentLoop() {
                   className={`ten-step-btn ${activeStep === index ? "is-active" : ""}`}
                   onClick={() => setActiveStep(index)}
                 >
-                  <span className="ten-step-num">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="ten-step-num">{item.num}</span>
                   <span className="ten-step-label">{item.label}</span>
                 </button>
               ))}
@@ -571,23 +644,26 @@ export function IncidentLoop() {
                 <div className="ten-step-meta">
                   <span className="site-eyebrow mb-1">
                     <span className="signal-dot" />
-                    STEP {String(activeStep + 1).padStart(2, "0")} / {steps[activeStep].label.toUpperCase()}
+                    STEP {steps[activeStep].num} / {steps[activeStep].label.toUpperCase()}
                   </span>
                   <h4 className="text-xl font-bold text-white mb-2">{steps[activeStep].title}</h4>
                   <p className="text-sm text-slate-300 leading-relaxed mb-0">{steps[activeStep].detail}</p>
                 </div>
 
                 <div className="ten-step-contract-box">
-                  <span className="contract-box-label">EVENT CONTRACT</span>
+                  <div className="contract-box-head">
+                    <span className="contract-box-label">CONCEPTUAL STATE</span>
+                    <span className={`contract-state-pill state-${steps[activeStep].statusType}`}>
+                      {steps[activeStep].state}
+                    </span>
+                  </div>
                   <strong className="contract-box-event">
-                    {activeStep === 4 ? "Voice · Push · SMS · Teams" :
-                     activeStep === 5 ? "ACKNOWLEDGED" :
-                     steps[activeStep].event}
+                    {steps[activeStep].event}
                   </strong>
                   <div className="contract-box-status">
-                    <span>INC-1042 · Checkout API</span>
+                    <span>{steps[activeStep].context}</span>
                     <span className="status-badge">
-                      {activeStep >= 8 ? "RESOLVED" : activeStep >= 5 ? "ACKNOWLEDGED" : "TRIGGERED"}
+                      {steps[activeStep].statusBadge}
                     </span>
                   </div>
                 </div>

@@ -29,6 +29,7 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "href",
     "https://opsknight.com/",
   );
+  await page.locator("#ten-steps-disclosure summary").click();
   await page.getByRole("button", { name: "05 Page", exact: true }).click();
   await expect(page.locator("#loop-panel")).toHaveAttribute("data-step", "4");
   await expect(page.locator("#loop-panel")).toContainText(
@@ -934,3 +935,110 @@ test("organizations can find services and evaluate security without a community 
     ).toBe(true);
   }
 });
+
+test("incident story: four acts navigation, visual continuity, and state progression", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const incidentSection = page.locator("#incident-loop");
+  await expect(incidentSection).toBeVisible();
+
+  // Illustrative fixture disclaimer pill
+  await expect(
+    page.getByText(/ILLUSTRATIVE INCIDENT SCENARIO · NORTHSTAR SYSTEMS v2\.0\.0 FIXTURE/i),
+  ).toBeVisible();
+
+  // Four acts sections exist and are visible
+  const detectAct = page.locator("#act-detect");
+  const respondAct = page.locator("#act-respond");
+  const coordinateAct = page.locator("#act-coordinate");
+  const recoverAct = page.locator("#act-recover");
+
+  await expect(detectAct).toBeVisible();
+  await expect(respondAct).toBeVisible();
+  await expect(coordinateAct).toBeVisible();
+  await expect(recoverAct).toBeVisible();
+
+  // Visual continuity: all 4 acts display persistent incident identity
+  for (const act of [detectAct, respondAct, coordinateAct, recoverAct]) {
+    await expect(act.locator(".incident-id-badge").first()).toHaveText("INC-1042");
+  }
+
+  // Lifecycle state badges progression across the 4 acts
+  await expect(detectAct.locator(".act-status-badge")).toContainText("INGRESS · SIGNAL CORRELATED");
+  await expect(respondAct.locator(".act-status-badge")).toContainText("ACKNOWLEDGED · 00:01:24");
+  await expect(coordinateAct.locator(".coordinate-card.internal-room")).toContainText("War Room");
+  await expect(coordinateAct.locator(".coordinate-card.internal-room")).toContainText("Investigating checkout latency spike");
+  await expect(coordinateAct.locator(".coordinate-card.public-status")).toContainText("DEGRADED");
+  await expect(recoverAct.locator(".act-status-badge")).toContainText("RESOLVED · 14:38 UTC");
+
+  // Four acts navigation buttons exist
+  const navTabs = page.locator(".acts-nav-bar .act-nav-tab");
+  await expect(navTabs).toHaveCount(4);
+
+  // Click nav tab to test navigation with reduced-motion emulation
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await navTabs.nth(1).click();
+  await expect(respondAct).toBeVisible();
+});
+
+test("incident story: detailed ten-step explorer lifecycle states and collapse behavior", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const disclosure = page.locator("#ten-steps-disclosure");
+  await expect(disclosure).toBeVisible();
+
+  // Collapsed by default
+  await expect(disclosure).not.toHaveAttribute("open", "");
+
+  // Expand disclosure
+  await page.locator("#ten-steps-disclosure summary").click();
+  await expect(disclosure).toHaveAttribute("open", "");
+
+  const loopPanel = page.locator("#loop-panel");
+
+  // Initial state is Step 01 (Detect)
+  await expect(loopPanel).toHaveAttribute("data-step", "0");
+  await expect(loopPanel).toContainText("SIGNAL RECEIVED");
+  await expect(loopPanel).toContainText("Datadog → Checkout API");
+  // Pre-incident: INC-1042 should not appear in Step 01
+  await expect(loopPanel).not.toContainText("INC-1042 · P1 · TRIGGERED");
+
+  // Step 02: Correlate (pre-incident correlation)
+  await page.getByRole("button", { name: "02 Correlate", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "1");
+  await expect(loopPanel).toContainText("RELATED SIGNAL PROCESSED");
+  await expect(loopPanel).toContainText("Correlation key: checkout-api-latency");
+
+  // Step 03: Create (incident triggered)
+  await page.getByRole("button", { name: "03 Create", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "2");
+  await expect(loopPanel).toContainText("INCIDENT TRIGGERED");
+  await expect(loopPanel).toContainText("INC-1042 · Checkout API · P1");
+
+  // Step 05: Page
+  await page.getByRole("button", { name: "05 Page", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "4");
+  await expect(loopPanel).toContainText("Voice · Push · SMS · Teams");
+
+  // Step 06: Acknowledge
+  await page.getByRole("button", { name: "06 Acknowledge", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "5");
+  await expect(loopPanel).toContainText("ACKNOWLEDGED");
+  await expect(loopPanel).toContainText("Maya Chen acknowledged");
+
+  // Step 09: Resolve
+  await page.getByRole("button", { name: "09 Resolve", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "8");
+  await expect(loopPanel).toContainText("RESOLVED");
+  await expect(loopPanel).toContainText("Checkout API recovered");
+
+  // Step 10: Learn
+  await page.getByRole("button", { name: "10 Learn", exact: true }).click();
+  await expect(loopPanel).toHaveAttribute("data-step", "9");
+  await expect(loopPanel).toContainText("POSTMORTEM");
+});
+
