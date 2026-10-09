@@ -774,3 +774,21 @@
 /* Accessibility review: secondary archival labels stay readable on paper. */
 .site-page--legal-document .legal-updated { color: #45515d; }
 .site-page--changelog .release-nav > span { color: #46515e; }
+
+
+/* Interior hero contrast certification: the same section uses both ink-on-paper
+   and paper-on-ink across routes; resolve colors by surface, not by .site-dark. */
+.site-page.site-page--legal-index .interior-hero .site-description,
+.site-page.site-page--solutions .interior-hero .site-description,
+.site-page.site-page--compare .interior-hero .site-description,
+.site-page.site-page--brand .interior-hero .site-description,
+.site-page.site-page--changelog .interior-hero .site-description {
+  color: #344152 !important;
+}
+.site-page.site-page--support .interior-hero .site-description,
+.site-page.site-page--community .interior-hero .site-description,
+.site-page.site-page--contact .interior-hero .site-description,
+.site-page.site-page--security .interior-hero .site-description,
+.site-page.site-page--about .interior-hero .site-description {
+  color: #e0e9f3 !important;
+}
