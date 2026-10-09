@@ -850,3 +850,267 @@
     font: 10px/1.5 var(--font-jetbrains-mono), monospace;
   }
 }
+
+
+/* ==========================================================================
+   Hero III / Balanced first-screen composition
+   No workflow mini-dashboard, faux browser chrome, long empty runway, or
+   decorative metadata around the opening product view.
+   ========================================================================== */
+.site-page--home .site-hero {
+  padding: 0;
+  overflow: hidden;
+  background: #0a1018;
+  border-bottom: 1px solid #283441;
+}
+.site-page--home .hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .87fr) minmax(0, 1.13fr);
+  align-items: center;
+  gap: clamp(36px, 4.2vw, 70px);
+  padding-block: clamp(65px, 6.3vw, 94px) clamp(68px, 6.3vw, 94px);
+}
+.site-page--home .hero-layout .hero-copy {
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+.site-page--home .hero-lead-in {
+  margin: 0 0 24px;
+  color: #eb8b89;
+  font-size: clamp(12px, 1.15vw, 14px);
+  font-weight: 700;
+  letter-spacing: .015em;
+  line-height: 1.5;
+}
+.site-page--home .hero-layout .hero-copy h1 {
+  max-width: 630px;
+  margin: 0;
+  font-size: clamp(53px, 5.2vw, 78px);
+  font-weight: 750;
+  line-height: 1.055;
+  letter-spacing: -.064em;
+  color: #fafafa;
+  text-wrap: balance;
+  animation: none;
+}
+.site-page--home .hero-period { color: #df343a; }
+.site-page--home .hero-layout .hero-subtitle {
+  margin-top: clamp(20px, 2.35vw, 32px);
+  color: #eef1f5;
+  font-size: clamp(20px, 1.85vw, 25px);
+  font-weight: 550;
+  line-height: 1.37;
+  letter-spacing: -.034em;
+  animation: none;
+}
+.site-page--home .hero-layout .hero-description {
+  margin-top: 16px;
+  max-width: 475px;
+  color: #bfcad8;
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.77;
+  animation: none;
+}
+.site-page--home .hero-layout .site-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.site-page--home .hero-layout .site-action {
+  border-radius: 3px;
+  min-height: 50px;
+  padding: 12px 18px;
+  gap: 13px;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+.site-page--home .hero-layout .site-action:hover { transform: none; }
+.site-page--home .hero-layout .site-action.secondary {
+  border-color: #515e70;
+  color: #edf3fa;
+}
+.site-page--home .hero-release-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  margin-top: 14px;
+  color: #a9bbce;
+  font-size: 12px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+.site-page--home .hero-release-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.site-page--home .hero-release-link:focus-visible,
+.site-page--home .hero-image-caption a:focus-visible {
+  outline: 3px solid #f18c85;
+  outline-offset: 4px;
+}
+
+/* A real product composition, not a browser mockup placed below the fold. */
+.site-page--home .hero-layout .hero-product.hero-framed {
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #364556;
+  border-radius: 4px;
+  background: #111925;
+  box-shadow: 0 25px 60px #00000032;
+}
+.site-page--home .hero-layout .hero-product.hero-framed::before { content: none; }
+.site-page--home .hero-image-window {
+  position: relative;
+  aspect-ratio: 1.54 / 1;
+  overflow: hidden;
+  background: #0b1019;
+}
+.site-page--home .hero-image-window img {
+  display: block;
+  width: 116%;
+  max-width: none;
+  height: auto;
+  transform: translate(-6.9%, -1%);
+}
+.site-page--home .hero-image-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  min-height: 54px;
+  padding: 12px 17px;
+  margin: 0;
+  border-top: 1px solid #354252;
+  background: #121c28;
+  color: #bfcad8;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.site-page--home .hero-image-caption strong {
+  color: #f5f7f9;
+  font-weight: 700;
+}
+.site-page--home .hero-image-caption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.site-page--home .hero-image-caption a:hover { color: #f49e98; }
+
+/* A 13-inch laptop still shows both halves of the hero in the first screen. */
+@media (min-width: 981px) and (max-width: 1200px) {
+  .site-page--home .hero-layout { gap: 30px; padding-block: 60px 65px; }
+  .site-page--home .hero-layout .hero-copy h1 {
+    font-size: clamp(48px, 5vw, 64px);
+  }
+  .site-page--home .hero-layout .hero-subtitle { font-size: 20px; }
+  .site-page--home .hero-layout .hero-description { font-size: 14px; }
+  .site-page--home .hero-layout .site-actions { gap: 9px; }
+  .site-page--home .hero-layout .site-action { padding-inline: 13px; gap: 9px; }
+}
+@media (max-width: 980px) {
+  .site-page--home .hero-layout {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 36px;
+    padding-block: 60px 66px;
+  }
+  .site-page--home .hero-layout .hero-copy { max-width: 740px; }
+  .site-page--home .hero-layout .hero-copy h1 {
+    max-width: 740px;
+    font-size: clamp(48px, 7vw, 70px);
+  }
+  .site-page--home .hero-layout .hero-description { max-width: 620px; }
+  .site-page--home .hero-image-window { aspect-ratio: 1.78 / 1; }
+  .site-page--home .hero-image-window img { width: 108%; transform: translate(-3.7%, -1%); }
+}
+@media (max-width: 640px) {
+  .site-page--home .hero-layout {
+    gap: 25px;
+    padding-block: 36px 44px;
+  }
+  .site-page--home .hero-lead-in { margin-bottom: 16px; font-size: 12px; }
+  .site-page--home .hero-layout .hero-copy h1 {
+    font-size: clamp(40px, 10.2vw, 56px);
+    letter-spacing: -.063em;
+    line-height: 1.07;
+  }
+  .site-page--home .hero-layout .hero-subtitle { margin-top: 15px; font-size: 19px; }
+  .site-page--home .hero-layout .hero-description {
+    margin-top: 11px;
+    font-size: 13px;
+    line-height: 1.69;
+  }
+  .site-page--home .hero-layout .site-actions {
+    margin-top: 22px;
+    gap: 8px;
+  }
+  .site-page--home .hero-layout .site-action {
+    min-height: 46px;
+    padding: 10px 12px;
+    gap: 8px;
+    font-size: 11px;
+  }
+  .site-page--home .hero-release-link {
+    margin-top: 6px;
+    font-size: 11px;
+    min-height: 32px;
+  }
+  .site-page--home .hero-image-window { aspect-ratio: 1.2 / 1; }
+  .site-page--home .hero-image-window img {
+    width: 150%;
+    transform: translate(-16.67%, 0);
+  }
+  .site-page--home .hero-image-caption {
+    padding: 11px 13px;
+    gap: 0 12px;
+    font-size: 10px;
+  }
+  .site-page--home .hero-image-caption a {
+    font-size: 10px;
+    min-height: 30px;
+  }
+}
+@media (max-width: 360px) {
+  .site-page--home .hero-layout .hero-copy h1 { font-size: 38px; }
+  .site-page--home .hero-layout .site-actions { align-items: stretch; }
+  .site-page--home .hero-layout .site-action {
+    flex: 1;
+    gap: 6px;
+    justify-content: center;
+    min-width: 0;
+    font-size: 10px;
+    padding-inline: 8px;
+  }
+  .site-page--home .hero-image-caption { align-items: flex-start; }
+}
+@media (max-height: 780px) and (min-width: 981px) {
+  .site-page--home .hero-layout { padding-block: 44px 50px; }
+  .site-page--home .hero-lead-in { margin-bottom: 15px; }
+  .site-page--home .hero-layout .hero-subtitle { margin-top: 14px; }
+  .site-page--home .hero-layout .site-actions { margin-top: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-page--home .hero-layout *,
+  .site-page--home .hero-layout *::before,
+  .site-page--home .hero-layout *::after { animation: none; transition: none; }
+}
