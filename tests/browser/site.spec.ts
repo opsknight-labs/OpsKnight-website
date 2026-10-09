@@ -88,6 +88,16 @@ test("editorial hero presents a legible, authentic incident workspace", async ({
   expect(stageBox.y).toBeGreaterThan(textBox.y + textBox.height - 3);
   expect(stageBox.y, "The real product must enter the first screen").toBeLessThan(viewport.height * .93);
   expect(stageBox.width, "The product scene should feel full-width").toBeGreaterThan(viewport.width * .80);
+  const headingBox = await heading.boundingBox();
+  expect(headingBox).not.toBeNull();
+  if (headingBox) {
+    expect(headingBox.x, "The headline needs a deliberate left gutter").toBeGreaterThanOrEqual(viewport.width <= 599 ? 15 : 24);
+    expect(headingBox.x + headingBox.width, "The headline must not touch the right edge")
+      .toBeLessThanOrEqual(viewport.width - 15);
+  }
+  if (viewport.width >= 1100) {
+    expect(stageBox.x, "Desktop product evidence must align with the page grid").toBeGreaterThanOrEqual(24);
+  }
   await expect(page.locator(".hero-signal, .hero-frame-bar, .incident-signal-rail")).toHaveCount(0);
 });
 
