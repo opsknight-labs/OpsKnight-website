@@ -40,8 +40,8 @@ export default function Home() {
               Own the incident<span className="hero-period">.</span>
             </h1>
             <p className="hero-description">
-              Every alert, every responder, every decision.
-              <span> One self-hosted incident platform.</span>
+              On-call, paging and incident response in one open-source platform
+              you host and control.
             </p>
             <div className="site-actions">
               <Action href="/deploy/">Install OpsKnight</Action>
