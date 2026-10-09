@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
@@ -18,6 +18,7 @@ import {
   X,
   ExternalLink,
   Copy,
+  CheckCircle2,
 } from "lucide-react";
 import { ProductScreenshot } from "./Primitives";
 import { PRODUCT, productDocs } from "@/lib/product";
@@ -103,229 +104,497 @@ const steps = [
     icon: Activity,
   },
 ];
+const acts = [
+  {
+    id: "act-detect",
+    num: "01",
+    label: "Detect",
+    summary: "Detect · Correlate · Create",
+    eyebrow: "01 / DETECT",
+    subtag: "NORTHSTAR SYSTEMS",
+    heading: "A signal becomes something actionable.",
+    description:
+      "An incoming alert reaches the service through an HMAC-authenticated webhook. A matching provider correlation key connects related events into a single incident, preserving service context and response evidence.",
+    stages: ["01 Detect", "02 Correlate", "03 Create"],
+  },
+  {
+    id: "act-respond",
+    num: "02",
+    label: "Respond",
+    summary: "On-call · Page · Acknowledge",
+    eyebrow: "02 / RESPOND",
+    subtag: "ON-CALL & PAGING",
+    heading: "The right person. The right moment.",
+    description:
+      "Live schedules determine the current primary responder without guesswork. Configured paging channels deliver multi-modal alerts across voice calls, push notifications, and ChatOps. On acknowledgement, ownership transitions seamlessly.",
+    stages: ["04 On-call", "05 Page", "06 Acknowledge"],
+  },
+  {
+    id: "act-coordinate",
+    num: "03",
+    label: "Coordinate",
+    summary: "Coordinate · Communicate",
+    eyebrow: "03 / COORDINATE",
+    subtag: "INTERNAL & EXTERNAL",
+    heading: "Internal response. Public clarity.",
+    description:
+      "Engineers investigate in dedicated ChatOps channels while customers stay informed through the integrated public status page. Both live in the same unified incident system without manual status duplication.",
+    stages: ["07 Coordinate", "08 Communicate"],
+  },
+  {
+    id: "act-recover",
+    num: "04",
+    label: "Recover",
+    summary: "Resolve · Learn",
+    eyebrow: "04 / RECOVER & LEARN",
+    subtag: "CONTINUOUS IMPROVEMENT",
+    heading: "Resolution sealed. Experience preserved.",
+    description:
+      "Service is restored and the incident resolved. Complete response evidence, timing metrics, and postmortem follow-up action items remain permanently preserved.",
+    stages: ["09 Resolve", "10 Learn"],
+  },
+];
+
 export function IncidentLoop() {
-  const [active, setActive] = useState(0);
-  const theater = useRef<HTMLDivElement>(null);
-  const [cinematic, setCinematic] = useState(false);
+  const [activeAct, setActiveAct] = useState(0);
+  const [activeStep, setActiveStep] = useState(4);
+
+  const scrollToAct = (index: number) => {
+    setActiveAct(index);
+    const target = document.getElementById(acts[index].id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
-    const media = window.matchMedia(
-      "(min-width: 1100px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)",
-    );
-    const update = () => setCinematic(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!cinematic || !theater.current) return;
-    const chapters = theater.current.querySelectorAll<HTMLElement>(
-      "[data-loop-chapter]",
-    );
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
-          .filter((entry) => entry.isIntersecting)
+          .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible[0]) {
-          setActive(
-            Number((visible[0].target as HTMLElement).dataset.loopChapter),
-          );
+          const actIndex = acts.findIndex((a) => a.id === visible[0].target.id);
+          if (actIndex !== -1) setActiveAct(actIndex);
         }
       },
-      { rootMargin: "-22% 0px -48% 0px", threshold: [0.15, 0.35, 0.6] },
+      { rootMargin: "-15% 0px -40% 0px", threshold: [0.15, 0.4] },
     );
-    chapters.forEach((chapter) => observer.observe(chapter));
+    acts.forEach((act) => {
+      const el = document.getElementById(act.id);
+      if (el) observer.observe(el);
+    });
     return () => observer.disconnect();
-  }, [cinematic]);
-
-  const step = steps[active];
+  }, []);
 
   return (
-    <div
-      className={`incident-theater response-theater ${cinematic ? "cinematic" : "compact"}`}
-      ref={theater}
-    >
-      <div
-        className="theater-chapters"
-        aria-label="Scroll through the incident lifecycle"
-      >
-        {steps.map((chapter, index) => (
-          <section
-            key={chapter.label}
-            data-loop-chapter={index}
-            className={`theater-chapter ${active === index ? "is-active" : ""}`}
+    <div className="incident-story-container">
+      {/* 1. Act Navigation / Scrubber */}
+      <nav className="acts-nav-bar" aria-label="Four Acts of an Incident">
+        {acts.map((act, index) => (
+          <button
+            key={act.id}
+            aria-current={activeAct === index ? "true" : undefined}
+            className={`act-nav-tab ${activeAct === index ? "is-active" : ""}`}
+            onClick={() => scrollToAct(index)}
           >
-            <p className="site-eyebrow">
-              <span className="signal-dot" />
-              {String(index + 1).padStart(2, "0")} /{" "}
-              {chapter.label.toUpperCase()}
-            </p>
-            <h3>{chapter.title}</h3>
-            <p>{chapter.detail}</p>
-          </section>
+            <span className="act-nav-num">{act.num}</span>
+            <div className="act-nav-text">
+              <strong className="act-nav-label">{act.label}</strong>
+              <span className="act-nav-summary">{act.summary}</span>
+            </div>
+          </button>
         ))}
-      </div>
+      </nav>
 
-      <div className="response-sticky">
-        <ResponseCanvas active={active} />
-        <div className="response-mobile-copy" aria-live="polite">
-          <p className="site-eyebrow">
-            {String(active + 1).padStart(2, "0")} / {step.label.toUpperCase()}
+      {/* 2. Act 01: Detect */}
+      <section className="act-section act-detect" id="act-detect">
+        <div className="act-story-copy">
+          <div className="act-header-tag">
+            <span className="act-num">01 / DETECT</span>
+            <span className="act-subtag">NORTHSTAR SYSTEMS</span>
+          </div>
+          <h3 className="act-heading">A signal becomes something actionable.</h3>
+          <p className="act-description">
+            An alert reaches the service through an HMAC-authenticated webhook.
+            A matching provider correlation key connects related events into a single incident,
+            preserving service context and response evidence.
           </p>
-          <h3>{step.title}</h3>
-          <p>{step.detail}</p>
-        </div>
-        <div className="response-stepper" aria-label="Incident lifecycle steps">
-          {steps.map((item, index) => (
-            <button
-              key={item.label}
-              className={active === index ? "is-active" : ""}
-              aria-pressed={active === index}
-              onClick={() => setActive(index)}
-            >
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ResponseCanvas({ active }: { active: number }) {
-  const status =
-    active >= 8
-      ? "RESOLVED"
-      : active >= 5
-        ? "ACKNOWLEDGED"
-        : active >= 2
-          ? "TRIGGERED"
-          : "SIGNAL RECEIVED";
-  const event = steps[active].event;
-  const visible = (step: number) => (active >= step ? "is-visible" : "");
-
-  return (
-    <div
-      id="loop-panel"
-      className={`response-canvas response-step-${active}`}
-      data-step={active}
-      aria-label={`Illustrative OpsKnight response workflow. Current state: ${event}`}
-    >
-      <div className="response-canvas-head">
-        <div>
-          <span className="signal-dot" />
-          NORTHSTAR SYSTEMS / CHECKOUT API
-        </div>
-        <span className={`response-status status-${status.toLowerCase().replaceAll(" ", "-")}`}>
-          {status}
-        </span>
-      </div>
-
-      <div className="response-canvas-body">
-        <div className={`response-sources ${visible(0)}`}>
-          <div className="response-source response-source-primary">
-            <Image
-              src="/integrations/datadog.svg"
-              width={28}
-              height={28}
-              alt=""
-            />
-            <span>
-              <small>DATADOG</small>
-              Checkout p95 &gt; 4.5s
+          <div className="act-stages-strip">
+            <span className="act-stage-pill is-active">
+              <span className="signal-dot" /> 01 Detect
             </span>
-          </div>
-          <div className={`response-source response-source-secondary ${visible(1)}`}>
-            <span>
-              <small>RELATED SIGNAL</small>
-              5xx errors rising
-            </span>
-          </div>
-          <div className={`response-source response-source-secondary ${visible(1)}`}>
-            <span>
-              <small>CORRELATION</small>
-              Same provider key
-            </span>
+            <span className="act-stage-pill">02 Correlate</span>
+            <span className="act-stage-pill">03 Create</span>
           </div>
         </div>
 
-        <div className={`response-flow-line flow-to-core ${visible(0)}`}>
-          <span />
-        </div>
+        <div className="act-visual-wrapper">
+          <div className="act-card detect-card">
+            <div className="act-card-head">
+              <div className="flex items-center gap-2">
+                <span className="signal-dot" />
+                <span className="act-meta-tag">INGRESS · CHECKOUT API</span>
+              </div>
+              <span className="act-badge-red">P1 · TRIGGERED</span>
+            </div>
 
-        <div className={`response-core ${visible(2)}`}>
-          <div className="response-core-brand">
-            <span className="signal-dot" />
-            OpsKnight
-          </div>
-          <div className="response-incident">
-            <span>P1</span>
-            <div>
-              <small>INC-1042</small>
-              <strong>Elevated checkout error rate</strong>
-              <p>Checkout API · Commerce Reliability</p>
+            <div className="detect-visual-flow">
+              <div className="detect-node alert-node">
+                <div className="detect-node-icon">
+                  <Image src="/integrations/datadog.svg" width={24} height={24} alt="" />
+                </div>
+                <div className="detect-node-content">
+                  <div className="flex justify-between items-center">
+                    <span className="node-source-label">DATADOG SIGNAL</span>
+                    <span className="node-active-pill">Active</span>
+                  </div>
+                  <strong className="node-title">Checkout API · Elevated latency</strong>
+                  <span className="node-detail">p95 latency &gt; 4.5s (threshold: 2.0s)</span>
+                </div>
+              </div>
+
+              <div className="detect-connector">
+                <div className="connector-badge">
+                  <Radio size={13} className="text-red-500" />
+                  <span>Provider correlation: <code>checkout-api-latency</code></span>
+                </div>
+              </div>
+
+              <div className="detect-node incident-node">
+                <div className="incident-node-badge">
+                  <span className="incident-p1">P1</span>
+                </div>
+                <div className="detect-node-content">
+                  <div className="flex justify-between items-center">
+                    <span className="node-source-label">INCIDENT CREATED</span>
+                    <span className="incident-id">INC-1042</span>
+                  </div>
+                  <strong className="node-title">Elevated checkout error rate</strong>
+                  <span className="node-detail">Checkout API · Commerce Reliability Service</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className={`response-flow-line flow-to-responder ${visible(3)}`}>
-          <span />
-        </div>
-
-        <div className={`response-responder ${visible(3)}`}>
-          <div className="response-avatar">MC</div>
-          <div>
-            <small>COMMERCE PRIMARY</small>
-            <strong>Maya Chen</strong>
-            <span>On-call responder</span>
+      {/* 3. Act 02: Respond */}
+      <section className="act-section act-respond" id="act-respond">
+        <div className="act-story-copy">
+          <div className="act-header-tag">
+            <span className="act-num">02 / RESPOND</span>
+            <span className="act-subtag">ON-CALL &amp; PAGING</span>
           </div>
-          <span className={`response-owner ${visible(5)}`}>OWNER</span>
-        </div>
-
-        <div className={`response-channels ${visible(4)}`}>
-          {["Voice", "Push", "SMS", "Teams"].map((channel) => (
-            <span key={channel}>{channel}</span>
-          ))}
-        </div>
-
-        <div className="response-outcomes">
-          <div className={`response-outcome ${visible(6)}`}>
-            <MessageSquare size={17} />
-            <span>
-              <small>WAR ROOM</small>
-              #inc-1042-checkout
-            </span>
-          </div>
-          <div className={`response-outcome ${visible(7)}`}>
-            <Globe size={17} />
-            <span>
-              <small>PUBLIC STATUS</small>
-              Checkout API · Degraded
-            </span>
-          </div>
-          <div className={`response-outcome response-outcome-success ${visible(8)}`}>
-            <Check size={17} />
-            <span>
-              <small>RECOVERY</small>
-              Incident resolved
-            </span>
-          </div>
-          <div className={`response-outcome ${visible(9)}`}>
-            <Activity size={17} />
-            <span>
-              <small>FOLLOW-UP</small>
-              Postmortem · 2 actions
+          <h3 className="act-heading">The right person. The right moment.</h3>
+          <p className="act-description">
+            Live schedules determine the current primary responder without guesswork.
+            Configured paging channels deliver multi-modal alerts across voice calls, push notifications,
+            and ChatOps. On acknowledgement, ownership transitions seamlessly.
+          </p>
+          <div className="act-stages-strip">
+            <span className="act-stage-pill">04 On-call</span>
+            <span className="act-stage-pill">05 Page</span>
+            <span className="act-stage-pill is-active">
+              <span className="signal-dot" /> 06 Acknowledge
             </span>
           </div>
         </div>
-      </div>
 
-      <div className="response-canvas-foot">
-        <span>{event}</span>
-        <span>{String(active + 1).padStart(2, "0")} / 10</span>
+        <div className="act-visual-wrapper">
+          <div className="act-card respond-card">
+            <div className="act-card-head">
+              <div className="flex items-center gap-2">
+                <span className="signal-dot" />
+                <span className="act-meta-tag">ESCALATION POLICY · TIER 1</span>
+              </div>
+              <span className="act-badge-ack">ACKNOWLEDGED · 00:01:24</span>
+            </div>
+
+            <div className="respond-visual-body">
+              <div className="responder-profile-card">
+                <div className="responder-avatar">MC</div>
+                <div className="responder-info">
+                  <div className="flex items-center justify-between">
+                    <span className="responder-role">COMMERCE PRIMARY</span>
+                    <span className="responder-status-pill">On-Call</span>
+                  </div>
+                  <strong className="responder-name">Maya Chen</strong>
+                  <span className="responder-schedule">Americas Primary Rotation · Shift active</span>
+                </div>
+              </div>
+
+              <div className="channels-grid">
+                <div className="channel-chip active">
+                  <PhoneCall size={14} className="channel-icon" />
+                  <div>
+                    <span className="channel-name">Voice Call</span>
+                    <span className="channel-state">Answered</span>
+                  </div>
+                </div>
+                <div className="channel-chip active">
+                  <Radio size={14} className="channel-icon" />
+                  <div>
+                    <span className="channel-name">Mobile PWA</span>
+                    <span className="channel-state">Delivered</span>
+                  </div>
+                </div>
+                <div className="channel-chip active">
+                  <MessageSquare size={14} className="channel-icon" />
+                  <div>
+                    <span className="channel-name">Direct SMS</span>
+                    <span className="channel-state">Delivered</span>
+                  </div>
+                </div>
+                <div className="channel-chip active">
+                  <Check size={14} className="channel-icon" />
+                  <div>
+                    <span className="channel-name">MS Teams</span>
+                    <span className="channel-state">Card posted</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="respond-footer">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                  <span className="text-xs text-slate-300 font-medium">
+                    Owned by <strong>Maya Chen</strong> · Escalation timeout canceled
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Act 03: Coordinate */}
+      <section className="act-section act-coordinate" id="act-coordinate">
+        <div className="act-story-copy">
+          <div className="act-header-tag">
+            <span className="act-num">03 / COORDINATE</span>
+            <span className="act-subtag">INTERNAL &amp; EXTERNAL</span>
+          </div>
+          <h3 className="act-heading">Internal response. Public clarity.</h3>
+          <p className="act-description">
+            Engineers investigate in dedicated ChatOps channels while customers stay
+            informed through the integrated public status page. Both live in the same
+            unified incident system without manual status duplication.
+          </p>
+          <div className="act-stages-strip">
+            <span className="act-stage-pill is-active">
+              <span className="signal-dot" /> 07 Coordinate
+            </span>
+            <span className="act-stage-pill">08 Communicate</span>
+          </div>
+        </div>
+
+        <div className="act-visual-wrapper">
+          <div className="coordinate-split-grid">
+            <div className="coordinate-card internal-room">
+              <div className="coordinate-card-head">
+                <div className="flex items-center gap-2">
+                  <MessageSquare size={13} className="text-red-400" />
+                  <span className="act-meta-tag">WAR ROOM · #inc-1042-checkout</span>
+                </div>
+                <span className="channel-badge">CHAT OPS</span>
+              </div>
+              <div className="chat-thread">
+                <div className="chat-msg">
+                  <span className="chat-avatar">MC</span>
+                  <div className="chat-content">
+                    <span className="chat-author">Maya Chen <small>14:24</small></span>
+                    <p>Investigating checkout latency spike after deployment v2.4.1.</p>
+                  </div>
+                </div>
+                <div className="chat-msg">
+                  <span className="chat-avatar dv">DV</span>
+                  <div className="chat-content">
+                    <span className="chat-author">Daniel Vance <small>14:26</small></span>
+                    <p>Read replicas healthy. Isolating third-party gateway pool.</p>
+                  </div>
+                </div>
+                <div className="chat-msg bot">
+                  <span className="chat-avatar bot">OK</span>
+                  <div className="chat-content">
+                    <span className="chat-author text-red-400">OpsKnight Bot <small>14:27</small></span>
+                    <p>Attached APM trace evidence to incident timeline.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="coordinate-card public-status">
+              <div className="coordinate-card-head">
+                <div className="flex items-center gap-2">
+                  <Globe size={13} className="text-amber-400" />
+                  <span className="act-meta-tag">PUBLIC STATUS PAGE</span>
+                </div>
+                <span className="status-pill-degraded">DEGRADED</span>
+              </div>
+              <div className="status-content">
+                <div className="status-service-row">
+                  <strong>Checkout &amp; Billing API</strong>
+                  <span className="status-indicator-tag">Degraded Performance</span>
+                </div>
+                <div className="status-update-box">
+                  <span className="status-update-time">UPDATE · 14:28 UTC</span>
+                  <p>
+                    Investigating elevated checkout latency. Engineers are actively isolating downstream pools. Next update in 15 minutes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Act 04: Recover */}
+      <section className="act-section act-recover" id="act-recover">
+        <div className="act-story-copy">
+          <div className="act-header-tag">
+            <span className="act-num">04 / RECOVER &amp; LEARN</span>
+            <span className="act-subtag">CONTINUOUS IMPROVEMENT</span>
+          </div>
+          <h3 className="act-heading">Resolution sealed. Experience preserved.</h3>
+          <p className="act-description">
+            Service restored and incident resolved. Complete response evidence,
+            timing metrics, and postmortem follow-up action items remain permanently
+            preserved to prevent repeat regressions.
+          </p>
+          <div className="act-stages-strip">
+            <span className="act-stage-pill is-active green">
+              <span className="signal-dot success" /> 09 Resolve
+            </span>
+            <span className="act-stage-pill green">10 Learn</span>
+          </div>
+        </div>
+
+        <div className="act-visual-wrapper">
+          <div className="act-card recover-card">
+            <div className="act-card-head recover-head">
+              <div className="flex items-center gap-2">
+                <span className="signal-dot success" />
+                <span className="act-meta-tag text-emerald-400">RESOLUTION &amp; AUDIT TRAIL</span>
+              </div>
+              <span className="act-badge-resolved">RESOLVED · 14:38 UTC</span>
+            </div>
+
+            <div className="recover-body">
+              <div className="recover-summary-row">
+                <div>
+                  <span className="node-source-label text-emerald-400">RESTORED SERVICE</span>
+                  <strong className="text-white text-base block">Checkout API</strong>
+                </div>
+                <div className="recover-metrics-badges">
+                  <div className="recover-metric">
+                    <span>MTTA</span>
+                    <strong>1m 24s</strong>
+                  </div>
+                  <div className="recover-metric">
+                    <span>MTTR</span>
+                    <strong>18m 40s</strong>
+                  </div>
+                  <div className="recover-metric">
+                    <span>HEALTH</span>
+                    <strong className="text-emerald-400">Normal (42ms)</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="recover-deck-grid">
+                <div className="recover-deck-card">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Activity size={14} className="text-emerald-400" />
+                    <strong className="text-sm text-white">Timeline</strong>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-0">
+                    Immutable timestamped audit log preserved with all webhook payloads and actions.
+                  </p>
+                </div>
+                <div className="recover-deck-card">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Radio size={14} className="text-emerald-400" />
+                    <strong className="text-sm text-white">Metrics</strong>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-0">
+                    TTN, TTA, and TTR analytics evaluated against historical baselines.
+                  </p>
+                </div>
+                <div className="recover-deck-card">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Check size={14} className="text-emerald-400" />
+                    <strong className="text-sm text-white">Actions</strong>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-0">
+                    2 blameless postmortem follow-up action items created and assigned.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Explore all 10 steps disclosure */}
+      <div className="ten-steps-wrapper">
+        <details className="ten-steps-disclosure" open>
+          <summary className="ten-steps-summary">
+            <div className="flex items-center gap-3">
+              <span className="signal-dot" />
+              <strong className="text-white">Explore all 10 granular incident lifecycle steps</strong>
+            </div>
+            <span className="ten-steps-hint">Release contract &amp; technical routing</span>
+          </summary>
+
+          <div className="ten-steps-drawer-body">
+            <div className="ten-steps-stepper" aria-label="Incident lifecycle steps">
+              {steps.map((item, index) => (
+                <button
+                  key={item.label}
+                  aria-pressed={activeStep === index}
+                  className={`ten-step-btn ${activeStep === index ? "is-active" : ""}`}
+                  onClick={() => setActiveStep(index)}
+                >
+                  <span className="ten-step-num">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="ten-step-label">{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div
+              id="loop-panel"
+              className={`ten-steps-panel step-${activeStep}`}
+              data-step={activeStep}
+            >
+              <div className="ten-step-row">
+                <div className="ten-step-meta">
+                  <span className="site-eyebrow mb-1">
+                    <span className="signal-dot" />
+                    STEP {String(activeStep + 1).padStart(2, "0")} / {steps[activeStep].label.toUpperCase()}
+                  </span>
+                  <h4 className="text-xl font-bold text-white mb-2">{steps[activeStep].title}</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed mb-0">{steps[activeStep].detail}</p>
+                </div>
+
+                <div className="ten-step-contract-box">
+                  <span className="contract-box-label">EVENT CONTRACT</span>
+                  <strong className="contract-box-event">
+                    {activeStep === 4 ? "Voice · Push · SMS · Teams" :
+                     activeStep === 5 ? "ACKNOWLEDGED" :
+                     steps[activeStep].event}
+                  </strong>
+                  <div className="contract-box-status">
+                    <span>INC-1042 · Checkout API</span>
+                    <span className="status-badge">
+                      {activeStep >= 8 ? "RESOLVED" : activeStep >= 5 ? "ACKNOWLEDGED" : "TRIGGERED"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   );

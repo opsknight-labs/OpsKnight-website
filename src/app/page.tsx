@@ -110,15 +110,15 @@ export default function Home() {
       {/* 2. Trust Strip */}
       <TrustStrip />
 
-      {/* 3. The Incident Loop */}
-      <section id="incident-loop" className="site-section">
+      {/* 3. The OpsKnight Experience: One Incident. Four Acts. */}
+      <section id="incident-loop" className="site-section site-dark incident-story-section">
         <div className="site-container">
           <SectionIntro
-            eyebrow="THE INCIDENT LOOP"
-            title="Something broke. Now what?"
+            eyebrow="THE OPSKNIGHT EXPERIENCE"
+            title="When something breaks, everything connects."
           >
-            Follow one incident from the first signal to the work that prevents
-            the next one.
+            An alert becomes an incident. An incident finds its responder. Your team
+            coordinates the recovery. Every response becomes an opportunity to improve.
           </SectionIntro>
           <IncidentLoop />
         </div>

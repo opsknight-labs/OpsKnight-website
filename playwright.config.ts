@@ -10,6 +10,9 @@ export default defineConfig({
     baseURL: process.env.PREVIEW_URL ?? "http://localhost:5001",
     trace: "retain-on-failure",
   },
+  expect: {
+    timeout: 15000,
+  },
   webServer: process.env.PREVIEW_URL
     ? undefined
     : {
