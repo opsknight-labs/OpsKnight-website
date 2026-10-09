@@ -92,6 +92,46 @@ test("hero aligns first-screen copy and Command Center across viewports", async 
   await expect(page.locator(".hero-image-caption")).toHaveCount(0);
 });
 
+test("homepage hero owns the entire initial viewport", async ({ page }, testInfo) => {
+  test.setTimeout(90000);
+  const viewports = testInfo.project.name === "desktop"
+    ? [
+      { width: 1280, height: 720 },
+      { width: 1366, height: 768 },
+      { width: 1440, height: 900 },
+      { width: 1920, height: 1080 },
+    ]
+    : [
+      { width: 390, height: 844 },
+      { width: 375, height: 667 },
+    ];
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const hero = page.locator(".site-hero");
+    const specs = page.locator(".trust-strip");
+    const story = page.locator("#incident-loop");
+    const heroBox = await hero.boundingBox();
+    const specsBox = await specs.boundingBox();
+    const storyBox = await story.boundingBox();
+    expect(heroBox, "Hero must have a measurable viewport").not.toBeNull();
+    expect(specsBox, "Feature strip must exist below the hero").not.toBeNull();
+    expect(storyBox, "Incident story must exist below the hero").not.toBeNull();
+    if (!heroBox || !specsBox || !storyBox) continue;
+
+    const bottom = heroBox.y + heroBox.height;
+    expect(bottom, `Hero must fill the screen at ${viewport.width}x${viewport.height}`)
+      .toBeGreaterThanOrEqual(viewport.height - 2);
+    expect(specsBox.y, "Licensing and technology details must begin after the first fold")
+      .toBeGreaterThanOrEqual(viewport.height - 2);
+    expect(storyBox.y, "Next section must not peek into the opening screen")
+      .toBeGreaterThan(specsBox.y);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth))
+      .toBeLessThanOrEqual(viewport.width + 1);
+  }
+});
+
 test("homepage product evidence is inspectable by touch and keyboard", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("tab", { name: /On-call/i }).first()).toHaveAttribute("aria-selected", "true");
