@@ -6944,6 +6944,125 @@ html {
   }
 }
 
+/* ==========================================================================
+   Navigation: one height, quieter links, compact actions, and a reading line
+   that moves through the incident colours as you scroll.
+   ========================================================================== */
+header.site-nav {
+  border-bottom: 1px solid #ffffff12;
+  background: #0b0f18e0;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+header.site-nav .nav-inner {
+  min-height: 0;
+  gap: clamp(16px, 2.4vw, 36px);
+}
+header.site-nav .site-wordmark { gap: 10px; font-size: 18px; }
+header.site-nav .site-wordmark img { width: 26px; height: 26px; }
+header.site-nav .desktop-nav { gap: clamp(2px, .5vw, 8px); font-size: 14px; }
+header.site-nav .desktop-nav > a,
+header.site-nav .desktop-nav > details > summary {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+header.site-nav .desktop-nav > a:hover,
+header.site-nav .desktop-nav > details > summary:hover,
+header.site-nav .desktop-nav > details[open] > summary { color: #f8fafc; background: #ffffff0d; }
+header.site-nav .desktop-nav > a[aria-current="page"],
+header.site-nav .desktop-nav > details.nav-active > summary { color: #f8fafc; }
+/* Current page: a small dot under the label instead of a full underline. */
+header.site-nav .desktop-nav > a[aria-current="page"]::after,
+header.site-nav .desktop-nav > details.nav-active > summary::after {
+  left: 50%;
+  right: auto;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  translate: -50% 0;
+}
+header.site-nav .nav-actions { gap: 4px; }
+header.site-nav .nav-actions > button,
+header.site-nav .nav-github {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: #94a3b8;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+header.site-nav .nav-actions > button:hover,
+header.site-nav .nav-github:hover { color: #f8fafc; background: #ffffff0f; }
+header.site-nav .nav-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  min-height: 36px;
+  margin-left: 6px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+header.site-nav .mobile-nav > summary {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  list-style: none;
+  cursor: pointer;
+}
+header.site-nav .mobile-nav > summary::marker { content: ""; }
+header.site-nav .mobile-nav > summary::-webkit-details-marker { display: none; }
+
+/* Reading line: red while you read about the signal, amber mid-page, green near the end. */
+header.site-nav::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: #f87171;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  header.site-nav::after {
+    animation: nav-reading linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes nav-reading {
+  0% { transform: scaleX(0); background: #f87171; }
+  38% { background: #f87171; }
+  45% { background: #fbbf24; }
+  70% { background: #fbbf24; }
+  78% { background: #34d399; }
+  100% { transform: scaleX(1); background: #34d399; }
+}
+
+@media (max-width: 479px) {
+  header.site-nav .site-wordmark { font-size: 17px; }
+  header.site-nav .nav-actions > button,
+  header.site-nav .nav-github { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  header.site-nav::after { display: none; }
+}
+
 
 
 

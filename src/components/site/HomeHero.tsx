@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Check } from "lucide-react";
+import { Check, Github, Heart } from "lucide-react";
 import { Action } from "@/components/site/Primitives";
 import { BRAND } from "@/lib/brand";
 
@@ -8,13 +8,27 @@ const STOPS = ["Signal", "Triage", "Page", "Acknowledge", "Mitigate", "Resolve",
 export function HomeHero({ version, license }: { version: string; license: string }) {
   return (
     <section id="signal" className="site-hero site-hero--center site-dark" aria-labelledby="home-hero-title">
+      <nav className="hc-strip" aria-label="Project">
+        <div className="site-container hc-strip-inner">
+          <a href="/changelog/" className="hc-strip-release">
+            <span className="hc-pill-dot" aria-hidden="true" />
+            v{version} is out
+            <span className="hc-pill-muted">What&apos;s new →</span>
+          </a>
+          <div className="hc-strip-links">
+            <a href={BRAND.links.github} target="_blank" rel="noopener noreferrer">
+              <Github size={14} aria-hidden="true" />
+              Star on GitHub
+            </a>
+            <a href={BRAND.links.sponsor} target="_blank" rel="noopener noreferrer" className="hc-pill-sponsor">
+              <Heart size={14} aria-hidden="true" />
+              Sponsor
+            </a>
+          </div>
+        </div>
+      </nav>
       <div className="site-container">
         <div className="hero-editorial-masthead hc-masthead">
-          <a className="hc-pill" href={BRAND.links.github} target="_blank" rel="noopener noreferrer">
-            <span className="hc-pill-dot" aria-hidden="true" />
-            Open source · v{version}
-            <span className="hc-pill-arrow" aria-hidden="true">→</span>
-          </a>
           <h1 id="home-hero-title" className="hc-title">
             Own the incident<em>.</em>
           </h1>
