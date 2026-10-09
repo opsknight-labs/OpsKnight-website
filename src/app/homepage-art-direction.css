@@ -834,3 +834,38 @@
   .site-page .hero-copy .hero-subtitle,
   .site-page .hero-copy .hero-description { animation: none; }
 }
+
+/* The screenshot is a pannable viewport, not an invisible click trap. */
+.site-page .product-proof-shot-open {
+  position: absolute;
+  inset: auto 14px 14px auto;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  height: auto;
+  padding: 9px 12px;
+  border: 1px solid #556273;
+  border-radius: 2px;
+  background: #111923ee;
+  color: #fff;
+  font: 11px var(--font-jetbrains-mono), monospace;
+  cursor: zoom-in;
+}
+.site-page .product-proof-shot-open:hover { background: #263343; }
+.site-page .proof-pan-hint { display: none; }
+@media (max-width: 767px) {
+  .site-page .product-proof-shot-open { display: none; }
+  .site-page .product-proof-shot-wrap::after { display: none; }
+  .site-page .proof-pan-hint {
+    display: block;
+    margin: 0;
+    padding: 10px 14px;
+    border-top: 1px solid #465467;
+    color: #c7d2e2;
+    background: #101923;
+    font: 10px/1.5 var(--font-jetbrains-mono), monospace;
+  }
+}
