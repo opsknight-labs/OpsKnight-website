@@ -852,323 +852,225 @@
 }
 
 
-/* ==========================================================================
-   Hero III / Balanced first-screen composition
-   No workflow mini-dashboard, faux browser chrome, long empty runway, or
-   decorative metadata around the opening product view.
-   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Hero IV. The real Command Center, not a device collage. A single editorial
+   opening, clear typography and a continuous transition into incident story.
+   -------------------------------------------------------------------------- */
 .site-page--home .site-hero {
   padding: 0;
+  background: #0b111a;
+  border-bottom: 1px solid #2d3a4a;
   overflow: hidden;
-  background: #0a1018;
-  border-bottom: 1px solid #283441;
+}
+.site-page--home .site-hero > .site-container {
+  width: min(1340px, calc(100% - var(--container-pad)));
 }
 .site-page--home .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, .87fr) minmax(0, 1.13fr);
+  grid-template-columns: minmax(0, .90fr) minmax(0, 1.45fr);
+  gap: clamp(30px, 3.7vw, 62px);
   align-items: center;
-  gap: clamp(36px, 4.2vw, 70px);
-  padding-block: clamp(65px, 6.3vw, 94px) clamp(68px, 6.3vw, 94px);
+  padding: clamp(54px, 5vw, 80px) 0;
 }
 .site-page--home .hero-layout .hero-copy {
   min-width: 0;
   max-width: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   text-align: left;
 }
 .site-page--home .hero-lead-in {
   margin: 0 0 24px;
-  color: #eb8b89;
-  font-size: clamp(12px, 1.15vw, 14px);
-  font-weight: 700;
-  letter-spacing: .015em;
-  line-height: 1.5;
+  color: #eda3a0;
+  font: 650 13px/1.5 var(--font-manrope), sans-serif;
 }
 .site-page--home .hero-layout .hero-copy h1 {
-  max-width: 630px;
+  max-width: 550px;
   margin: 0;
-  font-size: clamp(53px, 5.2vw, 78px);
+  font-size: clamp(52px, 5vw, 73px);
+  line-height: 1.04;
+  letter-spacing: -.067em;
   font-weight: 750;
-  line-height: 1.055;
-  letter-spacing: -.064em;
-  color: #fafafa;
+  color: #f7f9fc;
   text-wrap: balance;
   animation: none;
 }
-.site-page--home .hero-period { color: #df343a; }
-.site-page--home .hero-layout .hero-subtitle {
-  margin-top: clamp(20px, 2.35vw, 32px);
-  color: #eef1f5;
-  font-size: clamp(20px, 1.85vw, 25px);
-  font-weight: 550;
-  line-height: 1.37;
-  letter-spacing: -.034em;
-  animation: none;
-}
+.site-page--home .hero-period { color: #e04749; }
 .site-page--home .hero-layout .hero-description {
-  margin-top: 16px;
-  max-width: 475px;
-  color: #bfcad8;
-  font-size: clamp(14px, 1.15vw, 16px);
-  line-height: 1.77;
+  max-width: 460px;
+  margin: clamp(19px, 2.2vw, 30px) 0 0;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.72;
+  color: #c3cedb;
   animation: none;
 }
 .site-page--home .hero-layout .site-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 28px;
+  gap: 11px;
+  margin: 27px 0 0;
 }
 .site-page--home .hero-layout .site-action {
+  min-height: 48px;
+  padding: 11px 17px;
+  gap: 10px;
   border-radius: 3px;
-  min-height: 50px;
-  padding: 12px 18px;
-  gap: 13px;
-  font-size: 12px;
   white-space: nowrap;
-  transition: background-color 180ms ease, border-color 180ms ease;
+  font-size: 12px;
+  transition: background-color 170ms ease, border-color 170ms ease;
 }
 .site-page--home .hero-layout .site-action:hover { transform: none; }
 .site-page--home .hero-layout .site-action.secondary {
-  border-color: #515e70;
-  color: #edf3fa;
+  border-color: #596779;
+  color: #ecf2f9;
 }
-.site-page--home .hero-release-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 42px;
-  margin-top: 14px;
-  color: #a9bbce;
-  font-size: 12px;
-  font-weight: 600;
-  text-underline-offset: 4px;
-}
-.site-page--home .hero-release-link:hover {
-  color: #fff;
-  text-decoration: underline;
-}
-.site-page--home .hero-release-link:focus-visible,
-.site-page--home .hero-image-caption a:focus-visible {
-  outline: 3px solid #f18c85;
-  outline-offset: 4px;
-}
-
-/* A real product composition, not a browser mockup placed below the fold. */
-.site-page--home .hero-layout .hero-product.hero-framed {
-  min-width: 0;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  isolation: isolate;
-  overflow: hidden;
-  border: 1px solid #364556;
-  border-radius: 4px;
-  background: #111925;
-  box-shadow: 0 25px 60px #00000032;
-}
-.site-page--home .hero-layout .hero-product.hero-framed::before { content: none; }
-.site-page--home .hero-image-window {
-  position: relative;
-  aspect-ratio: 1.54 / 1;
-  overflow: hidden;
-  background: #0b1019;
-}
-.site-page--home .hero-image-window img {
-  display: block;
-  width: 116%;
-  max-width: none;
-  height: auto;
-  transform: translate(-6.9%, -1%);
-}
-.site-page--home .hero-image-caption {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  min-height: 54px;
-  padding: 12px 17px;
-  margin: 0;
-  border-top: 1px solid #354252;
-  background: #121c28;
-  color: #bfcad8;
-  font-size: 11px;
-  line-height: 1.5;
-}
-.site-page--home .hero-image-caption strong {
-  color: #f5f7f9;
-  font-weight: 700;
-}
-.site-page--home .hero-image-caption a {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 30px;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.site-page--home .hero-image-caption a:hover { color: #f49e98; }
-
-/* A 13-inch laptop still shows both halves of the hero in the first screen. */
-@media (min-width: 981px) and (max-width: 1200px) {
-  .site-page--home .hero-layout { gap: 30px; padding-block: 60px 65px; }
-  .site-page--home .hero-layout .hero-copy h1 {
-    font-size: clamp(48px, 5vw, 64px);
-  }
-  .site-page--home .hero-layout .hero-subtitle { font-size: 20px; }
-  .site-page--home .hero-layout .hero-description { font-size: 14px; }
-  .site-page--home .hero-layout .site-actions { gap: 9px; }
-  .site-page--home .hero-layout .site-action { padding-inline: 13px; gap: 9px; }
-}
-@media (max-width: 980px) {
-  .site-page--home .hero-layout {
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 36px;
-    padding-block: 60px 66px;
-  }
-  .site-page--home .hero-layout .hero-copy { max-width: 740px; }
-  .site-page--home .hero-layout .hero-copy h1 {
-    max-width: 740px;
-    font-size: clamp(48px, 7vw, 70px);
-  }
-  .site-page--home .hero-layout .hero-description { max-width: 620px; }
-  .site-page--home .hero-image-window { aspect-ratio: 1.78 / 1; }
-  .site-page--home .hero-image-window img { width: 108%; transform: translate(-3.7%, -1%); }
-}
-@media (max-width: 640px) {
-  .site-page--home .hero-layout {
-    gap: 25px;
-    padding-block: 36px 44px;
-  }
-  .site-page--home .hero-lead-in { margin-bottom: 16px; font-size: 12px; }
-  .site-page--home .hero-layout .hero-copy h1 {
-    font-size: clamp(40px, 10.2vw, 56px);
-    letter-spacing: -.063em;
-    line-height: 1.07;
-  }
-  .site-page--home .hero-layout .hero-subtitle { margin-top: 15px; font-size: 19px; }
-  .site-page--home .hero-layout .hero-description {
-    margin-top: 11px;
-    font-size: 13px;
-    line-height: 1.69;
-  }
-  .site-page--home .hero-layout .site-actions {
-    margin-top: 22px;
-    gap: 8px;
-  }
-  .site-page--home .hero-layout .site-action {
-    min-height: 46px;
-    padding: 10px 12px;
-    gap: 8px;
-    font-size: 11px;
-  }
-  .site-page--home .hero-release-link {
-    margin-top: 6px;
-    font-size: 11px;
-    min-height: 32px;
-  }
-  .site-page--home .hero-image-window { aspect-ratio: 1.2 / 1; }
-  .site-page--home .hero-image-window img {
-    width: 150%;
-    transform: translate(-16.67%, 0);
-  }
-  .site-page--home .hero-image-caption {
-    padding: 11px 13px;
-    gap: 0 12px;
-    font-size: 10px;
-  }
-  .site-page--home .hero-image-caption a {
-    font-size: 10px;
-    min-height: 30px;
-  }
-}
-@media (max-width: 360px) {
-  .site-page--home .hero-layout .hero-copy h1 { font-size: 38px; }
-  .site-page--home .hero-layout .site-actions { align-items: stretch; }
-  .site-page--home .hero-layout .site-action {
-    flex: 1;
-    gap: 6px;
-    justify-content: center;
-    min-width: 0;
-    font-size: 10px;
-    padding-inline: 8px;
-  }
-  .site-page--home .hero-image-caption { align-items: flex-start; }
-}
-@media (max-height: 780px) and (min-width: 981px) {
-  .site-page--home .hero-layout { padding-block: 44px 50px; }
-  .site-page--home .hero-lead-in { margin-bottom: 15px; }
-  .site-page--home .hero-layout .hero-subtitle { margin-top: 14px; }
-  .site-page--home .hero-layout .site-actions { margin-top: 19px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .site-page--home .hero-layout *,
-  .site-page--home .hero-layout *::before,
-  .site-page--home .hero-layout *::after { animation: none; transition: none; }
-}
-
-
-/* Release information and live status share one understated utility line. */
-.site-page--home .hero-secondary-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0 23px;
-  margin-top: 14px;
-}
-.site-page--home .hero-secondary-links .hero-release-link,
-.site-page--home .hero-secondary-links .hero-status-link {
+.site-page--home .hero-layout .hero-status-link {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
   min-height: 36px;
-  margin: 0;
-  color: #b3c0cf;
+  margin: 14px 0 0;
+  color: #bdcad9;
   font: 600 11px/1.5 var(--font-manrope), sans-serif;
 }
-.site-page--home .hero-secondary-links a:hover { color: #fff; }
-.site-page--home .hero-secondary-links a:focus-visible {
-  outline: 3px solid #f18c85;
-  outline-offset: 2px;
+.site-page--home .hero-layout .hero-status-link:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.site-page--home .hero-layout .hero-status-link:focus-visible {
+  outline: 3px solid #f09792;
+  outline-offset: 4px;
+}
+/* An un-obscured, full-width real dashboard. No fake browser/header chrome. */
+.site-page--home .hero-layout .hero-product.hero-framed {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #42536a;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #15202d;
+  box-shadow: 0 26px 65px #00000042;
+}
+.site-page--home .hero-layout .hero-product.hero-framed::before {
+  display: none;
+  content: none;
+}
+.site-page--home .hero-image-window {
+  aspect-ratio: 2400 / 1290;
+  overflow: hidden;
+  background: #121c28;
+}
+.site-page--home .hero-image-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 0;
+  transform: none;
+}
+.site-page--home .incident-signal-rail { display: none !important; }
+/* Keep the neutral specs strip in the same tonal family as the hero. */
+.site-page--home .trust-strip {
+  border: 0;
+  border-bottom: 1px solid #29384b;
+  background: #14202c;
+}
+.site-page--home .trust-strip > .site-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 11px 25px;
+  padding-block: 18px;
+  color: #bcc9d8;
+  font: 500 10px/1.5 var(--font-jetbrains-mono), monospace;
+  text-align: left;
+}
+.site-page--home .trust-strip > .site-container span {
+  color: inherit;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.site-page--home .incident-story-section { background: #0b111a; }
+@media (min-width: 981px) and (max-width: 1200px) {
+  .site-page--home .hero-layout { gap: 28px; padding-block: 50px; }
+  .site-page--home .hero-layout .hero-copy h1 { font-size: clamp(47px, 5vw, 59px); }
+  .site-page--home .hero-layout .hero-description { font-size: 14px; }
+  .site-page--home .hero-layout .site-actions { gap: 9px; }
+  .site-page--home .hero-layout .site-action { padding-inline: 12px; }
+}
+@media (max-width: 980px) {
+  .site-page--home .hero-layout {
+    grid-template-columns: minmax(0,1fr);
+    gap: 31px;
+    padding-block: 56px;
+    align-items: start;
+  }
+  .site-page--home .hero-layout .hero-copy { max-width: 720px; }
+  .site-page--home .hero-layout .hero-copy h1 { max-width: 650px; font-size: clamp(48px, 7.5vw, 67px); }
+  .site-page--home .hero-layout .hero-description { max-width: 610px; }
+  .site-page--home .trust-strip > .site-container {
+    justify-content: flex-start;
+    gap: 13px 27px;
+  }
 }
 @media (max-width: 640px) {
-  .site-page--home .hero-secondary-links { gap: 0 17px; margin-top: 10px; }
-  .site-page--home .hero-secondary-links .hero-release-link,
-  .site-page--home .hero-secondary-links .hero-status-link {
-    font-size: 10px;
-    min-height: 32px;
+  .site-page--home .hero-layout { gap: 24px; padding-block: 34px 39px; }
+  .site-page--home .hero-lead-in { font-size: 12px; margin-bottom: 15px; }
+  .site-page--home .hero-layout .hero-copy h1 {
+    font-size: clamp(41px, 10vw, 55px);
+    line-height: 1.065;
+    letter-spacing: -.06em;
+  }
+  .site-page--home .hero-layout .hero-description {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.67;
+  }
+  .site-page--home .hero-layout .site-actions { margin-top: 22px; gap: 9px; }
+  .site-page--home .hero-layout .site-action {
+    min-height: 46px;
+    padding: 10px 12px;
+    gap: 7px;
+    font-size: 11px;
+  }
+  .site-page--home .hero-layout .hero-status-link { margin-top: 10px; min-height: 32px; }
+  .site-page--home .hero-image-window { aspect-ratio: 1.33; }
+  .site-page--home .hero-image-window img { object-fit: cover; object-position: center top; }
+  .site-page--home .trust-strip > .site-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px 12px;
+    padding-block: 15px;
+    font-size: 9px;
   }
 }
-
-
-/* Final image framing after screenshot review: never slice the device silhouettes.
-   Desktop presents all three product surfaces; mobile deliberately focuses on
-   the dashboard interior and cuts away the outer devices altogether. */
-@media (min-width: 641px) {
-  .site-page--home .hero-image-window { aspect-ratio: 16 / 9; }
-  .site-page--home .hero-image-window img {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    transform: none;
-  }
+@media (max-width: 370px) {
+  .site-page--home .hero-layout .hero-copy h1 { font-size: 39px; }
+  .site-page--home .hero-layout .site-actions { flex-direction: column; align-items: stretch; }
+  .site-page--home .hero-layout .site-action { justify-content: space-between; }
 }
-@media (max-width: 640px) {
-  .site-page--home .hero-image-window { aspect-ratio: 1.32 / 1; }
-  .site-page--home .hero-image-window img {
-    width: 178%;
-    height: auto;
-    max-width: none;
-    transform: translate(-21.9%, -10.5%);
-  }
+@media (max-height: 780px) and (min-width: 981px) {
+  .site-page--home .hero-layout { padding-block: 40px; }
+  .site-page--home .hero-lead-in { margin-bottom: 15px; }
+  .site-page--home .hero-layout .hero-description { margin-top: 18px; }
+  .site-page--home .hero-layout .site-actions { margin-top: 19px; }
+  .site-page--home .hero-layout .hero-status-link { margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-page--home .hero-layout *,
+  .site-page--home .hero-layout *::before,
+  .site-page--home .hero-layout *::after { animation: none; transition: none; }
 }
