@@ -724,9 +724,79 @@ export function HeroSignal() {
     </div>
   );
 }
-const modes = ["Compose", "Split", "Kubernetes", "Swarm"];
+const modes = [
+  {
+    id: "compose",
+    name: "Compose",
+    label: "Docker Compose · Integrated Runtime",
+    desc: "Single-container runtime running Web, Scheduler, and background queue workers in one unified image alongside PostgreSQL. Ideal for fast evaluation and small teams.",
+    roles: [
+      { name: "Web HTTP / UI", desc: "User interface, REST API, webhook endpoints" },
+      { name: "Scheduler & Rotations", desc: "On-call shifts, escalation timers, cron" },
+      { name: "Notification Workers", desc: "Voice, SMS, push, ChatOps dispatch" },
+      { name: "Status Projector", desc: "Public service health page publishing" },
+    ],
+    pooling: false,
+    docs: "operate/deploy/compose",
+    haNote: "Evaluation topology. Bundled PostgreSQL is not highly available; external managed PostgreSQL is recommended for production HA.",
+  },
+  {
+    id: "split",
+    name: "Split",
+    label: "Split Runtime · Dedicated Processes",
+    desc: "Dedicated runtime processes running independently. Urgent paging alerts in Critical Worker are isolated from bulk webhook traffic.",
+    roles: [
+      { name: "Web", desc: "HTTP traffic, webhooks, auth, UI routing" },
+      { name: "Scheduler", desc: "DST-safe rotation shifts & escalation handoffs" },
+      { name: "Critical Worker", desc: "High-priority paging delivery control plane" },
+      { name: "Bulk Worker", desc: "High-volume alert ingestion & notification fanout" },
+      { name: "General Worker", desc: "ChatOps war rooms & background processing" },
+      { name: "Status Projector", desc: "Decoupled public status rendering" },
+    ],
+    pooling: true,
+    docs: "operate/deploy/split-runtime",
+    haNote: "Split production runtime. Requires PgBouncer connection pooling. Bundled PostgreSQL is not clustered; external managed database required for multi-node HA.",
+  },
+  {
+    id: "kubernetes",
+    name: "Kubernetes",
+    label: "Kubernetes · Helm & Kustomize",
+    desc: "Cloud-native deployment on Kubernetes with Helm or Kustomize. Independent horizontal pod autoscaling for Web and Worker deployments.",
+    roles: [
+      { name: "Web (Deployment)", desc: "Ingress-backed pods with horizontal autoscaling" },
+      { name: "Scheduler (Deployment)", desc: "Leader-elected cron and rotation shifts" },
+      { name: "Critical Worker (Deployment)", desc: "Dedicated high-priority paging pool" },
+      { name: "Bulk Worker (Deployment)", desc: "Elastic ingestion and fanout worker pool" },
+      { name: "General Worker (Deployment)", desc: "ChatOps war rooms & background jobs" },
+      { name: "Status Projector (Deployment)", desc: "Independent public status cache" },
+    ],
+    pooling: true,
+    docs: "operate/deploy/kubernetes",
+    haNote: "Production cluster profile. Use cloud-managed PostgreSQL (e.g. AWS RDS, Cloud SQL, or CloudNativePG) for high availability.",
+  },
+  {
+    id: "swarm",
+    name: "Swarm",
+    label: "Docker Swarm · Stack Services",
+    desc: "Docker Swarm service stack with native Raft secrets management, health checks, rollback tooling, and rolling zero-downtime updates.",
+    roles: [
+      { name: "Web Service", desc: "Replicated ingress service behind overlay network" },
+      { name: "Scheduler Service", desc: "Replicated scheduler with leader election" },
+      { name: "Critical Worker Service", desc: "Prioritized paging delivery service" },
+      { name: "Bulk Worker Service", desc: "Scalable bulk worker replica tasks" },
+      { name: "General Worker Service", desc: "ChatOps & event processing tasks" },
+      { name: "Status Projector Service", desc: "Independent status page service" },
+    ],
+    pooling: true,
+    docs: "operate/deploy/swarm",
+    haNote: "Swarm cluster profile with encrypted overlay network and Swarm secrets. External clustered database required for storage HA.",
+  },
+];
+
 export function ArchitectureViewer() {
   const [active, setActive] = useState(0);
+  const current = modes[active];
+
   return (
     <div className="architecture-viewer">
       <div
@@ -734,10 +804,10 @@ export function ArchitectureViewer() {
         role="tablist"
         aria-label="Runtime architecture"
       >
-        {modes.map((name, i) => (
+        {modes.map((mode, i) => (
           <button
             id={`arch-tab-${i}`}
-            key={name}
+            key={mode.id}
             role="tab"
             aria-controls="arch-panel"
             aria-selected={i === active}
@@ -757,10 +827,11 @@ export function ArchitectureViewer() {
               }
             }}
           >
-            {name}
+            {mode.name}
           </button>
         ))}
       </div>
+
       <div
         id="arch-panel"
         role="tabpanel"
@@ -768,63 +839,96 @@ export function ArchitectureViewer() {
         tabIndex={0}
         className="architecture-panel"
       >
+        {/* Topology Topbar */}
         <div className="architecture-caption">
-          <Terminal size={20} />
-          <span>
-            {active === 0
-              ? "Integrated runtime"
-              : `${modes[active]} / split runtime`}
-          </span>
+          <div className="flex items-center gap-2">
+            <Terminal size={17} />
+            <strong>{current.label}</strong>
+          </div>
+          <span className="arch-badge">v{PRODUCT.release.version} CONTRACT</span>
         </div>
-        <div className="architecture-roles">
-          {(active === 0
-            ? ["OpsKnight · integrated"]
-            : PRODUCT.deployments.roles
-          ).map((r, i) => (
-            <div key={r}>
+
+        {/* Clean Topological Diagram */}
+        <div className="arch-diagram-flow">
+          {/* Tier 1: Ingress */}
+          <div className="arch-tier-ingress">
+            <span className="arch-tier-label">INGRESS / NETWORK BOUNDARY</span>
+            <div className="arch-node ingress-node">
               <span className="signal-dot" />
-              {r}
-              <small>
-                {active === 0
-                  ? "Web + background processing"
-                  : i === 0
-                    ? "HTTP / UI"
-                    : "Independent process"}
-              </small>
+              <strong>External Webhook &amp; Client Ingress (HTTPS :443)</strong>
+              <small>TLS termination · reverse proxy / ingress controller</small>
             </div>
-          ))}
+          </div>
+
+          <div className="arch-diagram-arrow">↓</div>
+
+          {/* Tier 2: Runtime Roles */}
+          <div className="arch-tier-runtime">
+            <div className="flex items-center justify-between mb-2">
+              <span className="arch-tier-label">
+                APPLICATION RUNTIME TIER ·{" "}
+                {active === 0 ? "INTEGRATED" : "INDEPENDENT ROLES"}
+              </span>
+              <span className="arch-tier-sub">
+                {active === 0 ? "1 container" : `${current.roles.length} independent processes`}
+              </span>
+            </div>
+            <div className="arch-roles-grid">
+              {current.roles.map((role) => (
+                <div key={role.name} className="arch-role-card">
+                  <div className="flex items-center gap-2">
+                    <span className="signal-dot" />
+                    <strong>{role.name}</strong>
+                  </div>
+                  <small>{role.desc}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="arch-diagram-arrow">↓</div>
+
+          {/* Tier 3: Storage & Connection Pooling */}
+          <div className="arch-tier-storage">
+            <span className="arch-tier-label">DURABLE STATE LAYER</span>
+            <div className="arch-storage-nodes">
+              {current.pooling && (
+                <div className="arch-node pooling-node">
+                  <span className="signal-dot" />
+                  <strong>PgBouncer</strong>
+                  <small>Transaction connection pool</small>
+                </div>
+              )}
+              <div className="arch-node db-node">
+                <span className="signal-dot success" />
+                <strong>PostgreSQL 16+</strong>
+                <small>Durable state, relation store &amp; audit ledgers</small>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="architecture-db">
-          <div className="db-line" />
-          {active !== 0 && (
-            <span>
-              PgBouncer <small>optional pooling</small>
-            </span>
-          )}
-          <strong>PostgreSQL</strong>
+
+        {/* Architecture Notes & Context Panel */}
+        <div className="arch-context-footer">
+          <div className="arch-context-copy">
+            <p className="arch-context-desc">{current.desc}</p>
+            <p className="arch-context-ha">
+              <span className="font-semibold text-amber-400">HA boundary:</span>{" "}
+              {current.haNote}
+            </p>
+          </div>
+          <Link
+            className="site-text-link"
+            href={productDocs(current.docs)}
+          >
+            View deployment guide <ArrowRight size={15} />
+          </Link>
         </div>
-        <p className="architecture-note">
-          Conceptual topology. All roles share the database; pooling and direct
-          connections follow the deployment guide.
-        </p>
-        <Link
-          className="site-text-link"
-          href={productDocs(
-            active === 0
-              ? "operate/deploy/compose"
-              : active === 1
-                ? "operate/deploy/split-runtime"
-                : active === 2
-                  ? "operate/deploy/kubernetes"
-                  : "operate/deploy/swarm",
-          )}
-        >
-          View deployment guide <ArrowRight size={16} />
-        </Link>
       </div>
     </div>
   );
 }
+
 
 export {
   ProductProofShowcase,

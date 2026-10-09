@@ -283,3 +283,28 @@ test("comparison rows expose source and verification metadata", () => {
   assert.ok(matrix.includes("compareRowVerifiedAt"));
   assert.ok(table.includes("Verified {compareRowVerifiedAt(row)}"));
 });
+
+test("product proof showcase descriptions reject unverified marketing claims", () => {
+  const showcaseContent = fs.readFileSync(
+    path.join(root, "src/components/site/ProductProofShowcase.tsx"),
+    "utf8",
+  );
+  for (const forbidden of [
+    "Guaranteed Delivery",
+    "guaranteed delivery",
+    "Automated Gap Auditing",
+    "Sub-Second Ingestion Stream",
+    "Urgency-Aware Ringing",
+    "Do-Not-Disturb",
+    "Do Not Disturb",
+    "BullMQ",
+    "Redis",
+  ]) {
+    assert.equal(
+      showcaseContent.includes(forbidden),
+      false,
+      `ProductProofShowcase must not contain unverified claim: ${forbidden}`,
+    );
+  }
+});
+

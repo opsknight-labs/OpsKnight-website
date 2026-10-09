@@ -1,18 +1,7 @@
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  ShieldAlert,
-  CalendarDays,
-  PhoneCall,
-  MessageSquare,
-  Globe,
-  BarChart3,
-  Check,
-  ShieldCheck,
-  Github,
-} from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { PRODUCT, productProof } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
@@ -21,7 +10,6 @@ import {
   SectionIntro,
   TextLink,
   TrustStrip,
-  FeatureCard,
   FinalCTA,
 } from "@/components/site/Primitives";
 import {
@@ -84,9 +72,20 @@ export default function Home() {
             </a>
             <p className="site-proof">{productProof}</p>
           </div>
-          <div className="hero-product hero-composite">
+          <div className="hero-product hero-framed">
             <HeroSignal />
-            <figure className="hero-composite-art">
+            <figure className="hero-screenshot-frame">
+              <div className="hero-frame-bar">
+                <div className="frame-dots">
+                  <span className="frame-dot" />
+                  <span className="frame-dot" />
+                  <span className="frame-dot" />
+                </div>
+                <span className="frame-title">
+                  OpsKnight Command Center · v{PRODUCT.release.version}
+                </span>
+                <span className="frame-badge">PRODUCTION</span>
+              </div>
               <Image
                 src="/product/command-center.webp"
                 width={2400}
@@ -99,10 +98,6 @@ export default function Home() {
                 OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns.
               </figcaption>
             </figure>
-            <div className="hero-product-foot">
-              <span>REAL-TIME INCIDENT OPERATIONS &amp; TRIAGE</span>
-              <span>OPSKNIGHT COMMAND CENTER</span>
-            </div>
           </div>
         </div>
       </section>
@@ -124,74 +119,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Core Capabilities (Pillars Grid) */}
-      <section className="site-section site-white">
-        <div className="site-container">
-          <div className="section-heading-row">
-            <SectionIntro
-              eyebrow="PRODUCT PILLARS"
-              title="Built for the entire incident lifecycle."
-            >
-              The core incident platform runs on your infrastructure, connects
-              to your identity, and keeps the application data plane under your
-              operating control.
-            </SectionIntro>
-            <TextLink href="/product/incidents/">Browse all features</TextLink>
-          </div>
-          <div className="pillars-grid">
-            <FeatureCard
-              eyebrow="01 / COMMAND"
-              title="Incident Command"
-              description="Keep ownership, responders, timeline, notes and action items organized from first alert to resolution."
-              href="/product/incidents/"
-              linkText="Explore command"
-              icon={ShieldAlert}
-            />
-            <FeatureCard
-              eyebrow="02 / ON-CALL"
-              title="On-Call & Escalation"
-              description="Build rotations, schedule overrides and multi-step escalation policies around the engineers responsible for each service."
-              href="/product/on-call/"
-              linkText="Explore on-call"
-              icon={CalendarDays}
-            />
-            <FeatureCard
-              eyebrow="03 / PAGING"
-              title="Multi-Channel Paging"
-              description="Route urgent pages through voice, SMS, push, Slack, and Teams. Inspect delivery evidence, retries, and worker lanes."
-              href="/product/paging/"
-              linkText="Explore paging"
-              icon={PhoneCall}
-            />
-            <FeatureCard
-              eyebrow="04 / CHATOPS"
-              title="Slack & Teams War Rooms"
-              description="Coordinate directly where your team already communicates with two-way sync, interactive cards, and participant tracking."
-              href="/product/chatops/"
-              linkText="Explore ChatOps"
-              icon={MessageSquare}
-            />
-            <FeatureCard
-              eyebrow="05 / STATUS"
-              title="Customer Status Pages"
-              description="Publish service health, maintenance, and scoped updates to customers without exposing your internal response timeline."
-              href="/product/status-pages/"
-              linkText="Explore status page"
-              icon={Globe}
-            />
-            <FeatureCard
-              eyebrow="06 / ANALYTICS"
-              title="Analytics & Postmortems"
-              description="Turn every outage into an organizational asset with MTTA/MTTR metrics, service health trends, and blameless 5 Whys retrospectives."
-              href="/product/analytics/"
-              linkText="Explore analytics"
-              icon={BarChart3}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Real product proof — screenshots prove what the response canvas explains */}
+      {/* 4. Real Product Proof — Screenshots lead the product evidence */}
       <section className="site-section site-dark product-proof-section">
         <div className="site-container">
           <SectionIntro
@@ -203,6 +131,125 @@ export default function Home() {
             release-backed demo environment.
           </SectionIntro>
           <ProductProofShowcase />
+        </div>
+      </section>
+
+      {/* 5. Core Capabilities — Editorial Feature Index */}
+      <section className="site-section site-white capabilities-section">
+        <div className="site-container">
+          <div className="section-heading-row">
+            <SectionIntro
+              eyebrow="PRODUCT CAPABILITIES"
+              title="Built for the entire incident lifecycle."
+            >
+              The core incident platform runs on your infrastructure, connects
+              to your identity, and keeps the application data plane under your
+              operating control.
+            </SectionIntro>
+            <TextLink href="/product/incidents/">Browse all features</TextLink>
+          </div>
+
+          <div className="capabilities-editorial-layout">
+            {/* Left: Featured Capability */}
+            <div className="capability-featured-card">
+              <div className="capability-featured-header">
+                <span className="capability-featured-badge">FEATURED CAPABILITY</span>
+                <h3>Incident Command &amp; Live Timeline</h3>
+                <p>
+                  Keep ownership, responders, synchronized ChatOps war rooms, and
+                  immutable audit timelines organized from first alert to final resolution.
+                </p>
+                <TextLink href="/product/incidents/">Explore Incident Command</TextLink>
+              </div>
+              <div className="capability-featured-visual">
+                <Image
+                  src="/product/incident-detail.webp"
+                  width={1200}
+                  height={645}
+                  alt="OpsKnight Incident Command workspace showing responder assignment, telemetry metrics, and event timeline"
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                />
+                <div className="capability-featured-meta">
+                  <span>Assigned commander</span>
+                  <span>Correlated telemetry</span>
+                  <span>Immutable audit log</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Editorial Index with thin horizontal dividers */}
+            <div className="capabilities-editorial-index" role="list">
+              <div className="editorial-capability-row" role="listitem">
+                <div className="editorial-capability-copy">
+                  <div className="editorial-capability-head">
+                    <span className="editorial-capability-num">02</span>
+                    <h4>On-Call &amp; Escalation</h4>
+                  </div>
+                  <p>
+                    Design timezone-aware primary and secondary rotations with DST-safe
+                    handoffs and self-service shift overrides.
+                  </p>
+                </div>
+                <TextLink href="/product/on-call/">Explore on-call</TextLink>
+              </div>
+
+              <div className="editorial-capability-row" role="listitem">
+                <div className="editorial-capability-copy">
+                  <div className="editorial-capability-head">
+                    <span className="editorial-capability-num">03</span>
+                    <h4>Multi-Channel Paging</h4>
+                  </div>
+                  <p>
+                    Dispatch urgent pages across voice calls, push notifications, SMS,
+                    and Teams with verified delivery intents and Quiet Hours.
+                  </p>
+                </div>
+                <TextLink href="/product/paging/">Explore paging</TextLink>
+              </div>
+
+              <div className="editorial-capability-row" role="listitem">
+                <div className="editorial-capability-copy">
+                  <div className="editorial-capability-head">
+                    <span className="editorial-capability-num">04</span>
+                    <h4>Slack &amp; Teams ChatOps</h4>
+                  </div>
+                  <p>
+                    Coordinate in native chat channels with automated war rooms,
+                    two-way lifecycle sync, interactive cards, and participant tracking.
+                  </p>
+                </div>
+                <TextLink href="/product/chatops/">Explore ChatOps</TextLink>
+              </div>
+
+              <div className="editorial-capability-row" role="listitem">
+                <div className="editorial-capability-copy">
+                  <div className="editorial-capability-head">
+                    <span className="editorial-capability-num">05</span>
+                    <h4>Decoupled Status Pages</h4>
+                  </div>
+                  <p>
+                    Publish real-time service health, 90-day availability history,
+                    and scoped maintenance notices without exposing internal response chatter.
+                  </p>
+                </div>
+                <TextLink href="/product/status-pages/">Explore status pages</TextLink>
+              </div>
+
+              <div className="editorial-capability-row" role="listitem">
+                <div className="editorial-capability-copy">
+                  <div className="editorial-capability-head">
+                    <span className="editorial-capability-num">06</span>
+                    <h4>Analytics &amp; Postmortems</h4>
+                  </div>
+                  <p>
+                    Track MTTA/MTTR response velocity, pinpoint noisy monitor flapping,
+                    and conduct blameless 5-Whys retrospectives.
+                  </p>
+                </div>
+                <TextLink href="/product/analytics/">Explore analytics</TextLink>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -229,53 +276,77 @@ export default function Home() {
                 structured logs.
               </p>
               <TextLink href="/product/operations/">
-                Explore operations & scaling
+                Explore operations &amp; scaling
               </TextLink>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 7. Security, Integrations & Open Source */}
-      <section className="site-section site-white">
-        <div className="site-container security-story">
-          <div>
-            <div className="security-mark">
-              <ShieldCheck size={64} />
+      {/* 7. Security & Integrations */}
+      <section className="site-section site-white security-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="SECURITY &amp; ECOSYSTEM"
+            title="Your infrastructure. Your users. Your keys."
+          >
+            Connect your enterprise identity provider with OIDC and SCIM 2.0.
+            Enforce role-based access control and audit every operator event on
+            systems strictly under your governance.
+          </SectionIntro>
+
+          <div className="security-architecture-grid">
+            <div className="security-pillar-item">
+              <span className="security-pillar-num">01 / IDENTITY</span>
+              <h4>OIDC &amp; SCIM 2.0</h4>
+              <p>
+                Federated authentication with Okta, Microsoft Entra, Google, and Auth0.
+                Automated JIT user creation and SCIM 2.0 group provisioning.
+              </p>
             </div>
-            <SectionIntro
-              eyebrow="SECURITY & ECOSYSTEM"
-              title="Your infrastructure. Your users. Your keys."
-            />
+            <div className="security-pillar-item">
+              <span className="security-pillar-num">02 / ACCESS</span>
+              <h4>RBAC &amp; Auditor Role</h4>
+              <p>
+                Least-privilege authorization with workspace roles, scoped API tokens,
+                and a canonical signed-in session registry with one-click revocation.
+              </p>
+            </div>
+            <div className="security-pillar-item">
+              <span className="security-pillar-num">03 / ENCRYPTION</span>
+              <h4>AES-256-GCM Envelope</h4>
+              <p>
+                Integration secrets and notification credentials encrypted at rest.
+                All operational state stored in your self-hosted PostgreSQL database.
+              </p>
+            </div>
+            <div className="security-pillar-item">
+              <span className="security-pillar-num">04 / AUDIT</span>
+              <h4>Evidence Ledgers</h4>
+              <p>
+                Immutable operator event stream, DSAR export and erasure tooling,
+                retention holds, and verifiable evidence export packages.
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="site-description">
-              Connect your enterprise identity provider with OIDC and SCIM 2.0.
-              Enforce role-based access control and audit every operator event on
-              systems you control.
-            </p>
-            <div className="security-tokens">
-              {[
-                "OIDC",
-                "SCIM 2.0",
-                "RBAC",
-                "Auditor Role",
-                "Session Registry",
-                "Scoped API Keys",
-                "Envelope Encryption",
-                "Audit Log Stream",
-              ].map((t) => (
-                <span key={t}>
-                  <Check size={15} />
-                  {t}
-                </span>
-              ))}
+
+          <div className="security-integrations-block">
+            <div className="security-integrations-head">
+              <p className="site-eyebrow">
+                <span className="signal-dot" /> CERTIFIED INTEGRATION CATALOG
+              </p>
+              <h3>Connect to 28 release-tested inbound sources.</h3>
+              <p className="site-description">
+                OpsKnight validates signatures, deduplicates alerts, and normalizes
+                payloads across standard monitoring, cloud, and telemetry platforms.
+              </p>
             </div>
             <HomepageIntegrationFinder />
           </div>
         </div>
       </section>
 
+      {/* 8. Why OpsKnight (Compare) */}
       <section className="site-section site-light-alt homepage-compare">
         <div className="site-container compare-teaser-grid">
           <div>
@@ -321,6 +392,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 9. Built in the Open */}
       <section className="site-section">
         <div className="site-container open-source-story">
           <Github size={48} />
@@ -348,13 +420,13 @@ export default function Home() {
           <div className="paired-links">
             <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
             <TextLink href="/changelog/">Read release notes</TextLink>
-            <TextLink href="/support/">Commercial Support & Services</TextLink>
+            <TextLink href="/support/">Commercial Support &amp; Services</TextLink>
             <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
           </div>
         </div>
       </section>
 
-      {/* 8. Final CTA */}
+      {/* 10. Final CTA */}
       <FinalCTA />
     </div>
   );
