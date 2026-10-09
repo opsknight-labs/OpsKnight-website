@@ -32,49 +32,49 @@ export const metadata = siteMetadata(pageMetadata);
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. A single immersive introduction: message first, product as the stage. */}
-      <section className="site-hero site-dark" aria-labelledby="home-hero-title">
-        <div className="site-container hero-scene">
-          <div className="hero-intro">
-            <h1 id="home-hero-title">
-              Own the incident<span className="hero-period">.</span>
-            </h1>
-            <p className="hero-description">
-              On-call, paging and incident response in one open-source platform
-              you host and control.
-            </p>
-            <div className="site-actions">
-              <Action href="/deploy/">Install OpsKnight</Action>
-              <Action href="#product-proof" secondary>
-                Explore the product
-              </Action>
+      {/* 1. The first screen: editorial message and real incident response. */}
+      <section className="site-hero site-hero--editorial" aria-labelledby="home-hero-title">
+        <div className="site-container hero-editorial-container">
+          <div className="hero-editorial-masthead">
+            <div className="hero-editorial-statement">
+              <h1 id="home-hero-title">
+                Own the incident<span className="hero-period">.</span>
+              </h1>
+            </div>
+            <div className="hero-editorial-introduction">
+              <p>
+                Know what happened, who is responding, and what comes next.
+                All in one open-source platform you host and control.
+              </p>
+              <div className="site-actions">
+                <Action href="/deploy/">Install OpsKnight</Action>
+                <Action href="#incident-loop" secondary>
+                  See how it works
+                </Action>
+              </div>
             </div>
           </div>
-          <div className="hero-stage">
-            <figure className="hero-stage-screen">
-              <div className="hero-stage-viewport">
-                <picture>
-                  <source media="(max-width: 479px)" srcSet="/product/mobile.webp" type="image/webp" />
-                  <Image
-                    src="/product/command-center.webp"
-                    width={2400}
-                    height={1290}
-                    alt="Actual OpsKnight incident operations screens, showing the Command Center on desktop and mobile responder paging on phones, using demonstration data"
-                    loading="eager"
-                    fetchPriority="high"
-                    sizes="(max-width: 479px) 390px, (max-width: 1024px) 115vw, (max-width: 1600px) 1360px, 1540px"
-                  />
-                </picture>
-              </div>
-              <figcaption className="sr-only">
-                Real OpsKnight Command Center interface, using representative demo data.
-              </figcaption>
-            </figure>
-          </div>
-          <a className="hero-scroll-link" href="#incident-loop">
-            Explore incident response
-            <span aria-hidden="true">↓</span>
-          </a>
+
+          <figure className="hero-editorial-product">
+            <picture>
+              <source
+                media="(max-width: 599px)"
+                srcSet="/product/mobile.webp"
+                type="image/webp"
+              />
+              <Image
+                src="/product/incident-acknowledged.webp"
+                width={2400}
+                height={1500}
+                alt="Real OpsKnight incident workspace showing an acknowledged Checkout API incident, ownership, response timers and incident context. On phones the hero shows the responder mobile interface."
+                priority
+                sizes="(max-width: 599px) 850px, (max-width: 1199px) 100vw, 1600px"
+              />
+            </picture>
+            <figcaption className="sr-only">
+              OpsKnight v2 incident response and mobile interfaces, using demonstration data.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
