@@ -10,8 +10,8 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
-  await expect(page.getByText("Open-source incident management")).toBeVisible();
-  await expect(page.locator('.hero-image-window img')).toHaveAttribute("src", "/product/command-center.webp");
+  await expect(page.getByText(/Every alert, every responder, every decision/)).toBeVisible();
+  await expect(page.locator(".hero-stage-viewport img")).toHaveAttribute("src", "/product/command-center.webp");
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
   });
@@ -61,34 +61,34 @@ test("homepage workflow, architecture, metadata and layout", async ({
     fullPage: true,
   });
 });
-test("hero aligns first-screen copy and Command Center across viewports", async ({ page }) => {
+test("hero uses an immersive full-width product stage", async ({ page }) => {
   await page.goto("/");
   const heading = page.getByRole("heading", { level: 1, name: /Own the incident/ });
-  const product = page.locator(".hero-image-window");
-  const picture = product.locator("img");
+  const intro = page.locator(".hero-intro");
+  const stage = page.locator(".hero-stage-viewport");
+  const picture = stage.locator("img");
   await expect(heading).toBeVisible();
-  await expect(product).toBeVisible();
+  await expect(stage).toBeVisible();
   await expect(picture).toHaveJSProperty("complete", true);
   expect(await picture.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
 
-  const copyBox = await page.locator(".hero-copy").boundingBox();
-  const imageBox = await product.boundingBox();
+  const introBox = await intro.boundingBox();
+  const stageBox = await stage.boundingBox();
   const viewport = page.viewportSize();
-  expect(copyBox).not.toBeNull();
-  expect(imageBox).not.toBeNull();
-  if (!copyBox || !imageBox || !viewport) return;
-  expect(imageBox.y, "Product must enter the first viewport").toBeLessThan(viewport.height * .78);
-  expect(imageBox.width, "Product must have usable scale").toBeGreaterThan(viewport.width * .30);
-  if (viewport.width >= 981) {
-    expect(imageBox.x, "Product should align beside the copy").toBeGreaterThan(copyBox.x + copyBox.width - 3);
-    expect(Math.abs(imageBox.y + imageBox.height / 2 - (copyBox.y + copyBox.height / 2)))
-      .toBeLessThan(115);
-  } else {
-    expect(imageBox.y, "Stacked product belongs below the copy").toBeGreaterThan(copyBox.y + copyBox.height - 3);
+  expect(introBox).not.toBeNull();
+  expect(stageBox).not.toBeNull();
+  if (!introBox || !stageBox || !viewport) return;
+  expect(stageBox.y, "Product appears below the editorial opening").toBeGreaterThan(introBox.y + introBox.height - 3);
+  expect(stageBox.y, "Product should visibly enter the first screen").toBeLessThan(viewport.height * .92);
+  expect(stageBox.width, "Product interface deserves substantial width")
+    .toBeGreaterThan(viewport.width * .75);
+  if (viewport.width >= 1024) {
+    const stageMid = stageBox.x + stageBox.width / 2;
+    expect(Math.abs(stageMid - viewport.width / 2)).toBeLessThan(24);
   }
   await expect(page.locator(".hero-signal")).toHaveCount(0);
   await expect(page.locator(".hero-frame-bar")).toHaveCount(0);
-  await expect(page.locator(".incident-signal-rail")).toBeHidden();
+  await expect(page.locator(".incident-signal-rail")).toHaveCount(0);
   await expect(page.locator(".hero-image-caption")).toHaveCount(0);
 });
 
