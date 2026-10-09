@@ -1114,3 +1114,37 @@
   .site-page--home .hero-layout *::before,
   .site-page--home .hero-layout *::after { animation: none; transition: none; }
 }
+
+
+/* Release information and live status share one understated utility line. */
+.site-page--home .hero-secondary-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 23px;
+  margin-top: 14px;
+}
+.site-page--home .hero-secondary-links .hero-release-link,
+.site-page--home .hero-secondary-links .hero-status-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 36px;
+  margin: 0;
+  color: #b3c0cf;
+  font: 600 11px/1.5 var(--font-manrope), sans-serif;
+}
+.site-page--home .hero-secondary-links a:hover { color: #fff; }
+.site-page--home .hero-secondary-links a:focus-visible {
+  outline: 3px solid #f18c85;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .site-page--home .hero-secondary-links { gap: 0 17px; margin-top: 10px; }
+  .site-page--home .hero-secondary-links .hero-release-link,
+  .site-page--home .hero-secondary-links .hero-status-link {
+    font-size: 10px;
+    min-height: 32px;
+  }
+}
