@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import "./site.css";
+import "./editorial-site.css";
 import { PRODUCT } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 import { ConditionalNavbar } from "@/components/layout/ConditionalNavbar";
