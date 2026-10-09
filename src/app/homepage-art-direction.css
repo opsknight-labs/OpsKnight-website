@@ -975,6 +975,7 @@
   overflow: hidden;
   background: #111a26;
 }
+.site-page--home .hero-stage-viewport picture { display: block; width: 100%; height: 100%; }
 .site-page--home .hero-stage-viewport img {
   display: block;
   width: 159%;
@@ -1122,11 +1123,13 @@
     margin-left: calc(var(--container-pad) / -2);
     margin-right: calc(var(--container-pad) / -2);
   }
-  .site-page--home .hero-stage-viewport { aspect-ratio: 1 / 1; }
+  /* Single prominent real mobile paging view; neighboring devices stay peripheral. */
+  .site-page--home .hero-stage-viewport { aspect-ratio: .72 / 1; }
   .site-page--home .hero-stage-viewport img {
-    width: 250%;
+    width: 340%;
     height: auto;
-    transform: translate(-30%, -9%);
+    max-width: none;
+    transform: translate(-35.2%, -12.4%);
   }
   .site-page--home .trust-strip > .site-container {
     display: grid;
