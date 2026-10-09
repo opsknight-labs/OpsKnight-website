@@ -74,7 +74,9 @@ test("homepage product evidence is inspectable by touch and keyboard", async ({ 
   const inspect = page.getByRole("button", { name: "Inspect fullscreen: On-call screenshot" }).first();
   await inspect.focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog", { name: /On-call screenshot inspection/ })).toBeVisible();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("Follow-The-Sun On-Call Coverage");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
 });
