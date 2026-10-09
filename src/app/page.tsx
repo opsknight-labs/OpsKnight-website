@@ -53,14 +53,18 @@ export default function Home() {
           <div className="hero-stage">
             <figure className="hero-stage-screen">
               <div className="hero-stage-viewport">
-                <Image
-                  src="/product/command-center.webp"
-                  width={2400}
-                  height={1290}
-                  alt="OpsKnight Command Center product interface with incident metrics, triage and on-call operations, presented with demonstration data"
-                  priority
-                  sizes="(max-width: 640px) 760px, (max-width: 1024px) 115vw, (max-width: 1600px) 1360px, 1540px"
-                />
+                <picture>
+                  <source media="(max-width: 479px)" srcSet="/product/mobile.webp" type="image/webp" />
+                  <Image
+                    src="/product/command-center.webp"
+                    width={2400}
+                    height={1290}
+                    alt="Actual OpsKnight incident operations screens, showing the Command Center on desktop and mobile responder paging on phones, using demonstration data"
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(max-width: 479px) 390px, (max-width: 1024px) 115vw, (max-width: 1600px) 1360px, 1540px"
+                  />
+                </picture>
               </div>
               <figcaption className="sr-only">
                 Real OpsKnight Command Center interface, using representative demo data.
