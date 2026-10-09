@@ -53,9 +53,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { competitor } = await params;
   const c = find(competitor);
+  const name = c?.name ?? competitor;
   return siteMetadata({
-    title: `OpsKnight and ${c?.name} Comparison`,
-    description: `Technical and architectural comparison of OpsKnight and ${c?.name}. Grounded in v2.0.0 capabilities and dated vendor documentation.`,
+    title: `OpsKnight vs ${name} — Self-Hosted Alternative & Feature Comparison`,
+    description: `Detailed technical comparison of OpsKnight and ${name} for self-hosted incident management, on-call scheduling, and alert routing. Evaluated against v2.0.0 capabilities and verified vendor sources.`,
     alternates: { canonical: `/compare/${c?.slug ?? competitor}/` },
     openGraph: { url: `/compare/${c?.slug ?? competitor}/` },
   });

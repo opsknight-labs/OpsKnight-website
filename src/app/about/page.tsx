@@ -71,7 +71,7 @@ export default function About() {
             </div>
             <div className="about-fact-card">
               <strong>{PRODUCT.inboundIntegrationCount} Inbound Sources</strong>
-              <span>HMAC cryptographically signed</span>
+              <span>Documented request contracts</span>
             </div>
             <div className="about-fact-card">
               <strong>Unlimited Responders</strong>
@@ -278,7 +278,7 @@ export default function About() {
               </div>
               <h3>03 / Deterministic Contracts</h3>
               <p>
-                28 inbound integrations feature documented request starters, HMAC cryptographic signature verification,
+                28 inbound integrations feature documented request starters, integration-key authentication with conditional signature verification,
                 and transparent payload tracing. Alerts are never silently discarded by black-box filters.
               </p>
             </article>

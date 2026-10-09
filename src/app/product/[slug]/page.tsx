@@ -19,6 +19,19 @@ import Image from "next/image";
 export function generateStaticParams() {
   return PRODUCT.platform.products.map((p) => ({ slug: p.slug }));
 }
+const productSeoTitles: Record<string, string> = {
+  incidents: "Self-Hosted Incident Management & Response Command",
+  "on-call": "Self-Hosted On-Call Scheduling & Escalation Rotations",
+  paging: "Multi-Channel Alert Paging & Voice Escalation",
+  chatops: "Incident ChatOps for Slack & Microsoft Teams",
+  "status-pages": "Self-Hosted Status Page & Customer Communication",
+  analytics: "Incident Analytics & MTTA/MTTR Reliability Metrics",
+  postmortems: "Blameless Postmortems & 5-Whys Incident Reviews",
+  mobile: "Mobile Incident Response & PWA Alert Acknowledgement",
+  security: "Security, OIDC Identity & Audit Architecture",
+  operations: "Runtime Operations, Worker Topology & Health",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -26,8 +39,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const p = PRODUCT.platform.products.find((p) => p.slug === slug);
+  const title = productSeoTitles[slug] ?? p?.label ?? "Product";
   return siteMetadata({
-    title: p?.label,
+    title,
     description: p?.description,
     alternates: { canonical: `/product/${slug}/` },
     openGraph: {

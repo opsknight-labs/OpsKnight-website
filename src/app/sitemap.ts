@@ -11,24 +11,56 @@ export const dynamic = "force-static";
 
 const baseUrl = `https://${BRAND.domain}`;
 
+function getRouteLastModified(route: string): Date {
+  if (
+    route === "/" ||
+    route.startsWith("/about") ||
+    route.startsWith("/support") ||
+    route.startsWith("/contact") ||
+    route.startsWith("/deploy")
+  ) {
+    return new Date("2026-10-09T00:00:00Z");
+  }
+  if (route.startsWith("/compare")) {
+    return new Date("2026-10-08T00:00:00Z");
+  }
+  if (route.startsWith("/solutions")) {
+    return new Date("2026-10-07T00:00:00Z");
+  }
+  if (route.startsWith("/security")) {
+    return new Date("2026-10-05T00:00:00Z");
+  }
+  if (
+    route.startsWith("/changelog") ||
+    route.startsWith("/product") ||
+    route.startsWith("/integrations") ||
+    route.startsWith("/legal") ||
+    route.startsWith("/privacy") ||
+    route.startsWith("/terms") ||
+    route.startsWith("/brand")
+  ) {
+    return new Date(PRODUCT.release.publishedAt);
+  }
+  return new Date(site.updatedAt);
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date(site.updatedAt);
   const routes: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
-      lastModified,
+      url: `${baseUrl}/`,
+      lastModified: getRouteLastModified("/"),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/compare`,
-      lastModified,
+      url: `${baseUrl}/compare/`,
+      lastModified: getRouteLastModified("/compare"),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/contact`,
-      lastModified,
+      url: `${baseUrl}/contact/`,
+      lastModified: getRouteLastModified("/contact"),
       changeFrequency: "monthly",
       priority: 0.6,
     },
@@ -52,18 +84,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...solutions.map((p) => `/solutions/${p.slug}`),
       ...comparisons.map((p) => `/compare/${p.slug}`),
     ].map((route) => ({
-      url: `${baseUrl}${route}`,
-      lastModified,
+      url: `${baseUrl}${route}/`,
+      lastModified: getRouteLastModified(route),
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: route.startsWith("/product") ? 0.8 : route.startsWith("/compare") ? 0.7 : 0.6,
     })),
   ];
 
   for (const version of DOC_VERSIONS) {
     const docsModified =
       version.id === PRODUCT.release.tag
-        ? new Date(PRODUCT.release.date)
-        : undefined;
+        ? new Date(PRODUCT.release.publishedAt)
+        : new Date("2025-06-15T00:00:00Z");
     routes.push({
       url: `${baseUrl}/docs/${version.id}/`,
       lastModified: docsModified,
