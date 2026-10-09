@@ -10,7 +10,8 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
-  await expect(page.getByText("Every signal. One clear response.")).toBeVisible();
+  await expect(page.getByText("Open-source incident management")).toBeVisible();
+  await expect(page.locator('.hero-image-window img')).toHaveAttribute("src", "/product/command-center.webp");
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
   });
@@ -87,6 +88,8 @@ test("hero aligns first-screen copy and Command Center across viewports", async 
   }
   await expect(page.locator(".hero-signal")).toHaveCount(0);
   await expect(page.locator(".hero-frame-bar")).toHaveCount(0);
+  await expect(page.locator(".incident-signal-rail")).toBeHidden();
+  await expect(page.locator(".hero-image-caption")).toHaveCount(0);
 });
 
 test("homepage product evidence is inspectable by touch and keyboard", async ({ page }, testInfo) => {
