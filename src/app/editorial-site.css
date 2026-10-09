@@ -714,3 +714,27 @@
 @media (prefers-reduced-motion: reduce) {
   .docs-editorial-task-link { transition: none; }
 }
+
+
+/* Final cascade: route palettes must beat the shared dark hero contract. */
+.site-page.site-page--integrations .interior-hero { background: #141b23; }
+.site-page.site-page--deploy .interior-hero { background: #14202a; }
+.site-page.site-page--security .interior-hero { background: #10181b; }
+.site-page.site-page--about .interior-hero { background: #211b1c; }
+.site-page.site-page--community .interior-hero { background: #182127; }
+.site-page.site-page--support .interior-hero,
+.site-page.site-page--contact .interior-hero { background: #18232e; }
+.site-page.site-page--compare .interior-hero .site-description,
+.site-page.site-page--solutions .interior-hero .site-description,
+.site-page.site-page--changelog .interior-hero .site-description,
+.site-page.site-page--brand .interior-hero .site-description,
+.site-page.site-page--legal-index .interior-hero .site-description {
+  color: #3e4b5a;
+}
+.site-page.site-page--compare .interior-hero .site-eyebrow,
+.site-page.site-page--solutions .interior-hero .site-eyebrow,
+.site-page.site-page--changelog .interior-hero .site-eyebrow,
+.site-page.site-page--brand .interior-hero .site-eyebrow,
+.site-page.site-page--legal-index .interior-hero .site-eyebrow {
+  color: #8f2830;
+}
