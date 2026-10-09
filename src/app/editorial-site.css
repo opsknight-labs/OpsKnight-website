@@ -61,7 +61,7 @@
   color: #c7d0da;
 }
 .site-page:not(.site-page--home) .site-section {
-  padding-block: clamp(64px, 7vw, 108px);
+  padding-block: clamp(64px, 5vw, 98px);
 }
 .site-page:not(.site-page--home) .section-intro {
   margin-bottom: clamp(30px, 4vw, 50px);
@@ -769,3 +769,8 @@
   from { opacity: 0; transform: translateY(9px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* Accessibility review: secondary archival labels stay readable on paper. */
+.site-page--legal-document .legal-updated { color: #45515d; }
+.site-page--changelog .release-nav > span { color: #46515e; }
