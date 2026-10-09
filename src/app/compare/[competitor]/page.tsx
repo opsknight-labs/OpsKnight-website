@@ -191,7 +191,7 @@ export default async function CompareCompetitorPage({
   const perspective = COMPETITOR_PERSPECTIVES[c.slug] || COMPETITOR_PERSPECTIVES.pagerduty;
 
   return (
-    <div className="site-page">
+    <div className="site-page site-page--compare site-page--compare-detail">
       <BreadcrumbSchema name={c.name} path={`/compare/${c.slug}/`} />
 
       {/* Hero Section */}

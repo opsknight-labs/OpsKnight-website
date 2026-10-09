@@ -24,7 +24,7 @@ export const metadata = siteMetadata(pageMetadata);
 
 export default function ComparePage() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--compare site-page--compare-index">
       {/* 1. Interior Hero */}
       <section className="interior-hero site-dark">
         <div className="site-container">

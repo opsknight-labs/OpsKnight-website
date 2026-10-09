@@ -34,7 +34,7 @@ export default async function Deployment({
   const m = PRODUCT.deployments.models.find((m) => m.id === slug);
   if (!m && slug !== "architecture") notFound();
   return (
-    <div className="site-page">
+    <div className="site-page site-page--deploy site-page--deploy-detail">
       <BreadcrumbSchema
         name={m?.title ?? "Architecture"}
         path={`/deploy/${slug}/`}

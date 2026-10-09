@@ -17,7 +17,7 @@ export default function Solutions() {
     PRODUCT.platform.products.find((product) => product.slug === slug)?.label ?? slug;
 
   return (
-    <div className="site-page">
+    <div className="site-page site-page--solutions site-page--solutions-index">
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">
