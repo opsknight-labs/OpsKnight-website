@@ -10,7 +10,7 @@ test("homepage workflow, architecture, metadata and layout", async ({
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Own the incident",
   );
-  await expect(page.getByText(/Every alert, every responder, every decision/)).toBeVisible();
+  await expect(page.getByText(/On-call, paging and incident response/)).toBeVisible();
   await expect(page.locator(".hero-stage-viewport img")).toHaveAttribute("src", "/product/command-center.webp");
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
