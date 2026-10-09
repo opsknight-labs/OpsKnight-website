@@ -44,7 +44,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
 
 export default function ProductOverviewPage() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--product site-page--product-index">
       <BreadcrumbSchema name="Product Overview" path="/product/" />
       <section className="interior-hero site-dark">
         <div className="site-container">

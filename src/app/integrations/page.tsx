@@ -13,7 +13,7 @@ const pageMetadata: Metadata = {
 export const metadata = siteMetadata(pageMetadata);
 export default function Integrations() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--integrations site-page--integrations-index">
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">

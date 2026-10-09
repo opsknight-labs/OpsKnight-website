@@ -34,7 +34,7 @@ export default async function Integration({
   const p = PRODUCT.integrations.find((p) => p.id === slug);
   if (!p) notFound();
   return (
-    <div className="site-page">
+    <div className="site-page site-page--integrations site-page--integrations-detail">
       <BreadcrumbSchema name={p.title} path={`/integrations/${slug}/`} />
       <section className="interior-hero site-dark">
         <div className="site-container">

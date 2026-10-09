@@ -32,7 +32,7 @@ export const metadata = siteMetadata(pageMetadata);
 
 export default function Home() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--home">
       {/* 1. Hero */}
       <section className="site-hero site-dark">
         <div className="site-container">

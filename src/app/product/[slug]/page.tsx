@@ -131,7 +131,7 @@ export default async function ProductPage({
   const operationalStories = p.story.slice(1);
 
   return (
-    <div className="site-page">
+    <div className="site-page site-page--product site-page--product-detail">
       <BreadcrumbSchema name={p.label} path={`/product/${slug}/`} />
       <section className="interior-hero site-dark">
         <div className="site-container">
