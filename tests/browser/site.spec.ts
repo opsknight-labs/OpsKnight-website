@@ -60,6 +60,25 @@ test("homepage workflow, architecture, metadata and layout", async ({
     fullPage: true,
   });
 });
+test("homepage product evidence is inspectable by touch and keyboard", async ({ page }, testInfo) => {
+  await page.goto("/");
+  await expect(page.getByRole("tab", { name: /On-call/i }).first()).toHaveAttribute("aria-selected", "true");
+
+  const region = page.getByRole("region", { name: /Product screenshot/i });
+  await region.scrollIntoViewIfNeeded();
+  if (testInfo.project.name === "mobile") {
+    const canPan = await region.evaluate((element) => element.scrollWidth > element.clientWidth);
+    expect(canPan, "mobile product screenshot should be pannable rather than unreadably scaled").toBe(true);
+    await expect(page.getByText(/Swipe horizontally to explore the screenshot/)).toBeVisible();
+  }
+  const inspect = page.getByRole("button", { name: "Inspect fullscreen: On-call screenshot" }).first();
+  await inspect.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("dialog", { name: /On-call screenshot inspection/ })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+});
+
 test("navigation and search", async ({ page }, testInfo) => {
   await page.goto("/");
   if (testInfo.project.name === "mobile") {
