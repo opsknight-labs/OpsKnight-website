@@ -17,7 +17,7 @@ export const metadata = siteMetadata(pageMetadata);
 
 export default function Changelog() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--changelog">
       <section className="interior-hero site-dark changelog-hero">
         <div className="site-container">
           <p className="site-eyebrow">

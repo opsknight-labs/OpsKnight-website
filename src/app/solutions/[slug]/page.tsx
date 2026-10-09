@@ -40,7 +40,7 @@ export default async function Solution({
     .filter(Boolean);
 
   return (
-    <div className="site-page">
+    <div className="site-page site-page--solutions site-page--solutions-detail">
       <BreadcrumbSchema name={solution.label} path={"/solutions/" + slug + "/"} />
       <section className="interior-hero site-dark">
         <div className="site-container">

@@ -26,7 +26,7 @@ export const metadata = siteMetadata(pageMetadata);
 
 export default function About() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--about">
       {/* 1. Hero Section */}
       <section className="interior-hero site-dark">
         <div className="site-container">

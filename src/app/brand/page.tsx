@@ -21,7 +21,7 @@ const usageRules = [
 
 export default function Brand() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--brand">
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">

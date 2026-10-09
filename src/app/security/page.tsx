@@ -22,7 +22,7 @@ export const metadata: Metadata = siteMetadata({
 
 export default function Security() {
   return (
-    <div className="site-page">
+    <div className="site-page site-page--security">
       {/* Interior Hero */}
       <section className="interior-hero site-dark">
         <div className="site-container">
