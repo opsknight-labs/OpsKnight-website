@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowUpRight, Github } from "lucide-react";
 import { PRODUCT } from "@/lib/product";
+import { BRAND } from "@/lib/brand";
 import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
 import {
   Action,
