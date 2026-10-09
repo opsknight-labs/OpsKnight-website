@@ -286,7 +286,7 @@ export const PRODUCT_PROOFS: ProductProofItem[] = [
 ];
 
 export function ProductProofShowcase() {
-  const [activeId, setActiveId] = useState<string>(PRODUCT_PROOFS[0].id);
+  const [activeId, setActiveId] = useState<string>("on-call");
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const active =
@@ -376,7 +376,12 @@ export function ProductProofShowcase() {
         </div>
 
         {/* Screenshot (clickable to open fullscreen) */}
-        <div className="product-proof-shot-wrap">
+        <div
+          className="product-proof-shot-wrap"
+          role="region"
+          tabIndex={0}
+          aria-label="Product screenshot. On smaller screens scroll horizontally to inspect details."
+        >
           <ProductScreenshot name={active.image} alt={active.alt} />
           <button
             type="button"
@@ -384,7 +389,8 @@ export function ProductProofShowcase() {
             onClick={() => setLightboxOpen(true)}
             aria-label={`Inspect fullscreen: ${active.label} screenshot`}
           >
-            <span className="sr-only">Open image at full size</span>
+            <Maximize2 size={14} aria-hidden="true" />
+            <span>Expand</span>
           </button>
         </div>
 

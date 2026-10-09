@@ -46,6 +46,10 @@ export default function Home() {
             </a>
           </div>
           <div className="hero-copy">
+            <div className="hero-editorial-mark" aria-hidden="true">
+              <span>FIELD NOTES</span>
+              <span>01 / INCIDENT RESPONSE</span>
+            </div>
             <h1>
               Own the incident<span className="hero-period">.</span>
             </h1>
@@ -77,15 +81,10 @@ export default function Home() {
             <HeroSignal />
             <figure className="hero-screenshot-frame">
               <div className="hero-frame-bar">
-                <div className="frame-dots" aria-hidden="true">
-                  <span className="frame-dot" />
-                  <span className="frame-dot" />
-                  <span className="frame-dot" />
-                </div>
                 <span className="frame-title">
-                  OpsKnight Command Center · v{PRODUCT.release.version}
+                  Fig. 01 — OpsKnight Command Center · v{PRODUCT.release.version}
                 </span>
-                <span className="frame-badge">PRODUCT VIEW</span>
+                <span className="frame-badge">PRODUCT INTERFACE</span>
               </div>
               <Image
                 src="/product/command-center.webp"
@@ -95,8 +94,9 @@ export default function Home() {
                 priority
                 sizes="(max-width: 768px) 100vw, 1100px"
               />
-              <figcaption>
-                OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns.
+              <figcaption className="hero-product-caption">
+                <span>Incident operations in one view · Northstar demo fixture</span>
+                <a href="#product-proof">Browse the product views <ArrowUpRight size={14} aria-hidden="true" /></a>
               </figcaption>
             </figure>
           </div>
@@ -121,7 +121,7 @@ export default function Home() {
       </section>
 
       {/* 4. Real Product Proof — Screenshots lead the product evidence */}
-      <section className="site-section site-dark product-proof-section">
+      <section id="product-proof" className="site-section site-dark product-proof-section">
         <div className="site-container">
           <SectionIntro
             eyebrow="REAL PRODUCT PROOF"
@@ -348,16 +348,16 @@ export default function Home() {
       </section>
 
       {/* 8. Why OpsKnight (Compare) */}
-      <section className="site-section site-light-alt homepage-compare">
+      <section className="site-section site-dark homepage-compare">
         <div className="site-container compare-teaser-grid">
-          <div>
+          <div className="compare-editorial-copy">
             <p className="site-eyebrow">
-              <span className="signal-dot" /> COMPARE THE OPERATING MODEL
+              <span className="signal-dot" /> THE OWNERSHIP QUESTION
             </p>
-            <h2>How does OpsKnight fit against the usual incident stack?</h2>
+            <h2>Incident response. <em>On your terms.</em></h2>
             <p className="site-description">
-              Compare ownership, paging, ChatOps, identity, integrations and
-              response workflows without reducing the decision to a checkbox list.
+              Keep the software, response workflows and operational data under
+              your own control. Compare the alternatives on the details that matter.
             </p>
             <div className="compare-vendors" aria-label="Products covered in the comparison">
               <span>PagerDuty</span>
@@ -394,17 +394,24 @@ export default function Home() {
       </section>
 
       {/* 9. Built in the Open */}
-      <section className="site-section">
+      <section className="site-section homepage-open-source">
         <div className="site-container open-source-story">
-          <Github size={48} />
-          <SectionIntro
-            eyebrow="BUILT IN THE OPEN"
-            title="Inspectable, verifiable, and free of vendor lock-in."
-          >
-            Source code you can audit. Releases you can pin. Operational data
-            strictly under your governance.
-          </SectionIntro>
-          <div className="release-strip">
+          <div className="open-source-intro">
+            <div className="open-source-heading-label">
+              <Github size={27} aria-hidden="true" />
+              <span>PUBLIC SOURCE / OPERATOR CONTROL</span>
+            </div>
+            <SectionIntro
+              eyebrow="BUILT IN THE OPEN"
+              title="The source is part of the promise."
+            >
+              Read the code, pin a release and examine what runs inside
+              your infrastructure. No opaque control plane required.
+            </SectionIntro>
+          </div>
+          <div className="open-source-details">
+            <p className="open-source-ledger-label">RELEASE LEDGER / VERIFIED PRODUCT FACTS</p>
+            <div className="release-strip">
             <div>
               <small>LATEST RELEASE</small>
               <strong>{PRODUCT.release.tag}</strong>
@@ -418,11 +425,12 @@ export default function Home() {
               <strong>{PRODUCT.release.license}</strong>
             </div>
           </div>
-          <div className="paired-links">
-            <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
-            <TextLink href="/changelog/">Read release notes</TextLink>
-            <TextLink href="/support/">Commercial Support &amp; Services</TextLink>
-            <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
+            <div className="paired-links">
+              <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
+              <TextLink href="/changelog/">Read release notes</TextLink>
+              <TextLink href="/support/">Commercial support</TextLink>
+              <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
+            </div>
           </div>
         </div>
       </section>
