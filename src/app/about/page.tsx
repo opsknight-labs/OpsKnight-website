@@ -384,8 +384,8 @@ export default function About() {
               <span className="milestone-tag">PRINCIPLE 03</span>
               <h4>Permanent Open Source</h4>
               <p>
-                Protected by AGPL-3.0-only copyleft, OpsKnight cannot be enclosed into a proprietary cloud tier.
-                Every database migration, background worker queue, and API contract is open to audit and review.
+                Protected by AGPL-3.0 copyleft, OpsKnight’s core platform cannot be enclosed into a closed-source monopoly.
+                Every database migration, background worker queue, and API contract remains permanently open, auditable, and sovereign.
               </p>
             </article>
 

@@ -109,28 +109,46 @@ export default function Contact() {
 
         <div className="site-container contact-direct-wrap">
           <div className="contact-direct-card">
-            <div className="contact-direct-header">
-              <div className="support-mail-icon-wrap">
-                <Mail size={22} className="text-red-600" />
-              </div>
-              <div>
-                <p className="site-eyebrow mb-0">DIRECT INBOX</p>
-                <h3 className="text-xl font-bold">General &amp; Commercial Enquiries</h3>
+            <div className="contact-direct-main">
+              <p className="site-eyebrow mb-1">
+                <span className="signal-dot" /> DIRECT TRANSMISSION
+              </p>
+              <h3 className="text-2xl font-bold tracking-tight">General &amp; Commercial Enquiries</h3>
+              <p className="text-sm text-slate-600 leading-relaxed max-w-xl mb-0">
+                Prefer direct email over GitHub Discussions? Reach the maintainers directly
+                for high-availability architecture reviews, procurement security questionnaires,
+                or custom commercial support scopes.
+              </p>
+              <div className="contact-direct-badges">
+                <span className="contact-badge-item">
+                  <span className="signal-dot" /> Maintainer monitored
+                </span>
+                <span className="contact-badge-item">
+                  Zero sales spam
+                </span>
+                <span className="contact-badge-item">
+                  Direct engineering response
+                </span>
               </div>
             </div>
-            <p className="text-sm text-slate-700 leading-relaxed max-w-xl mb-0">
-              Prefer writing directly instead of GitHub? Send architecture reviews,
-              vendor security questionnaires, or commercial support requests straight to our team.
-            </p>
-            <div className="contact-direct-actions">
-              <div className="support-email-box py-2 px-3">
-                <span className="text-xs font-bold tracking-wider uppercase text-slate-700">Official Contact</span>
-                <a
-                  href={enquiryHref("OpsKnight enquiry")}
-                  className="support-email-address text-base"
-                >
-                  {BRAND.links.email}
-                </a>
+
+            <div className="contact-direct-console-wrap">
+              <div className="ops-email-console">
+                <div className="ops-email-console-head">
+                  <span className="ops-console-pill">
+                    <span className="signal-dot" /> OFFICIAL INBOX
+                  </span>
+                  <span className="ops-console-protocol">DIRECT SMTP</span>
+                </div>
+                <div className="ops-email-console-body">
+                  <Mail size={16} className="text-red-500 shrink-0" />
+                  <a
+                    href={enquiryHref("OpsKnight enquiry")}
+                    className="ops-console-address"
+                  >
+                    {BRAND.links.email}
+                  </a>
+                </div>
               </div>
               <Action href={enquiryHref("OpsKnight enquiry")}>
                 Send an email

@@ -154,32 +154,41 @@ export default function Support() {
             <div className="support-contact-card">
               <div className="support-contact-header">
                 <div className="support-mail-icon-wrap">
-                  <Mail size={22} className="text-red-600" />
+                  <Mail size={20} className="text-red-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Direct Support Inbox</h3>
-                  <p className="text-sm text-slate-700">
-                    Reach the core maintainers directly for commercial support and architecture assistance.
+                  <p className="site-eyebrow mb-0">
+                    <span className="signal-dot" /> DIRECT TRANSMISSION
                   </p>
+                  <h3 className="text-xl font-bold">Direct Support Inbox</h3>
                 </div>
               </div>
 
-              <div className="support-email-box">
-                <span className="text-xs font-bold tracking-wider uppercase text-slate-700">Official Contact Email</span>
-                <a
-                  href={enquiryHref("OpsKnight support and services enquiry")}
-                  className="support-email-address"
-                >
-                  {BRAND.links.email}
-                </a>
-              </div>
-
-              <p className="text-sm text-slate-600 leading-relaxed">
-                We discuss suitable engagement scopes, review high-availability deployment topology,
-                plan migrations from legacy SaaS, or assist with procurement security questionnaires.
+              <p className="text-sm text-slate-600 leading-relaxed mb-0">
+                Reach the core maintainers directly. We discuss suitable engagement scopes,
+                review high-availability deployment topology, plan migrations from legacy SaaS,
+                or assist with procurement security questionnaires.
               </p>
 
-              <div className="pt-2">
+              <div className="ops-email-console">
+                <div className="ops-email-console-head">
+                  <span className="ops-console-pill">
+                    <span className="signal-dot" /> OFFICIAL INBOX
+                  </span>
+                  <span className="ops-console-protocol">DIRECT SMTP</span>
+                </div>
+                <div className="ops-email-console-body">
+                  <Mail size={16} className="text-red-500 shrink-0" />
+                  <a
+                    href={enquiryHref("OpsKnight support and services enquiry")}
+                    className="ops-console-address"
+                  >
+                    {BRAND.links.email}
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-1">
                 <Action href={enquiryHref("OpsKnight support and services enquiry")}>
                   Discuss an engagement
                 </Action>
@@ -191,26 +200,42 @@ export default function Support() {
             </div>
 
             <div className="support-checklist-card">
-              <h4 className="text-base font-bold mb-4 flex items-center gap-2">
-                <span className="signal-dot" />
-                What to include in your email:
-              </h4>
+              <div className="support-checklist-header">
+                <p className="site-eyebrow mb-0">
+                  <span className="signal-dot" /> SCOPING CRITERIA
+                </p>
+                <h4 className="text-lg font-bold">
+                  What to include in your email
+                </h4>
+              </div>
               <ul className="support-checklist-items">
                 <li>
-                  <strong>Current monitoring stack</strong>
-                  <span>Alert sources in use (e.g., Datadog, Prometheus, Grafana, AWS CloudWatch, New Relic) and estimated signal volume.</span>
+                  <span className="support-step-num">01</span>
+                  <div>
+                    <strong>Current monitoring stack</strong>
+                    <span>Alert sources in use (e.g., Datadog, Prometheus, Grafana, CloudWatch, New Relic) and estimated signal volume.</span>
+                  </div>
                 </li>
                 <li>
-                  <strong>Target deployment model</strong>
-                  <span>Preferred runtime topology: single-node Docker Compose, Swarm HA cluster, or Kubernetes with Helm charts.</span>
+                  <span className="support-step-num">02</span>
+                  <div>
+                    <strong>Target deployment model</strong>
+                    <span>Preferred runtime topology: single-node Docker Compose, Swarm HA cluster, or Kubernetes with Helm charts.</span>
+                  </div>
                 </li>
                 <li>
-                  <strong>Responders &amp; channels</strong>
-                  <span>Team size, on-call rotations, and required paging channels (Voice phone calls, SMS, Slack, Microsoft Teams).</span>
+                  <span className="support-step-num">03</span>
+                  <div>
+                    <strong>Responders &amp; channels</strong>
+                    <span>Team size, on-call rotations, and required paging channels (Voice phone calls, SMS, Slack, Microsoft Teams).</span>
+                  </div>
                 </li>
                 <li>
-                  <strong>Goals &amp; timeline</strong>
-                  <span>Greenfield rollout, migration from PagerDuty/Opsgenie/Squadcast, or dedicated production hardening review.</span>
+                  <span className="support-step-num">04</span>
+                  <div>
+                    <strong>Goals &amp; timeline</strong>
+                    <span>Greenfield rollout, migration from PagerDuty/Opsgenie/Squadcast, or dedicated production hardening review.</span>
+                  </div>
                 </li>
               </ul>
             </div>

@@ -5813,18 +5813,85 @@ html {
   color: #f87171;
 }
 
+/* ============================================================================
+ * OpsKnight Direct Email & Dispatch Consoles
+ * ========================================================================= */
+
+.ops-email-console {
+  background: var(--surface-black);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ops-email-console-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ops-console-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-light-muted);
+}
+
+.ops-console-protocol {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #cbd5e1;
+}
+
+.ops-email-console-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.ops-console-address {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color 0.15s ease;
+}
+
+.ops-console-address:hover {
+  color: #f87171;
+  text-decoration: underline;
+}
+
+/* Support Page Cards */
 .support-contact-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 32px;
   margin-top: 36px;
+  align-items: stretch;
 }
 
 .support-contact-card {
   padding: 32px;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: var(--surface-white);
   border: 1px solid var(--border-light);
+  border-top: 2px solid var(--ok-red);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -5833,58 +5900,52 @@ html {
 .support-contact-header {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .support-mail-icon-wrap {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 10px;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  background: rgba(210, 26, 27, 0.08);
+  border: 1px solid rgba(210, 26, 27, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.support-email-box {
-  padding: 14px 18px;
-  border-radius: 8px;
-  background: var(--surface-soft);
+.support-security-notice {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-light);
+  padding-top: 14px;
+  margin: 0;
+  margin-top: auto;
+}
+
+.support-checklist-card {
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-white);
   border: 1px solid var(--border-light);
+  border-top: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.support-checklist-header {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.support-email-address {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--ok-red);
-  text-decoration: none;
-  font-family: var(--font-jetbrains-mono), monospace;
-  letter-spacing: -0.02em;
-}
-
-.support-email-address:hover {
-  text-decoration: underline;
-}
-
-.support-security-notice {
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-light);
-  padding-top: 14px;
+.support-checklist-header h4 {
   margin: 0;
-}
-
-.support-checklist-card {
-  padding: 32px;
-  border-radius: 12px;
-  background: var(--surface-soft);
-  border: 1px solid var(--border-light);
+  letter-spacing: -0.02em;
 }
 
 .support-checklist-items {
@@ -5894,20 +5955,40 @@ html {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
 }
 
 .support-checklist-items li {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.support-step-num {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ok-red);
+  background: rgba(210, 26, 27, 0.06);
+  border: 1px solid rgba(210, 26, 27, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .support-checklist-items strong {
+  display: block;
   font-size: 14px;
   color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.support-checklist-items span:not(.support-step-num) {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 .support-alternate-paths {
@@ -5919,10 +6000,80 @@ html {
   line-height: 1.7;
 }
 
+/* Contact Page Direct Card */
+.contact-direct-wrap {
+  margin-top: 56px;
+}
+
+.contact-direct-card {
+  padding: 36px 40px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  border-top: 2px solid var(--ok-red);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.contact-direct-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 640px;
+}
+
+.contact-direct-main h3 {
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.contact-direct-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.contact-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary-strong);
+  background: var(--surface-soft);
+  border: 1px solid var(--border-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.contact-direct-console-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 320px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 1023px) {
   .support-contact-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+  .contact-direct-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 28px;
+    gap: 24px;
+  }
+  .contact-direct-console-wrap {
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -5931,51 +6082,14 @@ html {
   .support-checklist-card {
     padding: 24px;
   }
-  .support-email-address {
-    font-size: 16px;
-    word-break: break-all;
-  }
-}
-
-/* Contact page direct email box */
-.contact-direct-wrap {
-  margin-top: 48px;
-}
-
-.contact-direct-card {
-  padding: 32px;
-  border-radius: 12px;
-  background: var(--surface-white);
-  border: 1px solid var(--border-light);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.contact-direct-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.contact-direct-actions {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  padding-top: 4px;
-}
-
-@media (max-width: 767px) {
   .contact-direct-card {
-    padding: 24px;
+    padding: 24px 20px;
   }
-  .contact-direct-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+  .ops-console-address {
+    font-size: 14px;
   }
 }
+
 
 
 
