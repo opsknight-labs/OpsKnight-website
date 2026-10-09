@@ -1079,7 +1079,8 @@
     padding: 10px 12px;
     font-size: 11px;
   }
-  /* The SAME source image is enlarged inside a genuinely pannable viewport. */
+  /* The same image is deliberately centered on the product UI.
+     Tap the stage to inspect the complete original in native image view. */
   .site-page--home .hero-editorial-product {
     width: calc(100% + var(--container-pad));
     margin-left: calc(var(--container-pad) / -2);
@@ -1087,17 +1088,20 @@
     border-inline: 0;
   }
   .site-page--home .hero-editorial-viewport {
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #687990 #0c1420;
+    position: relative;
+    height: 387px;
+    overflow: hidden;
+    cursor: zoom-in;
   }
   .site-page--home .hero-editorial-viewport img {
+    position: absolute;
+    left: 50%;
+    top: 0;
     display: block;
     width: 720px;
     max-width: none;
-    height: 360px;
+    height: auto;
+    transform: translateX(-50%);
   }
   .site-page--home .trust-strip > .site-container {
     display: grid;
@@ -1119,4 +1123,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .site-page--home .hero-editorial-introduction .site-action { transition: none; }
+}
+
+
+@media (max-width: 400px) {
+  .site-page--home .hero-editorial-viewport { height: 365px; }
 }
