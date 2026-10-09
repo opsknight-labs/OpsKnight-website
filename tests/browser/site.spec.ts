@@ -11,7 +11,6 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "Own the incident",
   );
   await expect(page.getByText(/Know what happened, who is responding/)).toBeVisible();
-  await expect(page.locator(".hero-editorial-product img")).toHaveAttribute("src", "/product/command-center.webp");
   const integrationSearch = page.getByRole("searchbox", {
     name: "Find an OpsKnight integration",
   });
@@ -30,7 +29,6 @@ test("homepage workflow, architecture, metadata and layout", async ({
     "href",
     "https://opsknight.com/",
   );
-  await page.locator("#ten-steps-disclosure summary").click();
   await page.getByRole("button", { name: "05 Page", exact: true }).click();
   await expect(page.locator("#loop-panel")).toHaveAttribute("data-step", "4");
   await expect(page.locator("#loop-panel")).toContainText(
@@ -61,46 +59,29 @@ test("homepage workflow, architecture, metadata and layout", async ({
     fullPage: true,
   });
 });
-test("editorial hero uses one original Command Center asset at every screen size", async ({ page }) => {
+test("hero states the promise and offers install, story and live status", async ({ page }) => {
   await page.goto("/");
   const heading = page.getByRole("heading", { level: 1, name: /Own the incident/ });
   const masthead = page.locator(".hero-editorial-masthead");
-  const stage = page.locator(".hero-editorial-product");
-  const picture = stage.locator("img");
+  const hero = page.locator("#signal");
 
   await expect(heading).toBeVisible();
-  await expect(stage).toBeVisible();
-  await expect(picture).toHaveJSProperty("complete", true);
-  expect(await picture.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(hero.getByRole("link", { name: /Install OpsKnight/ })).toBeVisible();
+  await expect(hero.getByRole("link", { name: /See how it works/ })).toBeVisible();
+  await expect(hero.getByRole("link", { name: /Live status page/ })).toBeVisible();
+  await expect(hero.locator("img"), "Product screenshots live in the sections below").toHaveCount(0);
   const viewport = page.viewportSize();
   if (!viewport) return;
-  const imageSrc = await picture.evaluate((img: HTMLImageElement) => img.currentSrc);
-  expect(imageSrc).toContain("/product/command-center.webp");
-  await expect(stage.locator("source")).toHaveCount(0);
-  await expect(stage.getByRole("link", { name: /Open full-size OpsKnight Command Center screenshot/ }))
-    .toHaveAttribute("href", "/product/command-center.webp");
   const textBox = await masthead.boundingBox();
-  const stageBox = await stage.boundingBox();
   expect(textBox).not.toBeNull();
-  expect(stageBox).not.toBeNull();
-  if (!textBox || !stageBox) return;
-  expect(stageBox.y).toBeGreaterThan(textBox.y + textBox.height - 3);
-  expect(stageBox.y, "The real product must enter the first screen").toBeLessThan(viewport.height * .93);
-  expect(stageBox.width, "The product scene should feel full-width").toBeGreaterThan(viewport.width * .80);
+  if (!textBox) return;
+  expect(textBox.y + textBox.height, "The whole statement fits the first screen").toBeLessThan(viewport.height);
   const headingBox = await heading.boundingBox();
   expect(headingBox).not.toBeNull();
   if (headingBox) {
     expect(headingBox.x, "The headline needs a deliberate left gutter").toBeGreaterThanOrEqual(viewport.width <= 599 ? 15 : 24);
     expect(headingBox.x + headingBox.width, "The headline must not touch the right edge")
       .toBeLessThanOrEqual(viewport.width - 15);
-  }
-  if (viewport.width >= 1100) {
-    expect(stageBox.x, "Desktop product evidence must align with the page grid").toBeGreaterThanOrEqual(24);
-  }
-  const navContentBox = await page.locator(".site-nav .site-container").first().boundingBox();
-  if (navContentBox && viewport.width >= 600) {
-    expect(Math.abs(textBox.x - navContentBox.x), "Editorial text must align with the navigation grid")
-      .toBeLessThanOrEqual(5);
   }
   await expect(page.locator(".hero-signal, .hero-frame-bar, .incident-signal-rail")).toHaveCount(0);
 });
@@ -151,10 +132,10 @@ test("homepage product evidence is inspectable by touch and keyboard", async ({ 
 
   const region = page.getByRole("region", { name: /Product screenshot/i });
   await region.scrollIntoViewIfNeeded();
+  const fits = await region.evaluate((element) => element.scrollWidth <= element.clientWidth + 1);
+  expect(fits, "product screenshot should fit its frame at every screen size").toBe(true);
   if (testInfo.project.name === "mobile") {
-    const canPan = await region.evaluate((element) => element.scrollWidth > element.clientWidth);
-    expect(canPan, "mobile product screenshot should be pannable rather than unreadably scaled").toBe(true);
-    await expect(page.getByText(/Swipe horizontally to explore the screenshot/)).toBeVisible();
+    await expect(page.getByText(/Tap Inspect for the full-resolution view/)).toBeVisible();
   }
   const inspect = page.getByRole("button", { name: "Inspect fullscreen: On-call screenshot" }).first();
   await inspect.focus();
@@ -1091,7 +1072,7 @@ test("incident story: four acts navigation, visual continuity, and state progres
 
   // Visual continuity: all 4 acts display persistent incident identity
   for (const act of [detectAct, respondAct, coordinateAct, recoverAct]) {
-    await expect(act.locator(".incident-id-badge").first()).toHaveText("INC-1042");
+    await expect(act.locator(".incident-id-badge").first()).toHaveText("#cm4q7xk2");
   }
 
   // Lifecycle state badges progression across the 4 acts
@@ -1112,20 +1093,13 @@ test("incident story: four acts navigation, visual continuity, and state progres
   await expect(respondAct).toBeVisible();
 });
 
-test("incident story: detailed ten-step explorer lifecycle states and collapse behavior", async ({
+test("incident story: ten-step timeline replay lifecycle states", async ({
   page,
 }) => {
   await page.goto("/");
 
-  const disclosure = page.locator("#ten-steps-disclosure");
-  await expect(disclosure).toBeVisible();
-
-  // Collapsed by default
-  await expect(disclosure).not.toHaveAttribute("open", "");
-
-  // Expand disclosure
-  await page.locator("#ten-steps-disclosure summary").click();
-  await expect(disclosure).toHaveAttribute("open", "");
+  const timeline = page.locator("#ten-steps-disclosure");
+  await expect(timeline).toBeVisible();
 
   const loopPanel = page.locator("#loop-panel");
 
@@ -1133,8 +1107,8 @@ test("incident story: detailed ten-step explorer lifecycle states and collapse b
   await expect(loopPanel).toHaveAttribute("data-step", "0");
   await expect(loopPanel).toContainText("SIGNAL RECEIVED");
   await expect(loopPanel).toContainText("Datadog → Checkout API");
-  // Pre-incident: INC-1042 should not appear in Step 01
-  await expect(loopPanel).not.toContainText("INC-1042 · P1 · TRIGGERED");
+  // Pre-incident: the incident ID should not appear in Step 01
+  await expect(loopPanel).not.toContainText("#cm4q7xk2");
 
   // Step 02: Correlate (pre-incident correlation)
   await page.getByRole("button", { name: "02 Correlate", exact: true }).click();
@@ -1146,7 +1120,7 @@ test("incident story: detailed ten-step explorer lifecycle states and collapse b
   await page.getByRole("button", { name: "03 Create", exact: true }).click();
   await expect(loopPanel).toHaveAttribute("data-step", "2");
   await expect(loopPanel).toContainText("INCIDENT TRIGGERED");
-  await expect(loopPanel).toContainText("INC-1042 · Checkout API · P1");
+  await expect(loopPanel).toContainText("#cm4q7xk2 · Checkout API · P1");
 
   // Step 05: Page
   await page.getByRole("button", { name: "05 Page", exact: true }).click();

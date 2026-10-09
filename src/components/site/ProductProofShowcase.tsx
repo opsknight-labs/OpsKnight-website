@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowRight, ExternalLink, Maximize2, X } from "lucide-react";
 import { PRODUCT, productImage } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
-import { ProductScreenshot } from "@/components/site/Primitives";
+
+const assetFor = (image: string) =>
+  PRODUCT.screenshots.assets[
+    image.replace(/\.png$/, "") as keyof typeof PRODUCT.screenshots.assets
+  ];
 
 export interface ProductProofAnnotation {
   tag: string;
@@ -294,9 +298,9 @@ export function ProductProofShowcase() {
 
   const handleKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
     let targetIndex: number | null = null;
-    if (e.key === "ArrowRight") {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       targetIndex = (currentIndex + 1) % PRODUCT_PROOFS.length;
-    } else if (e.key === "ArrowLeft") {
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
       targetIndex =
         (currentIndex - 1 + PRODUCT_PROOFS.length) % PRODUCT_PROOFS.length;
     } else if (e.key === "Home") {
@@ -313,121 +317,124 @@ export function ProductProofShowcase() {
     }
   };
 
-  const asset =
-    PRODUCT.screenshots.assets[
-      active.image.replace(/\.png$/, "") as keyof typeof PRODUCT.screenshots.assets
-    ];
+  const asset = assetFor(active.image);
+
+  const activeIndex = PRODUCT_PROOFS.findIndex((p) => p.id === active.id);
 
   return (
-    <div className="product-proof-experience">
-      {/* 1. Tab Bar */}
+    <div className="pp" style={{ "--i": activeIndex } as CSSProperties}>
+      {/* Contact sheet: every view, one click away */}
       <div
-        className="product-proof-tabs"
+        className="pp-index"
         role="tablist"
         aria-label="OpsKnight product views"
+        aria-orientation="vertical"
       >
-        {PRODUCT_PROOFS.map((proof, idx) => (
-          <button
-            key={proof.id}
-            id={`proof-tab-${proof.id}`}
-            type="button"
-            role="tab"
-            aria-selected={active.id === proof.id}
-            aria-controls="product-proof-panel"
-            tabIndex={active.id === proof.id ? 0 : -1}
-            onClick={() => setActiveId(proof.id)}
-            onKeyDown={(e) => handleKeyDown(e, idx)}
-          >
-            <span className="proof-tab-idx">{proof.num}</span>
-            <span className="proof-tab-label">{proof.label}</span>
-          </button>
-        ))}
+        <span className="pp-index-marker" aria-hidden="true" />
+        {PRODUCT_PROOFS.map((proof, idx) => {
+          const thumb = assetFor(proof.image);
+          return (
+            <button
+              key={proof.id}
+              id={`proof-tab-${proof.id}`}
+              type="button"
+              role="tab"
+              aria-selected={active.id === proof.id}
+              aria-controls="product-proof-panel"
+              tabIndex={active.id === proof.id ? 0 : -1}
+              className="pp-tab"
+              onClick={() => setActiveId(proof.id)}
+              onKeyDown={(e) => handleKeyDown(e, idx)}
+            >
+              <span className="pp-tab-thumb" aria-hidden="true">
+                <Image
+                  src={productImage(proof.image)}
+                  width={thumb?.width ?? 1440}
+                  height={thumb?.height ?? 900}
+                  alt=""
+                  sizes="72px"
+                />
+              </span>
+              <span className="pp-tab-num">{proof.num}</span>
+              <span className="pp-tab-label">{proof.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* 2. Main Product Panel */}
       <div
         id="product-proof-panel"
-        className="product-proof-panel"
+        className="pp-panel"
         role="tabpanel"
         tabIndex={0}
         aria-labelledby={`proof-tab-${active.id}`}
       >
-        {/* Frame Topbar */}
-        <div className="product-proof-frame-bar">
-          <div className="frame-bar-left">
-            <span className="frame-bar-indicator" />
-            <span className="frame-bar-tag">
-              REAL OPSKNIGHT UI · v{PRODUCT.release.version}
-            </span>
-            <span className="frame-bar-sep">/</span>
-            <span className="frame-bar-view">
-              {active.num} of 07 · {active.label.toUpperCase()}
-            </span>
+        <div
+          className="pp-stage"
+          role="region"
+          tabIndex={0}
+          aria-label="Product screenshot"
+        >
+          <div
+            className="pp-stage-inner"
+            style={{ "--ar": `${asset?.width ?? 16} / ${asset?.height ?? 10}` } as CSSProperties}
+          >
+            {PRODUCT_PROOFS.map((proof, idx) => {
+              const a = assetFor(proof.image);
+              return (
+                <Image
+                  key={proof.id}
+                  src={productImage(proof.image)}
+                  width={a?.width ?? 1440}
+                  height={a?.height ?? 900}
+                  alt={proof.id === active.id ? proof.alt : ""}
+                  aria-hidden={proof.id !== active.id || undefined}
+                  data-active={proof.id === active.id || undefined}
+                  style={{ "--o": idx } as CSSProperties}
+                  sizes="(max-width: 899px) 900px, 980px"
+                />
+              );
+            })}
           </div>
           <button
             type="button"
-            className="frame-bar-inspect-btn"
-            onClick={() => setLightboxOpen(true)}
-            aria-label={`Inspect fullscreen: ${active.label} screenshot`}
-          >
-            <Maximize2 size={13} aria-hidden="true" />
-            <span>Inspect fullscreen</span>
-          </button>
-        </div>
-
-        {/* Screenshot (clickable to open fullscreen) */}
-        <div
-          className="product-proof-shot-wrap"
-          role="region"
-          tabIndex={0}
-          aria-label="Product screenshot. On smaller screens scroll horizontally to inspect details."
-        >
-          <ProductScreenshot name={active.image} alt={active.alt} />
-          <button
-            type="button"
-            className="product-proof-shot-open"
+            className="pp-inspect"
             onClick={() => setLightboxOpen(true)}
             aria-label={`Inspect fullscreen: ${active.label} screenshot`}
           >
             <Maximize2 size={14} aria-hidden="true" />
-            <span>Expand</span>
+            <span>Inspect</span>
           </button>
+          <span className="pp-stage-count" aria-hidden="true">
+            {active.num} / 07
+          </span>
         </div>
-        <p className="proof-pan-hint">Swipe horizontally to explore the screenshot · use Inspect fullscreen for the complete view.</p>
+        <p className="proof-pan-hint">Tap Inspect for the full-resolution view.</p>
 
-        {/* Contextual Editorial Insight (replacing repeated 3-box cards) */}
-        <div className="product-proof-insight-strip">
-          <div className="proof-insight-main">
-            <div className="proof-insight-header">
-              <span className="proof-insight-counter">{active.num} / 07</span>
-              <strong className="proof-insight-headline">{active.headline}</strong>
-            </div>
-            <p className="proof-insight-summary">{active.summary}</p>
-            <div className="proof-insight-facts" aria-label="Verified capabilities">
-              {active.facts.map((fact) => (
-                <span key={fact} className="proof-fact-chip">
-                  {fact}
-                </span>
-              ))}
+        <div key={active.id} className="pp-caption">
+          <div className="pp-caption-head">
+            <h3>{active.headline}</h3>
+            <p>{active.summary}</p>
+            <div className="pp-caption-links">
+              <Link href={active.href} className="site-text-link">
+                Explore {active.label} <ArrowRight size={15} />
+              </Link>
+              {active.live ? (
+                <a href={BRAND.links.status} target="_blank" rel="noopener noreferrer" className="site-text-link">
+                  Live status <ExternalLink size={13} />
+                </a>
+              ) : null}
             </div>
           </div>
-
-          <div className="product-proof-actions">
-            <Link href={active.href} className="proof-action-link">
-              Explore {active.label} <ArrowRight size={15} />
-            </Link>
-            {active.live ? (
-              <a
-                href={BRAND.links.status}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="proof-action-link live"
-              >
-                <span className="live-dot" /> Live status
-                <ExternalLink size={13} />
-              </a>
-            ) : null}
-          </div>
+          <ol className="pp-notes">
+            {active.annotations.map((note, i) => (
+              <li key={note.title} style={{ "--n": i } as CSSProperties}>
+                <span>{note.tag}</span>
+                <strong>{note.title}</strong>
+                <p>{note.detail}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
 

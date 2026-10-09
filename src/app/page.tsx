@@ -2,12 +2,14 @@ import "./homepage-art-direction.css";
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { PRODUCT } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
+import { HomeChapterRail } from "@/components/site/HomeChapterRail";
+import { HomeArchitecture } from "@/components/site/HomeArchitecture";
+import { HomeHero } from "@/components/site/HomeHero";
 import {
-  Action,
   SectionIntro,
   TextLink,
   TrustStrip,
@@ -15,7 +17,6 @@ import {
 } from "@/components/site/Primitives";
 import {
   IncidentLoop,
-  ArchitectureViewer,
   ProductProofShowcase,
 } from "@/components/site/Experiences";
 
@@ -29,55 +30,38 @@ const pageMetadata: Metadata = {
 
 export const metadata = siteMetadata(pageMetadata);
 
+const HOME_CHAPTERS = [
+  { id: "signal", label: "Signal" },
+  { id: "incident-loop", label: "Response" },
+  { id: "product-proof", label: "Product" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "architecture", label: "Architecture" },
+  { id: "security-ecosystem", label: "Security" },
+  { id: "ownership", label: "Ownership" },
+  { id: "open-source", label: "Open source" },
+] as const;
+
+const CAPABILITIES = [
+  ["02", "On-Call & Escalation", "Design timezone-aware primary and secondary rotations with DST-safe handoffs and self-service shift overrides.", "/product/on-call/", "Explore on-call"],
+  ["03", "Multi-Channel Paging", "Dispatch urgent pages across voice calls, push notifications, SMS, and Teams with verified delivery intents and Quiet Hours.", "/product/paging/", "Explore paging"],
+  ["04", "Slack & Teams ChatOps", "Coordinate in native chat channels with automated war rooms, two-way lifecycle sync, interactive cards, and participant tracking.", "/product/chatops/", "Explore ChatOps"],
+  ["05", "Decoupled Status Pages", "Publish real-time service health, 90-day availability history, and scoped maintenance notices without exposing internal response chatter.", "/product/status-pages/", "Explore status pages"],
+  ["06", "Analytics & Postmortems", "Track MTTA/MTTR response velocity, pinpoint noisy monitor flapping, and conduct blameless 5-Whys retrospectives.", "/product/analytics/", "Explore analytics"],
+] as const;
+
+const SECURITY_SPECS = [
+  ["Identity", "OIDC and SCIM 2.0", "Sign in with Okta, Entra, Google or Auth0. Users and groups provision themselves."],
+  ["Access", "Roles, scoped tokens, an auditor seat", "Least privilege by default. Any signed-in session can be revoked in one click."],
+  ["Encryption", "AES-256-GCM at rest", "Integration secrets and credentials are envelope-encrypted. State lives in your PostgreSQL."],
+  ["Audit", "An evidence trail", "Immutable operator events, DSAR export and erasure, retention holds and exportable evidence."],
+] as const;
+
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. Single-image Command Center introduction. */}
-      <section className="site-hero site-hero--editorial site-dark" aria-labelledby="home-hero-title">
-        <div className="site-container hero-editorial-container">
-          <div className="hero-editorial-masthead">
-            <div className="hero-editorial-statement">
-              <h1 id="home-hero-title">
-                Own the incident<span className="hero-period">.</span>
-              </h1>
-            </div>
-            <div className="hero-editorial-introduction">
-              <p>
-                Know what happened, who is responding, and what comes next.
-                One open-source platform you host and control.
-              </p>
-              <div className="site-actions">
-                <Action href="/deploy/">Install OpsKnight</Action>
-                <Action href="#incident-loop" secondary>
-                  See how it works
-                </Action>
-              </div>
-            </div>
-          </div>
-
-          <figure className="hero-editorial-product">
-            <a
-              className="hero-editorial-viewport"
-              href="/product/command-center.webp"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open full-size OpsKnight Command Center screenshot"
-            >
-              <Image
-                src="/product/command-center.webp"
-                width={1120}
-                height={602}
-                alt="OpsKnight Command Center showing the incident banner, live alerts, incident triage, workload signals and SLA alerts with explanatory callouts"
-                priority
-                sizes="(max-width: 599px) 720px, (max-width: 1499px) 96vw, 1450px"
-              />
-            </a>
-            <figcaption className="sr-only">
-              OpsKnight Command Center, with demonstration data. The same original image is shown at every screen size.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
+      <HomeChapterRail chapters={HOME_CHAPTERS} />
+      {/* 1. Command Center introduction with a guided spotlight tour. */}
+      <HomeHero version={PRODUCT.release.version} license={PRODUCT.release.license} />
 
       {/* 2. Trust Strip */}
       <TrustStrip />
@@ -91,40 +75,39 @@ export default function Home() {
       </div>
 
       {/* 3. The OpsKnight Experience: One Incident. Four Acts. */}
-      <section id="incident-loop" className="site-section site-dark incident-story-section">
+      <section id="incident-loop" className="site-section site-white incident-story-section home-chapter">
         <div className="site-container">
           <SectionIntro
-            eyebrow="THE OPSKNIGHT EXPERIENCE"
+            eyebrow="The response"
             title="When something breaks, everything connects."
           >
-            An alert becomes an incident. An incident finds its responder. Your team
-            coordinates the recovery. Every response becomes an opportunity to improve.
+            An alert becomes an incident. The incident finds its responder. The team
+            works the problem together, and every response leaves you better prepared.
           </SectionIntro>
           <IncidentLoop />
         </div>
       </section>
 
       {/* 4. Real Product Proof — Screenshots lead the product evidence */}
-      <section id="product-proof" className="site-section site-dark product-proof-section">
+      <section id="product-proof" className="site-section site-dark product-proof-section home-chapter">
         <div className="site-container">
           <SectionIntro
-            eyebrow="REAL PRODUCT PROOF"
+            eyebrow="The product"
             title="The product behind the response."
           >
-            The workflow illustration explains how response moves. These are
-            real v{PRODUCT.release.version} product views captured from the
-            release-backed demo environment.
+            Every screen here is OpsKnight v{PRODUCT.release.version} itself,
+            running on demo data. Nothing is mocked up.
           </SectionIntro>
           <ProductProofShowcase />
         </div>
       </section>
 
       {/* 5. Core Capabilities — Editorial Feature Index */}
-      <section className="site-section site-white capabilities-section">
+      <section id="capabilities" className="site-section site-white capabilities-section home-chapter">
         <div className="site-container">
           <div className="section-heading-row">
             <SectionIntro
-              eyebrow="PRODUCT CAPABILITIES"
+              eyebrow="Capabilities"
               title="Built for the entire incident lifecycle."
             >
               The core incident platform runs on your infrastructure, connects
@@ -164,166 +147,82 @@ export default function Home() {
 
             {/* Right: Editorial Index with thin horizontal dividers */}
             <div className="capabilities-editorial-index" role="list">
-              <div className="editorial-capability-row" role="listitem">
-                <div className="editorial-capability-copy">
-                  <div className="editorial-capability-head">
-                    <span className="editorial-capability-num">02</span>
-                    <h3>On-Call &amp; Escalation</h3>
+              {CAPABILITIES.map(([num, title, body, href, linkText]) => (
+                <div key={href} className="editorial-capability-row" role="listitem">
+                  <div className="editorial-capability-copy">
+                    <div className="editorial-capability-head">
+                      <span className="editorial-capability-num">{num}</span>
+                      <h3>{title}</h3>
+                    </div>
+                    <p>{body}</p>
                   </div>
-                  <p>
-                    Design timezone-aware primary and secondary rotations with DST-safe
-                    handoffs and self-service shift overrides.
-                  </p>
+                  <TextLink href={href}>{linkText}</TextLink>
                 </div>
-                <TextLink href="/product/on-call/">Explore on-call</TextLink>
-              </div>
-
-              <div className="editorial-capability-row" role="listitem">
-                <div className="editorial-capability-copy">
-                  <div className="editorial-capability-head">
-                    <span className="editorial-capability-num">03</span>
-                    <h3>Multi-Channel Paging</h3>
-                  </div>
-                  <p>
-                    Dispatch urgent pages across voice calls, push notifications, SMS,
-                    and Teams with verified delivery intents and Quiet Hours.
-                  </p>
-                </div>
-                <TextLink href="/product/paging/">Explore paging</TextLink>
-              </div>
-
-              <div className="editorial-capability-row" role="listitem">
-                <div className="editorial-capability-copy">
-                  <div className="editorial-capability-head">
-                    <span className="editorial-capability-num">04</span>
-                    <h3>Slack &amp; Teams ChatOps</h3>
-                  </div>
-                  <p>
-                    Coordinate in native chat channels with automated war rooms,
-                    two-way lifecycle sync, interactive cards, and participant tracking.
-                  </p>
-                </div>
-                <TextLink href="/product/chatops/">Explore ChatOps</TextLink>
-              </div>
-
-              <div className="editorial-capability-row" role="listitem">
-                <div className="editorial-capability-copy">
-                  <div className="editorial-capability-head">
-                    <span className="editorial-capability-num">05</span>
-                    <h3>Decoupled Status Pages</h3>
-                  </div>
-                  <p>
-                    Publish real-time service health, 90-day availability history,
-                    and scoped maintenance notices without exposing internal response chatter.
-                  </p>
-                </div>
-                <TextLink href="/product/status-pages/">Explore status pages</TextLink>
-              </div>
-
-              <div className="editorial-capability-row" role="listitem">
-                <div className="editorial-capability-copy">
-                  <div className="editorial-capability-head">
-                    <span className="editorial-capability-num">06</span>
-                    <h3>Analytics &amp; Postmortems</h3>
-                  </div>
-                  <p>
-                    Track MTTA/MTTR response velocity, pinpoint noisy monitor flapping,
-                    and conduct blameless 5-Whys retrospectives.
-                  </p>
-                </div>
-                <TextLink href="/product/analytics/">Explore analytics</TextLink>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* 6. Production Architecture */}
-      <section className="site-section site-dark">
+      <section id="architecture" className="site-section site-dark home-architecture home-chapter">
         <div className="site-container">
-          <SectionIntro
-            eyebrow="PRODUCTION ARCHITECTURE"
-            title="Start simple. Scale the pieces that need it."
-          >
-            An integrated runtime to get started in minutes. Dedicated runtime
-            roles when your deployment requires independent scaling and high throughput.
-          </SectionIntro>
-          <ArchitectureViewer />
-          <div className="reliability-story">
-            <div>
-              <p className="site-eyebrow">RELIABILITY IS VISIBLE</p>
-              <h3>The incident platform has to survive the incident too.</h3>
-            </div>
-            <div>
-              <p>
-                Critical, transactional and bulk traffic classes. Delivery
-                attempts, retries, worker health, Prometheus metrics and
-                structured logs.
-              </p>
-              <TextLink href="/product/operations/">
-                Explore operations &amp; scaling
-              </TextLink>
-            </div>
+          <div className="home-arch-head">
+            <SectionIntro
+              eyebrow="Architecture"
+              title="Start simple. Scale the pieces that need it."
+            >
+              One process to get going in minutes. Separate runtime roles when a
+              part of the system needs to scale on its own.
+            </SectionIntro>
+            <figure className="home-arch-note">
+              <blockquote>
+                The incident platform has to survive the incident too.
+              </blockquote>
+              <figcaption>
+                <p>
+                  Critical, transactional and bulk traffic run in separate lanes,
+                  with retries, worker health, Prometheus metrics and structured
+                  logs you can watch.
+                </p>
+                <TextLink href="/product/operations/">Operations &amp; scaling</TextLink>
+              </figcaption>
+            </figure>
           </div>
+          <HomeArchitecture />
         </div>
       </section>
 
       {/* 7. Security & Integrations */}
-      <section className="site-section site-white security-section">
+      <section id="security-ecosystem" className="site-section site-white home-security home-chapter">
         <div className="site-container">
-          <SectionIntro
-            eyebrow="SECURITY &amp; ECOSYSTEM"
-            title="Your infrastructure. Your users. Your keys."
-          >
-            Connect your enterprise identity provider with OIDC and SCIM 2.0.
-            Enforce role-based access control and audit every operator event on
-            systems strictly under your governance.
-          </SectionIntro>
-
-          <div className="security-architecture-grid">
-            <div className="security-pillar-item">
-              <span className="security-pillar-num">01 / IDENTITY</span>
-              <h3>OIDC &amp; SCIM 2.0</h3>
-              <p>
-                Federated authentication with Okta, Microsoft Entra, Google, and Auth0.
-                Automated JIT user creation and SCIM 2.0 group provisioning.
-              </p>
-            </div>
-            <div className="security-pillar-item">
-              <span className="security-pillar-num">02 / ACCESS</span>
-              <h3>RBAC &amp; Auditor Role</h3>
-              <p>
-                Least-privilege authorization with workspace roles, scoped API tokens,
-                and a canonical signed-in session registry with one-click revocation.
-              </p>
-            </div>
-            <div className="security-pillar-item">
-              <span className="security-pillar-num">03 / ENCRYPTION</span>
-              <h3>AES-256-GCM Envelope</h3>
-              <p>
-                Integration secrets and notification credentials encrypted at rest.
-                All operational state stored in your self-hosted PostgreSQL database.
-              </p>
-            </div>
-            <div className="security-pillar-item">
-              <span className="security-pillar-num">04 / AUDIT</span>
-              <h3>Evidence Ledgers</h3>
-              <p>
-                Immutable operator event stream, DSAR export and erasure tooling,
-                retention holds, and verifiable evidence export packages.
-              </p>
-            </div>
+          <div className="home-spec">
+            <SectionIntro
+              eyebrow="Security"
+              title="Your infrastructure. Your users. Your keys."
+            >
+              Bring your own identity provider, keep every record in your own
+              database, and keep a trail of every change.
+            </SectionIntro>
+            <dl className="home-spec-list">
+              {SECURITY_SPECS.map(([term, title, body]) => (
+                <div key={term}>
+                  <dt>{term}</dt>
+                  <dd>
+                    <strong>{title}</strong>
+                    <span>{body}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <div className="security-integrations-block">
-            <div className="security-integrations-head">
-              <p className="site-eyebrow">
-                <span className="signal-dot" /> CERTIFIED INTEGRATION CATALOG
-              </p>
-              <h3>Connect to 28 release-tested inbound sources.</h3>
-              <p className="site-description">
-                OpsKnight validates signatures, deduplicates alerts, and normalizes
-                payloads across standard monitoring, cloud, and telemetry platforms.
+          <div className="home-integrations">
+            <div className="home-integrations-head">
+              <h3>Plugs into the stack you already run.</h3>
+              <p>
+                28 release-tested alert sources. Signatures verified, duplicates
+                folded, payloads normalised.
               </p>
             </div>
             <HomepageIntegrationFinder />
@@ -332,89 +231,59 @@ export default function Home() {
       </section>
 
       {/* 8. Why OpsKnight (Compare) */}
-      <section className="site-section site-dark homepage-compare">
-        <div className="site-container compare-teaser-grid">
-          <div className="compare-editorial-copy">
-            <p className="site-eyebrow">
-              <span className="signal-dot" /> THE OWNERSHIP QUESTION
-            </p>
-            <h2>Incident response. <em>On your terms.</em></h2>
-            <p className="site-description">
-              Keep the software, response workflows and operational data under
-              your own control. Compare the alternatives on the details that matter.
-            </p>
-            <div className="compare-vendors" aria-label="Products covered in the comparison">
-              <span>PagerDuty</span>
-              <span>incident.io</span>
-              <span>Opsgenie</span>
-              <span>Grafana Cloud IRM</span>
-            </div>
-            <TextLink href="/compare/">View full capability comparison</TextLink>
-          </div>
-          <div className="compare-difference-stack">
-            <article>
-              <span>01</span>
-              <div>
-                <strong>You operate it.</strong>
-                <p>Run OpsKnight on infrastructure and deployment topologies you control.</p>
-              </div>
-            </article>
-            <article>
-              <span>02</span>
-              <div>
-                <strong>Your incident data stays with you.</strong>
-                <p>The application, database, backups and network boundary remain under your governance.</p>
-              </div>
-            </article>
-            <article>
-              <span>03</span>
-              <div>
-                <strong>The software is open source.</strong>
-                <p>Inspect the code, pin releases, and evaluate the product before adopting it.</p>
-              </div>
-            </article>
-          </div>
+      <section id="ownership" className="site-section site-dark home-ownership home-chapter">
+        <div className="site-container">
+          <SectionIntro eyebrow="Ownership" title="Incident response, on your terms." />
+          <ol className="home-ownership-points">
+            <li>
+              <strong>You run it.</strong>
+              <p>On your own infrastructure, in whatever topology suits you.</p>
+            </li>
+            <li>
+              <strong>Your data stays put.</strong>
+              <p>Application, database, backups and network boundary stay under your governance.</p>
+            </li>
+            <li>
+              <strong>You can read every line.</strong>
+              <p>It&apos;s open source. Inspect it, pin a release, and evaluate before you commit.</p>
+            </li>
+          </ol>
+          <p className="home-ownership-compare">
+            <span>Weighing PagerDuty, incident.io, Opsgenie or Grafana Cloud IRM?</span>
+            <TextLink href="/compare/">See the comparison</TextLink>
+          </p>
         </div>
       </section>
 
       {/* 9. Built in the Open */}
-      <section className="site-section homepage-open-source">
-        <div className="site-container open-source-story">
-          <div className="open-source-intro">
-            <div className="open-source-heading-label">
-              <Github size={27} aria-hidden="true" />
-              <span>PUBLIC SOURCE / OPERATOR CONTROL</span>
-            </div>
-            <SectionIntro
-              eyebrow="BUILT IN THE OPEN"
-              title="The source is part of the promise."
-            >
-              Read the code, pin a release and examine what runs inside
-              your infrastructure. No opaque control plane required.
-            </SectionIntro>
-          </div>
-          <div className="open-source-details">
-            <p className="open-source-ledger-label">RELEASE LEDGER / VERIFIED PRODUCT FACTS</p>
-            <div className="release-strip">
+      <section id="open-source" className="site-section homepage-open-source home-chapter">
+        <div className="site-container home-open">
+          <SectionIntro
+            eyebrow="Open source"
+            title="The source is part of the promise."
+          >
+            Read the code, pin a release, and know exactly what runs inside
+            your infrastructure. No opaque control plane.
+          </SectionIntro>
+          <dl className="home-open-facts">
             <div>
-              <small>LATEST RELEASE</small>
-              <strong>{PRODUCT.release.tag}</strong>
+              <dt>Latest release</dt>
+              <dd>{PRODUCT.release.tag}</dd>
             </div>
             <div>
-              <small>RELEASED</small>
-              <strong>{PRODUCT.release.date}</strong>
+              <dt>Released</dt>
+              <dd>{PRODUCT.release.date}</dd>
             </div>
             <div>
-              <small>LICENSE</small>
-              <strong>{PRODUCT.release.license}</strong>
+              <dt>License</dt>
+              <dd>{PRODUCT.release.license}</dd>
             </div>
-          </div>
-            <div className="paired-links">
-              <TextLink href={BRAND.links.github}>View source on GitHub</TextLink>
-              <TextLink href="/changelog/">Read release notes</TextLink>
-              <TextLink href="/support/">Commercial support</TextLink>
-              <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
-            </div>
+          </dl>
+          <div className="home-open-links">
+            <TextLink href={BRAND.links.github}>Source on GitHub</TextLink>
+            <TextLink href="/changelog/">Release notes</TextLink>
+            <TextLink href="/support/">Commercial support</TextLink>
+            <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
           </div>
         </div>
       </section>
