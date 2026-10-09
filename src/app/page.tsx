@@ -3,8 +3,7 @@ import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowUpRight, Github } from "lucide-react";
-import { PRODUCT, productProof } from "@/lib/product";
-import { BRAND } from "@/lib/brand";
+import { PRODUCT } from "@/lib/product";
 import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
 import {
   Action,
@@ -14,7 +13,6 @@ import {
   FinalCTA,
 } from "@/components/site/Primitives";
 import {
-  HeroSignal,
   IncidentLoop,
   ArchitectureViewer,
   ProductProofShowcase,
@@ -33,66 +31,49 @@ export const metadata = siteMetadata(pageMetadata);
 export default function Home() {
   return (
     <div className="site-page site-page--home">
-      {/* 1. Hero */}
-      <section className="site-hero site-dark">
+      {/* 1. Hero: a single balanced introduction, with the product visible immediately. */}
+      <section className="site-hero site-dark" aria-labelledby="home-hero-title">
         <div className="site-container">
-          <div className="hero-topline">
-            <span>
-              <span className="signal-dot" /> INCIDENT OPERATIONS, UNDER YOUR
-              CONTROL
-            </span>
-            <a href="/changelog/">
-              {PRODUCT.release.tag} is here <ArrowUpRight size={13} />
-            </a>
-          </div>
-          <div className="hero-copy">
-            <h1>
-              Own the incident<span className="hero-period">.</span>
-            </h1>
-            <p className="hero-subtitle">
-              From first signal to final review.
-            </p>
-            <p className="hero-description">
-              Self-hosted on-call, paging, ChatOps, status, analytics and incident management.
-              <br className="desktop-break" /> On infrastructure you control.
-            </p>
-            <div className="site-actions">
-              <Action href="/deploy/">Install OpsKnight</Action>
-              <Action href="#incident-loop" secondary>
-                Explore the platform
-              </Action>
-            </div>
-            <a
-              className="hero-status-link"
-              href={BRAND.links.status}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="live-dot" /> Live OpsKnight status
-              <ArrowUpRight size={13} />
-            </a>
-            <p className="site-proof">{productProof}</p>
-          </div>
-          <div className="hero-product hero-framed">
-            <HeroSignal />
-            <figure className="hero-screenshot-frame">
-              <div className="hero-frame-bar">
-                <span className="frame-title">
-                  Fig. 01 — OpsKnight Command Center · v{PRODUCT.release.version}
-                </span>
-                <span className="frame-badge">PRODUCT INTERFACE</span>
+          <div className="hero-layout">
+            <div className="hero-copy">
+              <p className="hero-lead-in">Self-hosted incident operations</p>
+              <h1 id="home-hero-title">
+                Own the incident<span className="hero-period">.</span>
+              </h1>
+              <p className="hero-subtitle">Every signal. One clear response.</p>
+              <p className="hero-description">
+                Bring on-call, paging, incident response and ChatOps together
+                in a platform that runs on your infrastructure.
+              </p>
+              <div className="site-actions">
+                <Action href="/deploy/">Install OpsKnight</Action>
+                <Action href="#incident-loop" secondary>
+                  Explore the platform
+                </Action>
               </div>
-              <Image
-                src="/product/command-center.webp"
-                width={2400}
-                height={1290}
-                alt="OpsKnight Command Center displaying live triage, active alerts, workload distribution, and SLA countdowns"
-                priority
-                sizes="(max-width: 768px) 100vw, 1100px"
-              />
-              <figcaption className="hero-product-caption">
-                <span>Incident operations in one view · Northstar demo fixture</span>
-                <a href="#product-proof">Browse the product views <ArrowUpRight size={14} aria-hidden="true" /></a>
+              <a className="hero-release-link" href="/changelog/">
+                See what&apos;s new in {PRODUCT.release.tag}
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+
+            <figure className="hero-product hero-framed">
+              <div className="hero-image-window">
+                <Image
+                  src="/product/hero-composite.webp"
+                  width={2400}
+                  height={1350}
+                  alt="OpsKnight Command Center with incident overview and mobile responder interfaces, showing representative demo data"
+                  priority
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 90vw, (max-width: 1440px) 54vw, 710px"
+                />
+              </div>
+              <figcaption className="hero-image-caption">
+                <span><strong>OpsKnight Command Center</strong> · Product preview using demo data</span>
+                <a href="#product-proof">
+                  View more product screens
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
               </figcaption>
             </figure>
           </div>
