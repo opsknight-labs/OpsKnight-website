@@ -665,7 +665,7 @@
   padding-top: 18px;
 }
 .site-page .open-source-ledger-label {
-  color: #6b7179;
+  color: #454d58;
   font: 10px/1.6 var(--font-jetbrains-mono), monospace;
   letter-spacing: .1em;
 }
@@ -679,7 +679,7 @@
 }
 .site-page .open-source-story .release-strip > div { min-width: 0; gap: 8px; }
 .site-page .open-source-story .release-strip small {
-  color: #68717e;
+  color: #454d58;
 }
 .site-page .open-source-story .release-strip strong {
   color: #192130;
