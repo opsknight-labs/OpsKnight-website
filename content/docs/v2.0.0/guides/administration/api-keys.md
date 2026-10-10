@@ -4,10 +4,6 @@ description: Create, scope, rotate, inspect, and revoke OpsKnight API credential
 type: how-to
 product_area: administration
 audience: [administrator, operator]
-reader:
-  status: READER_COMPLETE
-  task: Create, test, rotate, and revoke a least-privileged API key.
-  evidence: [docs/v2.0.0/assets/api-keys.png]
 verification:
   level: source
   verified_at: 2026-09-29
@@ -16,43 +12,24 @@ verification:
 
 # Manage API keys
 
-![API key administration with scoped credentials and lifecycle controls](/docs/v2.0.0/assets/api-keys.png)
-
 ## Before you begin
 
-Sign in as an administrator and identify the consumer owner, endpoints, minimum scopes, expiration, and secret manager. Effective authority is the intersection of key scopes and its owner's current product permissions.
+Sign in as an administrator and identify the endpoints and minimum scopes the
+consumer requires.
 
-## Open the feature
-
-Open **Settings → API keys**. Review existing name, prefix, owner, scopes, expiry, status, and last-used evidence.
-
-## Configure and create a key
+Create API keys in **Settings → API keys**. Select only the scopes needed by the
+automation and set an expiration when the credential is not permanent.
 
 1. Open **Settings → API keys** and create a key.
-2. Name the system/environment/owner.
-3. Select minimum scopes and an operational expiration.
-4. Copy the secret once directly into a secret manager.
-5. Make a test request and verify **Last used** changes.
+2. Select the minimum scopes and an expiration.
+3. Copy the secret once into a secret manager.
+4. Make a test request and verify **Last used** changes.
 
 The secret is displayed once. Store it in a secret manager; OpsKnight retains a
 keyed hash, the visible prefix, owner, scopes, expiration, and last used time.
 Send the secret as `Authorization: Bearer <key>` or `X-API-Key` where documented.
 
-## What OpsKnight does
-
-OpsKnight stores a keyed hash rather than a retrievable secret, plus prefix, owner, scopes, expiration, and last-used evidence. Owner deactivation or permission changes can reduce/stop key authority.
-
-## Verify it worked
-
-```sh
-curl --fail --show-error \
-  -H "Authorization: Bearer $OPSKNIGHT_API_KEY" \
-  'https://opsknight.example.com/api/incidents'
-```
-
-Confirm the expected response and **Last used** update. Where safe, verify an operation outside scope returns `403`.
-
-## Revoke or rotate
+## Rotation
 
 1. Create a replacement with the same minimum scopes.
 2. Update the consumer and verify its last used value changes.
@@ -72,8 +49,3 @@ exposed, revoke it before investigating the consumer.
   this OpsKnight installation.
 
 See [Permissions and API scopes](../../reference/permissions/).
-
-## Next steps
-
-- Record owner, expiry, and rotation schedule.
-- Review [audit logs](./audit-logs) and [permissions](./manage-permissions).

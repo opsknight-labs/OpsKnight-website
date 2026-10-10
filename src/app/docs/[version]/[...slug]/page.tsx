@@ -101,10 +101,10 @@ export default async function DocsPage({
   ];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:grid-cols-[minmax(0,1fr)_18.5rem]">
+    <div className="docs-editorial-article grid gap-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:grid-cols-[minmax(0,1fr)_18.5rem]">
       <article className="space-y-6 min-w-0">
         {/* Article Header */}
-        <div className="overflow-hidden rounded-[14px] border border-slate-200 bg-white">
+        <div className="docs-editorial-heading overflow-hidden rounded-[14px] border border-slate-200 bg-white">
           {/* Breadcrumbs */}
           <div className="px-6 py-3 border-b border-slate-200 bg-slate-50">
             <nav className="flex items-center gap-1.5 text-xs">
@@ -156,13 +156,13 @@ export default async function DocsPage({
         <DocsMobileToc headings={doc.headings} />
 
         {/* Article Body */}
-        <div className="rounded-[14px] border border-slate-200 bg-white px-6 py-8 sm:px-10">
+        <div className="docs-editorial-body rounded-[14px] border border-slate-200 bg-white px-6 py-8 sm:px-10">
           <DocsArticleBody html={doc.html} />
           <DocsPrevNext version={version} currentPath={docsHref(version, slug)} />
         </div>
 
         {/* Footer Navigation */}
-        <div className="flex items-center justify-between p-4 rounded-[12px] border border-slate-200 bg-white">
+        <div className="docs-editorial-contribute flex items-center justify-between p-4 rounded-[12px] border border-slate-200 bg-white">
           <p className="text-xs text-slate-500">
             Last updated for {version}
           </p>

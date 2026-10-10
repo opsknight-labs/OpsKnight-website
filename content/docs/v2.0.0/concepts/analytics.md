@@ -12,8 +12,6 @@ verification:
 
 # Analytics
 
-![Analytics overview generated from realistic incident history](/docs/v2.0.0/assets/analytics-overview.png)
-
 Analytics summarizes operational records under explicit metric contracts.
 Filters, time boundaries, aggregation, and empty-data semantics are part of each
 metric's meaning.

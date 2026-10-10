@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "self-hosted-incident-management",
+    "label": "Self-hosted incident management",
+    "headline": "Bring incident operations onto your infrastructure.",
+    "description": "Keep operational data and deployment decisions under your control. Connect alerts to on-call, response, customer updates and postmortems.",
+    "problem": "You need a complete response workflow and the ability to decide where the system runs.",
+    "workflow": "Deploy an integrated runtime, connect an inbound provider, configure schedules and routing, then validate one synthetic incident end to end.",
+    "products": [
+      "incidents",
+      "on-call",
+      "paging"
+    ],
+    "deployment": "Start with integrated Docker Compose when a single application host is acceptable. Move to split runtime or Kubernetes when availability, workload isolation, or independent scaling requires it.",
+    "integration": "Connect one release-verified inbound provider first, map it to the owning service, then add ChatOps or issue-tracking only after the core alert-to-response path is proven.",
+    "security": "Set the public HTTPS origin, durable PostgreSQL and backups, production secrets, and the identity policy before exposing the installation to responders.",
+    "validation": "Run a synthetic incident through ingestion, correlation, on-call resolution, paging, acknowledgement, customer communication, resolution, and follow-up."
+  },
+  {
+    "slug": "sre",
+    "label": "SRE teams",
+    "headline": "Close the loop on reliability.",
+    "description": "Connect the alert to the response, the response to the review, and the review to owned follow-up work.",
+    "problem": "A restored service is only part of the job. Response evidence and learning need to survive the incident.",
+    "workflow": "Track incident ownership and SLA outcomes, review MTTA and MTTR, and create a postmortem with action items assigned to owners.",
+    "products": [
+      "incidents",
+      "analytics",
+      "postmortems"
+    ],
+    "deployment": "Choose the smallest topology that still meets the reliability target for the incident platform itself; split runtime only where failure isolation or independent worker scaling is justified.",
+    "integration": "Start with the monitoring systems that already define service health, then connect Slack or Teams for response collaboration and Jira when follow-up work belongs in the issue tracker.",
+    "security": "Use scoped roles, audit evidence, and enterprise identity where required. Keep incident and postmortem data within the deployment boundary your team operates.",
+    "validation": "Exercise one real service journey and verify MTTA/MTTR evidence, timeline completeness, postmortem creation, and owned action items after recovery."
+  },
+  {
+    "slug": "platform-engineering",
+    "label": "Platform engineering",
+    "headline": "Build a shared response foundation.",
+    "description": "Give service teams a common incident workflow while keeping deployment, identity and operational health in view.",
+    "problem": "Different teams own different services, but the incident platform still needs coherent access and operational control.",
+    "workflow": "Organize teams and services, connect OIDC and SCIM, and use worker health and delivery evidence to operate the platform.",
+    "products": [
+      "operations",
+      "security",
+      "chatops"
+    ],
+    "deployment": "Standardize a supported deployment pattern for service teams, including database ownership, ingress, secrets, backups, health signals, and upgrade responsibility.",
+    "integration": "Offer a curated set of monitoring and ChatOps paths instead of letting every team invent a different response contract. Use the generic webhook only for internal systems without a first-class provider.",
+    "security": "Define OIDC/SCIM ownership, RBAC boundaries, auditor access, API-key scope, and session policy as part of the platform contract.",
+    "validation": "Onboard a pilot service, trigger a synthetic incident, verify responder routing and delivery evidence, then validate Health Center and recovery procedures."
+  },
+  {
+    "slug": "regulated-environments",
+    "label": "Regulated environments",
+    "headline": "Keep control and evidence together.",
+    "description": "Run the data plane yourself. Apply identity and authorization controls and review operational evidence in your own environment.",
+    "problem": "Your response tooling must fit your data handling, access and retention requirements.",
+    "workflow": "Plan the deployment, configure scoped roles and identity, review audit events, and use privacy and evidence workflows for your own controls.",
+    "products": [
+      "security",
+      "operations",
+      "incidents"
+    ],
+    "deployment": "Keep the application, database, backups, and network controls inside the environment governed by your organization. Select a topology that fits your own availability and recovery requirements.",
+    "integration": "Prefer narrowly scoped provider credentials and document every inbound and outbound trust boundary used by the incident workflow.",
+    "security": "Configure enterprise identity, least-privilege roles, audit evidence, secret rotation, retention, and network hardening. OpsKnight controls support your program but do not create compliance certification by themselves.",
+    "validation": "Prove access denial as well as success: allowed user, denied user, audit event capture, credential rotation, backup/restore, and incident evidence retention."
+  },
+  {
+    "slug": "on-call",
+    "label": "On-call operations",
+    "headline": "Make responsibility explicit.",
+    "description": "Build schedules, apply overrides and route escalation to the responder responsible for the service.",
+    "problem": "Coverage and handoffs are hard to reason about during a page.",
+    "workflow": "Create rotations, validate current coverage, configure escalation targets and confirm delivery outcomes on a test incident.",
+    "products": [
+      "on-call",
+      "paging",
+      "mobile"
+    ],
+    "deployment": "The deployment choice matters less than proving the scheduler, worker health, database durability, and notification-provider reachability during an incident.",
+    "integration": "Map services to the schedules and escalation policies that actually own them. Enable only the paging channels responders are expected to use and test each configured provider.",
+    "security": "Limit schedule and escalation administration to the roles that need it, and protect notification-provider credentials with the same production secret controls as the rest of the platform.",
+    "validation": "Test current coverage, an override, a triggered incident, each required delivery channel, acknowledgement, retry visibility, and escalation behavior."
+  },
+  {
+    "slug": "devops",
+    "label": "DevOps teams",
+    "headline": "Connect your monitoring to the response.",
+    "description": "Bring signals from your existing tools into a shared incident lifecycle.",
+    "problem": "Alerts arrive from several tools, while ownership and communication happen elsewhere.",
+    "workflow": "Connect providers, map services and escalation policies, coordinate in ChatOps and publish scoped customer updates.",
+    "products": [
+      "incidents",
+      "chatops",
+      "status-pages"
+    ],
+    "deployment": "Begin with a simple integrated deployment for evaluation, then choose split or Kubernetes based on the production availability and operations model rather than team size alone.",
+    "integration": "Connect monitoring and delivery systems already in use, route alerts by service ownership, use ChatOps for coordination, and publish only customer-safe updates to status pages.",
+    "security": "Configure identity, roles, API keys, provider credentials, HTTPS, backups, and audit review before treating the installation as production incident infrastructure.",
+    "validation": "Send representative alerts from each important source and verify deduplication, assignment, paging, ChatOps actions, status communication, resolution, and recovery."
+  }
+]

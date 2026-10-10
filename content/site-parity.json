@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "purpose": "Track old-site usefulness through the Website 3.0 redesign. Every meaningful old behavior must be preserved, restored, rewritten, or intentionally removed with a reason.",
+  "entries": [
+    {
+      "id": "homepage-live-status",
+      "area": "Homepage",
+      "oldContent": "Live Status CTA",
+      "oldLocation": "homepage / footer",
+      "newDestination": "homepage hero / status journey / footer",
+      "status": "RESTORED"
+    },
+    {
+      "id": "homepage-product-walkthrough",
+      "area": "Homepage",
+      "oldContent": "Product walkthrough",
+      "oldLocation": "homepage",
+      "newDestination": "homepage incident loop + product proof",
+      "status": "RESTORED"
+    },
+    {
+      "id": "homepage-deployment",
+      "area": "Homepage",
+      "oldContent": "Deployment entry point",
+      "oldLocation": "homepage",
+      "newDestination": "homepage architecture + /deploy/",
+      "status": "RESTORED"
+    },
+    {
+      "id": "homepage-open-source",
+      "area": "Homepage",
+      "oldContent": "Open-source/license discovery",
+      "oldLocation": "homepage",
+      "newDestination": "homepage open-source section + footer",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "homepage-support",
+      "area": "Homepage",
+      "oldContent": "Sponsor/support discovery",
+      "oldLocation": "homepage/project links",
+      "newDestination": "homepage open-source section + /support/",
+      "status": "RESTORED"
+    },
+    {
+      "id": "changelog-filters",
+      "area": "Changelog",
+      "oldContent": "Release filters",
+      "oldLocation": "/changelog/",
+      "newDestination": "/changelog/ sticky filter bar",
+      "status": "RESTORED"
+    },
+    {
+      "id": "changelog-version-nav",
+      "area": "Changelog",
+      "oldContent": "Sticky version navigation",
+      "oldLocation": "/changelog/",
+      "newDestination": "desktop version rail + mobile release selector",
+      "status": "RESTORED"
+    },
+    {
+      "id": "changelog-docker-copy",
+      "area": "Changelog",
+      "oldContent": "Docker pull command with copy",
+      "oldLocation": "/changelog/",
+      "newDestination": "each release article",
+      "status": "RESTORED"
+    },
+    {
+      "id": "changelog-release-detail",
+      "area": "Changelog",
+      "oldContent": "Summary, date, latest badge, detailed categories",
+      "oldLocation": "/changelog/",
+      "newDestination": "release stream",
+      "status": "RESTORED"
+    },
+    {
+      "id": "nav-product-hierarchy",
+      "area": "Navigation",
+      "oldContent": "Product navigation",
+      "oldLocation": "top navigation",
+      "newDestination": "grouped Respond / Collaborate / Operate mega menu",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "nav-whats-new",
+      "area": "Navigation",
+      "oldContent": "First-class Changelog discovery",
+      "oldLocation": "top navigation",
+      "newDestination": "adaptive What's New + Resources",
+      "status": "RESTORED"
+    },
+    {
+      "id": "nav-direct-routes",
+      "area": "Navigation",
+      "oldContent": "Direct primary product evaluation routes",
+      "oldLocation": "top navigation",
+      "newDestination": "Integrations / Compare / Deploy / Security / Docs",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "mobile-nav-density",
+      "area": "Navigation",
+      "oldContent": "Fast mobile access to primary routes",
+      "oldLocation": "mobile navigation",
+      "newDestination": "short Product / Explore / Resources groups",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "legal-privacy",
+      "area": "Legal",
+      "oldContent": "Privacy route",
+      "oldLocation": "/privacy/",
+      "newDestination": "/privacy/ Website 3.0 reading layout",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "legal-terms",
+      "area": "Legal",
+      "oldContent": "Terms route",
+      "oldLocation": "/terms/",
+      "newDestination": "/terms/ Website 3.0 reading layout",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "legal-index",
+      "area": "Legal",
+      "oldContent": "Legal policy discovery",
+      "oldLocation": "footer links",
+      "newDestination": "/legal/ policy index",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "footer-legal",
+      "area": "Footer",
+      "oldContent": "Explicit legal links",
+      "oldLocation": "footer",
+      "newDestination": "footer Legal group",
+      "status": "RESTORED"
+    },
+    {
+      "id": "integration-search",
+      "area": "Integrations",
+      "oldContent": "Integration search",
+      "oldLocation": "/integrations/",
+      "newDestination": "source-backed IntegrationExplorer",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "integration-categories",
+      "area": "Integrations",
+      "oldContent": "Integration category filters",
+      "oldLocation": "/integrations/",
+      "newDestination": "source-backed category filters",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "integration-contract",
+      "area": "Integrations",
+      "oldContent": "Provider protocol/endpoint/setup detail",
+      "oldLocation": "/integrations/",
+      "newDestination": "integration drawer + detail routes",
+      "status": "RESTORED"
+    },
+    {
+      "id": "integration-webhook",
+      "area": "Integrations",
+      "oldContent": "Custom webhook guidance",
+      "oldLocation": "/integrations/",
+      "newDestination": "/integrations/webhook/ + docs",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "integration-pagerduty",
+      "area": "Integrations",
+      "oldContent": "PagerDuty Events API compatibility",
+      "oldLocation": "/integrations/",
+      "newDestination": "compatibility entry + setup guide",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "integration-blanket-hmac",
+      "area": "Integrations",
+      "oldContent": "Blanket HMAC wording",
+      "oldLocation": "legacy integration marketing",
+      "status": "INTENTIONALLY_REMOVED",
+      "reason": "Incorrect across providers; authentication and signature behavior vary by integration."
+    },
+    {
+      "id": "compare-matrix",
+      "area": "Compare",
+      "oldContent": "Capability matrix",
+      "oldLocation": "/compare/",
+      "newDestination": "26-dimension dated matrix",
+      "status": "RESTORED"
+    },
+    {
+      "id": "compare-vendor-pages",
+      "area": "Compare",
+      "oldContent": "Vendor comparison pages",
+      "oldLocation": "/compare/[vendor]/",
+      "newDestination": "dated vendor deep-dives + sources",
+      "status": "RESTORED"
+    },
+    {
+      "id": "compare-migration",
+      "area": "Compare",
+      "oldContent": "Migration helpers",
+      "oldLocation": "comparison pages",
+      "newDestination": "PagerDuty / Opsgenie / Grafana migration helpers",
+      "status": "PRESERVED"
+    },
+    {
+      "id": "compare-neutrality",
+      "area": "Compare",
+      "oldContent": "Marketing-led competitor claims",
+      "oldLocation": "legacy compare copy",
+      "newDestination": "dated, source-conscious operating-model language",
+      "status": "REWRITTEN"
+    },
+    {
+      "id": "product-pages",
+      "area": "Product",
+      "oldContent": "Broad homepage product explanation",
+      "oldLocation": "homepage",
+      "newDestination": "dedicated product routes + unique operational workflows",
+      "status": "RESTORED"
+    },
+    {
+      "id": "solutions-depth",
+      "area": "Solutions",
+      "oldContent": "Use-case routes",
+      "oldLocation": "/use-cases/",
+      "newDestination": "/solutions/ + deployment/integration/security/validation journeys",
+      "status": "RESTORED"
+    },
+    {
+      "id": "support-services",
+      "area": "Commercial",
+      "oldContent": "Sponsorship/support discovery",
+      "oldLocation": "project pages",
+      "newDestination": "/support/ sponsorship + commercial support + implementation",
+      "status": "RESTORED"
+    },
+    {
+      "id": "enterprise-edition",
+      "area": "Commercial",
+      "oldContent": "Enterprise-style edition positioning",
+      "oldLocation": "legacy marketing",
+      "status": "INTENTIONALLY_REMOVED",
+      "reason": "OpsKnight has one open-source product; commercial support and implementation do not gate product features."
+    },
+    {
+      "id": "hosted-cloud-promise",
+      "area": "Commercial",
+      "oldContent": "Hosted/cloud implication",
+      "oldLocation": "legacy marketing",
+      "status": "INTENTIONALLY_REMOVED",
+      "reason": "No hosted OpsKnight cloud offering is being launched in this website release."
+    },
+    {
+      "id": "responsive-matrix",
+      "area": "Responsive",
+      "oldContent": "Responsive behavior across common devices",
+      "oldLocation": "global",
+      "newDestination": "11-viewport overflow regression sweep + visual baselines",
+      "status": "RESTORED"
+    }
+  ]
+}

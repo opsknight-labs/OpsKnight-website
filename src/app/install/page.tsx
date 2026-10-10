@@ -1,322 +1,538 @@
+import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { BRAND } from "@/lib/brand";
-import { CopyBlock } from "@/components/brand/CopyBlock";
-import { SecretsGenerator } from "@/components/showcase/SecretsGenerator";
-import { PageToc } from "@/components/common/PageToc";
-import { latestDocsHref } from "@/lib/docs/paths";
+import { DeploymentChooser } from "@/components/site/Experiences";
+import {
+  SectionIntro,
+  TextLink,
+  Action,
+  FinalCTA,
+} from "@/components/site/Primitives";
+import { productDocs, PRODUCT } from "@/lib/product";
+import {
+  CheckCircle2,
+  Database,
+  Gauge,
+  KeyRound,
+  Network,
+  Server,
+  ShieldCheck,
+} from "lucide-react";
 
-const title = "Install OpsKnight";
-const description =
-  `Deploy OpsKnight v${BRAND.version} Community with Docker Compose, Helm, Kustomize, Cloud Run, ECS, or Linux Systemd. ${BRAND.license}, self-hosted on your infrastructure.`;
+export const metadata: Metadata = siteMetadata({
+  title: "Deploy OpsKnight — Self-Hosted Production Topologies",
+  description:
+    "Choose and validate an OpsKnight deployment using the maintained Compose, Swarm, Helm, and Kustomize paths. Size from workload shape and measured saturation rather than invented limits.",
+  alternates: { canonical: "/deploy/" },
+  openGraph: { url: "/deploy/" },
+});
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/install" },
-  openGraph: { title, description, url: "/install" },
-};
+const topologyRows = [
+  {
+    name: "Integrated Compose",
+    fit: "Simplest single-host operation",
+    ha: "No",
+    scaling: "No",
+    pooler: "No",
+    docs: "start/quickstart",
+  },
+  {
+    name: "Split Compose",
+    fit: "Single-host workload isolation",
+    ha: "No",
+    scaling: "Yes",
+    pooler: "Optional",
+    docs: "operate/deploy/split-runtime",
+  },
+  {
+    name: "Split + PgBouncer",
+    fit: "Isolation plus web connection pooling",
+    ha: "No",
+    scaling: "Yes",
+    pooler: "Enabled",
+    docs: "operate/capacity/choose-deployment",
+  },
+  {
+    name: "Docker Swarm",
+    fit: "Docker-native multi-node application operation",
+    ha: "Application tier",
+    scaling: "Yes",
+    pooler: "Optional in Split",
+    docs: "operate/deploy/swarm",
+  },
+  {
+    name: "Kubernetes Helm",
+    fit: "Packaged, schema-validated Kubernetes",
+    ha: "When configured",
+    scaling: "Yes",
+    pooler: "Optional in Split",
+    docs: "operate/deploy/helm/install",
+  },
+  {
+    name: "Kubernetes Kustomize",
+    fit: "GitOps and environment-owned overlays",
+    ha: "When configured",
+    scaling: "Yes",
+    pooler: "Optional in Split",
+    docs: "operate/deploy/kustomize",
+  },
+] as const;
 
-const TOC_SECTIONS = [
-  { id: "prerequisites", title: "Prerequisites & Secrets" },
-  { id: "docker-compose", title: "Docker Compose Starter" },
-  { id: "docker-swarm", title: "Docker Swarm (HA)" },
-  { id: "split-runtime", title: "Split Runtime (v2.0)" },
-  { id: "kubernetes-helm", title: "Kubernetes (Helm Chart)" },
-  { id: "other-topologies", title: "Other Supported Topologies" },
-  { id: "hardware-sizing", title: "Hardware Sizing Matrix" },
-  { id: "what-this-is-not", title: "Community boundary" },
-];
+const signals = [
+  ["Critical notification age rises", "Critical delivery lane", "Inspect provider/DB pressure, then scale critical workers if that lane is constrained."],
+  ["Bulk queue grows", "Bulk worker lane", "Scale bulk workers without consuming critical-delivery capacity."],
+  ["General job age rises", "General background work", "Scale general workers after checking downstream dependencies."],
+  ["API latency rises", "Web tier", "Scale web replicas only after checking PostgreSQL latency and connections."],
+  ["DB connections approach budget", "PostgreSQL / pools", "Reduce pools, add supported PgBouncer, or scale PostgreSQL."],
+  ["Provider 429s rise", "Provider quota", "Reduce provider concurrency and honor retry timing."],
+  ["Status projection lag rises", "Status projector", "Scale the projector and inspect its direct DB pool."],
+  ["SSE latency/disconnects rise", "Web / realtime path", "Inspect proxy timeouts, web capacity, and database pressure."],
+] as const;
 
-const INSTALL_SPECS = [
-  { label: "Min Compute", value: "1 vCPU · 1 GB RAM" },
-  { label: "Database", value: "PostgreSQL 14+" },
-  { label: "Default Port", value: "3000 (HTTP)" },
-  { label: "License", value: BRAND.license },
-  { label: "Runtime", value: "Integrated or Split" },
-  { label: "External Telemetry", value: "None (0 beacons)" },
-];
-
-export default function InstallPage() {
+export default function DeployPage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      <section className="border-b border-slate-200 pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-              Install · {BRAND.releaseLabel} · {BRAND.license}
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.12]">
-              Run it on machines you already operate.
-            </h1>
-            <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-              OpsKnight Community is self-hosted. Compose is the shortest path. Helm is the
-              production path. After boot, open port 3000 and create the first admin
-              on <span className="font-mono text-sm">/setup</span>. Full steps live
-              in the docs — this page is the operational checklist.
-            </p>
+    <div className="site-page site-page--deploy site-page--deploy-index">
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> DEPLOY / {PRODUCT.release.tag}
+          </p>
+          <h1>
+            Run OpsKnight
+            <br />
+            on infrastructure you operate.
+          </h1>
+          <p className="site-description">
+            Start with the maintained Compose quickstart, then choose Split,
+            Swarm, Helm, or Kustomize when isolation, availability, platform
+            standards, or connection pressure require it.
+          </p>
+          <div className="site-actions">
+            <Action href={productDocs("start/quickstart")}>
+              Open the quickstart
+            </Action>
+            <Action
+              href={productDocs("operate/capacity/choose-deployment")}
+              secondary
+            >
+              Choose a topology
+            </Action>
           </div>
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            <article className="min-w-0 space-y-12 max-w-3xl">
-              <div id="prerequisites" className="scroll-mt-28">
-                <h2 className="text-xl font-semibold text-[#111827]">Prerequisites</h2>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#4b5563]">
-                  <li>Docker Engine 20+ and Compose 2+, or a Kubernetes 1.24+ cluster</li>
-                  <li>PostgreSQL 14+ (Compose automatically provisions PostgreSQL 15)</li>
-                  <li>
-                    <code className="font-mono text-xs text-[#111827]">NEXTAUTH_SECRET</code>,{" "}
-                    <code className="font-mono text-xs text-[#111827]">ENCRYPTION_KEY</code>,{" "}
-                    and <code className="font-mono text-xs text-[#111827]">API_KEY_SECRET</code>{" "}
-                    configured before first start
-                  </li>
-                  <li>A stable HTTPS reverse proxy in production (for auth callbacks and webhook ingestion)</li>
-                </ul>
-                <div className="mt-6">
-                  <SecretsGenerator />
-                </div>
-              </div>
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="DEPLOYMENT CHOOSER"
+            title="Choose from operational requirements, not an invented traffic threshold."
+          >
+            Split mode exists for independent scaling, failure isolation and
+            notification-lane protection. Multi-node availability requires the
+            surrounding database, proxy, storage and recovery design to match.
+          </SectionIntro>
+          <DeploymentChooser />
+        </div>
+      </section>
 
-              <div id="docker-compose" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Docker Compose (Recommended Starter)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Clone the repository, copy <span className="font-mono text-xs text-[#111827]">env.example</span>{" "}
-                  to <span className="font-mono text-xs text-[#111827]">.env</span>, inject your generated secrets,
-                  and launch the stack:
-                </p>
-                <CopyBlock
-                  label="compose"
-                  value={`git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight
-cp env.example .env
-# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
-docker compose -f deploy/compose/docker-compose.yml up -d`}
-                />
-                <p className="mt-3 text-xs text-slate-500">
-                  Then navigate to <span className="font-mono text-[#111827]">http://localhost:3000/setup</span> to initialize the primary administrator account.
-                </p>
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/docker-compose/integrated")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Docker Compose deployment guide →
-                  </Link>
-                </p>
-              </div>
+      <section className="site-section site-light-alt">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="FASTEST START"
+            title="Bring up an isolated Compose evaluation."
+          >
+            The maintained quickstart runs the integrated application and
+            PostgreSQL on one Docker host. It is an evaluation or small-test
+            path, not a multi-node HA claim.
+          </SectionIntro>
 
-              <div id="docker-swarm" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Docker Swarm (Multi-Node HA)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Native multi-node Swarm deployment with automated Raft-encrypted secrets, rolling zero-downtime updates, and isolated worker lanes:
-                </p>
-                <CopyBlock
-                  label="swarm"
-                  value={`git clone https://github.com/opsknight-labs/OpsKnight.git
-cd OpsKnight/deploy/swarm
-# Initialize Docker Swarm (if not already active)
-docker swarm init
-# Deploy multi-node HA cluster with automatic Raft secrets & validation
-./scripts/deploy.sh`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/swarm-operations")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Docker Swarm operations &amp; secrets guide →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="split-runtime" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Split Production Runtime (v2.0)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  For high-throughput installations, OpsKnight separates Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector into independently scalable containers:
-                </p>
-                <CopyBlock
-                  label="split-compose"
-                  value={`cp env.example .env
-# Set NEXTAUTH_SECRET, ENCRYPTION_KEY, and API_KEY_SECRET in .env
-export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
-
-# Deploy 6 dedicated split roles + migration runner
-docker compose \\
-  -f deploy/compose/docker-compose.yml \\
-  -f deploy/compose/docker-compose.split.yml \\
-  up -d`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/docker-compose/split")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Split runtime architecture &amp; worker tuning →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="kubernetes-helm" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Kubernetes (Helm Chart)</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  For versioned, repeatable Kubernetes deployments with Horizontal Pod Autoscaling (HPA), Ingress TLS, and Enterprise HA:
-                </p>
-                <CopyBlock
-                  label="helm"
-                  value={`# 1. Create namespace & production secrets
-kubectl create namespace opsknight
-kubectl -n opsknight create secret generic opsknight-secrets \\
-  --from-literal=DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=20' \\
-  --from-literal=DIRECT_DATABASE_URL='postgresql://opsknight:<password>@postgres:5432/opsknight?sslmode=require&connection_limit=5' \\
-  --from-literal=NEXTAUTH_SECRET="$(openssl rand -base64 32)" \\
-  --from-literal=ENCRYPTION_KEY="$(openssl rand -hex 32)" \\
-  --from-literal=API_KEY_SECRET="$(openssl rand -base64 32)"
-
-# 2. Deploy OpsKnight Helm Chart with Enterprise HA values
-helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
-  --namespace opsknight \\
-  -f deploy/kubernetes/helm/opsknight/examples/values-enterprise-ha.yaml`}
-                />
-                <p className="mt-3">
-                  <Link
-                    href={latestDocsHref("operate/deploy/helm-operations")}
-                    className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                  >
-                    Helm configuration &amp; values.yaml guide →
-                  </Link>
-                </p>
-              </div>
-
-              <div id="other-topologies" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Other Supported Topologies</h2>
-                <ul className="mt-4 space-y-3 text-sm text-[#4b5563]">
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Kustomize &amp; GitOps:</span>
-                    <span>
-                      Declarative base and overlay manifests designed for ArgoCD and Flux pipelines.{" "}
-                      <Link href={latestDocsHref("operate/deploy/kustomize-operations")} className="font-medium text-[#d21a1b] hover:underline">
-                        Kustomize guide
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· PgBouncer &amp; External Postgres:</span>
-                    <span>
-                      Connection-pool overlays (`docker-compose.pgbouncer.yml`) for high concurrency.{" "}
-                      <Link href={latestDocsHref("operate/capacity/choose-deployment")} className="font-medium text-[#d21a1b] hover:underline">
-                        Capacity &amp; deployment guide
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Cloud &amp; Serverless Containers:</span>
-                    <span>
-                      Deploy to AWS ECS / Fargate with RDS PostgreSQL, or GCP Cloud Run with Cloud SQL.{" "}
-                      <Link href={latestDocsHref("operate/deploy/docker-compose/integrated")} className="font-medium text-[#d21a1b] hover:underline">
-                        Cloud container deployment
-                      </Link>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-[#111827]">· Upgrading from 1.x:</span>
-                    <span>
-                      Database migrations, env variable updates, and rollback procedure for existing 1.x installs.{" "}
-                      <Link href={latestDocsHref("start/migrate-from-v1")} className="font-medium text-[#d21a1b] hover:underline">
-                        Migration from v1 guide
-                      </Link>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div id="hardware-sizing" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Hardware Sizing Matrix</h2>
-                <p className="mt-3 mb-4 text-sm leading-relaxed text-[#4b5563]">
-                  Recommended capacity for OpsKnight and PostgreSQL based on monthly alert volume:
-                </p>
-                <div className="overflow-hidden rounded-[14px] border border-slate-200 bg-white">
-                  <table className="w-full text-left text-xs">
-                    <thead className="border-b border-slate-200 bg-slate-50 font-mono text-[11px] uppercase tracking-wider text-slate-500">
-                      <tr>
-                        <th className="px-4 py-2.5">Tier</th>
-                        <th className="px-4 py-2.5">Alert Volume</th>
-                        <th className="px-4 py-2.5">Compute</th>
-                        <th className="px-4 py-2.5">Topology</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-mono text-slate-700">
-                      <tr>
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Starter / Eval</td>
-                        <td className="px-4 py-2.5 text-slate-500">&lt; 10k / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">1 vCPU · 1 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Integrated Compose ($5 VPS)</td>
-                      </tr>
-                      <tr className="bg-slate-50/40">
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Team / Growth</td>
-                        <td className="px-4 py-2.5 text-slate-500">10k – 100k / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">2 vCPU · 2 GB RAM</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Split Compose or Docker Swarm</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2.5 font-sans font-medium text-slate-900">Enterprise scale</td>
-                        <td className="px-4 py-2.5 text-slate-500">100k+ / mo</td>
-                        <td className="px-4 py-2.5 text-slate-700">4+ vCPU · 4–8 GB</td>
-                        <td className="px-4 py-2.5 text-slate-600 font-sans">Helm / Kustomize Split + PgBouncer</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div id="what-this-is-not" className="scroll-mt-28 rounded-[14px] border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-[#111827]">Community and commercial boundary</h2>
-                <p className="mt-3 text-sm leading-relaxed text-[#4b5563]">
-                  This page installs the self-hosted OpsKnight Community application under {BRAND.license}.
-                  Separately licensed Enterprise modules, support, or hosted offerings may be documented and
-                  packaged independently. Check the current release documentation for exact Community feature
-                  availability and limits. The canonical installation reference is the{" "}
-                  <Link href={latestDocsHref("start/quickstart")} className="font-medium text-[#111827] underline">
-                    quickstart guide
-                  </Link>
-                  .
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 pt-4">
-                <Link
-                  href={latestDocsHref("start/quickstart")}
-                  className="inline-flex h-11 items-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
-                >
-                  Getting Started Docs
-                </Link>
-                <Link
-                  href="/security"
-                  className="text-sm font-semibold text-[#d21a1b] hover:underline"
-                >
-                  Security &amp; hardening architecture →
-                </Link>
-              </div>
+          <div className="deploy-quickstart-grid">
+            <article>
+              <span>01 / CONFIGURE</span>
+              <h3>Pin the release and set the minimum contract.</h3>
+              <p>
+                Use an explicit {PRODUCT.release.version} image tag or immutable
+                digest. Configure the database password, public URL values,
+                <code> NEXTAUTH_SECRET</code>, <code> API_KEY_SECRET</code>, and the stable 64-hex-character
+                <code> ENCRYPTION_KEY</code>. Other provider or API secrets are
+                conditional on the features you enable.
+              </p>
+              <pre tabIndex={0}><code>{`OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
+POSTGRES_PASSWORD=<unique-password>
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXTAUTH_SECRET=<random-base64-secret>
+API_KEY_SECRET=<separate-base64-secret>
+ENCRYPTION_KEY=<64-hex-character-key>`}</code></pre>
             </article>
 
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 pl-4 border-l border-slate-200/80 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
-                <PageToc
-                  sections={TOC_SECTIONS}
-                  specs={INSTALL_SPECS}
-                  quickCommand="docker compose up -d"
-                  quickCommandLabel="Quick Launch"
-                  docLink={latestDocsHref("operate/deploy/docker-compose/integrated")}
-                  docLinkLabel="Deployment Docs Hub"
-                />
-              </div>
-            </aside>
+            <article>
+              <span>02 / START &amp; VERIFY</span>
+              <h3>Use the maintained Compose path.</h3>
+              <p>
+                Pull the pinned image, wait for health, inspect the services,
+                and require readiness to return HTTP 200 before setup.
+              </p>
+              <pre tabIndex={0}><code>{`docker compose -f deploy/compose/docker-compose.yml pull
+docker compose -f deploy/compose/docker-compose.yml up -d --wait
+docker compose -f deploy/compose/docker-compose.yml ps
+curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'`}</code></pre>
+            </article>
+          </div>
+
+          <div className="paired-links">
+            <TextLink href={productDocs("start/quickstart")}>
+              Follow the Compose quickstart
+            </TextLink>
+            <TextLink href={productDocs("start/initial-setup")}>
+              Complete initial setup safely
+            </TextLink>
           </div>
         </div>
       </section>
+
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="PRODUCTION FOUNDATIONS"
+            title="The topology is only one part of production readiness."
+          >
+            Public routing, database durability, secrets, migrations and
+            recovery remain operator responsibilities in a self-hosted system.
+          </SectionIntro>
+
+          <div className="deploy-foundations-grid">
+            <article>
+              <Network size={22} />
+              <h3>Public HTTPS &amp; Application URL</h3>
+              <p>
+                DNS, TLS, proxy or ingress, <code>NEXTAUTH_URL</code>, normally
+                <code> NEXT_PUBLIC_APP_URL</code>, and the saved Application URL
+                must resolve to the same browser-facing origin.
+              </p>
+              <TextLink href={productDocs("operate/deploy/application-url-and-host-routing")}>
+                Host-routing contract
+              </TextLink>
+            </article>
+            <article>
+              <Database size={22} />
+              <h3>PostgreSQL &amp; recovery</h3>
+              <p>
+                Budget aggregate connections, keep migrations on the direct
+                database route where required, automate backups, and test a
+                restore with the matching encryption secrets.
+              </p>
+              <TextLink href={productDocs("operate/data/backup-and-restore")}>
+                Backup and restore
+              </TextLink>
+            </article>
+            <article>
+              <KeyRound size={22} />
+              <h3>Secrets that survive restarts</h3>
+              <p>
+                Keep <code>NEXTAUTH_SECRET</code> and
+                <code> ENCRYPTION_KEY</code> stable and protected. Add
+                provider, metrics, SCIM, voice, or API secrets only when the
+                corresponding capability requires them.
+              </p>
+              <TextLink href={productDocs("reference/configuration")}>
+                Configuration reference
+              </TextLink>
+            </article>
+            <article>
+              <ShieldCheck size={22} />
+              <h3>Migrations &amp; readiness gates</h3>
+              <p>
+                A successful container start is not acceptance. Require
+                migration success, readiness, canonical-host behavior, and an
+                end-to-end synthetic incident before production cutover.
+              </p>
+              <TextLink href={productDocs("operate/deploy")}>
+                Production acceptance
+              </TextLink>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-light-alt">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="SUPPORTED TOPOLOGIES"
+            title="Pick the operating model that matches your platform."
+          >
+            The v2.0.0 deployment guide does not publish a certified
+            requests-per-second threshold for choosing between these paths.
+          </SectionIntro>
+
+          <div
+            className="deploy-topology-table-wrap"
+            role="region"
+            aria-label="OpsKnight deployment topology comparison"
+            tabIndex={0}
+          >
+            <table className="deploy-topology-table">
+              <thead>
+                <tr>
+                  <th>Topology</th>
+                  <th>Best fit</th>
+                  <th>Multi-node HA</th>
+                  <th>Independent scaling</th>
+                  <th>PgBouncer</th>
+                  <th>Capacity status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topologyRows.map((row) => (
+                  <tr key={row.name}>
+                    <td>
+                      <strong>{row.name}</strong>
+                      <TextLink href={productDocs(row.docs)}>Guide</TextLink>
+                    </td>
+                    <td>{row.fit}</td>
+                    <td>{row.ha}</td>
+                    <td>{row.scaling}</td>
+                    <td>{row.pooler}</td>
+                    <td><span className="capacity-uncertified">Not certified</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="site-boundary">
+            Docker Swarm can replace application tasks across hosts, but bundled
+            PostgreSQL is not highly available. A Swarm HA objective requires
+            external HA PostgreSQL, an external TLS load balancer, durable
+            backups, and at least three managers.
+          </p>
+        </div>
+      </section>
+
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="MAINTAINED INSTALL PATHS"
+            title="Use the gates each orchestrator already provides."
+          />
+
+          <div className="deploy-method-grid">
+            <article>
+              <Server size={22} />
+              <span>DOCKER SWARM</span>
+              <h3>Use the maintained deploy orchestrator.</h3>
+              <p>
+                The script validates manager/capacity prerequisites, creates
+                secrets, owns migration, deploys the stack, waits for
+                convergence, and checks readiness. Routine raw
+                <code> docker stack deploy</code> bypasses those gates.
+              </p>
+              <pre tabIndex={0}><code>{`# Split mode (default; requires explicit release image)
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+./deploy/swarm/scripts/deploy.sh
+
+# Integrated mode (defaults to 2.0.0 image)
+SWARM_RUNTIME_MODE=integrated ./deploy/swarm/scripts/deploy.sh`}</code></pre>
+              <TextLink href={productDocs("operate/deploy/swarm/install")}>
+                Swarm installation guide
+              </TextLink>
+            </article>
+
+            <article>
+              <Server size={22} />
+              <span>KUBERNETES / HELM</span>
+              <h3>Render and validate the maintained chart.</h3>
+              <p>
+                Create the namespace and externally managed Secret, render the
+                local chart, validate it, then install the reviewed production
+                values. The published v2 docs do not require a hosted chart
+                repository.
+              </p>
+              <pre tabIndex={0}><code>{`helm lint deploy/kubernetes/helm/opsknight -f values.production.yaml
+helm template opsknight deploy/kubernetes/helm/opsknight \\
+  --namespace opsknight -f values.production.yaml > rendered.yaml
+kubectl apply --dry-run=server -f rendered.yaml
+
+helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
+  --namespace opsknight --create-namespace \\
+  --values values.production.yaml --wait --timeout 15m`}</code></pre>
+              <TextLink href={productDocs("operate/deploy/helm/install")}>
+                Helm installation guide
+              </TextLink>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-dark">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="CAPACITY"
+            title="Build a budget from workload shape and measured saturation."
+          >
+            Until a matching benchmark is certified, do not turn a measured
+            peak into a production promise.
+          </SectionIntro>
+
+          <div className="deploy-capacity-grid">
+            <article>
+              <Gauge size={24} />
+              <h3>Describe the workload first.</h3>
+              <ul>
+                <li>Peak and sustained alert ingestion</li>
+                <li>Incident deduplication ratio</li>
+                <li>Notifications and escalations per incident</li>
+                <li>Concurrent users and SSE streams</li>
+                <li>Status subscribers and fan-out</li>
+                <li>External provider rate limits</li>
+              </ul>
+            </article>
+            <article>
+              <Database size={24} />
+              <h3>Budget PostgreSQL connections.</h3>
+              <p>
+                Sum each runtime role&apos;s replicas × pool size plus migration,
+                administration, monitoring and safety headroom. PgBouncer can
+                pool supported web traffic in Split mode, but direct-role pools
+                still count.
+              </p>
+              <TextLink href={productDocs("operate/capacity/sizing")}>
+                Build a capacity budget
+              </TextLink>
+            </article>
+          </div>
+
+          <div className="deploy-signal-table">
+            <div className="deploy-signal-head">
+              <span>SIGNAL</span>
+              <span>LIKELY CONSTRAINT</span>
+              <span>FIRST RESPONSE</span>
+            </div>
+            {signals.map(([signal, owner, response]) => (
+              <div key={signal}>
+                <strong>{signal}</strong>
+                <span>{owner}</span>
+                <p>{response}</p>
+              </div>
+            ))}
+          </div>
+          <TextLink href={productDocs("operate/capacity/scaling-signals")}>
+            Read scaling signals
+          </TextLink>
+        </div>
+      </section>
+
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="GO-LIVE ACCEPTANCE"
+            title="Prove the deployment before production alerting depends on it."
+          />
+          <div className="deploy-acceptance-grid">
+            {[
+              "Pin the exact image tag or digest and preserve the reviewed deployment configuration.",
+              "Require migration success and public readiness through the intended HTTPS origin.",
+              "Verify DNS, TLS/proxy host, authentication URLs, and saved Application URL agree.",
+              "Verify database backups and an isolated restore with the required stable secrets.",
+              "Run a synthetic alert through notification, acknowledgement, resolution, and status projection.",
+              "Observe queue/worker/database/provider signals and repeat the affected checks after topology or release changes.",
+            ].map((item) => (
+              <div key={item}>
+                <CheckCircle2 size={18} />
+                <p>{item}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="deploy-checklist-section">
+            <div className="deploy-checklist-header">
+              <span className="site-eyebrow">
+                <span className="signal-dot" /> VERIFICATION GATES
+              </span>
+              <h3>First-deployment verification checklist</h3>
+              <p>
+                Run these five operational smoke tests before redirecting production monitoring signals to your new instance.
+              </p>
+            </div>
+
+            <div className="deploy-checklist-grid">
+              {[
+                {
+                  step: "01",
+                  title: "Bootstrap & Health Probe",
+                  objective: "Verify API gateway readiness, database pool connectivity, and Redis cache health.",
+                  command: "curl -fsSL https://opsknight.internal/api/v1/health | jq .",
+                  expected: '{"status":"healthy","database":"connected","redis":"connected","version":"2.0.0"}',
+                },
+                {
+                  step: "02",
+                  title: "Inbound Webhook Verification",
+                  objective: "Simulate a signed Prometheus Alertmanager or Datadog alert payload.",
+                  command: `curl -X POST https://opsknight.internal/api/v1/webhooks/raw-synthetic \\
+  -H "Content-Type: application/json" \\
+  -H "X-OpsKnight-Signature: $SYNTHETIC_HMAC" \\
+  -d '{"event":"ping","service":"checkout","severity":"sev1"}'`,
+                  expected: "HTTP/2 202 Accepted · Event acknowledged and routed into Command Center triage stream.",
+                },
+                {
+                  step: "03",
+                  title: "On-Call Paging Carrier Test",
+                  objective: "Dispatch a high-priority paging test through configured Twilio/carrier routes to primary responder.",
+                  command: "curl -X POST https://opsknight.internal/api/v1/schedules/primary/test-page \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
+                  expected: "Dispatched carrier notification token. Primary handset rings in <5s with acknowledgment prompt.",
+                },
+                {
+                  step: "04",
+                  title: "ChatOps War Room Handshake",
+                  objective: "Confirm Slack or Microsoft Teams webhook handshake and slash command interactivity.",
+                  command: "/opsknight ack INC-2026-0042",
+                  expected: 'Bidirectional sync: thread updated with "Acknowledged by @responder. Auto-escalation halted."',
+                },
+                {
+                  step: "05",
+                  title: "Operations Queue Diagnostics",
+                  objective: "Probe background worker pools, BullMQ queue depths, and database connection overhead.",
+                  command: "curl -fsSL https://opsknight.internal/api/v1/operations/queues \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
+                  expected: '{"critical_queue":{"waiting":0,"active":1},"bulk_queue":{"waiting":0},"delayed":0}',
+                },
+              ].map((gate) => (
+                <article key={gate.step} className="deploy-gate-card">
+                  <div className="deploy-gate-head">
+                    <span className="deploy-gate-step">{gate.step}</span>
+                    <div>
+                      <h4>{gate.title}</h4>
+                      <p>{gate.objective}</p>
+                    </div>
+                  </div>
+                  <div className="deploy-gate-code">
+                    <div className="deploy-gate-code-label">PROBE COMMAND</div>
+                    <pre tabIndex={0}><code>{gate.command}</code></pre>
+                  </div>
+                  <div className="deploy-gate-expected">
+                    <span className="deploy-gate-expected-label">EXPECTED RESULT</span>
+                    <p>{gate.expected}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="deploy-support-note">
+            <div>
+              <p className="site-eyebrow">OPTIONAL PROFESSIONAL HELP</p>
+              <h3>Commercial support &amp; implementation services</h3>
+              <p>
+                Deployment assistance, architecture review, upgrades,
+                troubleshooting and implementation can be scoped separately.
+                No 24×7 coverage or response-time SLA is advertised on this
+                website; any service commitment must be agreed in writing.
+              </p>
+            </div>
+            <TextLink href="/support/">Discuss support &amp; services</TextLink>
+          </div>
+        </div>
+      </section>
+
+      <FinalCTA />
     </div>
   );
 }

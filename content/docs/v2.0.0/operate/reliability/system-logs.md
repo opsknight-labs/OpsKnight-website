@@ -4,10 +4,6 @@ description: Use OpsKnight's process-local log viewer and durable container logs
 type: how-to
 product_area: observability
 audience: [operator, administrator]
-reader:
-  status: READER_COMPLETE
-  task: Configure logging, correlate a failure across roles, and verify recovery.
-  evidence: [docs/v2.0.0/assets/system-logs.png]
 verification:
   level: source
   verified_at: 2026-09-29
@@ -16,8 +12,6 @@ verification:
 
 # Operate with system logs
 
-![System Logs with severity counters, filters, and structured entries](/docs/v2.0.0/assets/system-logs.png)
-
 OpsKnight writes application logs to stdout/stderr and retains a small copy in each Node.js process. **System Logs** displays that in-process copy. Use it for immediate diagnosis on a single web replica; use your container logging platform for durable, searchable, multi-replica history.
 
 ## Before you begin
@@ -25,12 +19,6 @@ OpsKnight writes application logs to stdout/stderr and retains a small copy in e
 Sign in as an `ADMIN`. Record the affected workflow, UTC time, visible error,
 runtime role, and any request, incident, notification, delivery, or job identifier
 before restarting a container or changing log levels.
-
-## Open the feature
-
-Open **System Logs** (`/system-logs`) on the affected environment. Keep the platform log explorer open beside it because the UI buffer represents only the web process serving the request.
-
-## Understand how logging works
 
 ## Supported boundary
 
@@ -69,15 +57,7 @@ The logger redacts context keys associated with passwords, tokens, secrets, auth
 
 Redaction is defense in depth, not permission to log secrets. Never add credentials or complete payloads to logs for troubleshooting. Restrict central logs because incident titles, identifiers, provider errors, and operational timing can still be sensitive.
 
-## Verify the diagnosis
-
-Reproduce the safe test once, confirm the expected log transition across owning roles, and verify the user workflow recovers. Preserve relevant centralized records before a restart clears process-local evidence.
-
-## Undo temporary logging changes
-
-Return `LOG_LEVEL` to the approved production value, roll the affected roles, and confirm debug volume stops. Do not reduce durable retention or delete incident evidence as part of cleanup.
-
-## Troubleshooting
+## Symptom-first troubleshooting
 
 ### The page says “No logs captured yet”
 
@@ -94,9 +74,3 @@ Set `LOG_LEVEL=debug` on only the affected roles, restart them, reproduce for a 
 ### A request ID stops at the web tier
 
 Follow the incident, notification, delivery, external-operation, or background-job identifier. Queue execution is asynchronous and is not guaranteed to retain the initiating browser correlation ID.
-
-## Next steps
-
-- [Use Health Center](./health-center)
-- [Health checks and metrics](./health-and-metrics)
-- [Audit logs](../../guides/administration/audit-logs)

@@ -1,10 +1,13 @@
 import { BRAND } from "@/lib/brand";
+import comparisons from "@/../content/product/comparisons.json";
 
 /**
  * Comparison matrix for OpsKnight and common on-call products.
  *
- * OpsKnight feature cells reflect the v2.0.0 stable release (2026-10-02).
- * License metadata reflects AGPL-3.0-only; v1.4.0 and earlier retain Apache-2.0.
+ * OpsKnight feature cells are grounded in the pinned v2.0.0 release catalog,
+ * application routes and published v2.0.0 documentation. Competitor cells are
+ * summaries of the public vendor sources listed below and should be re-verified
+ * when vendors change packaging, product status or pricing.
  */
 
 export type CompareVendorId =
@@ -16,9 +19,19 @@ export type CompareVendorId =
   | "splunk"
   | "grafana";
 
+export type CompareCategory =
+  | "deployment"
+  | "response"
+  | "paging"
+  | "collaboration"
+  | "status"
+  | "analytics"
+  | "identity"
+  | "integrations";
+
 export type CompareCell = boolean | string;
 
-export const COMPARE_AS_OF = "2 Oct 2026";
+export const COMPARE_AS_OF = comparisons[0]?.asOf ?? "2026-10-05";
 
 export const COMPARE_VENDORS: {
   id: CompareVendorId;
@@ -36,9 +49,14 @@ export const COMPARE_VENDORS: {
 
 export type CompareRow = {
   feature: string;
+  category?: CompareCategory;
   source?: string;
+  verifiedAt?: string;
   values: Record<CompareVendorId, CompareCell>;
 };
+
+export const compareRowVerifiedAt = (row: CompareRow) =>
+  row.verifiedAt ?? COMPARE_AS_OF;
 
 export type CompareSection = {
   title: string;
@@ -82,6 +100,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Deployment",
+        category: "deployment",
         source: "OpsKnight: Compose, Swarm, Helm, Kustomize. Others: vendor product model as of Oct 2026.",
         values: {
           opsknight: "Self-hosted: Compose, Swarm, Helm, Kustomize (your VPC)",
@@ -95,6 +114,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Software license",
+        category: "deployment",
         source: `OpsKnight v2.0.0: ${BRAND.license}. Published v${BRAND.legacyVersion} and earlier retain the licenses shipped with those artifacts, including ${BRAND.legacyLicense} where applicable. Grafana OnCall OSS was AGPLv3; that repo is archived.`,
         values: {
           opsknight: `${BRAND.license} (v2.0.0)`,
@@ -108,21 +128,23 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Commercial model",
-        source: "OpsKnight Community and commercial offerings have separate licensing boundaries. Vendor pricing references should be confirmed on vendor sites.",
+        category: "deployment",
+        source: "OpsKnight v2.0.0: AGPL-3.0-only open source with optional commercial support and implementation services. Vendor packaging changes over time; use the linked vendor pricing pages for current terms.",
         values: {
-          opsknight: "Self-hosted Community; Enterprise/hosted capabilities may be packaged separately",
-          pagerduty: "Professional $25/user/mo or $21 annual; Business/Enterprise and add-ons vary",
-          incidentio: "Per-seat responder/on-call plans; packaging varies by tier",
-          opsgenie: "No new sales; capabilities moving to Jira Service Management",
-          squadcast: "Per-user commercial plans",
-          splunk: "Commercial Splunk On-Call plans",
-          grafana: "Grafana Cloud IRM commercial usage/user pricing",
+          opsknight: "AGPL-3.0-only open source; optional commercial support & services",
+          pagerduty: "Free / paid Incident Management and Reliability Platform plans; add-ons vary",
+          incidentio: "Free and paid Incident Response plans; On-call packaging varies by plan",
+          opsgenie: "No new standalone sales; capabilities are moving to Jira Service Management",
+          squadcast: "Commercial SolarWinds Incident Response plans",
+          splunk: "Commercial Splunk On-Call service",
+          grafana: "Commercial Grafana Cloud IRM service",
         },
       },
       {
         feature: "Incident data location",
+        category: "deployment",
         values: {
-          opsknight: "Your Postgres / VPC for Community self-hosting",
+          opsknight: "Application database and backups stay in infrastructure you operate; configured external providers receive only the traffic you enable",
           pagerduty: "PagerDuty cloud",
           incidentio: "Vendor cloud",
           opsgenie: "Atlassian cloud",
@@ -133,15 +155,114 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Product standing (Oct 2026)",
-        source: "OpsKnight v2.0.0 is the active stable release (AGPL-3.0-only); v1.4.0 remains historical Apache-era stable. Atlassian Opsgenie and Grafana status from their public migration/archive pages.",
+        category: "deployment",
+        source: `OpsKnight ${BRAND.releaseLabel} is the stable release under ${BRAND.license}. Atlassian Opsgenie and Grafana status from their public migration/archive pages.`,
         values: {
-          opsknight: "v2.0.0 stable; v1.4.0 historical Apache release",
+          opsknight: `${BRAND.releaseLabel} stable release (${BRAND.license})`,
           pagerduty: "Actively sold",
           incidentio: "Actively sold",
           opsgenie: "Standalone: no new purchases; EOL 5 Apr 2027 → Jira Service Management",
           squadcast: "Actively sold (SolarWinds Incident Response)",
           splunk: "Actively sold",
           grafana: "OnCall OSS archived 24 Mar 2026. Current: Grafana Cloud IRM",
+        },
+      },
+      {
+        feature: "Runtime topology choice",
+        category: "deployment",
+        source: "OpsKnight v2.0.0 documents integrated and split runtime roles across Compose, Kubernetes and Swarm. SaaS competitors operate their application runtime for customers.",
+        values: {
+          opsknight: "Integrated runtime or independently scalable Web, Scheduler, General, Critical, Bulk and Status roles",
+          pagerduty: "Vendor-operated SaaS runtime",
+          incidentio: "Vendor-operated SaaS runtime",
+          opsgenie: "Vendor-operated Atlassian Cloud runtime",
+          squadcast: "Vendor-operated SolarWinds runtime",
+          splunk: "Vendor-operated Splunk runtime",
+          grafana: "Vendor-operated Grafana Cloud runtime",
+        },
+      },
+      {
+        feature: "Release / upgrade control",
+        category: "deployment",
+        source: "OpsKnight operators pin container/chart/source releases and choose upgrade timing. SaaS vendors control production rollout timing for their hosted service.",
+        values: {
+          opsknight: "Operator pins the release and schedules upgrades",
+          pagerduty: "Vendor-managed rollout",
+          incidentio: "Vendor-managed rollout",
+          opsgenie: "Vendor-managed rollout through end-of-support / migration path",
+          squadcast: "Vendor-managed rollout",
+          splunk: "Vendor-managed rollout",
+          grafana: "Vendor-managed rollout",
+        },
+      },
+      {
+        feature: "Database & backup responsibility",
+        category: "deployment",
+        source: "OpsKnight is self-hosted around PostgreSQL and published backup/recovery guidance. SaaS vendors operate their service storage layer.",
+        values: {
+          opsknight: "Operator manages PostgreSQL, backups, restore testing and capacity",
+          pagerduty: "Vendor operated",
+          incidentio: "Vendor operated",
+          opsgenie: "Vendor operated",
+          squadcast: "Vendor operated",
+          splunk: "Vendor operated",
+          grafana: "Vendor operated",
+        },
+      },
+      {
+        feature: "Network edge & TLS responsibility",
+        category: "deployment",
+        source: "OpsKnight deployment guides make DNS, HTTPS, reverse proxy / ingress and network policy operator responsibilities. SaaS vendors operate the public product endpoint and transport layer for their service.",
+        values: {
+          opsknight: "Operator owns DNS, TLS, ingress / proxy and network policy",
+          pagerduty: "Vendor operates service endpoint and TLS",
+          incidentio: "Vendor operates service endpoint and TLS",
+          opsgenie: "Atlassian operates service endpoint and TLS",
+          squadcast: "Vendor operates service endpoint and TLS",
+          splunk: "Splunk operates service endpoint and TLS",
+          grafana: "Grafana operates Cloud endpoint and TLS",
+        },
+      },
+      {
+        feature: "Application secret & key custody",
+        category: "deployment",
+        source: "OpsKnight v2.0.0 hardening and recovery guidance requires operators to manage application/provider secrets and preserve required encryption keys. SaaS vendors manage service-side cryptography while customers retain tenant and integration credentials.",
+        values: {
+          opsknight: "Operator manages application keys, provider credentials and recovery copies",
+          pagerduty: "Vendor manages service keys; customer manages tenant/API credentials",
+          incidentio: "Vendor manages service keys; customer manages tenant/integration credentials",
+          opsgenie: "Atlassian manages service keys; customer manages tenant/integration credentials",
+          squadcast: "Vendor manages service keys; customer manages tenant/integration credentials",
+          splunk: "Splunk manages service keys; customer manages tenant/integration credentials",
+          grafana: "Grafana manages Cloud service keys; customer manages tenant/integration credentials",
+        },
+      },
+      {
+        feature: "Runtime scaling responsibility",
+        category: "deployment",
+        source: "OpsKnight v2.0.0 publishes integrated/split runtime roles, database connection budgeting and scaling guidance. Hosted competitors operate capacity for their SaaS control plane.",
+        values: {
+          opsknight: "Operator scales web/workers/database and budgets connections",
+          pagerduty: "Vendor manages service-plane capacity",
+          incidentio: "Vendor manages service-plane capacity",
+          opsgenie: "Atlassian manages service-plane capacity",
+          squadcast: "Vendor manages service-plane capacity",
+          splunk: "Splunk manages service-plane capacity",
+          grafana: "Grafana manages Cloud service-plane capacity",
+        },
+      },
+      {
+        feature: "Incident-platform health monitoring",
+        category: "deployment",
+        source: "OpsKnight exposes Health Center, Prometheus metrics and structured logs for operator monitoring. SaaS vendors monitor their hosted control plane; customers still monitor their own integrations and vendor status.",
+        values: {
+          opsknight: "Operator monitors Health Center, metrics, logs, queues, DB and providers",
+          pagerduty: "Vendor monitors hosted platform; customer monitors integrations/vendor status",
+          incidentio: "Vendor monitors hosted platform; customer monitors integrations/vendor status",
+          opsgenie: "Atlassian monitors hosted platform through support period",
+          squadcast: "Vendor monitors hosted platform; customer monitors integrations/vendor status",
+          splunk: "Splunk monitors hosted platform; customer monitors integrations/vendor status",
+          grafana: "Grafana monitors Cloud platform; customer monitors integrations/vendor status",
         },
       },
     ],
@@ -151,6 +272,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Incident lifecycle",
+        category: "response",
         source: "OpsKnight Prisma IncidentStatus. Others: core incident/alert products.",
         values: {
           opsknight: "Open, ack, snooze, suppress, resolve",
@@ -164,6 +286,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "On-call schedules",
+        category: "paging",
         source: "OpsKnight layers/overrides. Others: documented schedule products.",
         values: {
           opsknight: "Layers, rotations, overrides, timezones",
@@ -177,6 +300,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Escalation policies",
+        category: "paging",
         values: {
           opsknight: "Steps: user, schedule, or team",
           pagerduty: true,
@@ -189,9 +313,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Outbound paging channels",
+        category: "paging",
         source: "OpsKnight NotificationChannel enum + docs. Vendor contact-method docs.",
         values: {
-          opsknight: "Email, SMS (Twilio/SNS), push, Slack, Teams, WhatsApp, voice paging (Twilio), webhook (v2.0.0)",
+          opsknight: "Email, SMS (Twilio or AWS SNS), push, Slack, WhatsApp, webhook, Twilio voice calls",
           pagerduty: "Push, phone, SMS, email, Slack; WhatsApp in Early Access",
           incidentio: "Mobile app, phone, SMS, Slack, email, WhatsApp (WhatsApp not on Basic)",
           opsgenie: "Push, email, SMS, voice (plan caps); Slack and Teams apps",
@@ -202,9 +327,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Native voice / phone calls",
-        source: "OpsKnight v2.0.0 adds Twilio VOICE channel for triggered-incident paging with responder ack input. Others: notification/contact docs.",
+        category: "paging",
+        source: "OpsKnight v2.0.0 adds Twilio voice paging on incident trigger (single-key DTMF ack, press 1). Others: notification/contact docs.",
         values: {
-          opsknight: "Twilio voice paging on incident trigger with responder ack input (v2.0.0)",
+          opsknight: "Yes — Twilio voice paging on trigger (press 1 to ack)",
           pagerduty: "Yes — phone contact method",
           incidentio: "Yes — phone escalations; live call routing on Pro/Enterprise",
           opsgenie: "Yes — voice on historical paid plans",
@@ -215,6 +341,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Slack ChatOps war rooms",
+        category: "collaboration",
         source: "OpsKnight Slack OAuth war rooms from v1.2. Vendor Slack apps.",
         values: {
           opsknight: "Channel per incident; ack/assign/resolve from Slack",
@@ -228,9 +355,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Microsoft Teams ChatOps",
-        source: "OpsKnight v2.0.0: native Teams app via Entra + Azure Bot — war rooms, Adaptive Cards, ack/resolve from channel, identity linking, meeting collaboration. Others: published Teams apps.",
+        category: "collaboration",
+        source: "OpsKnight v2.0.0: Native Teams war rooms and incident channels. Others: published Teams apps.",
         values: {
-          opsknight: "Native Teams app: war rooms, Adaptive Cards, ack/resolve, identity linking (v2.0.0)",
+          opsknight: "Native Teams war rooms & incident channels",
           pagerduty: "Native Teams app: channel cards, ack/resolve, service mapping",
           incidentio: "Native Teams app (Pro/Enterprise): dedicated channel, lifecycle in Teams",
           opsgenie: "Teams V2 integration: ack/close/snooze from channel",
@@ -241,6 +369,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Video bridge on incident",
+        category: "collaboration",
         source: "OpsKnight: Jitsi generator + Zoom/Meet URL templates. Vendor collaboration docs.",
         values: {
           opsknight: "Jitsi; Zoom/Meet via URL template",
@@ -254,6 +383,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Postmortems + action items",
+        category: "analytics",
         source: "OpsKnight Postmortem + ActionItem models. Vendor PIR docs.",
         values: {
           opsknight: "Timeline-based postmortems and action items",
@@ -267,9 +397,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Status page",
-        source: "OpsKnight published Community baseline: one page per install. Other vendors: status-page product docs.",
+        category: "status",
+        source: "OpsKnight v2.0.0: One public/private status page per install with subscribers. Other vendors: status-page product docs.",
         values: {
-          opsknight: "Community baseline: one public/private page with custom domain and subscribers",
+          opsknight: "v2.0.0: 1 public/private page with custom domain & subscribers",
           pagerduty: "Internal / external / private Status Pages (plan-gated; custom domain on external)",
           incidentio: "Public, internal, customer pages (counts by plan); custom domain",
           opsgenie: "Pair with Atlassian Statuspage (separate product)",
@@ -280,6 +411,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "MTTA / MTTR / SLA",
+        category: "analytics",
         source: "OpsKnight SLA definitions/analytics. Other vendors: reporting products.",
         values: {
           opsknight: "MTTA/MTTR and SLA definitions in-app",
@@ -293,7 +425,8 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Mobile",
-        source: "OpsKnight: installable PWA. Vendor App Store / Play apps.",
+        category: "response",
+        source: "OpsKnight: installable PWA with push. Vendor App Store / Play apps.",
         values: {
           opsknight: "Installable PWA with push; no App Store listing",
           pagerduty: "iOS and Android apps",
@@ -311,6 +444,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
     rows: [
       {
         feature: "Inbound monitoring webhooks",
+        category: "integrations",
         source: `OpsKnight published docs catalog: ${BRAND.integrationCountLabel} native parsers. Other vendors: integration directories.`,
         values: {
           opsknight: `${BRAND.integrationCountLabel} native parsers + generic JSON`,
@@ -324,6 +458,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "PagerDuty Events API v2 ingest",
+        category: "integrations",
         source: "OpsKnight docs: POST /api/integrations/pagerduty/v2/enqueue. PagerDuty: events.pagerduty.com/v2/enqueue.",
         values: {
           opsknight: "Yes — ingest adapter (routing_key payload). Not a PagerDuty clone",
@@ -337,6 +472,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "Jira Cloud",
+        category: "integrations",
         source: "OpsKnight published integration and vendor Jira integration guides.",
         values: {
           opsknight: "Bi-directional issue sync",
@@ -350,6 +486,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "REST API keys",
+        category: "integrations",
         values: {
           opsknight: true,
           pagerduty: "REST API + Events API keys",
@@ -362,6 +499,7 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "SSO",
+        category: "identity",
         source: "OpsKnight v2.0.0: OIDC with PKCE, JIT provisioning, claim-to-role mapping, and SCIM 2.0 user provisioning. Vendor SSO docs for other products.",
         values: {
           opsknight: "OIDC (PKCE, JIT, claim-to-role) + SCIM 2.0 provisioning (v2.0.0)",
@@ -375,9 +513,10 @@ export const COMPARE_SECTIONS: CompareSection[] = [
       },
       {
         feature: "RBAC + audit log",
+        category: "identity",
         source: "OpsKnight roles + AuditLog. Other vendors: documented admin controls.",
         values: {
-          opsknight: "Roles + audit log; advanced governance can be packaged separately",
+          opsknight: "4 roles (Admin, Responder, Observer, Auditor) + append-only audit log",
           pagerduty: "Roles + audit / analytics (plan-dependent)",
           incidentio: "Roles; custom RBAC + audit logs on Enterprise",
           opsgenie: "Roles + audit on paid plans",
@@ -390,72 +529,4 @@ export const COMPARE_SECTIONS: CompareSection[] = [
   },
 ];
 
-export const OPKNIGHT_GAPS = [
-  {
-    item: "Voice paging scope",
-    detail: "v2.0.0 adds Twilio voice paging on incident trigger. Voice fires on the initial triggered-incident paging step only — not on every subsequent state change.",
-  },
-  {
-    item: "Multiple independent status pages per team",
-    detail: "The v2.0.0 baseline has one status page per install. Additional pages are a natural future commercial capability.",
-  },
-  {
-    item: "AI alert correlation / auto postmortems",
-    detail: "Postmortems are currently authored from the incident timeline rather than generated automatically.",
-  },
-  {
-    item: "OpsKnight-hosted cloud",
-    detail: "A managed OpsKnight Cloud service is not currently offered; v2.0.0 is self-hosted.",
-  },
-];
-
-export const HONEST_BLURB: Record<string, { title: string; body: string }> = {
-  pagerduty: {
-    title: "PagerDuty",
-    body: "Vendor-hosted incident and on-call with commercial plans and add-ons. Native voice, Slack/Teams apps, Status Pages, and Events API v2. OpsKnight Community is self-hosted and supports the Events API v2 payload shape at your URL; commercial OpsKnight capabilities can be packaged separately.",
-  },
-  incidentio: {
-    title: "incident.io",
-    body: "Vendor-hosted response that runs in Slack or Microsoft Teams, with status pages and commercial responder/on-call packaging. OpsKnight v2.0.0 is self-hosted with native Slack and Teams war rooms under AGPL-3.0-only.",
-  },
-  opsgenie: {
-    title: "Opsgenie",
-    body: "Atlassian's standalone Opsgenie is closed to new purchases. Support ends 5 April 2027; alerting/on-call is moving into Jira Service Management. OpsKnight is independent self-hosted software under AGPL-3.0-only.",
-  },
-  squadcast: {
-    title: "Squadcast",
-    body: "SolarWinds Incident Response (Squadcast) is commercial SaaS with voice, Slack/Teams apps, and status-page capabilities by plan. OpsKnight v2.0.0 is self-hosted and licensed under AGPL-3.0-only.",
-  },
-  splunk: {
-    title: "Splunk On-Call",
-    body: `Formerly VictorOps. Vendor-hosted on-call with phone/SMS/push and Slack/Teams apps. OpsKnight v2.0.0 is a separate ${BRAND.license} self-hosted stack, not a Splunk add-on.`,
-  },
-  grafana: {
-    title: "Grafana Cloud IRM",
-    body: `Grafana OnCall OSS was archived on 24 March 2026. The current Grafana product is Cloud IRM. OpsKnight v${BRAND.version} is ${BRAND.license} self-hosted incident response; published v${BRAND.legacyVersion} artifacts retain their historical ${BRAND.legacyLicense} license.`,
-  },
-};
-
-export function vendorIdFromCompareSlug(slug: string): CompareVendorId | null {
-  switch (slug) {
-    case "pagerduty":
-      return "pagerduty";
-    case "incidentio":
-    case "incident-io":
-      return "incidentio";
-    case "opsgenie":
-      return "opsgenie";
-    case "squadcast":
-      return "squadcast";
-    case "splunk":
-    case "victorops":
-      return "splunk";
-    case "grafana-oncall":
-      return "grafana";
-    default:
-      return null;
-  }
-}
-
-export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight feature cells reflect the v${BRAND.version} stable release (${BRAND.license}); v${BRAND.legacyVersion} and earlier artifacts retain their historical ${BRAND.legacyLicense} terms. Vendor columns summarize public documentation and packaging, not a contract. Confirm current vendor pricing before making a purchasing decision.`;
-
+export const COMPARE_FOOTNOTE = `As of ${COMPARE_AS_OF}. OpsKnight cells are grounded in the pinned v${BRAND.version} release, application routes, release catalog and versioned documentation. Vendor columns summarize dated public documentation and packaging, not contractual commitments. Confirm current vendor terms and re-verify any feature that is material to your decision.`;

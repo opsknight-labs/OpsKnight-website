@@ -1,0 +1,134 @@
+[
+  {
+    "claim": "Current release",
+    "contractField": "release.version",
+    "evidence": "source/versions.json",
+    "action": "Release matches tagged source"
+  },
+  {
+    "claim": "License",
+    "contractField": "release.license",
+    "evidence": "source/LICENSE",
+    "action": "AGPL-3.0-only; historical terms retained"
+  },
+  {
+    "claim": "Integration count",
+    "contractField": "inboundIntegrationCount",
+    "evidence": "source/catalog.yaml",
+    "action": "Derived from inbound providers"
+  },
+  {
+    "claim": "Voice behavior",
+    "contractField": "notifications.voiceScope",
+    "evidence": "integrations/communication/voice",
+    "action": "Triggered incidents; later lifecycle events do not call"
+  },
+  {
+    "claim": "Manual escalation",
+    "contractField": "boundaries.manualEscalation",
+    "evidence": "guides/incidents/escalate",
+    "action": "Capability-enabled Teams cards only"
+  },
+  {
+    "claim": "Status page limit",
+    "contractField": "boundaries.statusPageLimit",
+    "evidence": "concepts/status-pages",
+    "action": "One per installation"
+  },
+  {
+    "claim": "Mobile type",
+    "contractField": "boundaries.mobileType",
+    "evidence": "concepts/mobile",
+    "action": "Installable PWA"
+  },
+  {
+    "claim": "Slack and Teams",
+    "contractField": "platform.products.chatops",
+    "evidence": "source/capabilities.yaml#chatops",
+    "action": "Verified collaboration capability"
+  },
+  {
+    "claim": "Jira",
+    "contractField": "integrations.jira",
+    "evidence": "source/capabilities.yaml#jira",
+    "action": "Verified bidirectional issue workflow"
+  },
+  {
+    "claim": "OIDC",
+    "contractField": "security.sections.Identity",
+    "evidence": "source/capabilities.yaml#oidc",
+    "action": "Verified identity capability"
+  },
+  {
+    "claim": "SCIM",
+    "contractField": "security.sections.Provisioning",
+    "evidence": "source/capabilities.yaml#scim",
+    "action": "Verified provisioning capability"
+  },
+  {
+    "claim": "Roles and sessions",
+    "contractField": "security.sections.Access & sessions",
+    "evidence": "source/CHANGELOG.md",
+    "action": "Role authorization and session registry"
+  },
+  {
+    "claim": "Privacy",
+    "contractField": "security.sections.Privacy operations",
+    "evidence": "source/capabilities.yaml#privacy",
+    "action": "Verified privacy operations"
+  },
+  {
+    "claim": "Compliance",
+    "contractField": "marketing boundary",
+    "evidence": "source/CHANGELOG.md",
+    "action": "No external certification claimed"
+  },
+  {
+    "claim": "Deployment models",
+    "contractField": "deployments.models",
+    "evidence": "source/capabilities.yaml#deployment",
+    "action": "Compose, Kubernetes/Helm/Kustomize, Swarm"
+  },
+  {
+    "claim": "Split runtime",
+    "contractField": "deployments.roles",
+    "evidence": "source/CHANGELOG.md",
+    "action": "Six runtime roles; split alone is not HA"
+  },
+  {
+    "claim": "Health and observability",
+    "contractField": "platform.products.operations",
+    "evidence": "source/capabilities.yaml#observability",
+    "action": "Health Center, metrics and logs"
+  },
+  {
+    "claim": "Analytics",
+    "contractField": "platform.products.analytics",
+    "evidence": "source/capabilities.yaml#analytics_and_reports",
+    "action": "Response and service performance"
+  },
+  {
+    "claim": "Postmortems",
+    "contractField": "platform.products.postmortems",
+    "evidence": "source/capabilities.yaml#postmortems",
+    "action": "Timeline, 5 Whys and owned action items"
+  },
+  {
+    "claim": "AI RCA",
+    "contractField": "excluded",
+    "evidence": "source/capabilities.yaml",
+    "action": "No AI-generated RCA claim"
+  },
+  {
+    "claim": "Native SLO platform",
+    "contractField": "excluded",
+    "evidence": "source/capabilities.yaml",
+    "action": "No native SLO-management claim"
+  },
+  {
+    "claim": "Competitors",
+    "contractField": "comparisons.json",
+    "evidence": "dated primary vendor links",
+    "action": "Deployment, operating costs and capability scope remain distinct"
+  }
+]

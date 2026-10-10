@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Footer } from "@/components/layout/Footer";
+import { SiteFooter } from "@/components/site/SiteNavigation";
 
 export function ConditionalFooter() {
     const pathname = usePathname();
@@ -9,5 +9,5 @@ export function ConditionalFooter() {
 
     if (isDocs) return null;
 
-    return <Footer />;
+    return <SiteFooter />;
 }

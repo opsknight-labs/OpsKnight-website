@@ -31,7 +31,3 @@ in [Guides](../guides/); exact contracts belong in
 - [Analytics](./analytics)
 - [Authentication](./authentication)
 - [Permissions](./permissions)
-- [Privacy](./privacy)
-- [Compliance](./compliance)
-- [Mobile and PWA](./mobile)
-- [Postmortem workflow](./postmortem-workflow)

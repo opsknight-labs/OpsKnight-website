@@ -1,0 +1,34 @@
+{
+  "sections": [
+    {
+      "title": "Identity",
+      "description": "Authenticate with OIDC and provision users and groups through SCIM 2.0.",
+      "capability": "oidc",
+      "docs": "guides/identity/configure-oidc"
+    },
+    {
+      "title": "Provisioning",
+      "description": "Manage user and group lifecycle through SCIM discovery, tokens and provisioning endpoints.",
+      "capability": "scim",
+      "docs": "guides/identity/configure-scim"
+    },
+    {
+      "title": "Access & sessions",
+      "description": "Use roles, scoped authorization and the signed-in-session registry.",
+      "capability": "authorization",
+      "docs": "concepts/permissions"
+    },
+    {
+      "title": "Privacy operations",
+      "description": "Process privacy requests and retention holds with operational evidence.",
+      "capability": "privacy",
+      "docs": "concepts/privacy"
+    },
+    {
+      "title": "Deployment hardening",
+      "description": "Configure secrets, networking and operational access for your environment.",
+      "capability": "deployment",
+      "docs": "operate/security/hardening"
+    }
+  ]
+}

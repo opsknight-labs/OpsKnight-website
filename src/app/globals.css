@@ -408,6 +408,29 @@ h4 {
 .docs-content {
   min-width: 0;
   flex: 1 1 auto;
+  overflow-wrap: anywhere;
+}
+
+.docs-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.docs-content :where(code):not(:where(pre code)) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.docs-content :where(h1, h2, h3, h4) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.docs-content a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 @media (min-width: 1024px) {
@@ -505,6 +528,8 @@ h4 {
   font-weight: 500;
   font-size: 0.875em;
   color: #111827;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .prose :where(code):not(:where(pre code))::before,

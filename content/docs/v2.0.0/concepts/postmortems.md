@@ -12,8 +12,6 @@ verification:
 
 # Postmortems
 
-![Postmortem directory with completed operational reviews](/docs/v2.0.0/assets/postmortems.png)
-
 Postmortems turn incident evidence into shared learning and follow-up work. They
 should preserve links to the source timeline rather than restating it manually.
 

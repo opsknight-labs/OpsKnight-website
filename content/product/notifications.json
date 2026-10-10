@@ -1,0 +1,16 @@
+{
+  "channels": [
+    "Voice",
+    "Push",
+    "SMS",
+    "Email",
+    "WhatsApp",
+    "Slack",
+    "Microsoft Teams",
+    "Webhook"
+  ],
+  "voiceProvider": "Twilio",
+  "voiceScope": "Triggered incidents with responder acknowledgement input. Acknowledgement and resolution events do not initiate additional calls.",
+  "docs": "integrations/communication/voice",
+  "deliveryDocs": "guides/notifications/inspect-delivery"
+}

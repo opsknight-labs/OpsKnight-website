@@ -7,7 +7,7 @@ capabilities:
     status: documented
     required: { concepts: true, guides: true, reference: true, tests: true, evidence: true }
     concepts: [concepts/incidents.md, concepts/incident-response.md, concepts/incident-sla.md]
-    guides: [guides/incidents/create.md, guides/incidents/acknowledge.md, guides/incidents/assign.md, guides/incidents/escalate.md, guides/incidents/resolve.md, guides/incidents/configure-incident-sla.md, guides/incidents/migrate-sla-scheduler.md]
+    guides: [guides/incidents/create.md, guides/incidents/acknowledge.md, guides/incidents/assign.md, guides/incidents/escalate.md, guides/incidents/resolve.md]
     reference: [reference/api/incidents.md, reference/api/authentication.md, reference/api/errors.md]
     tests: [tests/docs/journeys/incident-lifecycle.spec.ts, tests/lib/incidents/lifecycle.test.ts]
     sources: [src/lib/incidents/lifecycle.ts, src/app/(app)/incidents/actions.ts]
@@ -17,9 +17,9 @@ capabilities:
     title: Organize services and ownership teams
     product_area: services
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
+    required: { concepts: true, guides: false, reference: true, tests: true, evidence: false }
     concepts: [concepts/services.md, concepts/teams.md]
-    guides: [guides/services/README.md, guides/services/manage-service.md, guides/teams/README.md, guides/teams/manage-team.md]
+    guides: []
     reference: [reference/api/README.md]
     tests: [tests/lib/authorization-filters.test.ts]
     sources: [src/app/(app)/services, src/app/(app)/teams]
@@ -67,7 +67,7 @@ capabilities:
     status: documented
     required: { concepts: true, guides: true, reference: true, tests: true, evidence: true }
     concepts: [concepts/status-pages.md]
-    guides: [guides/status-pages/create-and-configure.md, guides/status-pages/publish-update.md, guides/status-pages/subscribers-and-api-access.md]
+    guides: [guides/status-pages/publish-update.md]
     reference: [reference/api/README.md]
     tests: [tests/integration/status-page-publication.test.ts, tests/integration/status-page-privacy-matrix.test.ts]
     sources: [src/lib/status-page-projection.ts, src/lib/status-page-public-data.ts, src/lib/status-page-delivery.ts, src/app/(app)/settings/status-pages, src/app/api/status-page, src/app/api/settings/status-pages]
@@ -79,8 +79,8 @@ capabilities:
     status: documented
     required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
     concepts: [concepts/chatops.md]
-    guides: [guides/chatops/configure-global-policy.md, guides/chatops/create-war-room.md]
-    reference: [integrations/communication/slack/README.md, integrations/communication/microsoft-teams/README.md]
+    guides: [guides/chatops/create-war-room.md]
+    reference: [integrations/communication/slack.md, integrations/communication/microsoft-teams.md]
     tests: [tests/architecture/war-room-provider-neutral-contract.test.ts]
     sources: [src/lib/war-room, src/lib/chatops, src/lib/slack.ts, src/lib/microsoft-teams, src/app/api/slack, src/app/api/microsoft-teams]
     evidence: []
@@ -89,9 +89,9 @@ capabilities:
     title: Ingest provider webhook events
     product_area: integrations
     status: documented
-    required: { concepts: false, guides: true, reference: true, tests: true, evidence: true }
+    required: { concepts: false, guides: false, reference: true, tests: true, evidence: true }
     concepts: []
-    guides: [guides/integrations/send-test-event.md]
+    guides: []
     reference: [integrations/README.md, integrations/catalog.yaml, reference/api/events.md, reference/api/authentication.md, reference/api/errors.md]
     tests: [tests/integration/event-resilience.test.ts, tests/integration/event-dedup-semantics.test.ts]
     sources: [src/lib/integrations, src/app/api/integrations]
@@ -104,7 +104,7 @@ capabilities:
     required: { concepts: false, guides: true, reference: true, tests: true, evidence: false }
     concepts: []
     guides: [guides/jira/connect-jira.md]
-    reference: [integrations/issue-tracking/jira/README.md]
+    reference: [integrations/issue-tracking/jira.md]
     tests: [tests/unit/jira-issue-creation.test.ts, tests/architecture/jira-enterprise-hardening-contract.test.ts]
     sources: [src/lib/jira-sync.ts, src/app/api/jira/webhook/route.ts]
     evidence: []
@@ -161,21 +161,21 @@ capabilities:
     title: Analyze incident and service performance
     product_area: analytics
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: true }
+    required: { concepts: true, guides: false, reference: true, tests: true, evidence: false }
     concepts: [concepts/analytics.md]
-    guides: [guides/analytics/README.md, guides/analytics/use-analytics.md, guides/reports/README.md, guides/reports/create-dashboard.md, guides/reports/read-dashboard.md, guides/reports/manage-dashboard.md, guides/reports/troubleshooting.md]
+    guides: []
     reference: [reference/api/README.md, reference/metrics.md]
     tests: [tests/unit/analytics-panels.test.ts, tests/api/reports-metrics-response.test.ts]
-    sources: [src/app/(app)/analytics, src/app/(app)/reports, src/app/api/dashboards, src/components/reports, src/lib/reports]
-    evidence: [generated/docs-evidence/current/analytics/reports.png, generated/docs-evidence/current/analytics/dashboard-template.png, generated/docs-evidence/current/analytics/dashboard-saved.png]
+    sources: [src/app/(app)/analytics, src/lib/reports]
+    evidence: []
     roles: [responder, administrator]
   postmortems:
     title: Learn from resolved incidents
     product_area: postmortems
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
+    required: { concepts: true, guides: false, reference: true, tests: true, evidence: false }
     concepts: [concepts/postmortems.md, concepts/postmortem-workflow.md]
-    guides: [guides/postmortems/README.md, guides/postmortems/create-review-publish.md]
+    guides: []
     reference: [reference/api/README.md]
     tests: [tests/components/jira-postmortem-consistency.test.tsx]
     sources: [src/app/(app)/postmortems, src/lib/action-items.ts]
@@ -185,9 +185,9 @@ capabilities:
     title: Process privacy requests and retention holds
     product_area: privacy
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
+    required: { concepts: true, guides: false, reference: true, tests: true, evidence: false }
     concepts: [concepts/privacy.md]
-    guides: [guides/privacy/README.md, guides/privacy/manage-request.md, guides/privacy/export-data.md, guides/privacy/process-erasure.md, guides/privacy/retention-and-troubleshooting.md]
+    guides: []
     reference: [reference/api/README.md]
     tests: [tests/integration/privacy-verification-lifecycle.test.ts, tests/integration/privacy-erasure-concurrency.test.ts]
     sources: [src/lib/privacy, src/lib/retention-policy.ts]
@@ -197,9 +197,9 @@ capabilities:
     title: Evaluate controls and export compliance evidence
     product_area: compliance
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
+    required: { concepts: true, guides: false, reference: true, tests: true, evidence: false }
     concepts: [concepts/compliance.md]
-    guides: [guides/compliance/README.md, guides/compliance/evaluate-and-export.md]
+    guides: []
     reference: [reference/api/README.md]
     tests: [tests/integration/compliance-runtime-evaluation.test.ts, tests/integration/compliance-evidence-export.test.ts]
     sources: [src/lib/compliance, docs/compliance]
@@ -209,9 +209,9 @@ capabilities:
     title: Respond through mobile and progressive web routes
     product_area: mobile
     status: documented
-    required: { concepts: true, guides: true, reference: false, tests: true, evidence: false }
+    required: { concepts: true, guides: false, reference: false, tests: true, evidence: false }
     concepts: [concepts/mobile.md]
-    guides: [guides/mobile/install-and-notifications.md, guides/mobile/respond-to-incidents.md, guides/mobile/offline-and-updates.md, guides/mobile/use-mobile-operations.md]
+    guides: []
     reference: []
     tests: [tests/e2e/mobile-pwa.spec.ts, tests/e2e/mobile-responsive-matrix.spec.ts]
     sources: [src/app/(mobile)]
@@ -221,12 +221,24 @@ capabilities:
     title: Deploy integrated and split runtimes
     product_area: deployment
     status: documented
-    required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
-    concepts: [operate/deploy/README.md, operate/deploy/architecture/integrated-vs-split.md, operate/deploy/architecture/runtime-roles.md, operate/deploy/architecture/database-connections.md]
-    guides: [start/quickstart.md, start/production-install.md, operate/deploy/docker-compose/prerequisites.md, operate/deploy/docker-compose/integrated.md, operate/deploy/docker-compose/split.md, operate/deploy/docker-compose/external-postgres.md, operate/deploy/docker-compose/pgbouncer.md, operate/deploy/docker-compose/reverse-proxy.md, operate/deploy/docker-compose/upgrade.md, operate/deploy/docker-compose/troubleshooting.md, operate/deploy/docker-compose/production-checklist.md, operate/deploy/kubernetes-operations.md, operate/deploy/swarm-operations.md, operate/deploy/helm-operations.md, operate/deploy/kustomize-operations.md]
+    required: { concepts: false, guides: true, reference: true, tests: true, evidence: false }
+    concepts: []
+    guides: [start/quickstart.md, start/production-install.md, operate/deploy/compose.md, operate/deploy/kubernetes.md, operate/deploy/split-runtime.md, operate/deploy/swarm.md, operate/deploy/helm.md, operate/deploy/kustomize.md]
     reference: [reference/configuration/README.md, reference/health.md]
     tests: [tests/lib/deployment-config-unit.test.ts]
     sources: [deploy/compose, deploy/kubernetes, deploy/swarm]
+    evidence: []
+    roles: [operator, administrator]
+  capacity_certification:
+    title: Measure and certify deployment capacity
+    product_area: deployment
+    status: documented
+    required: { concepts: false, guides: true, reference: true, tests: true, evidence: false }
+    concepts: []
+    guides: [operate/capacity/README.md, operate/capacity/choose-deployment.md, operate/capacity/sizing.md, operate/capacity/scaling-signals.md]
+    reference: [operate/capacity/benchmark-results.md, operate/capacity/certification-methodology.md]
+    tests: [tests/docs/tooling/capacity-contract.test.mjs]
+    sources: [artifacts/load-certification, tests/load, tests/load/helpers/topology.ts]
     evidence: []
     roles: [operator, administrator]
   observability:

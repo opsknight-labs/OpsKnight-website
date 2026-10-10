@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "pagerduty",
+    "name": "PagerDuty",
+    "asOf": "2026-10-05",
+    "summary": "PagerDuty publishes incident management plans with on-call, escalation, integrations and mobile response. Feature availability varies by plan.",
+    "source": "https://www.pagerduty.com/pricing/",
+    "sourceLabel": "PagerDuty plans and pricing",
+    "focus": "Evaluate ownership of deployment and operational data alongside the managed service, plan features and support you need."
+  },
+  {
+    "slug": "incident-io",
+    "name": "incident.io",
+    "asOf": "2026-10-05",
+    "summary": "incident.io lists Slack and Microsoft Teams incident response, on-call and status pages. Paid response plans and on-call add-ons vary by tier.",
+    "source": "https://incident.io/pricing",
+    "sourceLabel": "incident.io pricing",
+    "focus": "Evaluate the collaboration workflow, plan scope and identity requirements alongside your need to operate the platform yourself."
+  },
+  {
+    "slug": "opsgenie",
+    "name": "Opsgenie",
+    "asOf": "2026-10-05",
+    "summary": "Atlassian states that new Opsgenie sales ended on June 4, 2025 and support ends on April 5, 2027. Existing customers should plan a migration before that date.",
+    "source": "https://support.atlassian.com/opsgenie/docs/choose-the-right-path-and-schedule-migration/",
+    "sourceLabel": "Atlassian migration guidance",
+    "focus": "Inventory services, routing, schedules and escalation policies. Rebuild and test them in the destination before switching production alerts."
+  },
+  {
+    "slug": "grafana",
+    "name": "Grafana Cloud IRM",
+    "asOf": "2026-10-05",
+    "summary": "Grafana documents that OnCall OSS was archived on March 24, 2026. Active development continues in Grafana Cloud IRM. The archived OSS project and Cloud IRM are different deployment choices.",
+    "source": "https://grafana.com/docs/oncall/latest/",
+    "sourceLabel": "Grafana OnCall documentation",
+    "focus": "Choose between operating a self-hosted platform and using Grafana Cloud IRM. Check the current IRM plan and integration requirements directly."
+  },
+  {
+    "slug": "squadcast",
+    "name": "Squadcast / SolarWinds Incident Response",
+    "asOf": "2026-10-05",
+    "summary": "The Squadcast pricing URL now leads to SolarWinds Incident Response. Its plans list schedules, escalations, SMS and voice notifications, postmortems and mobile apps, with features varying by tier.",
+    "source": "https://www.solarwinds.com/it-incident-response-software/pricing",
+    "sourceLabel": "SolarWinds Incident Response pricing",
+    "focus": "Compare your response workflow and provider requirements, then assess the effort of operating your own deployment."
+  },
+  {
+    "slug": "splunk",
+    "name": "Splunk On-Call",
+    "asOf": "2026-10-05",
+    "summary": "Splunk describes on-call scheduling, escalation policies, incident context, response reports and iOS and Android apps. Confirm commercial terms directly with the vendor.",
+    "source": "https://www.splunk.com/en_us/products/on-call.html",
+    "sourceLabel": "Splunk On-Call product page",
+    "focus": "Compare scheduling, reporting and mobile workflows with OpsKnight\u2019s installable PWA and self-hosted operational model."
+  }
+]

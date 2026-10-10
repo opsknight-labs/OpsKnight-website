@@ -10,6 +10,7 @@ import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 
 import path from "node:path";
+import { resolveDocLink } from "./link-resolver.mjs";
 
 type RenderOptions = {
   imageBasePath?: string;
@@ -121,23 +122,16 @@ function rehypeDocLinkPaths(options: RenderOptions) {
           clean = `/docs/${version}${clean}`;
         }
       } else if (version) {
-        // Resolve relative path against document directory
-        const normalizedRel = path.posix.normalize(
-          path.posix.join(relDir === "." ? "" : relDir, clean)
-        );
-
-        // Deduplicate any consecutive duplicate segments (e.g. integrations/cloud/cloud/aws-cloudwatch -> integrations/cloud/aws-cloudwatch)
-        const segments = normalizedRel.split("/").filter(Boolean);
-        const deduplicated: string[] = [];
-        for (let i = 0; i < segments.length; i++) {
-          if (i > 0 && segments[i] === segments[i - 1]) {
-            continue;
-          }
-          deduplicated.push(segments[i]);
+        const resolved = resolveDocLink(rawPathname, version, relDir);
+        if (!resolved) {
+          // Preserve historical text while preventing navigation to missing pages.
+          node.tagName = "span";
+          const properties = { ...node.properties };
+          delete properties.href;
+          node.properties = { ...properties, title: "This referenced page is not included in this documentation release." };
+          return;
         }
-        const finalRel = deduplicated.join("/");
-
-        clean = `/docs/${version}/${finalRel}`;
+        clean = resolved;
       }
 
       // Ensure trailing slash on directory/page links so Next.js static router navigates to index.html

@@ -1,0 +1,75 @@
+{
+  "source": "OpsKnight v2.0.0 documentation evidence runtime",
+  "capturedAt": "2026-10-08T16:54:58.631Z",
+  "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
+  "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+  "assets": {
+    "dashboard-overview": {
+      "width": 2400,
+      "height": 1290,
+      "sha256": "7e9d05809e669586dbb7d2942f2ce2c8c1b55fe1279e9e6e61b52ce9fc7c2fd3",
+      "fixture": "Northstar Systems",
+      "route": "/"
+    },
+    "incident-detail": {
+      "width": 2400,
+      "height": 1500,
+      "sha256": "3b03816cdf54dc349be0a1e0fd708bf3819e6f415f0187906048350d811bbfd0",
+      "fixture": "Northstar Systems",
+      "route": "/incidents/[northstar-incident]"
+    },
+    "on-call-schedule-detail": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "612cb12f8d92ae29d1a511735e60cd7a9b44f0d93cd0daf53f6a3e4fb90fe22e",
+      "fixture": "Northstar Systems",
+      "route": "/schedules/[commerce-primary-on-call]"
+    },
+    "analytics-overview": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "90b63ae6ca01fd72624c3a9050e828597e15e3c3f9b54175fa09c85358c41c48",
+      "fixture": "Northstar Systems",
+      "route": "/analytics"
+    },
+    "postmortems": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "c2092c3561c677cd8ea2eee6a25251d28aebeef592db5394dddb691ccd5d92f1",
+      "fixture": "Northstar Systems",
+      "route": "/postmortems"
+    },
+    "audit-log": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "62fb54db3aad8476e72f1e0b00779f30c322cf0b717f0893be2cbf32bdad4f81",
+      "fixture": "Northstar Systems",
+      "route": "/audit"
+    },
+    "notification-settings": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "5f3a034eac2dd6c9c93d443137815b80b8f65f02cadb82fecfd890fb037fb54d",
+      "fixture": "Northstar Systems",
+      "route": "/settings/notifications"
+    },
+    "health-center": {
+      "width": 1440,
+      "height": 900,
+      "sha256": "1764f1ca258afc51ba6708ed7f4602eea66147a15542fd746e3b07f8a9f78067",
+      "fixture": "Northstar Systems",
+      "route": "/settings/system/health"
+    },
+    "status-pages": {
+      "width": 1920,
+      "height": 1080,
+      "sha256": "fff555894f93c8005960b8dae1e4ba9604edaef45236d7b83016375c6ba30e6d",
+      "fixture": "Northstar Systems",
+      "route": "/status/northstar-systems",
+      "authenticated": false,
+      "publicProof": "https://status.opsknight.com"
+    }
+  },
+  "capturePipeline": "OpsKnight v2.0.0 docs evidence journey",
+  "fixture": "Northstar Systems"
+}

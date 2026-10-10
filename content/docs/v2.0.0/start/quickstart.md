@@ -5,9 +5,6 @@ type: tutorial
 product_area: deployment
 audience: [operator, administrator]
 keywords: [install OpsKnight, Docker Compose, local install, quick start, first boot]
-reader:
-  status: READER_COMPLETE
-  task: Install an isolated OpsKnight evaluation and verify the first incident workflow.
 verification:
   level: source
   verified_at: 2026-09-29
@@ -62,21 +59,7 @@ docker compose -f deploy/compose/docker-compose.yml logs --tail=200 opsknight-db
 
 ## 3. Create the first administrator
 
-Open `http://localhost:3000/setup`. Verify the Application URL before selecting **Create administrator**. For a production hostname, follow the complete [initial setup](./initial-setup) guide; a wrong value can make normal access return HTTP 421.
-
-Generate a one-time bootstrap code inside the configured application container:
-
-```sh
-docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \
-  node scripts/create-bootstrap-code.mjs
-```
-
-Do not run the Node command directly on the Docker host: the host quickstart
-does not install application dependencies or configure its database connection.
-Enter the printed code with your display name, administrator email, Application
-URL, and a strong unique password. A configured `SETUP_SECRET` or
-`BOOTSTRAP_SECRET` remains a compatibility alternative. Select **Create
-administrator**.
+Open `http://localhost:3000/setup`. Enter your display name, administrator email, application URL, and a strong unique password. Enter the setup secret only if the operator configured `SETUP_SECRET` or `BOOTSTRAP_SECRET`, then select **Create administrator**.
 
 OpsKnight creates exactly one first user as an active Admin. Once any user exists, `/setup` redirects to `/login`. For a trusted-host alternative, use the [command-line reference](../reference/cli); do not put passwords in shell history.
 
@@ -84,7 +67,7 @@ OpsKnight creates exactly one first user as an active Admin. Once any user exist
 
 Sign in and:
 
-1. Open **Settings → System → Health** (or **System Health Center**) and confirm runtime and database health.
+1. Open **Settings → Health Center** and confirm runtime and database health.
 2. [Create your first service](./create-first-service).
 3. [Configure on-call](./configure-on-call).
 4. Complete the [first incident journey](./first-incident).
@@ -102,3 +85,4 @@ The quickstart is complete when an alert creates an incident and the intended re
 **Sign-in returns to the wrong host:** make both URL settings the externally reachable origin and restart the application.
 
 **A 2.0 feature is absent:** run `docker compose config` and confirm `opsknight-app.image` resolves to your explicit 2.0 tag or digest.
+

@@ -1,0 +1,26 @@
+{
+  "additional": [
+    {
+      "id": "slack",
+      "catalogId": "slack-chatops",
+      "title": "Slack",
+      "category": "communication",
+      "direction": "bidirectional",
+      "docs": "integrations/communication/slack"
+    },
+    {
+      "id": "microsoft-teams",
+      "title": "Microsoft Teams",
+      "category": "communication",
+      "direction": "bidirectional",
+      "docs": "integrations/communication/microsoft-teams"
+    },
+    {
+      "id": "jira",
+      "title": "Jira",
+      "category": "issue-tracking",
+      "direction": "bidirectional",
+      "docs": "integrations/issue-tracking/jira"
+    }
+  ]
+}

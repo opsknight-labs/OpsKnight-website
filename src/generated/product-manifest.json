@@ -1,0 +1,2636 @@
+{
+  "release": {
+    "version": "2.0.0",
+    "license": "AGPL-3.0-only",
+    "hostedSaaS": false,
+    "publishedAt": "2026-10-03T05:02:04Z",
+    "releaseCreatedAt": "2026-10-02T23:36:01Z",
+    "date": "2026-10-03",
+    "tagCreatedAt": "2026-10-02T23:36:01Z",
+    "changelogDate": "2026-10-02",
+    "tag": "v2.0.0",
+    "sourceCommit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+    "highlights": [
+      {
+        "title": "Split production runtime",
+        "description": "Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector can scale independently. The integrated runtime remains supported."
+      },
+      {
+        "title": "Notification delivery control plane",
+        "description": "Durable logical intents, provider attempts, traffic classes, admission/defer behavior, retry and terminal states, callback reconciliation, provider capacity controls, and an administrator Operations view. Delivery evidence distinguishes deferred, retrying, accepted, delivered, permanent-failure, and superseded work."
+      },
+      {
+        "title": "Microsoft Teams ChatOps",
+        "description": "Entra application and Azure Bot integration, Teams app packaging and tenant installation, service-to-channel destinations, Adaptive Cards, interactive incident actions, identity linking, war rooms, participant synchronization, and meeting collaboration. A service can target up to three Teams destinations."
+      },
+      {
+        "title": "Twilio voice paging",
+        "description": "`VOICE` is a triggered-incident paging channel with responder acknowledgement input, signed callbacks, and reconciliation of uncertain provider outcomes. Acknowledge and resolve lifecycle updates do not initiate additional voice calls."
+      },
+      {
+        "title": "Incident response policy engine",
+        "description": "Versioned classification, incident SLA, and support-hours policies at workspace and service scope, with immutable published versions, preview, history, diff, restore, and API access."
+      },
+      {
+        "title": "SCIM 2.0 provisioning",
+        "description": "Users, Groups, discovery endpoints, provisioning/deprovisioning, team membership, PATCH operations, and in-product bearer-token generation, rotation, and revocation."
+      },
+      {
+        "title": "Auditor access and sessions",
+        "description": "A read-oriented `AUDITOR` role, centralized resource authorization, OIDC claim mapping, and a canonical signed-in-session registry with browser, OS, device, authentication type, activity, expiry, and revoke controls."
+      },
+      {
+        "title": "Privacy and compliance operations",
+        "description": "Privacy/DSAR request processing, export and erasure evidence, retention holds, controlled encryption migrations, technical control evaluation, framework mappings, evidence ledgers, drift monitoring, and verifiable evidence-package exports. Framework mapping does not confer external certification."
+      },
+      {
+        "title": "Docker Swarm",
+        "description": "Integrated and split stacks, Raft secrets, direct-database migration lifecycle, health checks, topology switching, and rollback tooling."
+      },
+      {
+        "title": "Deployment planning and load certification",
+        "description": "Workload shapes and multi-topology load/correctness tests cover ingestion, incident lifecycle, escalation, notification fanout, realtime delivery, status fanout, and recovery."
+      },
+      {
+        "title": "ManageEngine ingestion",
+        "description": "A new native inbound parser joins the existing integration catalog. The release certifies 28 current inbound contracts in total; it does not add 28 new integrations."
+      },
+      {
+        "title": "Incident response",
+        "description": "Centralized lifecycle commands, durable side effects, persistent idempotency, stale-worker fencing, a global create modal, templates, stronger validation, rebuilt incident detail, action items, and interactive 5-Whys postmortems."
+      },
+      {
+        "title": "Schedules and escalation",
+        "description": "Redesigned schedule setup/detail, DST-safe rotations, overrides and handoff behavior, user/team/schedule escalation targets, priority/urgency/support-hours conditions, durable recovery, and stale-work protection."
+      },
+      {
+        "title": "Slack and Jira",
+        "description": "More reliable Slack war rooms, identity and capability controls, up to three Slack destinations per service, provider-neutral collaboration, and stronger bidirectional Jira lifecycle reconciliation."
+      },
+      {
+        "title": "Quiet Hours",
+        "description": "Personal timezone-aware suppression for low-urgency notifications; medium- and high-urgency operational paging bypasses Quiet Hours."
+      },
+      {
+        "title": "Status Page V3",
+        "description": "One supported status page with themes, announcements, subscriber verification/unsubscribe, API tokens, webhooks, privacy controls, uptime history/export, rebuild-safe snapshots, and hardened routing. Multiple status pages are not a supported 2.0 capability."
+      },
+      {
+        "title": "Dashboards and reports",
+        "description": "Templates, configurable widgets, persisted layout, private/team/organization visibility, filtered share links, PDF export, live refresh, and fullscreen NOC/TV presentation mode."
+      },
+      {
+        "title": "Responder-grade mobile PWA",
+        "description": "Rebuilt mobile navigation and operational workflows, per-device push registration and reconciliation, repair flows, offline/cached-state boundaries, update handling, and hardened fresh-install iOS Web Push recovery. This is an installable PWA, not a native App Store application."
+      },
+      {
+        "title": "OIDC and SSO policy",
+        "description": "Entra, Google, Okta, Auth0, and generic provider flows with PKCE/nonce, JIT provisioning, explicit account linking, claim-to-role mapping, provider lifecycle hardening, maximum lifetime, update interval, idle timeout, and reauthentication controls."
+      },
+      {
+        "title": "Application bootstrap and routing",
+        "description": "Short-lived first-admin bootstrap capability, UI-managed Application URL, canonical-host enforcement, reverse-proxy awareness, and explicit HTTP 421 protection."
+      },
+      {
+        "title": "Health and operations",
+        "description": "Expanded Health Center diagnostics, Prometheus metrics, system logs, backup/restore, worker/readiness visibility, and PgBouncer-aware connection ownership."
+      },
+      {
+        "title": "Documentation",
+        "description": "The 2.0 task-oriented documentation is backed by implementation discovery, semantic contracts, runtime evidence, API smoke tests, legacy-knowledge mapping, and rendered-site validation."
+      },
+      {
+        "title": "License",
+        "description": "OpsKnight 2.0.0 is the first stable release distributed under `AGPL-3.0-only`. OpsKnight 1.4.0 and earlier retain their historical licenses."
+      }
+    ]
+  },
+  "inboundIntegrationCount": 28,
+  "platform": {
+    "products": [
+      {
+        "slug": "incidents",
+        "label": "Incident command",
+        "headline": "One place to run the incident.",
+        "description": "Keep ownership, responders, timeline, notes and action items together from first alert to resolution.",
+        "capability": "incident_lifecycle",
+        "docs": "concepts/incidents",
+        "screenshot": "incident-detail.png",
+        "features": [
+          "Create and acknowledge incidents",
+          "Assign responders and track ownership",
+          "Keep a timeline and action items"
+        ],
+        "story": [
+          {
+            "title": "One incident, with the context to act.",
+            "body": "An incoming signal belongs to a service. Priority, urgency, ownership and related alert context give the responder a place to begin instead of another isolated notification.",
+            "docs": "concepts/incidents"
+          },
+          {
+            "title": "Acknowledge. Assign. Investigate.",
+            "body": "Acknowledge the incident, assign a responder and record the investigation. Keep notes, watchers and the operational timeline together so the next person can understand the response.",
+            "docs": "guides/incidents/respond-to-an-incident"
+          },
+          {
+            "title": "Response timing with a policy behind it.",
+            "body": "Use the documented response-policy and SLA workflow to inspect acknowledgement and resolution timing. Review the applicable policy and support-hours context before interpreting a breach.",
+            "docs": "concepts/incident-sla"
+          },
+          {
+            "title": "Coordinate without losing the record.",
+            "body": "Create a provider-backed war room when collaboration is needed. OpsKnight remains authoritative for incident state while Slack or Teams projects the response into the conversation.",
+            "docs": "guides/chatops/create-war-room"
+          },
+          {
+            "title": "Recovery is the beginning of learning.",
+            "body": "Resolve the incident, preserve the response timeline and carry follow-up work into a postmortem with accountable owners.",
+            "docs": "concepts/postmortems"
+          }
+        ]
+      },
+      {
+        "slug": "on-call",
+        "label": "On-call & escalation",
+        "headline": "Know who’s responsible before something breaks.",
+        "description": "Build rotations, schedule overrides and escalation policies around the people responsible for each service.",
+        "capability": "on_call",
+        "docs": "concepts/schedules",
+        "screenshot": "on-call-schedule-detail.png",
+        "features": [
+          "Timezone-aware rotations",
+          "Temporary overrides and handoffs",
+          "User, team and schedule escalation targets"
+        ],
+        "story": [
+          {
+            "title": "A schedule is a promise of ownership.",
+            "body": "Build rotations around real team availability, time zones and coverage. Verify the effective on-call responder instead of relying on how a calendar looks.",
+            "docs": "guides/on-call/build-schedule"
+          },
+          {
+            "title": "Change coverage without rebuilding the rotation.",
+            "body": "Use an override for planned leave or a last-minute swap. Review its time window and validate that the intended responder owns the affected interval.",
+            "docs": "guides/on-call/overrides"
+          },
+          {
+            "title": "Primary, backup, and a viable final target.",
+            "body": "An escalation step can target a user, team or effective schedule. Set explicit delays and channels, then test unavailable users and empty schedules before relying on the policy.",
+            "docs": "concepts/escalation-policies"
+          },
+          {
+            "title": "Make the handoff deliberate.",
+            "body": "Review active incidents, current ownership and incoming coverage together. A schedule transition is an operational handoff, not a guarantee that every open incident was understood.",
+            "docs": "guides/on-call/handoffs"
+          },
+          {
+            "title": "Test the page before you need it.",
+            "body": "Validate the selected responder, healthy endpoints and delivery evidence with a synthetic incident. A saved schedule alone does not prove an end-to-end page.",
+            "docs": "guides/on-call/test-on-call"
+          }
+        ]
+      },
+      {
+        "slug": "paging",
+        "label": "Paging",
+        "headline": "Reach the responder. Not just their inbox.",
+        "description": "Route urgent pages through configured providers and inspect attempts, retries and terminal delivery outcomes.",
+        "capability": "notifications",
+        "docs": "concepts/notifications",
+        "screenshot": "notification-settings.png",
+        "features": [
+          "Multi-channel routing",
+          "Twilio voice for triggered incidents",
+          "Delivery evidence and retry visibility"
+        ],
+        "story": [
+          {
+            "title": "Intent first. Delivery evidence next.",
+            "body": "The notification control plane stores a logical intent and provider-specific attempts. Routing and admission decide eligible work; callbacks add delivery evidence without rewriting the incident lifecycle.",
+            "docs": "concepts/notifications"
+          },
+          {
+            "title": "Critical, transactional and bulk work.",
+            "body": "Notification priority and worker lanes keep time-sensitive response work distinguishable from general and bulk processing. Inspect admission, oldest queue age and lane health together when capacity is constrained.",
+            "docs": "reference/notifications"
+          },
+          {
+            "title": "Route to people and service destinations.",
+            "body": "Configure lifecycle events, channels and healthy responder endpoints. Slack and Teams service destinations receive lifecycle messages; linked destinations are not an ordered fallback chain.",
+            "docs": "guides/notifications/configure-routing"
+          },
+          {
+            "title": "Voice for the triggered incident.",
+            "body": "Twilio voice paging supports responder acknowledgement input. Acknowledgement and resolution events do not start additional voice calls. Test the call input against the actual incident state.",
+            "docs": "integrations/communication/voice"
+          },
+          {
+            "title": "Retry the operation, not the incident.",
+            "body": "Transient failures, provider rate limits, deferred work and permanent failures require different actions. Inspect the existing retry schedule, respect provider hints and correct bad credentials or endpoints before retrying.",
+            "docs": "guides/notifications/retry-failures"
+          },
+          {
+            "title": "Accepted is not the same as delivered.",
+            "body": "Trace the notification ID, attempts, provider message ID, callback outcome and next-attempt time. Superseded intents are discarded when a newer incident state makes them stale.",
+            "docs": "guides/notifications/inspect-delivery"
+          },
+          {
+            "title": "See the failure where it happened.",
+            "body": "Use Notifications Operations and Health Center to connect provider failures, capacity and worker availability. Provider delivery is an operational outcome to verify, not a promise attached to a queued page.",
+            "docs": "operate/reliability/health-center"
+          }
+        ]
+      },
+      {
+        "slug": "chatops",
+        "label": "ChatOps",
+        "headline": "Response belongs in the room.",
+        "description": "Coordinate incidents in Slack and Microsoft Teams with incident actions, linked identities and war rooms.",
+        "capability": "chatops",
+        "docs": "integrations/communication/microsoft-teams",
+        "screenshot": null,
+        "features": [
+          "Acknowledge, assign and resolve",
+          "War rooms and participant synchronization",
+          "Service destinations for Slack and Teams"
+        ],
+        "story": [
+          {
+            "title": "Choose the conversation that owns the response.",
+            "body": "Create an incident-scoped Slack or Microsoft Teams war room manually, or use the effective global/service policy for automatic creation. One destination should own automatic room creation for a service.",
+            "docs": "guides/chatops/create-war-room"
+          },
+          {
+            "title": "Keep actions attached to the incident.",
+            "body": "Provider cards project incident context and supported actions. Identity links, product permissions, provider capabilities and lifecycle phase determine which actions can run.",
+            "docs": "concepts/chatops"
+          },
+          {
+            "title": "Policy before provisioning.",
+            "body": "Service policy overrides the global default. Validate the effective destination and permissions with a new incident; changing policy does not migrate an already provisioned room.",
+            "docs": "guides/chatops/configure-global-policy"
+          },
+          {
+            "title": "Reconcile drift instead of creating duplicates.",
+            "body": "Inspect the durable room and operation identity when provisioning times out, membership changes or a card is stale. Retry or reconcile the existing operation before attempting another room.",
+            "docs": "guides/chatops/create-war-room"
+          },
+          {
+            "title": "Close the response with the conversation.",
+            "body": "Resolve the incident, verify terminal context and close or archive the room through supported controls. Provider retention and cleanup capabilities determine the final room behavior.",
+            "docs": "guides/chatops/create-war-room"
+          }
+        ]
+      },
+      {
+        "slug": "status-pages",
+        "label": "Status page",
+        "headline": "Give customers clarity.",
+        "description": "Publish service status, incident updates and maintenance without exposing your internal response timeline.",
+        "capability": "status_pages",
+        "docs": "concepts/status-pages",
+        "screenshot": "status-pages.png",
+        "features": [
+          "Components and service mapping",
+          "Incident and maintenance updates",
+          "Subscribers, branding and uptime"
+        ],
+        "story": [
+          {
+            "title": "Internal response. Deliberate public communication.",
+            "body": "Map services to customer-facing components and choose approved impact wording. Projection controls the fields that cross the privacy boundary; it does not serialize the internal incident directly.",
+            "docs": "guides/status-pages/publish-update"
+          },
+          {
+            "title": "Publish, verify, correct, resolve.",
+            "body": "Confirm affected components, publish a scoped update and open the page through the audience’s hostname while signed out. Follow with a correcting update or resolution and verify the public state again.",
+            "docs": "guides/status-pages/publish-update"
+          },
+          {
+            "title": "A page and its subscribers are separate outcomes.",
+            "body": "Subscriber and webhook delivery are asynchronous and separate from page rendering. Review verification, unsubscribe and API-access behavior, then inspect delivery independently.",
+            "docs": "guides/status-pages/subscribers-and-api-access"
+          },
+          {
+            "title": "Brand the customer-facing surface.",
+            "body": "Configure the installation’s supported status page, service mapping and privacy options. Verify DNS, TLS and the public URL when using a custom domain.",
+            "docs": "guides/status-pages/create-and-configure"
+          },
+          {
+            "title": "History with an operational boundary.",
+            "body": "Service availability and incident history give customers context. Check projection freshness, privacy settings and documented metrics before treating the public view as current.",
+            "docs": "concepts/status-pages"
+          }
+        ]
+      },
+      {
+        "slug": "analytics",
+        "label": "Analytics",
+        "headline": "See the shape of your operations.",
+        "description": "Use incident and service performance data to understand response times, trends and SLA outcomes.",
+        "capability": "analytics_and_reports",
+        "docs": "concepts/analytics",
+        "screenshot": "analytics-overview.png",
+        "features": [
+          "MTTA and MTTR",
+          "Incident volume and service trends",
+          "Reports and configurable dashboards"
+        ],
+        "story": [
+          {
+            "title": "Measure the response, not just the alert count.",
+            "body": "Explore incident volume, acknowledgement and resolution timing with the available dashboard filters. Compare like-for-like time windows and service context.",
+            "docs": "guides/analytics/use-analytics"
+          },
+          {
+            "title": "Keep current state and historical timing distinct.",
+            "body": "An active incident count describes the current response. MTTA and MTTR describe timing across the selected population; inspect the sample and filters before drawing conclusions.",
+            "docs": "concepts/analytics"
+          },
+          {
+            "title": "Bring the questions back to the team.",
+            "body": "Use the analysis to identify repeated incidents and response bottlenecks, then connect findings to owned postmortem action items. Metrics support investigation rather than explaining root cause on their own.",
+            "docs": "concepts/postmortems"
+          },
+          {
+            "title": "Verify the evidence behind a review.",
+            "body": "Record the selected time range and service scope when sharing a finding. Follow the analytics guide to understand available views and operational limitations.",
+            "docs": "guides/analytics/use-analytics"
+          }
+        ]
+      },
+      {
+        "slug": "postmortems",
+        "label": "Postmortems",
+        "headline": "Make the next incident easier.",
+        "description": "Turn resolved incidents into reviews with a timeline, contributing factors and owned follow-up work.",
+        "capability": "postmortems",
+        "docs": "concepts/postmortems",
+        "screenshot": "postmortems.png",
+        "features": [
+          "Incident timeline",
+          "Interactive 5 Whys",
+          "Action items with owners and due dates"
+        ],
+        "story": [
+          {
+            "title": "Start from the incident evidence.",
+            "body": "Connect impact, detection, response and resolution to the source timeline. Preserve evidence links so the review remains traceable to the incident record.",
+            "docs": "concepts/postmortems"
+          },
+          {
+            "title": "Draft. Review. Publish.",
+            "body": "Separate investigation from the published review. Distinguish observed facts from hypotheses and write for system improvement rather than individual blame.",
+            "docs": "guides/postmortems/create-review-publish"
+          },
+          {
+            "title": "Learning needs an owner.",
+            "body": "Track follow-up action items with an owner and status. Close remediation work when it is verifiably complete, rather than when the incident review is written.",
+            "docs": "concepts/postmortems"
+          },
+          {
+            "title": "Carry the change into the next response.",
+            "body": "Review detection gaps, response friction and contributing conditions together. Use the documented workflow to keep review and publication deliberate.",
+            "docs": "concepts/postmortem-workflow"
+          }
+        ]
+      },
+      {
+        "slug": "mobile",
+        "label": "Mobile",
+        "headline": "Your response travels with you.",
+        "description": "Install the progressive web app and acknowledge, triage and follow incidents from your phone.",
+        "capability": "mobile",
+        "docs": "concepts/mobile",
+        "screenshot": null,
+        "features": [
+          "Installable progressive web app",
+          "Per-device Web Push registration",
+          "Mobile incident response"
+        ],
+        "story": [
+          {
+            "title": "The response fits in your pocket.",
+            "body": "Use the mobile incident routes with the same installation identity and permissions. Keep active incidents and their context accessible away from the desktop.",
+            "docs": "concepts/mobile"
+          },
+          {
+            "title": "Install the progressive web app.",
+            "body": "Follow the device and browser-specific installation guide. Mobile is a PWA, not a separate app-store product.",
+            "docs": "guides/mobile/install-and-notifications"
+          },
+          {
+            "title": "Register each device deliberately.",
+            "body": "Enable Web Push, grant the required browser permission and validate the device endpoint with the notification workflow. Delivery behavior depends on the browser and device.",
+            "docs": "guides/notifications/configure-web-push"
+          },
+          {
+            "title": "Verify before relying on it.",
+            "body": "Test notifications and incident access on the actual phone. Device permission, endpoint registration and product authorization are separate checks.",
+            "docs": "guides/mobile/install-and-notifications"
+          }
+        ]
+      },
+      {
+        "slug": "security",
+        "label": "Security & identity",
+        "headline": "Your infrastructure. Your users. Your keys.",
+        "description": "Connect identity, control access and inspect operational evidence on infrastructure you own.",
+        "capability": "authorization",
+        "docs": "operate/security/hardening",
+        "screenshot": "audit-log.png",
+        "features": [
+          "OIDC and SCIM 2.0",
+          "Role and resource authorization",
+          "Session registry and audit events"
+        ],
+        "story": [
+          {
+            "title": "Identity belongs to your organization.",
+            "body": "Connect OIDC authentication and provision users and groups with SCIM. Enforce MFA at your identity provider; OpsKnight does not provide a native server-verified second factor.",
+            "docs": "guides/identity/configure-oidc"
+          },
+          {
+            "title": "Access is an operational control.",
+            "body": "Review roles, scoped authorization and session behavior. Provisioning and deprovisioning should be verified against the effective product permissions.",
+            "docs": "concepts/permissions"
+          },
+          {
+            "title": "Keys and infrastructure have an owner.",
+            "body": "Configure secrets, network access, HTTPS and recovery for your deployment. Preserve required encryption keys separately from database backups and follow the key-rotation guide.",
+            "docs": "operate/security/hardening"
+          },
+          {
+            "title": "Prepare evidence for your evaluation.",
+            "body": "Use the security and procurement entry point for release policies, vulnerability handling, SBOM scope, supported versions and shared responsibility. These materials do not confer external certification.",
+            "docs": "operate/security"
+          }
+        ]
+      },
+      {
+        "slug": "operations",
+        "label": "Operations",
+        "headline": "The platform has to survive the incident too.",
+        "description": "Choose integrated or split runtimes and inspect worker health, delivery operations, metrics and logs.",
+        "capability": "observability",
+        "docs": "operate/reliability/health-center",
+        "screenshot": "health-center.png",
+        "features": [
+          "Health Center and worker visibility",
+          "Prometheus metrics and structured logs",
+          "Independently scalable runtime roles"
+        ],
+        "story": [
+          {
+            "title": "Scale the responsibility that is constrained.",
+            "body": "Choose an integrated process or separate Web, Scheduler, General Worker, Critical Worker, Bulk Worker and Status Projector. A split runtime alone does not provide high availability.",
+            "docs": "operate/deploy/architecture/runtime-roles"
+          },
+          {
+            "title": "Workers, queues and providers tell different stories.",
+            "body": "Inspect worker heartbeat, oldest pending job age and provider state together. A growing critical queue has a different operational priority from delayed bulk work.",
+            "docs": "operate/reliability/health-center"
+          },
+          {
+            "title": "Budget database connections before adding replicas.",
+            "body": "Include each role’s replica count and pool size in the connection budget. More workers can exhaust database capacity instead of improving queue latency.",
+            "docs": "operate/deploy/architecture/database-connections"
+          },
+          {
+            "title": "Use PgBouncer where the topology calls for it.",
+            "body": "Follow the documented transaction-pooling and direct-connection requirements. Schema management and runtime traffic must use the connection paths appropriate to their work.",
+            "docs": "operate/deploy/docker-compose/pgbouncer"
+          },
+          {
+            "title": "Health Center for investigation. Metrics for monitoring.",
+            "body": "Use the Health Center to inspect recorded diagnostics and operational priorities. Connect documented health and Prometheus metrics to your own monitoring, and interpret component status rather than only HTTP status.",
+            "docs": "operate/reliability/health-and-metrics"
+          },
+          {
+            "title": "Make scale and recovery a tested plan.",
+            "body": "Scale the constrained role only after checking database and provider capacity. Plan backups, upgrades, ingress and recovery together for production availability.",
+            "docs": "operate/reliability/scaling"
+          }
+        ]
+      }
+    ],
+    "lifecycle": [
+      {
+        "id": "triggered",
+        "label": "Triggered",
+        "image": "/product/incident-triggered.webp",
+        "badge": "OPEN · P1",
+        "badgeColor": "#f43f5e",
+        "summary": "The incoming signal is correlated to its service and enters incident response; ownership and escalation resolve from the service configuration.",
+        "docs": "concepts/incidents"
+      },
+      {
+        "id": "acknowledged",
+        "label": "Acknowledged",
+        "image": "/product/incident-acknowledged.webp",
+        "badge": "ACKNOWLEDGED",
+        "badgeColor": "#f59e0b",
+        "summary": "Responder takes ownership, investigates root cause, updates timeline, and stops next-tier paging.",
+        "docs": "guides/incidents/respond-to-an-incident"
+      },
+      {
+        "id": "resolved",
+        "label": "Resolved",
+        "image": "/product/incident-resolved.webp",
+        "badge": "RESOLVED",
+        "badgeColor": "#10b981",
+        "summary": "Service restored and incident resolved. Response timing, timeline evidence and postmortem follow-up remain available for review.",
+        "docs": "concepts/incidents"
+      }
+    ]
+  },
+  "lifecycle": [
+    {
+      "id": "triggered",
+      "label": "Triggered",
+      "image": "/product/incident-triggered.webp",
+      "badge": "OPEN · P1",
+      "badgeColor": "#f43f5e",
+      "summary": "The incoming signal is correlated to its service and enters incident response; ownership and escalation resolve from the service configuration.",
+      "docs": "concepts/incidents"
+    },
+    {
+      "id": "acknowledged",
+      "label": "Acknowledged",
+      "image": "/product/incident-acknowledged.webp",
+      "badge": "ACKNOWLEDGED",
+      "badgeColor": "#f59e0b",
+      "summary": "Responder takes ownership, investigates root cause, updates timeline, and stops next-tier paging.",
+      "docs": "guides/incidents/respond-to-an-incident"
+    },
+    {
+      "id": "resolved",
+      "label": "Resolved",
+      "image": "/product/incident-resolved.webp",
+      "badge": "RESOLVED",
+      "badgeColor": "#10b981",
+      "summary": "Service restored and incident resolved. Response timing, timeline evidence and postmortem follow-up remain available for review.",
+      "docs": "concepts/incidents"
+    }
+  ],
+  "notifications": {
+    "channels": [
+      "Voice",
+      "Push",
+      "SMS",
+      "Email",
+      "WhatsApp",
+      "Slack",
+      "Microsoft Teams",
+      "Webhook"
+    ],
+    "voiceProvider": "Twilio",
+    "voiceScope": "Triggered incidents with responder acknowledgement input. Acknowledgement and resolution events do not initiate additional calls.",
+    "docs": "integrations/communication/voice",
+    "deliveryDocs": "guides/notifications/inspect-delivery"
+  },
+  "deployments": {
+    "models": [
+      {
+        "id": "docker",
+        "title": "Docker Compose",
+        "docs": "operate/deploy/docker-compose",
+        "description": "Start with the integrated runtime and PostgreSQL. Split the runtime when independent scaling is useful."
+      },
+      {
+        "id": "kubernetes",
+        "title": "Kubernetes",
+        "docs": "operate/deploy/kubernetes",
+        "description": "Use Kubernetes manifests, Helm or Kustomize with integrated and split runtime profiles."
+      },
+      {
+        "id": "swarm",
+        "title": "Docker Swarm",
+        "docs": "operate/deploy/swarm",
+        "description": "Run integrated or split stacks with Swarm secrets and documented upgrade workflows."
+      }
+    ],
+    "roles": [
+      "Web",
+      "Scheduler",
+      "General Worker",
+      "Critical Worker",
+      "Bulk Worker",
+      "Status Projector"
+    ]
+  },
+  "security": {
+    "sections": [
+      {
+        "title": "Identity",
+        "description": "Authenticate with OIDC and provision users and groups through SCIM 2.0.",
+        "capability": "oidc",
+        "docs": "guides/identity/configure-oidc"
+      },
+      {
+        "title": "Provisioning",
+        "description": "Manage user and group lifecycle through SCIM discovery, tokens and provisioning endpoints.",
+        "capability": "scim",
+        "docs": "guides/identity/configure-scim"
+      },
+      {
+        "title": "Access & sessions",
+        "description": "Use roles, scoped authorization and the signed-in-session registry.",
+        "capability": "authorization",
+        "docs": "concepts/permissions"
+      },
+      {
+        "title": "Privacy operations",
+        "description": "Process privacy requests and retention holds with operational evidence.",
+        "capability": "privacy",
+        "docs": "concepts/privacy"
+      },
+      {
+        "title": "Deployment hardening",
+        "description": "Configure secrets, networking and operational access for your environment.",
+        "capability": "deployment",
+        "docs": "operate/security/hardening"
+      }
+    ]
+  },
+  "boundaries": {
+    "statusPageLimit": 1,
+    "mobileType": "PWA",
+    "manualEscalation": "Capability-enabled Microsoft Teams cards; no manual escalation control in Web or standard Slack incident actions.",
+    "statusEvidence": {
+      "docs": "concepts/status-pages",
+      "contains": "one status page per installation"
+    },
+    "mobileEvidence": {
+      "docs": "concepts/mobile",
+      "contains": "PWA"
+    },
+    "escalationEvidence": {
+      "docs": "guides/incidents/escalate",
+      "contains": "no manual **Escalate** control"
+    }
+  },
+  "integrations": [
+    {
+      "id": "appdynamics",
+      "title": "AppDynamics",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/appdynamics",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/appdynamics.ts",
+      "route": "src/app/api/integrations/appdynamics/route.ts",
+      "docs": "integrations/monitoring/appdynamics"
+    },
+    {
+      "id": "azure",
+      "title": "Azure Monitor",
+      "category": "cloud",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/azure",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "none",
+      "signatureProvider": "azure",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/azure.ts",
+      "route": "src/app/api/integrations/azure/route.ts",
+      "docs": "integrations/cloud/azure"
+    },
+    {
+      "id": "better-uptime",
+      "title": "Better Uptime",
+      "category": "uptime",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/better-uptime",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/better-uptime.ts",
+      "route": "src/app/api/integrations/better-uptime/route.ts",
+      "docs": "integrations/uptime/better-uptime"
+    },
+    {
+      "id": "bitbucket",
+      "title": "Bitbucket",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/bitbucket",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/bitbucket.ts",
+      "route": "src/app/api/integrations/bitbucket/route.ts",
+      "docs": "integrations/webhooks/bitbucket"
+    },
+    {
+      "id": "cloudwatch",
+      "title": "Amazon CloudWatch",
+      "category": "cloud",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/cloudwatch",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "none",
+      "signatureProvider": "cloudwatch",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/cloudwatch.ts",
+      "route": "src/app/api/integrations/cloudwatch/route.ts",
+      "docs": "integrations/cloud/cloudwatch"
+    },
+    {
+      "id": "datadog",
+      "title": "Datadog",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/datadog",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/datadog.ts",
+      "route": "src/app/api/integrations/datadog/route.ts",
+      "docs": "integrations/monitoring/datadog"
+    },
+    {
+      "id": "dynatrace",
+      "title": "Dynatrace",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/dynatrace",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/dynatrace.ts",
+      "route": "src/app/api/integrations/dynatrace/route.ts",
+      "docs": "integrations/monitoring/dynatrace"
+    },
+    {
+      "id": "elastic",
+      "title": "Elastic",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/elastic",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/elastic.ts",
+      "route": "src/app/api/integrations/elastic/route.ts",
+      "docs": "integrations/monitoring/elastic"
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/github",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "github",
+      "signatureHeaders": [
+        "x-hub-signature-256"
+      ],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/github.ts",
+      "route": "src/app/api/integrations/github/route.ts",
+      "docs": "integrations/webhooks/github"
+    },
+    {
+      "id": "gitlab",
+      "title": "GitLab",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/gitlab",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "gitlab",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/gitlab.ts",
+      "route": "src/app/api/integrations/gitlab/route.ts",
+      "docs": "integrations/webhooks/gitlab"
+    },
+    {
+      "id": "google-cloud-monitoring",
+      "title": "Google Cloud Monitoring",
+      "category": "cloud",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/google-cloud-monitoring",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/google-cloud-monitoring.ts",
+      "route": "src/app/api/integrations/google-cloud-monitoring/route.ts",
+      "docs": "integrations/cloud/google-cloud-monitoring"
+    },
+    {
+      "id": "grafana",
+      "title": "Grafana",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/grafana",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "grafana",
+      "signatureHeaders": [
+        "x-grafana-signature"
+      ],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/grafana.ts",
+      "route": "src/app/api/integrations/grafana/route.ts",
+      "docs": "integrations/monitoring/grafana"
+    },
+    {
+      "id": "honeycomb",
+      "title": "Honeycomb",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/honeycomb",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/honeycomb.ts",
+      "route": "src/app/api/integrations/honeycomb/route.ts",
+      "docs": "integrations/monitoring/honeycomb"
+    },
+    {
+      "id": "icinga",
+      "title": "Icinga",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/icinga",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/icinga.ts",
+      "route": "src/app/api/integrations/icinga/route.ts",
+      "docs": "integrations/monitoring/icinga"
+    },
+    {
+      "id": "manageengine",
+      "title": "ManageEngine",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/manageengine",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/manageengine.ts",
+      "route": "src/app/api/integrations/manageengine/route.ts",
+      "docs": "integrations/monitoring/manageengine"
+    },
+    {
+      "id": "nagios",
+      "title": "Nagios",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/nagios",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/nagios.ts",
+      "route": "src/app/api/integrations/nagios/route.ts",
+      "docs": "integrations/monitoring/nagios"
+    },
+    {
+      "id": "newrelic",
+      "title": "New Relic",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/newrelic",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "none",
+      "signatureProvider": "newrelic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/newrelic.ts",
+      "route": "src/app/api/integrations/newrelic/route.ts",
+      "docs": "integrations/monitoring/newrelic"
+    },
+    {
+      "id": "pagerduty",
+      "title": "PagerDuty Events API",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/pagerduty",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key-or-routing-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "x-routing-key",
+        "key query parameter",
+        "token query parameter",
+        "routing_key payload field"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "none",
+      "signatureProvider": "pagerduty",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/pagerduty.ts",
+      "route": "src/app/api/integrations/pagerduty/route.ts",
+      "docs": "integrations/webhooks/pagerduty"
+    },
+    {
+      "id": "pingdom",
+      "title": "Pingdom",
+      "category": "uptime",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/pingdom",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/pingdom.ts",
+      "route": "src/app/api/integrations/pingdom/route.ts",
+      "docs": "integrations/uptime/pingdom"
+    },
+    {
+      "id": "prometheus",
+      "title": "Prometheus Alertmanager",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/prometheus",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-identifier"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "none",
+      "signatureProvider": "prometheus",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/prometheus.ts",
+      "route": "src/app/api/integrations/prometheus/route.ts",
+      "docs": "integrations/monitoring/prometheus"
+    },
+    {
+      "id": "sentry",
+      "title": "Sentry",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/sentry",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "conditional-signature-secret"
+      ],
+      "acceptedCredentials": [],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "sentry",
+      "signatureHeaders": [
+        "sentry-hook-signature"
+      ],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Configured authentication or signature validation failed"
+        },
+        {
+          "status": 403,
+          "meaning": "Integration is disabled"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 500,
+          "meaning": "Provider event processing failed"
+        }
+      ],
+      "source": "src/lib/integrations/sentry.ts",
+      "route": "src/app/api/integrations/sentry/route.ts",
+      "docs": "integrations/monitoring/sentry"
+    },
+    {
+      "id": "splunk-observability",
+      "title": "Splunk Observability",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/splunk-observability",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/splunk-observability.ts",
+      "route": "src/app/api/integrations/splunk-observability/route.ts",
+      "docs": "integrations/monitoring/splunk-observability"
+    },
+    {
+      "id": "splunk-oncall",
+      "title": "Splunk On-Call",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/splunk-oncall",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/splunk-oncall.ts",
+      "route": "src/app/api/integrations/splunk-oncall/route.ts",
+      "docs": "integrations/monitoring/splunk-oncall"
+    },
+    {
+      "id": "uptime-kuma",
+      "title": "Uptime Kuma",
+      "category": "uptime",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/uptime-kuma",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/uptime-kuma.ts",
+      "route": "src/app/api/integrations/uptime-kuma/route.ts",
+      "docs": "integrations/uptime/uptime-kuma"
+    },
+    {
+      "id": "uptimerobot",
+      "title": "UptimeRobot",
+      "category": "uptime",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/uptimerobot",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/uptimerobot.ts",
+      "route": "src/app/api/integrations/uptimerobot/route.ts",
+      "docs": "integrations/uptime/uptimerobot"
+    },
+    {
+      "id": "vercel",
+      "title": "Vercel",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/vercel",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "vercel",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/vercel.ts",
+      "route": "src/app/api/integrations/vercel/route.ts",
+      "docs": "integrations/webhooks/vercel"
+    },
+    {
+      "id": "webhook",
+      "title": "Generic webhook",
+      "category": "webhooks",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/webhook",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/webhook.ts",
+      "route": "src/app/api/integrations/webhook/route.ts",
+      "docs": "integrations/webhooks/webhook"
+    },
+    {
+      "id": "zabbix",
+      "title": "Zabbix",
+      "category": "monitoring",
+      "direction": "inbound",
+      "kind": "inbound",
+      "protocol": "webhook",
+      "endpoint": "/api/integrations/zabbix",
+      "method": "POST",
+      "actions": [
+        "trigger",
+        "acknowledge",
+        "resolve"
+      ],
+      "authentication": [
+        "integration-key"
+      ],
+      "acceptedCredentials": [
+        "Authorization: Bearer",
+        "Authorization: Token token=",
+        "x-integration-key",
+        "x-api-key",
+        "integrationKey query parameter"
+      ],
+      "integrationId": "query parameter",
+      "bodyLimitBytes": 1048576,
+      "rateLimit": {
+        "requests": 100,
+        "windowSeconds": 60
+      },
+      "signature": "conditional-when-secret-configured",
+      "signatureProvider": "generic",
+      "signatureHeaders": [],
+      "correlation": "adapter EventPayload.dedup_key",
+      "recovery": "adapter emits resolve for its recovery state",
+      "errors": [
+        {
+          "status": 400,
+          "meaning": "Invalid request or payload validation failed"
+        },
+        {
+          "status": 401,
+          "meaning": "Integration is disabled, mismatched, or unauthorized"
+        },
+        {
+          "status": 404,
+          "meaning": "Integration record was not found"
+        },
+        {
+          "status": 413,
+          "meaning": "Payload exceeds the one MiB body limit"
+        },
+        {
+          "status": 429,
+          "meaning": "Per-integration request rate exceeded"
+        },
+        {
+          "status": 503,
+          "meaning": "A matching delivery is already being processed"
+        }
+      ],
+      "source": "src/lib/integrations/zabbix.ts",
+      "route": "src/app/api/integrations/zabbix/route.ts",
+      "docs": "integrations/monitoring/zabbix"
+    },
+    {
+      "id": "slack",
+      "title": "Slack",
+      "category": "communication",
+      "direction": "bidirectional",
+      "kind": "workflow",
+      "protocol": null,
+      "endpoint": null,
+      "method": null,
+      "actions": [],
+      "authentication": [],
+      "acceptedCredentials": [],
+      "integrationId": null,
+      "bodyLimitBytes": null,
+      "rateLimit": null,
+      "signature": "See setup guide",
+      "signatureProvider": null,
+      "signatureHeaders": [],
+      "correlation": null,
+      "recovery": null,
+      "errors": [],
+      "source": null,
+      "route": null,
+      "docs": "integrations/communication/slack"
+    },
+    {
+      "id": "microsoft-teams",
+      "title": "Microsoft Teams",
+      "category": "communication",
+      "direction": "bidirectional",
+      "kind": "workflow",
+      "protocol": null,
+      "endpoint": null,
+      "method": null,
+      "actions": [],
+      "authentication": [],
+      "acceptedCredentials": [],
+      "integrationId": null,
+      "bodyLimitBytes": null,
+      "rateLimit": null,
+      "signature": "See setup guide",
+      "signatureProvider": null,
+      "signatureHeaders": [],
+      "correlation": null,
+      "recovery": null,
+      "errors": [],
+      "source": null,
+      "route": null,
+      "docs": "integrations/communication/microsoft-teams"
+    },
+    {
+      "id": "jira",
+      "title": "Jira",
+      "category": "issue-tracking",
+      "direction": "bidirectional",
+      "kind": "workflow",
+      "protocol": null,
+      "endpoint": null,
+      "method": null,
+      "actions": [],
+      "authentication": [],
+      "acceptedCredentials": [],
+      "integrationId": null,
+      "bodyLimitBytes": null,
+      "rateLimit": null,
+      "signature": "See setup guide",
+      "signatureProvider": null,
+      "signatureHeaders": [],
+      "correlation": null,
+      "recovery": null,
+      "errors": [],
+      "source": null,
+      "route": null,
+      "docs": "integrations/issue-tracking/jira"
+    }
+  ],
+  "screenshots": {
+    "source": "OpsKnight v2.0.0 documentation evidence runtime",
+    "capturedAt": "2026-10-08T16:54:58.631Z",
+    "runtimeImage": "ghcr.io/opsknight-labs/opsknight@sha256:099023cbd024fac4c53435aaf2bff669f0e8bf04ba96564d3a3d62d6bdfe0d62",
+    "runtimeRevision": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+    "assets": {
+      "dashboard-overview": {
+        "width": 2400,
+        "height": 1290,
+        "sha256": "7e9d05809e669586dbb7d2942f2ce2c8c1b55fe1279e9e6e61b52ce9fc7c2fd3",
+        "fixture": "Northstar Systems",
+        "route": "/"
+      },
+      "incident-detail": {
+        "width": 2400,
+        "height": 1500,
+        "sha256": "3b03816cdf54dc349be0a1e0fd708bf3819e6f415f0187906048350d811bbfd0",
+        "fixture": "Northstar Systems",
+        "route": "/incidents/[northstar-incident]"
+      },
+      "on-call-schedule-detail": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "612cb12f8d92ae29d1a511735e60cd7a9b44f0d93cd0daf53f6a3e4fb90fe22e",
+        "fixture": "Northstar Systems",
+        "route": "/schedules/[commerce-primary-on-call]"
+      },
+      "analytics-overview": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "90b63ae6ca01fd72624c3a9050e828597e15e3c3f9b54175fa09c85358c41c48",
+        "fixture": "Northstar Systems",
+        "route": "/analytics"
+      },
+      "postmortems": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "c2092c3561c677cd8ea2eee6a25251d28aebeef592db5394dddb691ccd5d92f1",
+        "fixture": "Northstar Systems",
+        "route": "/postmortems"
+      },
+      "audit-log": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "62fb54db3aad8476e72f1e0b00779f30c322cf0b717f0893be2cbf32bdad4f81",
+        "fixture": "Northstar Systems",
+        "route": "/audit"
+      },
+      "notification-settings": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "5f3a034eac2dd6c9c93d443137815b80b8f65f02cadb82fecfd890fb037fb54d",
+        "fixture": "Northstar Systems",
+        "route": "/settings/notifications"
+      },
+      "health-center": {
+        "width": 1440,
+        "height": 900,
+        "sha256": "1764f1ca258afc51ba6708ed7f4602eea66147a15542fd746e3b07f8a9f78067",
+        "fixture": "Northstar Systems",
+        "route": "/settings/system/health"
+      },
+      "status-pages": {
+        "width": 1920,
+        "height": 1080,
+        "sha256": "fff555894f93c8005960b8dae1e4ba9604edaef45236d7b83016375c6ba30e6d",
+        "fixture": "Northstar Systems",
+        "route": "/status/northstar-systems",
+        "authenticated": false,
+        "publicProof": "https://status.opsknight.com"
+      }
+    },
+    "capturePipeline": "OpsKnight v2.0.0 docs evidence journey",
+    "fixture": "Northstar Systems"
+  }
+}

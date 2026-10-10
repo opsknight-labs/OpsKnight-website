@@ -8,7 +8,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/appdynamics
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -24,38 +24,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/appdynamics.ts
     route: src/app/api/integrations/appdynamics/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a2
     id: azure
     title: Azure Monitor
@@ -69,7 +50,7 @@ providers:
       - trigger
       - resolve
     authentication:
-      - integration-identifier
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -80,33 +61,17 @@ providers:
       integrationId: query parameter
       integrationKey: []
     signatureVerification:
-      mode: none
+      mode: not-declared
       provider: azure
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/azure.ts
     route: src/app/api/integrations/azure/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a3
     id: better-uptime
     title: Better Uptime
@@ -114,7 +79,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/better-uptime
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -130,38 +95,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/better-uptime.ts
     route: src/app/api/integrations/better-uptime/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a4
     id: bitbucket
     title: Bitbucket
@@ -169,7 +115,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/bitbucket
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -184,38 +130,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/bitbucket.ts
     route: src/app/api/integrations/bitbucket/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a5
     id: cloudwatch
     title: Amazon CloudWatch
@@ -229,7 +156,7 @@ providers:
       - trigger
       - resolve
     authentication:
-      - integration-identifier
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -240,33 +167,17 @@ providers:
       integrationId: query parameter
       integrationKey: []
     signatureVerification:
-      mode: none
+      mode: not-declared
       provider: cloudwatch
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/cloudwatch.ts
     route: src/app/api/integrations/cloudwatch/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a6
     id: datadog
     title: Datadog
@@ -300,8 +211,6 @@ providers:
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/datadog.ts
     route: src/app/api/integrations/datadog/route.ts
     sharedContracts:
@@ -328,7 +237,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/dynatrace
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -344,38 +253,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/dynatrace.ts
     route: src/app/api/integrations/dynatrace/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a8
     id: elastic
     title: Elastic
@@ -383,7 +273,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/elastic
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -399,38 +289,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/elastic.ts
     route: src/app/api/integrations/elastic/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a9
     id: github
     title: GitHub
@@ -445,7 +316,7 @@ providers:
       - acknowledge
       - resolve
     authentication:
-      - conditional-signature-secret
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -462,29 +333,13 @@ providers:
         - x-hub-signature-256
     deliveryIdentity:
       - x-github-delivery
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/github.ts
     route: src/app/api/integrations/github/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a10
     id: gitlab
     title: GitLab
@@ -492,7 +347,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/gitlab
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -508,38 +363,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: gitlab
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/gitlab.ts
     route: src/app/api/integrations/gitlab/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a11
     id: google-cloud-monitoring
     title: Google Cloud Monitoring
@@ -547,7 +383,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/google-cloud-monitoring
-    handler: shared
+    handler: custom
     tier: 1
     acceptedActions:
       - trigger
@@ -563,38 +399,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/google-cloud-monitoring.ts
     route: src/app/api/integrations/google-cloud-monitoring/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a12
     id: grafana
     title: Grafana
@@ -609,7 +426,7 @@ providers:
       - acknowledge
       - resolve
     authentication:
-      - conditional-signature-secret
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -627,29 +444,13 @@ providers:
     deliveryIdentity:
       - x-request-id
       - x-grafana-delivery
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/grafana.ts
     route: src/app/api/integrations/grafana/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a13
     id: honeycomb
     title: Honeycomb
@@ -657,7 +458,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/honeycomb
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -673,38 +474,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/honeycomb.ts
     route: src/app/api/integrations/honeycomb/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a14
     id: icinga
     title: Icinga
@@ -712,7 +494,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/icinga
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -728,38 +510,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/icinga.ts
     route: src/app/api/integrations/icinga/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a15
     id: manageengine
     title: ManageEngine
@@ -767,7 +530,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/manageengine
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -783,38 +546,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/manageengine.ts
     route: src/app/api/integrations/manageengine/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a16
     id: nagios
     title: Nagios
@@ -822,7 +566,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/nagios
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -838,38 +582,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/nagios.ts
     route: src/app/api/integrations/nagios/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a17
     id: newrelic
     title: New Relic
@@ -884,7 +609,7 @@ providers:
       - acknowledge
       - resolve
     authentication:
-      - integration-identifier
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -895,33 +620,17 @@ providers:
       integrationId: query parameter
       integrationKey: []
     signatureVerification:
-      mode: none
+      mode: not-declared
       provider: newrelic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/newrelic.ts
     route: src/app/api/integrations/newrelic/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a18
     id: pagerduty
     title: PagerDuty Events API
@@ -935,8 +644,7 @@ providers:
       - trigger
       - acknowledge
       - resolve
-    authentication:
-      - integration-key-or-routing-key
+    authentication: []
     request:
       method: POST
       schema: shared provider schema
@@ -945,40 +653,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - x-routing-key
-        - key query parameter
-        - token query parameter
-        - routing_key payload field
+      integrationKey: []
     signatureVerification:
-      mode: none
+      mode: not-declared
       provider: pagerduty
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/pagerduty.ts
     route: src/app/api/integrations/pagerduty/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a19
     id: pingdom
     title: Pingdom
@@ -986,7 +673,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/pingdom
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1002,38 +689,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/pingdom.ts
     route: src/app/api/integrations/pingdom/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a20
     id: prometheus
     title: Prometheus Alertmanager
@@ -1048,7 +716,7 @@ providers:
       - acknowledge
       - resolve
     authentication:
-      - integration-identifier
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -1059,33 +727,17 @@ providers:
       integrationId: query parameter
       integrationKey: []
     signatureVerification:
-      mode: none
+      mode: not-declared
       provider: prometheus
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/prometheus.ts
     route: src/app/api/integrations/prometheus/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a21
     id: sentry
     title: Sentry
@@ -1100,7 +752,7 @@ providers:
       - acknowledge
       - resolve
     authentication:
-      - conditional-signature-secret
+      - integration-key
     request:
       method: POST
       schema: shared provider schema
@@ -1116,29 +768,13 @@ providers:
       headers:
         - sentry-hook-signature
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/sentry.ts
     route: src/app/api/integrations/sentry/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Configured authentication or signature validation failed
-      - status: 403
-        meaning: Integration is disabled
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 500
-        meaning: Provider event processing failed
+    errors: []
   - &a22
     id: splunk-observability
     title: Splunk Observability
@@ -1146,7 +782,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/splunk-observability
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1162,38 +798,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/splunk-observability.ts
     route: src/app/api/integrations/splunk-observability/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a23
     id: splunk-oncall
     title: Splunk On-Call
@@ -1201,7 +818,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/splunk-oncall
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1217,38 +834,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/splunk-oncall.ts
     route: src/app/api/integrations/splunk-oncall/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a24
     id: uptime-kuma
     title: Uptime Kuma
@@ -1256,7 +854,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/uptime-kuma
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1271,38 +869,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/uptime-kuma.ts
     route: src/app/api/integrations/uptime-kuma/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a25
     id: uptimerobot
     title: UptimeRobot
@@ -1310,7 +889,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/uptimerobot
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1326,38 +905,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/uptimerobot.ts
     route: src/app/api/integrations/uptimerobot/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a26
     id: vercel
     title: Vercel
@@ -1365,7 +925,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/vercel
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1381,38 +941,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: vercel
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/vercel.ts
     route: src/app/api/integrations/vercel/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
   - &a27
     id: webhook
     title: Generic webhook
@@ -1447,8 +988,6 @@ providers:
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/webhook.ts
     route: src/app/api/integrations/webhook/route.ts
     sharedContracts:
@@ -1475,7 +1014,7 @@ providers:
     direction: inbound
     protocol: webhook
     endpoint: /api/integrations/zabbix
-    handler: shared
+    handler: custom
     tier: 2
     acceptedActions:
       - trigger
@@ -1491,38 +1030,19 @@ providers:
         requests: 100
         windowSeconds: 60
       integrationId: query parameter
-      integrationKey:
-        - "Authorization: Bearer"
-        - "Authorization: Token token="
-        - x-integration-key
-        - x-api-key
-        - integrationKey query parameter
+      integrationKey: []
     signatureVerification:
-      mode: conditional-when-secret-configured
+      mode: not-declared
       provider: generic
       headers: []
     deliveryIdentity: []
-    correlation: adapter EventPayload.dedup_key
-    recovery: adapter emits resolve for its recovery state
     source: src/lib/integrations/zabbix.ts
     route: src/app/api/integrations/zabbix/route.ts
     sharedContracts:
       - src/lib/integrations/handler.ts
       - src/lib/integrations/request-security.ts
       - src/lib/integrations/rate-limiter.ts
-    errors:
-      - status: 400
-        meaning: Invalid request or payload validation failed
-      - status: 401
-        meaning: Integration is disabled, mismatched, or unauthorized
-      - status: 404
-        meaning: Integration record was not found
-      - status: 413
-        meaning: Payload exceeds the one MiB body limit
-      - status: 429
-        meaning: Per-integration request rate exceeded
-      - status: 503
-        meaning: A matching delivery is already being processed
+    errors: []
 integrations:
   - *a1
   - *a2

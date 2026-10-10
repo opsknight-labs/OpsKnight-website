@@ -101,7 +101,7 @@ export default async function DocsIndexPage({
   const editUrl = `${BRAND.links.github}/blob/main/docs/${version}/README.md`;
 
   return (
-    <div className="space-y-10">
+    <div className="docs-editorial-index space-y-10">
       <section>
         <p className="mb-3 font-mono text-[11px] text-slate-500">
           {BRAND.name} · {version}
@@ -132,12 +132,12 @@ export default async function DocsIndexPage({
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="docs-editorial-task-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => (
           <Link
             key={card.slug.join("/")}
             href={`/docs/${version}/${card.slug.join("/")}/`}
-            className="rounded-[14px] border border-slate-200 bg-white p-5 hover:border-slate-300"
+            className="docs-editorial-task-link rounded-[14px] border border-slate-200 bg-white p-5 hover:border-slate-300"
           >
             <h2 className="text-base font-semibold text-[#111827]">{card.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-[#4b5563]">

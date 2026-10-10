@@ -1,29 +1,30 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { ArrowUpRight, Check, Copy, Terminal } from "lucide-react";
-import { BRAND } from "@/lib/brand";
 import {
   CHANGE_KIND_LABEL,
   type ChangeKind,
   type ReleaseItem,
   releases,
 } from "@/lib/changelog";
+import { copyText } from "@/lib/client-clipboard";
 
 const FILTERS: { id: "all" | ChangeKind; label: string }[] = [
   { id: "all", label: "All" },
   { id: "added", label: "New" },
   { id: "security", label: "Security" },
   { id: "fixed", label: "Fixes" },
+  { id: "changed", label: "Changes" },
+  { id: "performance", label: "Performance" },
 ];
 
 const KIND_TONE: Record<ChangeKind, string> = {
-  added: "bg-red-50 text-[#d21a1b]",
-  security: "bg-emerald-50 text-emerald-700",
-  fixed: "bg-amber-50 text-amber-800",
-  changed: "bg-slate-100 text-slate-600",
-  performance: "bg-red-50 text-red-800",
+  added: "change-kind-new",
+  security: "change-kind-security",
+  fixed: "change-kind-fix",
+  changed: "change-kind-change",
+  performance: "change-kind-performance",
 };
 
 function CopyPull({ tag }: { tag: string }) {
@@ -31,26 +32,21 @@ function CopyPull({ tag }: { tag: string }) {
   const command = `docker pull ${tag}`;
 
   return (
-    <div className="flex items-center gap-2 overflow-hidden rounded-[10px] border border-slate-200 bg-[#0f172a] pl-3 pr-1.5">
-      <Terminal className="h-3.5 w-3.5 shrink-0 text-slate-500" />
-      <code className="min-w-0 flex-1 truncate py-2.5 font-mono text-[11px] text-slate-200 sm:text-xs">
-        {command}
-      </code>
+    <div className="release-command">
+      <Terminal size={15} aria-hidden="true" />
+      <code>{command}</code>
       <button
         type="button"
-        onClick={() => {
-          navigator.clipboard.writeText(command);
+        onClick={async () => {
+          const ok = await copyText(command);
+          if (!ok) return;
           setCopied(true);
-          setTimeout(() => setCopied(false), 1600);
+          window.setTimeout(() => setCopied(false), 1600);
         }}
-        className="shrink-0 rounded-md p-2 text-slate-400 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d21a1b]"
         aria-label="Copy docker pull command"
       >
-        {copied ? (
-          <Check className="h-3.5 w-3.5 text-emerald-400" />
-        ) : (
-          <Copy className="h-3.5 w-3.5" />
-        )}
+        {copied ? <Check size={15} /> : <Copy size={15} />}
+        <span>{copied ? "Copied" : "Copy"}</span>
       </button>
     </div>
   );
@@ -64,67 +60,40 @@ function ReleaseArticle({
   filter: "all" | ChangeKind;
 }) {
   const categories = release.categories.filter(
-    (c) => filter === "all" || c.type === filter
+    (category) => filter === "all" || category.type === filter,
   );
-  if (categories.length === 0) return null;
+  if (!categories.length) return null;
 
   return (
-    <article
-      id={release.slug}
-      className="scroll-mt-28 border-t border-slate-200 pt-10 first:border-t-0 first:pt-0"
-    >
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-        <h2 className="font-mono text-2xl font-semibold tracking-tight text-[#111827] sm:text-[1.75rem]">
-          {release.version}
-        </h2>
-        {release.badge && (
-          <span className="rounded-full bg-[#d21a1b] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-            {release.badge}
-          </span>
-        )}
-        <p className="font-mono text-xs text-slate-500">{release.date}</p>
+    <article id={release.slug} className="release-article">
+      <div className="release-heading">
+        <div>
+          <div className="release-title-line">
+            <h2>{release.version}</h2>
+            {release.badge ? <span className="release-badge">{release.badge}</span> : null}
+          </div>
+          <p>{release.date}</p>
+        </div>
+        <a href={release.githubReleaseUrl} target="_blank" rel="noopener noreferrer">
+          GitHub release <ArrowUpRight size={14} />
+        </a>
       </div>
-      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#4b5563]">
-        {release.summary}
-      </p>
-      <div className="mt-5 max-w-2xl">
-        <CopyPull tag={release.dockerTag} />
-      </div>
-      <a
-        href={release.githubReleaseUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#d21a1b] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d21a1b]"
-      >
-        Notes on GitHub
-        <ArrowUpRight className="h-3.5 w-3.5" />
-      </a>
 
-      <div className="mt-8 space-y-8">
-        {categories.map((cat) => (
-          <section key={`${release.slug}-${cat.title}`}>
-            <div className="mb-3 flex items-center gap-2">
-              <span
-                className={`rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${KIND_TONE[cat.type]}`}
-              >
-                {CHANGE_KIND_LABEL[cat.type]}
+      <p className="release-summary">{release.summary}</p>
+      <CopyPull tag={release.dockerTag} />
+
+      <div className="release-categories">
+        {categories.map((category) => (
+          <section key={`${release.slug}-${category.title}`}>
+            <div className="release-category-title">
+              <span className={KIND_TONE[category.type]}>
+                {CHANGE_KIND_LABEL[category.type]}
               </span>
-              <h3 className="text-sm font-semibold text-[#111827]">
-                {cat.title}
-              </h3>
+              <h3>{category.title}</h3>
             </div>
-            <ul className="space-y-2.5">
-              {cat.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm leading-relaxed text-[#4b5563]"
-                >
-                  <span
-                    className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-slate-400"
-                    aria-hidden
-                  />
-                  {item}
-                </li>
+            <ul>
+              {category.items.map((item) => (
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </section>
@@ -140,114 +109,85 @@ export function ChangelogView() {
 
   const visible = useMemo(
     () =>
-      releases.filter((rel) =>
-        rel.categories.some((c) => filter === "all" || c.type === filter)
+      releases.filter((release) =>
+        release.categories.some(
+          (category) => filter === "all" || category.type === filter,
+        ),
       ),
-    [filter]
+    [filter],
   );
 
   useEffect(() => {
     const nodes = visible
-      .map((rel) => document.getElementById(rel.slug))
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (nodes.length === 0) return;
+      .map((release) => document.getElementById(release.slug))
+      .filter((node): node is HTMLElement => Boolean(node));
+    if (!nodes.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const hit = entries
-          .filter((e) => e.isIntersecting)
+          .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (hit?.target.id) setActive(hit.target.id);
       },
-      { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.25, 0.5] }
+      { rootMargin: "-18% 0px -68% 0px", threshold: [0, 0.25, 0.5] },
     );
-    nodes.forEach((n) => observer.observe(n));
+
+    nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, [visible]);
 
-  return (
-    <div className="mx-auto max-w-6xl">
-      <header className="max-w-2xl">
-        <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-          {BRAND.name} · shipping notes
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight text-[#111827] sm:text-[2.75rem]">
-          What’s new
-        </h1>
-        <p className="mt-4 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-          What each version actually shipped. Pull a tagged image, or read the
-          long form on GitHub.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href={BRAND.links.releases}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-10 items-center rounded-[12px] bg-[#d21a1b] px-4 text-sm font-semibold text-white hover:bg-[#b41516] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d21a1b] focus-visible:ring-offset-2"
-          >
-            All GitHub releases
-          </Link>
-          <Link
-            href={BRAND.links.docs}
-            className="inline-flex h-10 items-center rounded-[12px] border border-slate-200 bg-white px-4 text-sm font-medium text-slate-800 hover:bg-slate-50"
-          >
-            Docs
-          </Link>
-        </div>
-      </header>
+  const jumpTo = (slug: string) => {
+    setActive(slug);
+    document.getElementById(slug)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
-      <div
-        className="mt-10 flex flex-wrap gap-1.5"
-        role="tablist"
-        aria-label="Filter by change type"
-      >
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            type="button"
-            role="tab"
-            aria-selected={filter === f.id}
-            onClick={() => setFilter(f.id)}
-            className={`rounded-full px-3 py-1.5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d21a1b] ${
-              filter === f.id
-                ? "bg-[#0f172a] text-white"
-                : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
+  return (
+    <div className="changelog-experience">
+      <div className="changelog-filters" aria-label="Release filters">
+        <div role="tablist" aria-label="Filter release notes by change type">
+          {FILTERS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === item.id}
+              onClick={() => setFilter(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+        <label className="changelog-mobile-version">
+          <span>Release</span>
+          <select value={active} onChange={(event) => jumpTo(event.target.value)}>
+            {visible.map((release) => (
+              <option key={release.slug} value={release.slug}>
+                {release.version}{release.badge ? " · Latest" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-16">
-        <nav
-          aria-label="Versions"
-          className="hidden lg:block lg:self-start lg:sticky lg:top-28"
-        >
-          <p className="mb-3 font-mono text-[10px] uppercase tracking-wider text-slate-400">
-            Versions
-          </p>
-          <ol className="space-y-1 border-l border-slate-200">
-            {releases.map((rel) => {
-              const shown = visible.some((v) => v.slug === rel.slug);
+      <div className="changelog-grid">
+        <nav aria-label="Release versions" className="release-nav">
+          <span>VERSIONS</span>
+          <ol>
+            {releases.map((release) => {
+              const shown = visible.some((item) => item.slug === release.slug);
               return (
-                <li key={rel.slug}>
+                <li key={release.slug}>
                   <a
-                    href={`#${rel.slug}`}
-                    className={`-ml-px block border-l py-1.5 pl-4 font-mono text-[13px] ${
-                      !shown
-                        ? "border-transparent text-slate-300"
-                        : active === rel.slug
-                          ? "border-[#d21a1b] font-semibold text-[#111827]"
-                          : "border-transparent text-slate-500 hover:text-[#111827]"
-                    }`}
+                    href={shown ? `#${release.slug}` : undefined}
+                    aria-current={active === release.slug ? "true" : undefined}
+                    aria-disabled={!shown}
+                    onClick={(event) => {
+                      if (!shown) event.preventDefault();
+                    }}
                   >
-                    {rel.version}
-                    {rel.badge ? (
-                      <span className="ml-2 font-sans text-[10px] font-medium uppercase tracking-wide text-[#d21a1b]">
-                        {rel.badge}
-                      </span>
-                    ) : null}
+                    {release.version}
+                    {release.badge ? <small>{release.badge}</small> : null}
                   </a>
                 </li>
               );
@@ -255,13 +195,11 @@ export function ChangelogView() {
           </ol>
         </nav>
 
-        <div className="min-w-0 space-y-4">
-          {visible.map((rel) => (
-            <ReleaseArticle key={rel.slug} release={rel} filter={filter} />
+        <div className="release-stream">
+          {visible.map((release) => (
+            <ReleaseArticle key={release.slug} release={release} filter={filter} />
           ))}
-          {visible.length === 0 && (
-            <p className="text-sm text-slate-500">Nothing in this filter.</p>
-          )}
+          {!visible.length ? <p className="empty-result">Nothing in this filter.</p> : null}
         </div>
       </div>
     </div>

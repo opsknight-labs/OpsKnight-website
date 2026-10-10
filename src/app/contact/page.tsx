@@ -1,158 +1,183 @@
-import Link from "next/link";
-import { ArrowRight, BookOpen, Github, Mail, MessageSquare, Shield } from "lucide-react";
 import { BRAND } from "@/lib/brand";
+import { enquiryHref } from "@/lib/contact";
+import { Action, TextLink } from "@/components/site/Primitives";
+import { Mail } from "lucide-react";
 
 const paths = [
   {
-    n: "01",
-    title: "You are installing or configuring",
-    body: "Start in the docs. Most “it doesn’t start” questions are Compose secrets or the first-boot keys.",
-    href: BRAND.links.docs,
-    cta: "Open docs",
-    icon: BookOpen,
-    external: false,
+    id: "community",
+    title: "Community",
+    description:
+      "Discuss incident workflows, request features, report product issues or contribute to the open-source project.",
+    href: "/community/",
+    action: "Visit the community",
   },
   {
-    n: "02",
-    title: "Something is broken in the product",
-    body: "File a GitHub issue. Include Compose vs Helm, version, and logs. That is the public tracker — not a private queue.",
-    href: BRAND.links.issues,
-    cta: "Open an issue",
-    icon: Github,
-    external: true,
+    id: "support",
+    title: "Commercial support",
+    description:
+      "Discuss deployment help, upgrades, troubleshooting and architecture guidance. Scope, support hours and any service commitments are agreed separately.",
+    href: enquiryHref("OpsKnight commercial support enquiry"),
+    action: "Email about support",
   },
   {
-    n: "03",
-    title: "You want to talk it through",
-    body: "Discussions are for how-to threads and design questions that are not a bug.",
-    href: BRAND.links.discussions,
-    cta: "Open Discussions",
-    icon: MessageSquare,
-    external: true,
+    id: "implementation",
+    title: "Implementation / consulting",
+    description:
+      "Get help connecting monitoring platforms, designing services and escalation policies, and planning production deployment, high availability and hardening.",
+    href: enquiryHref("OpsKnight implementation and consulting enquiry"),
+    action: "Email about implementation",
+  },
+  {
+    id: "security",
+    title: "Security reports",
+    description:
+      "Report undisclosed vulnerabilities privately through GitHub's security reporting form. If unavailable, email with the subject Private security report and ask for a secure exchange channel before sending sensitive material.",
+    href: BRAND.links.privateSecurityReport,
+    action: "Report a vulnerability privately",
+  },
+  {
+    id: "procurement",
+    title: "Corporate & security questionnaires",
+    description:
+      "Contact the maintainer directly for supplier review, security questionnaires, licensing questions and release evidence. Include the release, deployment context, requested evidence and your evaluation deadline. No GitHub Discussions account is needed.",
+    href: enquiryHref("OpsKnight supplier and security questionnaire enquiry"),
+    action: "Email about your evaluation",
   },
 ];
 
-export default function ContactPage() {
+export default function Contact() {
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      <section className="relative overflow-hidden border-b border-slate-200 pt-28 pb-16">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div
-            className="absolute inset-0 opacity-[0.45]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px)",
-              backgroundSize: "48px 48px",
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(16rem,0.8fr)]">
-            <header className="max-w-2xl">
-              <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-                Community · v{BRAND.version} · {BRAND.license}
-              </p>
-              <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl sm:leading-[1.12]">
-                The people who write OpsKnight are on GitHub. There is no ticket desk.
-              </h1>
-              <p className="mt-5 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-                We named this Community on purpose. “Contact” sounds like a sales
-                form and an SLA. This project is self-hosted software — you get
-                answers in the open, or a private note when the topic should stay
-                private.
-              </p>
-            </header>
-
-            <aside className="overflow-hidden rounded-[14px] border border-slate-800 bg-[#0f172a] p-6 text-slate-200">
-              <p className="font-mono text-[11px] font-medium tracking-wide text-slate-400">
-                Private only
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                Partnerships, press, and things that should not be a public issue.
-                Not on-call coverage for your install.
-              </p>
-              <a
-                href={`mailto:${BRAND.links.email}`}
-                className="mt-5 inline-flex items-center gap-2 font-mono text-sm text-white hover:underline"
-              >
-                <Mail className="h-4 w-4 text-slate-400" />
-                {BRAND.links.email}
-              </a>
-              <Link
-                href={BRAND.links.security}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 flex items-center gap-2 text-sm text-slate-300 hover:text-white hover:underline"
-              >
-                <Shield className="h-4 w-4 text-slate-400" />
-                Security advisories — not a public bug ticket
-              </Link>
-            </aside>
+    <div className="site-page site-page--contact">
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> CONTACT OPSKNIGHT
+          </p>
+          <h1>
+            Find the right
+            <br />
+            conversation.
+          </h1>
+          <p className="site-description">
+            Community, professional assistance and corporate evaluation each
+            have a clear path. Reach us directly at{" "}
+            <a
+              href={enquiryHref("OpsKnight enquiry")}
+              className="text-white font-semibold underline underline-offset-4 hover:text-red-400"
+            >
+              {BRAND.links.email}
+            </a>{" "}
+            for support, implementation, or procurement enquiries.
+          </p>
+          <div className="site-actions">
+            <Action href={enquiryHref("OpsKnight enquiry")}>
+              Email the maintainer
+            </Action>
+            <Action href="/support/" secondary>
+              Support & Services
+            </Action>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-            Pick a door
-          </p>
-          <h2 className="text-2xl font-semibold tracking-tight text-[#111827] sm:text-3xl">
-            Three public paths. One private mailbox.
-          </h2>
+      <section className="site-section">
+        <div className="site-container security-sections">
+          {paths.map((path) => (
+            <article id={path.id} key={path.id}>
+              <h2>{path.title}</h2>
+              <p>{path.description}</p>
+              <TextLink href={path.href}>{path.action}</TextLink>
+              {path.id === "security" && (
+                <p>
+                  <a href={enquiryHref("Private security report")}>
+                    Email fallback
+                  </a>{" "}
+                  · <a href={BRAND.links.securityPolicy}>Security policy</a>
+                </p>
+              )}
+              {path.id === "procurement" && (
+                <p>
+                  <a href="/security/#evaluation">
+                    Review security & procurement resources
+                  </a>
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
 
-          <ol className="mt-10 grid gap-px overflow-hidden rounded-[14px] border border-slate-200 bg-slate-200 lg:grid-cols-3">
-            {paths.map((path) => {
-              const Icon = path.icon;
-              const className =
-                "flex h-full flex-col bg-white p-6 md:p-8 hover:bg-slate-50";
-              const inner = (
-                <>
-                  <div className="mb-6 flex items-center justify-between">
-                    <Icon className="h-5 w-5 text-[#d21a1b]" strokeWidth={1.75} />
-                    <span className="font-mono text-[11px] text-slate-400">{path.n}</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-[#111827]">{path.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-[#4b5563]">{path.body}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#d21a1b]">
-                    {path.cta}
-                    <ArrowRight className="h-4 w-4" />
+        <div className="site-container contact-direct-wrap">
+          <div className="contact-direct-card">
+            <div className="contact-direct-main">
+              <p className="site-eyebrow mb-1">
+                <span className="signal-dot" /> LET’S TALK
+              </p>
+              <h3 className="text-2xl font-bold tracking-tight">General &amp; Commercial Enquiries</h3>
+              <p className="text-sm text-slate-600 leading-relaxed max-w-xl mb-0">
+                Prefer direct email over GitHub Discussions? Reach the maintainers directly
+                for high-availability architecture reviews, procurement security questionnaires,
+                or custom commercial support scopes.
+              </p>
+              <div className="contact-direct-badges">
+                <span className="contact-badge-item">
+                  <span className="signal-dot" /> Maintainer monitored
+                </span>
+                <span className="contact-badge-item">
+                  Direct contact
+                </span>
+                <span className="contact-badge-item">
+                  Project maintainer
+                </span>
+              </div>
+            </div>
+
+            <div className="contact-direct-console-wrap">
+              <div className="ops-email-console">
+                <div className="ops-email-console-head">
+                  <span className="ops-console-pill">
+                    <span className="signal-dot" /> EMAIL CONTACT
                   </span>
-                </>
-              );
-              return (
-                <li key={path.n} className="bg-white">
-                  {path.external ? (
-                    <a href={path.href} target="_blank" rel="noopener noreferrer" className={className}>
-                      {inner}
-                    </a>
-                  ) : (
-                    <Link href={path.href} className={className}>
-                      {inner}
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-
-          <div className="mt-8 rounded-[14px] border border-slate-200 bg-[#f8fafc] p-6 md:p-8">
-            <h3 className="text-base font-semibold text-[#111827]">When you file an issue</h3>
-            <ul className="mt-4 grid gap-3 text-sm text-[#4b5563] sm:grid-cols-3">
-              <li>
-                <span className="font-mono text-[11px] text-slate-400">01 · Install</span>
-                <p className="mt-1">Compose, Helm, or Docker — and {BRAND.name} {BRAND.version} if you know it.</p>
-              </li>
-              <li>
-                <span className="font-mono text-[11px] text-slate-400">02 · Evidence</span>
-                <p className="mt-1">Logs or a screenshot. Redact secrets. Do not paste ENCRYPTION_KEY.</p>
-              </li>
-              <li>
-                <span className="font-mono text-[11px] text-slate-400">03 · Expectation</span>
-                <p className="mt-1">What you thought would happen, and what actually happened.</p>
-              </li>
-            </ul>
+                  <span className="ops-console-protocol">GENERAL ENQUIRIES</span>
+                </div>
+                <div className="ops-email-console-body">
+                  <Mail size={16} className="text-red-500 shrink-0" />
+                  <a
+                    href={enquiryHref("OpsKnight enquiry")}
+                    className="ops-console-address"
+                  >
+                    {BRAND.links.email}
+                  </a>
+                </div>
+              </div>
+              <Action href={enquiryHref("OpsKnight enquiry")}>
+                Send an email
+              </Action>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="site-section site-light-alt">
+        <div className="site-container contact-issue-guide">
+          <div>
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> REPORTING A PRODUCT ISSUE
+            </p>
+            <h2>Give maintainers enough context to reproduce it.</h2>
+            <p className="site-description">
+              For non-sensitive bugs, include the release, deployment type,
+              affected page or workflow, exact reproduction steps, expected and
+              actual behavior, and sanitized logs or request IDs where useful.
+              Remove secrets, tokens, cookies, credentials and private incident data.
+            </p>
+          </div>
+          <div className="issue-evidence-list">
+            <span>Release / commit</span>
+            <span>Deployment topology</span>
+            <span>Reproduction steps</span>
+            <span>Expected vs actual</span>
+            <span>Sanitized logs / request IDs</span>
+            <span>Relevant provider or service</span>
           </div>
         </div>
       </section>

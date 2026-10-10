@@ -1,3 +1,6 @@
+import { PRODUCT } from "@/lib/product";
+import { BRAND } from "@/lib/brand";
+
 export type ChangeKind =
   | "added"
   | "security"
@@ -32,15 +35,19 @@ export const CHANGE_KIND_LABEL: Record<ChangeKind, string> = {
 
 export const releases: ReleaseItem[] = [
   {
-    version: "v2.0.0",
-    slug: "v2.0.0",
+    version: PRODUCT.release.tag,
+    slug: PRODUCT.release.tag,
     badge: "Latest",
-    date: "October 2, 2026",
+    date: new Intl.DateTimeFormat("en", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(new Date(PRODUCT.release.date + "T00:00:00Z")),
     summary:
       "A major milestone release introducing split production runtimes, Microsoft Teams ChatOps, Twilio voice paging, incident response policy engine, SCIM 2.0 provisioning, Docker Swarm HA, ManageEngine ingestion, and a durable notification delivery control plane.",
-    dockerTag: "ghcr.io/opsknight-labs/opsknight:2.0.0",
-    githubReleaseUrl:
-      "https://github.com/opsknight-labs/OpsKnight/releases/tag/v2.0.0",
+    dockerTag: `ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}`,
+    githubReleaseUrl: `${BRAND.links.releases}/tag/${PRODUCT.release.tag}`,
     categories: [
       {
         type: "added",
@@ -48,7 +55,7 @@ export const releases: ReleaseItem[] = [
         items: [
           "Split production runtime: independently scalable Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector processes.",
           "Docker Swarm deployment stacks (integrated and split) with Raft secrets, zero-downtime topology switching, and direct-database lifecycle.",
-          "PgBouncer pooling overlays and certified sizing profiles (Small, Medium, Large, Storm).",
+          "PgBouncer pooling overlays, published sizing profiles (Small, Medium, Large, Storm), and load/correctness scenarios for deployment planning. Benchmark results are planning evidence, not guaranteed capacity.",
         ],
       },
       {
@@ -62,7 +69,7 @@ export const releases: ReleaseItem[] = [
       },
       {
         type: "added",
-        title: "Enterprise Governance & Delivery Control",
+        title: "Governance & Delivery Control",
         items: [
           "Incident response policy engine: versioned SLA policies, classification, and support-hours rules at workspace and service scope.",
           "SCIM 2.0 provisioning: Users, Groups, discovery endpoints, team membership, and bearer token rotation.",
@@ -79,6 +86,27 @@ export const releases: ReleaseItem[] = [
           "Responder-grade installable mobile PWA with per-device Web Push registration and iOS recovery flows.",
           "Custom dashboard templates, configurable widgets, live refresh, PDF export, and fullscreen NOC mode.",
           "First stable release distributed under AGPL-3.0-only; historical v1.4.0 and earlier artifacts retain Apache-2.0.",
+        ],
+      },
+      {
+        type: "performance",
+        title: "Performance & Scale",
+        items: [
+          "Integrated and split runtime roles let operators scale Web, Scheduler, Critical, General, Bulk, and Status processing independently where the deployment model supports it.",
+          "PgBouncer pooling overlays and published sizing profiles reduce database-connection pressure and give operators a documented starting point for capacity planning.",
+          "Load and correctness scenarios exercise alert ingestion, incident lifecycle, escalation, notifications, status fan-out, realtime traffic, user workload, security-under-load, recovery, and queue-drain behavior. Results are planning evidence, not guaranteed capacity.",
+        ],
+      },
+      {
+        type: "changed",
+        title: "2.0 Release Boundaries",
+        items: [
+          "One supported status page per installation; multiple independent status pages are not a released 2.0 capability.",
+          "Service Objectives/SLO UI is deferred and its route redirects; it is not advertised as a released feature.",
+          "Mobile is an installable PWA with Web Push, not a native App Store or Google Play application.",
+          "Voice paging is for initial triggered-incident alerting and responder acknowledgement; later lifecycle updates do not place additional calls.",
+          "OpsKnight remains self-hosted; v2.0.0 does not introduce a hosted OpsKnight Cloud service.",
+          "The 28 inbound contracts are the total supported inbound catalog, not 28 integrations newly introduced in 2.0.",
         ],
       },
     ],

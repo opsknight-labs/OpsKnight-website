@@ -32,9 +32,3 @@ delivering stale acknowledgements, resolutions, or escalation messages.
 Use **Settings → Notifications** for provider configuration and the operations
 view for delivery outcomes. See [inspect notification delivery](../../guides/notifications/inspect-delivery)
 for the operator workflow.
-
-## Reference pages
-
-- [Providers](./providers)
-- [Rate limits and admission](./rate-limits)
-- [Delivery states](./delivery-states)

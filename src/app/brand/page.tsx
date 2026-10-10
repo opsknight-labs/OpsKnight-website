@@ -1,201 +1,207 @@
+import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { BRAND, BRAND_COLORS } from "@/lib/brand";
-import { PageToc } from "@/components/common/PageToc";
-import { CopyBlock } from "@/components/brand/CopyBlock";
+import { Action, SectionIntro, TextLink } from "@/components/site/Primitives";
 
-const title = "Brand";
-const description =
-  "OpsKnight logo, colors, and how to write about the product. Not affiliated with PagerDuty or other tools we ingest from.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/brand" },
-  openGraph: { title, description, url: "/brand" },
+const pageMetadata: Metadata = {
+  title: "Brand",
+  description:
+    "OpsKnight identity, logo usage, colors, typography, naming and the Incident Signal.",
+  alternates: { canonical: "/brand/" },
+  openGraph: { url: "/brand/" },
 };
+export const metadata = siteMetadata(pageMetadata);
 
-const swatches: { name: string; hex: string; use: string }[] = [
-  { name: "Chrome", hex: BRAND_COLORS.chrome, use: "Night surfaces: nav, footer, command chrome" },
-  { name: "Canvas", hex: BRAND_COLORS.canvas, use: "Page background" },
-  { name: "Ink", hex: BRAND_COLORS.ink, use: "Headings and body on canvas" },
-  { name: "Shield", hex: BRAND_COLORS.accent, use: "Buttons, links, and live signal — from the logo" },
-  { name: "Clear", hex: BRAND_COLORS.success, use: "Resolved / healthy" },
-  { name: "Severity", hex: BRAND_COLORS.error, use: "Error and critical only" },
-];
+const usageRules = [
+  ["Clear space", "Give the knight mark breathing room. Do not crowd it with text, borders or partner marks."],
+  ["Keep proportions", "Scale the supplied asset as one unit. Do not stretch, squash, rotate or redraw the mark."],
+  ["Use contrast", "Use the red mark where it remains legible. Prefer the supplied assets over recoloring the logo."],
+  ["Name it OpsKnight", "Write the product name as “OpsKnight”. Avoid alternate spacing, abbreviations or invented product names."],
+] as const;
 
-const TOC_SECTIONS = [
-  { id: "logo", title: "Logo & Mark" },
-  { id: "color", title: "Color System" },
-  { id: "writing", title: "Writing About OpsKnight" },
-  { id: "assets", title: "Download Brand Assets" },
-];
-
-const BRAND_SPECS = [
-  { label: "Shield Red", value: "#d21a1b" },
-  { label: "Night Chrome", value: "#0f172a" },
-  { label: "Canvas", value: "#f8fafc" },
-  { label: "Community Software", value: BRAND.license },
-  { label: "Current Line", value: BRAND.releaseLabel },
-  { label: `Legacy v${BRAND.legacyVersion}`, value: BRAND.legacyLicense },
-];
-
-export default function BrandPage() {
+export default function Brand() {
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      <section className="border-b border-slate-200 bg-[#0f172a] pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <div className="mb-6">
-              <Image
-                src={BRAND.assets.logo}
-                alt={BRAND.name}
-                width={48}
-                height={48}
-                sizes="48px"
-                className="h-12 w-12 object-contain"
-              />
-            </div>
-            <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-400">
-              Brand · {BRAND.releaseLabel}
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-              Night chrome. Shield red.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-              Use the OpsKnight logo as shipped. Do not replace it with a new mark.
-              The shield red is for actions, not the whole page.
-            </p>
+    <div className="site-page site-page--brand">
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> BRAND / OPSKNIGHT
+          </p>
+          <h1>
+            One identity.
+            <br />A clear signal.
+          </h1>
+          <p className="site-description">
+            Incident operations you control. The identity pairs operational
+            surfaces with a deliberate red signal and enough restraint for the
+            product to remain the focus.
+          </p>
+          <div className="site-actions">
+            <Action href="/logo.svg">Download SVG logo</Action>
+            <Action href="/logo.png" secondary>
+              Download PNG
+            </Action>
           </div>
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,1fr)_20rem]">
-            <article className="min-w-0 space-y-14 max-w-3xl">
-              <div id="logo" className="scroll-mt-28">
-                <h2 className="text-xl font-semibold text-[#111827]">Logo</h2>
-                <p className="mt-3 text-[#4b5563]">
-                  The mark is <span className="font-mono text-sm">logo-mark.png</span>{" "}
-                  / <span className="font-mono text-sm">logo.svg</span>. Do not
-                  stretch, recolor, or substitute it.
-                </p>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <div className="flex items-center gap-4 rounded-[14px] border border-slate-800 bg-[#0f172a] p-6">
-                    <Image
-                      src={BRAND.assets.logo}
-                      alt=""
-                      width={40}
-                      height={40}
-                      sizes="40px"
-                      className="h-10 w-10 object-contain"
-                    />
-                    <div>
-                      <p className="text-sm font-medium text-white">On chrome</p>
-                      <a href={BRAND.assets.logoMark} download className="text-xs text-slate-400 hover:text-white">
-                        Download logo-mark.png
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 rounded-[14px] border border-slate-200 bg-white p-6">
-                    <Image
-                      src={BRAND.assets.logoSvg}
-                      alt=""
-                      width={40}
-                      height={40}
-                      sizes="40px"
-                      className="h-10 w-10 object-contain"
-                    />
-                    <div>
-                      <p className="text-sm font-medium text-[#111827]">On canvas</p>
-                      <a href={BRAND.assets.logoSvg} download className="text-xs text-slate-500 hover:text-[#111827]">
-                        Download logo.svg
-                      </a>
-                    </div>
-                  </div>
-                </div>
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro eyebrow="THE MARK" title="Keep the knight recognizable.">
+            Use the supplied mark, preserve its proportions and leave clear
+            space around it.
+          </SectionIntro>
+          <div className="brand-logo-stage">
+            <Image
+              src="/logo.svg"
+              width={160}
+              height={160}
+              alt="OpsKnight red knight shield"
+            />
+            <div>
+              <p>
+                Use the original vector wherever possible. The PNG is provided
+                for environments that cannot use SVG.
+              </p>
+              <div className="paired-links">
+                <TextLink href="/logo.svg">SVG asset</TextLink>
+                <TextLink href="/logo.png">PNG asset</TextLink>
+                <TextLink href="/brand/opsknight-mark.webp">Web mark</TextLink>
               </div>
-
-              <div id="color" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Color System</h2>
-                <p className="mt-3 text-sm text-[#4b5563]">
-                  OpsKnight uses high-contrast night chrome surfaces, warm light canvas backgrounds, and tactical shield red for active signals:
-                </p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {swatches.map((s) => (
-                    <div key={s.name} className="flex overflow-hidden rounded-[12px] border border-slate-200 bg-white shadow-sm">
-                      <div className="w-16 shrink-0" style={{ background: s.hex }} />
-                      <div className="p-3">
-                        <p className="font-mono text-xs font-semibold text-[#111827]">{s.name}</p>
-                        <p className="font-mono text-[11px] text-slate-500">{s.hex}</p>
-                        <p className="mt-1 text-xs text-[#4b5563]">{s.use}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div id="writing" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Writing about the product</h2>
-                <div className="mt-6 space-y-4 text-sm text-[#4b5563]">
-                  <div className="rounded-[12px] border border-slate-200 bg-white p-4">
-                    <p className="font-mono text-xs font-semibold text-[#059669]">Do</p>
-                    <p className="mt-1">
-                      &ldquo;OpsKnight is a self-hosted incident command center and on-call platform.&rdquo;
-                    </p>
-                  </div>
-                  <div className="rounded-[12px] border border-slate-200 bg-white p-4">
-                    <p className="font-mono text-xs font-semibold text-[#d21a1b]">Don&apos;t</p>
-                    <p className="mt-1">
-                      &ldquo;OpsKnight is an open-source PagerDuty clone.&rdquo; — We ingest from PagerDuty-compatible webhooks; we are not PagerDuty and are not affiliated with them.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div id="assets" className="scroll-mt-28 border-t border-slate-200 pt-10">
-                <h2 className="text-xl font-semibold text-[#111827]">Download Brand Assets</h2>
-                <p className="mt-3 text-sm text-[#4b5563]">
-                  Software and brand rights are separate. The active v{BRAND.version} Community
-                  development line uses {BRAND.license}; published v{BRAND.legacyVersion} and
-                  earlier releases retain the licenses shipped with those artifacts, including
-                  {" "}{BRAND.legacyLicense} where applicable. Neither software license grants
-                  permission to present a fork, derivative product, or hosted service as the
-                  official OpsKnight product. See the{" "}
-                  <a
-                    href={BRAND.links.trademarks}
-                    className="text-[#d21a1b] hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    trademark policy
-                  </a>{" "}
-                  for details.
-                </p>
-                <div className="mt-4">
-                  <CopyBlock
-                    label="curl"
-                    value={`curl -O https://opsknight.com/logo.svg
-curl -O https://opsknight.com/logo-mark.png`}
-                  />
-                </div>
-              </div>
-            </article>
-
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 pl-4 border-l border-slate-200/80 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
-                <PageToc
-                  sections={TOC_SECTIONS}
-                  specs={BRAND_SPECS}
-                  quickCommand="curl -O https://opsknight.com/logo.svg"
-                  quickCommandLabel="Download SVG"
-                  docLink={BRAND.links.github}
-                  docLinkLabel="GitHub Repository"
-                />
-              </div>
-            </aside>
+            </div>
           </div>
+
+          <div className="brand-usage-grid">
+            {usageRules.map(([title, body]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-white">
+        <div className="site-container">
+          <SectionIntro eyebrow="COLOR" title="Operational, not decorative." />
+          <div className="brand-palette">
+            {[
+              ["OpsKnight Red", "#D21A1B"],
+              ["Command Black", "#0B0F18"],
+              ["Ops Slate", "#0F172A"],
+              ["Elevated Slate", "#1E293B"],
+              ["Canvas", "#F8FAFC"],
+              ["Ink", "#111827"],
+              ["Operational Green", "#059669"],
+              ["Warning", "#D97706"],
+            ].map(([name, color]) => (
+              <div key={name}>
+                <span style={{ background: color }} />
+                <strong>{name}</strong>
+                <code>{color}</code>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section">
+        <div className="site-container">
+          <SectionIntro eyebrow="USE IT CORRECTLY" title="Practical rules for product references.">
+            Keep the name, mark and product claims recognizable and accurate
+            wherever OpsKnight appears in documentation, integrations or partner material.
+          </SectionIntro>
+          <div className="brand-do-dont">
+            <article>
+              <span>DO</span>
+              <h3>Preserve the supplied identity.</h3>
+              <ul>
+                <li>Use “OpsKnight” with the exact capitalization.</li>
+                <li>Use supplied logo assets with clear space and sufficient contrast.</li>
+                <li>Describe the product using capabilities that are current for the referenced release.</li>
+                <li>Link to the project or documentation when attribution helps readers verify a claim.</li>
+              </ul>
+            </article>
+            <article>
+              <span>DON’T</span>
+              <h3>Invent variants or implied endorsements.</h3>
+              <ul>
+                <li>Do not stretch, rotate, recolor, or redraw the knight mark.</li>
+                <li>Do not call a third-party product or service an official OpsKnight offering without permission.</li>
+                <li>Do not combine the OpsKnight name with another brand in a way that implies ownership or endorsement.</li>
+                <li>Do not reuse old release claims as if they describe the current product.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section site-white">
+        <div className="site-container">
+          <SectionIntro eyebrow="README & DOCS" title="Present OpsKnight consistently.">
+            Use the canonical mark, product name and current-release wording when
+            OpsKnight appears in a README, integration guide or partner document.
+          </SectionIntro>
+          <div className="brand-example-grid">
+            <article>
+              <span>README LOCKUP</span>
+              <h3>Keep the product name and destination obvious.</h3>
+              <pre tabIndex={0}><code>{`![OpsKnight](https://opsknight.com/logo.svg)
+
+**OpsKnight** — self-hosted incident management and on-call.
+
+[Install](https://opsknight.com/deploy/) · [Docs](https://opsknight.com/docs/) · [GitHub](https://github.com/opsknight-labs/OpsKnight)`}</code></pre>
+            </article>
+            <article>
+              <span>INTEGRATION ATTRIBUTION</span>
+              <h3>Describe interoperability without implying endorsement.</h3>
+              <pre tabIndex={0}><code>{`Works with OpsKnight v2.0.0 through the documented webhook/API contract.
+
+OpsKnight is an independent open-source project. Product names and trademarks belong to their respective owners.`}</code></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="site-section">
+        <div className="site-container brand-principles-grid">
+          <article className="interior-copy">
+            <p className="site-eyebrow">THE INCIDENT SIGNAL</p>
+            <h2>Red carries meaning.</h2>
+            <p>
+              A point, a path, an active incident. Use red to explain routing,
+              paging, attention and action—not as decoration on every surface.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">TYPOGRAPHY</p>
+            <h2>Type with clarity.</h2>
+            <p>
+              Manrope leads narrative copy. JetBrains Mono labels versions,
+              commands, states and operational details. Large headings should
+              create hierarchy, not crowd smaller laptop viewports.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">TRADEMARK & ATTRIBUTION</p>
+            <h2>Identify the project without implying affiliation.</h2>
+            <p>
+              The OpsKnight name and logo identify this project and product.
+              When referencing OpsKnight from another product, company or service,
+              keep the attribution clear and do not imply endorsement, certification
+              or an official partnership that has not been established.
+            </p>
+          </article>
+          <article className="interior-copy">
+            <p className="site-eyebrow">WRITING</p>
+            <h2>Specific beats dramatic.</h2>
+            <p>
+              Describe what the product actually does, its operational
+              boundaries and where to verify the behavior. Avoid unsupported
+              superlatives or claims that a deployment has not proven.
+            </p>
+          </article>
         </div>
       </section>
     </div>

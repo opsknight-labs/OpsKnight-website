@@ -13,6 +13,7 @@ import {
   GitBranch,
 } from "lucide-react";
 import { latestDocsHref } from "@/lib/docs/paths";
+import { copyText } from "@/lib/client-clipboard";
 
 type SnippetTab = "contact_point" | "alertmanager" | "slack_chatops" | "curl";
 
@@ -26,20 +27,18 @@ export function GrafanaMigrationHelper({ className = "" }: { className?: string 
   > = {
     contact_point: {
       title: "Grafana Contact Point",
-      filename: "grafana-contact-point.json",
-      language: "json",
-      notes: "Add a Webhook Contact Point in Grafana Alerting pointing to OpsKnight with optional HMAC signature verification.",
-      code: `{
-  "name": "OpsKnight-OnCall",
-  "type": "webhook",
-  "settings": {
-    "url": "https://opsknight.yourcompany.com/api/v1/webhooks/grafana",
-    "httpMethod": "POST",
-    "authorization_scheme": "Bearer",
-    "authorization_credentials": "YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY",
-    "maxAlerts": 10
-  }
-}`,
+      filename: "grafana-contact-point.txt",
+      language: "text",
+      notes: "Configure these fields in Grafana Alerting → Contact points. Keep Grafana's default Alerting / Alertmanager JSON intact.",
+      code: `Type: Webhook
+URL: https://opsknight.yourcompany.com/api/integrations/grafana?integrationId=YOUR_INTEGRATION_ID
+Method: POST
+Resolved messages: enabled
+Payload: default Grafana / Alertmanager JSON
+
+Optional HMAC verification:
+If you configure an OpsKnight signature secret, configure the matching Grafana
+HMAC signature so X-Grafana-Signature can be verified.`,
     },
     alertmanager: {
       title: "Grafana Alertmanager / Mimir",
@@ -49,10 +48,8 @@ export function GrafanaMigrationHelper({ className = "" }: { className?: string 
       code: `receivers:
   - name: 'opsknight-oncall'
     webhook_configs:
-      - url: 'https://opsknight.yourcompany.com/api/v1/webhooks/grafana'
+      - url: 'https://opsknight.yourcompany.com/api/integrations/grafana?integrationId=YOUR_INTEGRATION_ID'
         send_resolved: true
-        http_config:
-          bearer_token: 'YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY'
 
 route:
   receiver: 'opsknight-oncall'
@@ -63,50 +60,29 @@ route:
       receiver: 'opsknight-oncall'`,
     },
     slack_chatops: {
-      title: "Slack ChatOps Configuration",
-      filename: "slack-manifest.json",
-      language: "json",
-      notes: "Replace Grafana OnCall Slack bot with OpsKnight's dedicated self-hosted Slack ChatOps integration.",
-      code: `{
-  "display_information": {
-    "name": "OpsKnight Incident Bot",
-    "description": "On-call alerts, incident war rooms, and paging"
-  },
-  "features": {
-    "bot_user": {
-      "display_name": "OpsKnight",
-      "always_online": true
-    },
-    "slash_commands": [
-      {
-        "command": "/opsknight",
-        "url": "https://opsknight.yourcompany.com/api/integrations/slack/events",
-        "description": "Manage incidents, on-call schedules, and acknowledgments"
-      }
-    ]
-  },
-  "oauth_config": {
-    "scopes": {
-      "bot": [
-        "chat:write",
-        "channels:manage",
-        "groups:write",
-        "commands",
-        "users:read",
-        "users:read.email"
-      ]
-    }
-  }
-}`,
+      title: "Slack ChatOps transition",
+      filename: "slack-transition.md",
+      language: "markdown",
+      notes: "Use OpsKnight's generated Slack app manifest instead of copying a static manifest from this comparison page.",
+      code: `# Slack ChatOps transition
+
+1. Open Settings → Integrations → Slack in OpsKnight.
+2. Copy the generated Slack app manifest.
+3. In the Slack API console, create the app from that manifest.
+4. Configure the documented OAuth credentials in OpsKnight.
+5. Install/connect the intended workspace.
+6. Route one non-production service first.
+7. Trigger a test incident and verify signed actions, identity, room projection and cleanup.
+
+Do not reuse a Grafana OnCall bot token or hardcode scopes from an old manifest.`,
     },
     curl: {
       title: "Grafana Webhook Test",
       filename: "test-grafana-payload.sh",
       language: "bash",
       notes: "Fire a test Grafana 9/10/11 alerting webhook payload to verify ingestion and severity mapping.",
-      code: `curl -X POST https://opsknight.yourcompany.com/api/v1/webhooks/grafana \\
+      code: `curl -X POST https://opsknight.yourcompany.com/api/integrations/grafana?integrationId=YOUR_INTEGRATION_ID \\
   -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer YOUR_OPSKNIGHT_SERVICE_INTEGRATION_KEY" \\
   -d '{
     "receiver": "opsknight-oncall",
     "status": "firing",
@@ -131,8 +107,9 @@ route:
     },
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(snippets[activeTab].code);
+  const handleCopy = async () => {
+    const ok = await copyText(snippets[activeTab].code);
+    if (!ok) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -155,7 +132,7 @@ route:
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Replace archived open-source tooling with actively maintained self-hosted incident response.
+              Evaluate OpsKnight as a self-hosted replacement path and validate Grafana alert delivery plus responder workflows before migration.
             </p>
           </div>
         </div>

@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/opsknight-labs/OpsKnight",
+  "tag": "v2.0.0",
+  "commit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+  "tagCreatedAt": "2026-10-02T23:36:01Z",
+  "releaseCreatedAt": "2026-10-02T23:36:01Z",
+  "publishedAt": "2026-10-03T05:02:04Z",
+  "sha256": {
+    "versions.json": "04facc04370f3ba206be5926b59167d98eeb1ce5b3975f3ad032b97852f1152a",
+    "capabilities.yaml": "b2785b3707ae07a000d2a8f9e70a32fb02d5ef41f154be3eecf7026681663b7e",
+    "catalog.yaml": "63fe453c7f8920e2d4b930c359e942d93121d8f71715c5feabdc6a0f10a81951",
+    "CHANGELOG.md": "08c48201cbc063bfd565a0b9f1015cda83595e7d4e8faf80b48313370342d8b8",
+    "LICENSE": "11da8a17b2242560ddf34b556d962fe0fda352e78561f32fabec37bd5017ffb4",
+    "notification-priority.source.txt": "18271222cce64885a05df2975f47e28610600cbc04dcb2fed6e9807de9d6b876"
+  }
+}

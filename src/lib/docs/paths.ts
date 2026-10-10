@@ -1,11 +1,7 @@
-/**
- * Docs URLs. Marketing always uses DOCS_CHANNEL ("latest").
- * Cloudflare maps /docs/latest/ to the newest content/docs/v* folder
- * when the website builds (see scripts/generate-redirects.mjs).
- * Add the next versioned docs tree in the app; after docs-sync + site build,
- * latest follows. Do not pin a numbered docs version in marketing pages.
- */
-export const DOCS_CHANNEL = "latest";
+import manifest from "@/generated/product-manifest.json";
+
+/** Link directly to exported release pages; /docs/latest remains a Cloudflare redirect for bookmarks. */
+export const DOCS_CHANNEL = manifest.release.tag;
 
 /** Docs URLs must end with `/` so Next's RSC fetch uses `index.txt`, not a sibling `.txt`. */
 export function withTrailingSlash(path: string) {
@@ -24,7 +20,10 @@ export function docsHref(version: string, slug: string[] = []) {
 
 /** Newest published docs tree. Pass a path like "getting-started/installation". */
 export function latestDocsHref(slugPath = "") {
-  const slug = slugPath.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean);
+  const slug = slugPath
+    .replace(/^\/+|\/+$/g, "")
+    .split("/")
+    .filter(Boolean);
   return docsHref(DOCS_CHANNEL, slug);
 }
 

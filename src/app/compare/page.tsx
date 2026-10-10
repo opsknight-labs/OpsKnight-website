@@ -1,95 +1,124 @@
+import { siteMetadata } from "@/lib/site-metadata";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { BRAND } from "@/lib/brand";
 import { COMPETITORS } from "@/lib/competitors";
-import { COMPARE_AS_OF, COMPARE_FOOTNOTE, COMPARE_SOURCE_LINKS } from "@/lib/compare-matrix";
+import {
+  COMPARE_AS_OF,
+  COMPARE_FOOTNOTE,
+  COMPARE_SOURCE_LINKS,
+} from "@/lib/compare-matrix";
 import { CompareTable } from "@/components/comparison/CompareTable";
-import { SavingsCalculator } from "@/components/calculator/SavingsCalculator";
+import { FinalCTA } from "@/components/site/Primitives";
+
+const pageMetadata: Metadata = {
+  title: "Compare Incident Management & On-Call Platforms — OpsKnight vs The Market",
+  description:
+    "Compare OpsKnight v2.0.0 with PagerDuty, incident.io, Opsgenie, and Grafana. An open-source, self-hosted alternative for on-call scheduling, voice paging, and incident response.",
+  alternates: { canonical: "/compare/" },
+  openGraph: { url: "/compare/" },
+};
+
+export const metadata = siteMetadata(pageMetadata);
 
 export default function ComparePage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] pt-28 pb-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <header className="max-w-3xl">
-          <p className="mb-3 font-mono text-[11px] font-medium tracking-wide text-slate-500">
-            Compare · v{BRAND.version} · as of {COMPARE_AS_OF}
+    <div className="site-page site-page--compare site-page--compare-index">
+      {/* 1. Interior Hero */}
+      <section className="interior-hero site-dark">
+        <div className="site-container">
+          <p className="site-eyebrow">
+            <span className="signal-dot" /> COMPREHENSIVE MARKET COMPARISON · {COMPARE_AS_OF}
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-[#111827] sm:text-5xl">
-            OpsKnight next to the rest of the on-call market.
+          <h1>
+            Compare the operating model,
+            <br />
+            not just the feature list.
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-[#4b5563] sm:text-lg">
-            The {BRAND.name} column is what ships in {BRAND.version}: incidents,
-            on-call, Slack war rooms, status page, {BRAND.integrationCountLabel}{" "}
-            inbound parsers, {BRAND.license}. Other columns are taken from each
-            vendor’s own docs and public pricing pages — including Opsgenie’s
-            end of support and Grafana OnCall OSS being archived.
+          <p className="site-description">
+            Evaluate OpsKnight v{BRAND.version} against PagerDuty, incident.io, Opsgenie,
+            Squadcast, Splunk On-Call, and Grafana Cloud IRM across deployment ownership,
+            response workflows, identity, notification channels, and commercial model.
+            OpsKnight values come from the pinned release; vendor values are tied to dated public sources.
           </p>
-        </header>
+        </div>
+      </section>
 
-        <section className="mt-10">
-          <p className="mb-3 text-xs font-medium uppercase tracking-wide text-slate-500">
-            Direct comparisons
-          </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {/* 2. Direct Competitor Cards */}
+      <section className="site-section site-white border-b border-slate-200">
+        <div className="site-container">
+          <div className="mb-6">
+            <p className="site-eyebrow">DIRECT PLATFORM COMPARISONS</p>
+            <h2 className="text-2xl font-bold text-slate-900">Explore vendor deep-dives</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {COMPETITORS.map((vendor) => (
               <Link
                 key={vendor.slug}
                 href={vendor.href}
-                className="rounded-[12px] border border-slate-200 bg-white p-4 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d21a1b]"
+                className="group p-5 rounded-[14px] border border-slate-200 bg-white hover:border-[#d21a1b] hover:shadow-md transition-all flex flex-col justify-between"
               >
-                <p className="text-sm font-semibold text-[#111827]">{vendor.name}</p>
-                <p className="mt-1 text-[11px] text-[#4b5563]">{vendor.category}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-[#d21a1b]">
-                  vs {BRAND.name}
-                  <ArrowRight className="h-3 w-3" />
-                </span>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-bold text-lg text-slate-900 group-hover:text-[#d21a1b] transition-colors">
+                      {vendor.name}
+                    </span>
+                    <span className="text-[11px] font-mono font-medium px-2.5 py-1 bg-slate-100 rounded-full text-slate-600">
+                      {vendor.category}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-4">{vendor.commercialModel}</p>
+                </div>
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] group-hover:underline">
+                  OpsKnight vs {vendor.shortName} <ArrowRight size={14} />
+                </div>
               </Link>
             ))}
           </div>
-        </section>
-
-        <section className="mt-14">
-          <h2 className="mb-4 text-xl font-semibold text-[#111827]">Capability matrix</h2>
-          <CompareTable />
-          <p className="mt-4 max-w-4xl text-xs leading-relaxed text-slate-500">
-            {COMPARE_FOOTNOTE}
-          </p>
-          <ul className="mt-3 columns-1 gap-x-8 text-[11px] leading-relaxed text-slate-500 sm:columns-2 lg:columns-3">
-            {COMPARE_SOURCE_LINKS.map((link) => (
-              <li key={link.href} className="break-inside-avoid pb-1">
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#d21a1b] hover:underline"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-14">
-          <h2 className="mb-3 text-xl font-semibold text-[#111827]">Cost sketch</h2>
-          <SavingsCalculator />
-        </section>
-
-        <div className="mt-16 flex flex-wrap items-center gap-4">
-          <Link
-            href={BRAND.links.docs}
-            className="inline-flex h-11 items-center rounded-[12px] bg-[#d21a1b] px-6 text-sm font-semibold text-white hover:bg-[#b41516]"
-          >
-            Install
-          </Link>
-          <Link
-            href={BRAND.links.github}
-            className="text-sm font-medium text-[#d21a1b] hover:underline"
-          >
-            Source on GitHub
-          </Link>
         </div>
-      </div>
+      </section>
+
+      {/* 3. Master Capability Matrix */}
+      <section className="site-section">
+        <div className="site-container">
+          <div className="mb-8">
+            <p className="site-eyebrow">FULL SPECIFICATION AUDIT</p>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+              Capability &amp; Architecture Matrix
+            </h2>
+            <p className="mt-2 text-slate-600 max-w-3xl text-sm leading-relaxed">
+              Examine side-by-side capabilities across hosting boundaries, on-call scheduling, notification channels,
+              collaboration tools, and enterprise security. Filter by capability category or select a vendor on mobile.
+            </p>
+          </div>
+
+          <CompareTable />
+
+          {/* Footnote & Primary Sources */}
+          <div className="mt-12 rounded-[14px] bg-slate-50 border border-slate-200 p-6 text-slate-600 text-xs">
+            <p className="font-semibold text-slate-900 mb-2">Verification &amp; Integrity Notice</p>
+            <p className="leading-relaxed mb-4">{COMPARE_FOOTNOTE}</p>
+            <p className="font-semibold text-slate-900 mb-2">Primary Sourced Documentation</p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {COMPARE_SOURCE_LINKS.map((link) => (
+                <li key={link.href} className="truncate">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center min-h-[28px] py-1 text-[#d21a1b] hover:underline"
+                  >
+                    ↳ {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <FinalCTA />
     </div>
   );
 }

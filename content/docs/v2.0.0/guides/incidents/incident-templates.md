@@ -1,13 +1,9 @@
 ---
 title: Manage incident templates
-order: 9
 description: Create, use, and delete reusable incident defaults with the current 2.0 template workflow.
 type: how-to
 product_area: incidents
 audience: [responder, administrator]
-reader:
-  status: READER_COMPLETE
-  task: Create, use, replace, and delete an incident template.
 verification:
   level: source
   verified_at: 2026-09-29
@@ -22,11 +18,7 @@ Incident templates provide reusable defaults for common response scenarios. In 2
 
 Sign in as an `ADMIN` or `RESPONDER`. Decide whether every permitted responder should see the template or only its creator, and confirm access to any default service.
 
-## Open the feature
-
-Open **Incidents → Templates**. Select an existing template to use/delete, or **New Template** to create one.
-
-## Configure and create a template
+## Create a template
 
 1. Open **Incidents → Templates**.
 2. Select **New Template**.
@@ -48,15 +40,7 @@ The listing returns public templates plus private templates created by the curre
 
 The creator relationship is ownership metadata. If you plan to disable or delete a creator, inventory private templates first and create public or replacement templates where the workflow must continue.
 
-## What OpsKnight does
-
-OpsKnight stores reusable defaults and applies them to the new-incident form. The resulting incident is independent: later template replacement/deletion does not rewrite incidents already created from it.
-
-## Verify the template
-
-Open **Create incident**, choose the new template, and confirm its title, description/runbook, urgency, priority, service, visibility, and ownership defaults populate as intended. Cancel the form or create a controlled test incident and verify the resulting incident.
-
-## Remove or replace a template
+## Replace a template
 
 Because 2.0 does not support editing:
 
@@ -69,11 +53,6 @@ Because 2.0 does not support editing:
 Deleting a template prevents future selection. It does not rewrite incidents that were already created from it.
 
 ## Troubleshooting
-
-## Next steps
-
-- [Create an incident](./create)
-- [Respond to an incident](./respond-to-an-incident)
 
 - **Template Name Conflict:** names are unique; choose a different name or delete the obsolete template after validating its replacement.
 - **Template is missing from the chooser:** confirm it is public or owned by the current user and that the user can create an incident for the default service.

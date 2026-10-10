@@ -2,7 +2,7 @@
 title: Guides
 order: 3
 description: Task-oriented workflows for responders and administrators.
-type: concept
+type: how-to
 product_area: platform
 audience: [responder, administrator]
 verification:
@@ -17,13 +17,5 @@ Every guide states prerequisites, steps, expected results, verification,
 common mistakes, and related concepts. Published guides must be backed by a
 test, current source/configuration, or a certified runtime journey.
 
-Browse by task area:
-
-- [Incidents](./incidents/), [on-call](./on-call/), and [escalation](./escalation/)
-- [Services](./services/) and [teams](./teams/)
-- [Notifications](./notifications/), [ChatOps](./chatops/), and [status pages](./status-pages/)
-- [Profile](./profile/), [identity](./identity/), [administration](./administration/), and [privacy](./privacy/)
-- [Postmortems](./postmortems/) and [Compliance Control Center](./compliance/)
-- [Analytics](./analytics/), [reports and dashboards](./reports/), and [mobile/PWA](./mobile/)
-- [Jira](./jira/) and provider-specific [integrations](../integrations/)
-- [Command Center](./dashboard/) and [navigation, search, and inbox](./navigation/)
+Browse by task area: incidents, on-call, escalation, notifications, ChatOps,
+status pages, identity, Jira, and administration.

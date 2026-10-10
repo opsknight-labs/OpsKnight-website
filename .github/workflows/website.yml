@@ -1,0 +1,75 @@
+name: Website quality
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  static-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run product:verify-source
+      - run: npm run product:check
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test:export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-pages-static
+          path: out/
+  browser:
+    # Match the pinned Linux browser/font environment used to capture baselines.
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    needs: static-site
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: cloudflare-pages-static
+          path: out/
+      - name: Test the exported site and performance budgets
+        run: |
+          PORT=5001 node scripts/serve-static.mjs &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          export PREVIEW_URL=http://127.0.0.1:5001
+          npx playwright test
+          mkdir -p test-results
+          export CHROME_PATH="$(node -e "const { chromium } = require('@playwright/test'); process.stdout.write(chromium.executablePath())")"
+          for target in "home:/" "integrations:/integrations/" "compare:/compare/"; do
+            name="${target%%:*}"
+            route="${target#*:}"
+            npx lighthouse "http://127.0.0.1:5001${route}" \
+              --chrome-path="$CHROME_PATH" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="test-results/lighthouse-${name}.json" \
+              --quiet
+          done
+          node scripts/check-lighthouse.mjs \
+            test-results/lighthouse-home.json \
+            test-results/lighthouse-integrations.json \
+            test-results/lighthouse-compare.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-browser-evidence
+          path: test-results/

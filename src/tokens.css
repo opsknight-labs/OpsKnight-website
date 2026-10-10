@@ -1,0 +1,196 @@
+/* ============================================================================
+ * OpsKnight Design System Tokens
+ * ============================================================================
+ * Single source of truth for all design values used across the marketing site.
+ * Imported by site.css — all site components reference these tokens.
+ *
+ * The tokens here formalize values previously scattered across site.css and
+ * globals.css into a disciplined, predictable scale.
+ * ========================================================================= */
+
+:root {
+  /* ===================================================================
+   * Colors — operational palette
+   * =================================================================== */
+
+  /* Primary brand */
+  --ok-red: #d21a1b;
+  --ok-red-hover: #b41516;
+  --ok-red-glow: rgba(210, 26, 27, 0.27);
+  --ok-red-subtle: rgba(210, 26, 27, 0.08);
+
+  /* Surfaces — dark mode (hero, nav, footer) */
+  --surface-black: #0b0f18;
+  --surface-slate: #0f172a;
+  --surface-elevated: #111824;
+  --surface-raised: #17202f;
+
+  /* Surfaces — light mode */
+  --surface-white: #fff;
+  --surface-canvas: #f8fafc;
+  --surface-soft: #f1f5f9;
+  --surface-alt: #f5f7fa;
+
+  /* Text */
+  --text-primary: #111827;
+  --text-secondary: #526075;
+  --text-secondary-strong: #394353;
+  --text-dark-muted: #64748b;
+  --text-light-muted: #a6b1c2;
+  --text-light-secondary: #cbd5e1;
+
+  /* Borders */
+  --border-light: #dbe2eb;
+  --border-subtle: #e2e8f0;
+  --border-dark: #1e293b;
+  --border-dark-strong: #334155;
+
+  /* Semantic */
+  --success: #059669;
+  --success-bg: #ecfdf5;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --error: #be123c;
+  --error-bg: #fff1f2;
+
+  /* Aliases for brevity */
+  --site-black: var(--surface-black);
+  --site-red: var(--ok-red);
+  --site-muted: var(--text-dark-muted);
+
+  /* ===================================================================
+   * Spacing Scale — 4px base unit
+   * =================================================================== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+
+  /* ===================================================================
+   * Section Padding — fluid via clamp()
+   *
+   * Replaces the abrupt 112px → 72px jump at the 800px breakpoint.
+   * Now scales smoothly across all viewport widths.
+   * =================================================================== */
+  --section-pad: clamp(var(--space-16), 5vw, 108px);
+  --section-pad-sm: clamp(44px, 4.25vw, 72px);
+
+  /* ===================================================================
+   * Container Widths and Padding
+   *
+   * Container padding adjusts per breakpoint (set in media queries below).
+   * All containers use `width: min(MAX, calc(100% - var(--container-pad)))`.
+   * =================================================================== */
+  --container-max: 1240px;
+  --container-narrow: 800px;
+  --container-wide: 1440px;
+  --container-pad: 96px;
+
+  /* ===================================================================
+   * Navigation and Stage Heights
+   * =================================================================== */
+  --nav-height: 68px;
+  --stage-height: 380px;
+
+  /* ===================================================================
+   * Typography Scale — fluid via clamp()
+   *
+   * Every text size scales proportionally. No more fixed px sizes that
+   * require breakpoint overrides.
+   * =================================================================== */
+  --text-xs: clamp(10px, 0.65vw + 4px, 12px);
+  --text-sm: clamp(12px, 0.5vw + 6px, 14px);
+  --text-base: clamp(14px, 0.4vw + 8px, 16px);
+  --text-lg: clamp(16px, 0.5vw + 9px, 18px);
+  --text-xl: clamp(18px, 0.8vw + 8px, 22px);
+  --text-2xl: clamp(22px, 1.2vw + 8px, 28px);
+  --text-3xl: clamp(28px, 1.8vw + 8px, 36px);
+  --text-4xl: clamp(34px, 2.5vw + 10px, 48px);
+  --text-5xl: clamp(40px, 4vw + 8px, 64px);
+  --text-hero: clamp(52px, 5vw, 112px);
+
+  /* ===================================================================
+   * Border Radius
+   * =================================================================== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* ===================================================================
+   * Shadows
+   * =================================================================== */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08);
+  --shadow-xl: 0 18px 50px rgba(15, 23, 42, 0.11);
+  --shadow-hero: 0 0 80px rgba(0, 0, 0, 0.25);
+
+  /* ===================================================================
+   * Motion
+   * =================================================================== */
+  --motion-fast: 120ms;
+  --motion-normal: 220ms;
+  --motion-smooth: 400ms;
+  --motion-cinematic: 700ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =====================================================================
+ * Responsive Container & Dimension Scaling
+ * =================================================================== */
+@media (min-width: 1600px) {
+  :root {
+    --nav-height: 74px;
+    --stage-height: 440px;
+  }
+}
+@media (max-width: 1279px) {
+  :root {
+    --container-pad: 64px;
+    --nav-height: 64px;
+    --stage-height: 360px;
+  }
+}
+@media (max-width: 1023px) {
+  :root {
+    --container-pad: 48px;
+    --nav-height: 64px;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --container-pad: 40px;
+    --nav-height: 60px;
+  }
+}
+@media (max-width: 479px) {
+  :root {
+    --container-pad: 32px;
+    --nav-height: 60px;
+  }
+}
+
+/* =====================================================================
+ * Height-aware rules for compact displays (e.g. 1366x768 laptops)
+ * =================================================================== */
+@media (max-height: 768px) {
+  :root {
+    --nav-height: 60px;
+    --stage-height: 320px;
+    --section-pad: clamp(64px, 9vh, 76px);
+    --section-pad-sm: clamp(44px, 6.5vh, 56px);
+  }
+}
