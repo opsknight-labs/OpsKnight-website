@@ -7063,6 +7063,102 @@ header.site-nav::after {
   header.site-nav::after { display: none; }
 }
 
+/* ==========================================================================
+   Footer: brand and project actions on the left, quiet link columns right.
+   ========================================================================== */
+footer.site-footer {
+  padding: 40px 0 0;
+  border-top: 1px solid #ffffff12;
+  background: var(--surface-black);
+  color: #94a3b8;
+}
+footer.site-footer .footer-top {
+  display: grid;
+  grid-template-columns: minmax(240px, .8fr) minmax(0, 2fr);
+  gap: 48px clamp(40px, 6vw, 96px);
+  padding: 24px 0 48px;
+  border: 0;
+}
+footer.site-footer .footer-brand { display: grid; align-content: start; justify-items: start; gap: 16px; }
+footer.site-footer .site-wordmark { gap: 10px; color: #f8fafc; font-size: 18px; }
+footer.site-footer .footer-brand > p { max-width: 30ch; margin: 0; color: #94a3b8; font-size: 14.5px; line-height: 1.6; }
+footer.site-footer .footer-cta { display: flex; flex-wrap: wrap; gap: 8px; }
+footer.site-footer .footer-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid #263244;
+  border-radius: 999px;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+footer.site-footer .footer-cta a:hover { border-color: #3b4a60; background: #ffffff0a; }
+footer.site-footer .footer-sponsor svg { color: #f472b6; }
+footer.site-footer .footer-live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  color: #94a3b8;
+  font: 500 13px/1 var(--font-manrope), sans-serif;
+}
+footer.site-footer .footer-live-status:hover { color: #f8fafc; }
+footer.site-footer .footer-links {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+footer.site-footer .footer-links > div { display: grid; align-content: start; gap: 2px; }
+footer.site-footer .footer-links span {
+  margin-bottom: 10px;
+  color: #f1f5f9;
+  font: 600 13px/1.4 var(--font-manrope), sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+footer.site-footer .footer-links a {
+  padding: 5px 0;
+  color: #94a3b8;
+  font-size: 13.5px;
+  transition: color 180ms ease;
+}
+footer.site-footer .footer-links a:hover { color: #f8fafc; }
+footer.site-footer .footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 20px 0 28px;
+  border-top: 1px solid #ffffff0f;
+  color: #8592a6;
+  font: 500 12.5px/1.5 var(--font-manrope), sans-serif;
+}
+footer.site-footer .footer-bottom > div { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+footer.site-footer .footer-bottom a { color: #8592a6; transition: color 180ms ease; }
+footer.site-footer .footer-bottom a:hover { color: #f8fafc; }
+footer.site-footer a:focus-visible { outline: 2px solid #f69e9d; outline-offset: 3px; border-radius: 4px; }
+@media (max-width: 1099px) {
+  footer.site-footer .footer-top { grid-template-columns: 1fr; }
+  footer.site-footer .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 599px) {
+  footer.site-footer .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  footer.site-footer .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 400px) {
+  header.site-nav .nav-actions > button,
+  header.site-nav .nav-github { width: 36px; height: 36px; }
+  header.site-nav .nav-github { display: none; }
+  header.site-nav .mobile-nav > summary { width: 38px; height: 38px; }
+  .site-page--home .hc-strip-label { display: none; }
+  .site-page--home .hc-strip-links a { padding: 0 9px; }
+}
+
 
 
 

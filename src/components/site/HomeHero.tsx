@@ -16,13 +16,13 @@ export function HomeHero({ version, license }: { version: string; license: strin
             <span className="hc-pill-muted">What&apos;s new →</span>
           </a>
           <div className="hc-strip-links">
-            <a href={BRAND.links.github} target="_blank" rel="noopener noreferrer">
+            <a href={BRAND.links.github} target="_blank" rel="noopener noreferrer" aria-label="Star OpsKnight on GitHub">
               <Github size={14} aria-hidden="true" />
-              Star on GitHub
+              <span className="hc-strip-label">Star on GitHub</span>
             </a>
-            <a href={BRAND.links.sponsor} target="_blank" rel="noopener noreferrer" className="hc-pill-sponsor">
+            <a href={BRAND.links.sponsor} target="_blank" rel="noopener noreferrer" className="hc-pill-sponsor" aria-label="Sponsor OpsKnight">
               <Heart size={14} aria-hidden="true" />
-              Sponsor
+              <span className="hc-strip-label">Sponsor</span>
             </a>
           </div>
         </div>

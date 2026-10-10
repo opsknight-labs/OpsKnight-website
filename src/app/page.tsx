@@ -2,18 +2,19 @@ import "./homepage-art-direction.css";
 import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Code2, Database, KeyRound, Lock, ScrollText, Server, ShieldCheck } from "lucide-react";
 import { PRODUCT } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 import { HomepageIntegrationFinder } from "@/components/site/HomepageIntegrationFinder";
 import { HomeChapterRail } from "@/components/site/HomeChapterRail";
 import { HomeArchitecture } from "@/components/site/HomeArchitecture";
 import { HomeHero } from "@/components/site/HomeHero";
+import { HomeInstall } from "@/components/site/HomeInstall";
+import { HomeFinalCta } from "@/components/site/HomeFinalCta";
 import {
   SectionIntro,
   TextLink,
   TrustStrip,
-  FinalCTA,
 } from "@/components/site/Primitives";
 import {
   IncidentLoop,
@@ -30,6 +31,24 @@ const pageMetadata: Metadata = {
 
 export const metadata = siteMetadata(pageMetadata);
 
+// Mirrors the Quick start in the OpsKnight README.
+const QUICK_START = `git clone https://github.com/opsknight-labs/OpsKnight.git
+cd OpsKnight
+cp env.example .env
+
+printf 'NEXTAUTH_SECRET=%s\\n' "$(openssl rand -base64 32)" >> .env
+printf 'API_KEY_SECRET=%s\\n' "$(openssl rand -base64 32)" >> .env
+printf 'ENCRYPTION_KEY=%s\\n' "$(openssl rand -hex 32)" >> .env
+printf 'POSTGRES_PASSWORD=%s\\n' "$(openssl rand -base64 32)" >> .env
+
+OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version} \\
+  docker compose -f deploy/compose/docker-compose.yml pull
+OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version} \\
+  docker compose -f deploy/compose/docker-compose.yml up -d
+
+docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
+  node scripts/create-bootstrap-code.mjs`;
+
 const HOME_CHAPTERS = [
   { id: "signal", label: "Signal" },
   { id: "incident-loop", label: "Response" },
@@ -39,6 +58,7 @@ const HOME_CHAPTERS = [
   { id: "security-ecosystem", label: "Security" },
   { id: "ownership", label: "Ownership" },
   { id: "open-source", label: "Open source" },
+  { id: "faq", label: "Questions" },
 ] as const;
 
 const CAPABILITIES = [
@@ -50,10 +70,39 @@ const CAPABILITIES = [
 ] as const;
 
 const SECURITY_SPECS = [
-  ["Identity", "OIDC and SCIM 2.0", "Sign in with Okta, Entra, Google or Auth0. Users and groups provision themselves."],
-  ["Access", "Roles, scoped tokens, an auditor seat", "Least privilege by default. Any signed-in session can be revoked in one click."],
-  ["Encryption", "AES-256-GCM at rest", "Integration secrets and credentials are envelope-encrypted. State lives in your PostgreSQL."],
-  ["Audit", "An evidence trail", "Immutable operator events, DSAR export and erasure, retention holds and exportable evidence."],
+  [KeyRound, "Identity", "OIDC and SCIM 2.0", "Sign in with Okta, Entra, Google or Auth0. Users and groups provision themselves."],
+  [ShieldCheck, "Access", "Roles, scoped tokens, an auditor seat", "Least privilege by default. Any signed-in session can be revoked in one click."],
+  [Lock, "Encryption", "AES-256-GCM at rest", "Integration secrets and credentials are envelope-encrypted. State lives in your PostgreSQL."],
+  [ScrollText, "Audit", "An evidence trail", "Immutable operator events, DSAR export and erasure, retention holds and exportable evidence."],
+] as const;
+
+const OWNERSHIP = [
+  [Server, "You run it.", "On your own infrastructure, in whatever topology suits you: Compose, Swarm or Kubernetes."],
+  [Database, "Your data stays put.", "Application, database, backups and network boundary stay under your governance."],
+  [Code2, "You can read every line.", "It's open source. Inspect it, pin a release, and evaluate before you commit."],
+] as const;
+
+const FAQ = [
+  [
+    "Is OpsKnight free to use?",
+    `The software is open source under ${PRODUCT.release.license}, so you can run it on your own infrastructure without a licence fee. Commercial support is available if your team wants it.`,
+  ],
+  [
+    "What do I need to run it?",
+    "Git, Docker with Docker Compose, and openssl. The bundled Compose stack starts PostgreSQL and OpsKnight together; the quick start above generates the secrets for you.",
+  ],
+  [
+    "Can it run with high availability?",
+    "Yes. Use the split runtime on Docker, Swarm or Kubernetes with an external, managed PostgreSQL. The bundled database is meant for evaluation and is not clustered.",
+  ],
+  [
+    "Which tools does it connect to?",
+    `${PRODUCT.inboundIntegrationCount} release-tested inbound alert sources, plus Slack, Microsoft Teams and Jira. A generic webhook covers internal systems without a dedicated adapter.`,
+  ],
+  [
+    "Where is my incident data stored?",
+    "In your own PostgreSQL database. Integration secrets and notification credentials are envelope-encrypted with AES-256-GCM at rest.",
+  ],
 ] as const;
 
 export default function Home() {
@@ -131,10 +180,10 @@ export default function Home() {
               </div>
               <div className="capability-featured-visual">
                 <Image
-                  src="/product/incident-detail.webp"
-                  width={1200}
-                  height={645}
-                  alt="OpsKnight Incident Command workspace showing responder assignment, telemetry metrics, and event timeline"
+                  src="/product/incident-response.webp"
+                  width={2400}
+                  height={1290}
+                  alt="OpsKnight incident response workspace showing the active incident, responders, and live timeline"
                   sizes="(max-width: 1024px) 100vw, 560px"
                 />
                 <div className="capability-featured-meta">
@@ -205,9 +254,12 @@ export default function Home() {
               database, and keep a trail of every change.
             </SectionIntro>
             <dl className="home-spec-list">
-              {SECURITY_SPECS.map(([term, title, body]) => (
+              {SECURITY_SPECS.map(([Icon, term, title, body]) => (
                 <div key={term}>
-                  <dt>{term}</dt>
+                  <dt>
+                    <span className="home-icon" aria-hidden="true"><Icon size={16} /></span>
+                    {term}
+                  </dt>
                   <dd>
                     <strong>{title}</strong>
                     <span>{body}</span>
@@ -221,7 +273,7 @@ export default function Home() {
             <div className="home-integrations-head">
               <h3>Plugs into the stack you already run.</h3>
               <p>
-                28 release-tested alert sources. Signatures verified, duplicates
+                {PRODUCT.inboundIntegrationCount} release-tested alert sources. Signatures verified, duplicates
                 folded, payloads normalised.
               </p>
             </div>
@@ -230,66 +282,84 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Why OpsKnight (Compare) */}
+      {/* 8. Ownership */}
       <section id="ownership" className="site-section site-dark home-ownership home-chapter">
         <div className="site-container">
-          <SectionIntro eyebrow="Ownership" title="Incident response, on your terms." />
+          <div className="home-split-head">
+            <SectionIntro eyebrow="Ownership" title="Incident response, on your terms." />
+            <p className="home-ownership-compare">
+              <span>Weighing PagerDuty, incident.io, Opsgenie or Grafana Cloud IRM?</span>
+              <TextLink href="/compare/">See the comparison</TextLink>
+            </p>
+          </div>
           <ol className="home-ownership-points">
-            <li>
-              <strong>You run it.</strong>
-              <p>On your own infrastructure, in whatever topology suits you.</p>
-            </li>
-            <li>
-              <strong>Your data stays put.</strong>
-              <p>Application, database, backups and network boundary stay under your governance.</p>
-            </li>
-            <li>
-              <strong>You can read every line.</strong>
-              <p>It&apos;s open source. Inspect it, pin a release, and evaluate before you commit.</p>
-            </li>
+            {OWNERSHIP.map(([Icon, title, body]) => (
+              <li key={title}>
+                <span className="home-icon home-icon--dark" aria-hidden="true"><Icon size={18} /></span>
+                <strong>{title}</strong>
+                <p>{body}</p>
+              </li>
+            ))}
           </ol>
-          <p className="home-ownership-compare">
-            <span>Weighing PagerDuty, incident.io, Opsgenie or Grafana Cloud IRM?</span>
-            <TextLink href="/compare/">See the comparison</TextLink>
-          </p>
         </div>
       </section>
 
-      {/* 9. Built in the Open */}
+      {/* 9. Open source and install */}
       <section id="open-source" className="site-section homepage-open-source home-chapter">
         <div className="site-container home-open">
-          <SectionIntro
-            eyebrow="Open source"
-            title="The source is part of the promise."
-          >
-            Read the code, pin a release, and know exactly what runs inside
-            your infrastructure. No opaque control plane.
+          <div className="home-open-copy">
+            <SectionIntro
+              eyebrow="Open source"
+              title="The source is part of the promise."
+            >
+              Read the code, pin a release, and know exactly what runs inside
+              your infrastructure. No opaque control plane.
+            </SectionIntro>
+            <dl className="home-open-facts">
+              <div>
+                <dt>Latest release</dt>
+                <dd>{PRODUCT.release.tag}</dd>
+              </div>
+              <div>
+                <dt>Released</dt>
+                <dd>{PRODUCT.release.date}</dd>
+              </div>
+              <div>
+                <dt>License</dt>
+                <dd>{PRODUCT.release.license}</dd>
+              </div>
+            </dl>
+            <div className="home-open-links">
+              <TextLink href={BRAND.links.github}>Source on GitHub</TextLink>
+              <TextLink href="/changelog/">Release notes</TextLink>
+              <TextLink href="/support/">Commercial support</TextLink>
+              <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
+            </div>
+          </div>
+          <HomeInstall command={QUICK_START} />
+        </div>
+      </section>
+
+      {/* 10. Questions */}
+      <section id="faq" className="site-section site-white home-faq home-chapter">
+        <div className="site-container home-faq-grid">
+          <SectionIntro eyebrow="Questions" title="What teams ask before they install.">
+            Still unsure? The <a href={BRAND.links.docs}>documentation</a> covers
+            every deployment option in detail.
           </SectionIntro>
-          <dl className="home-open-facts">
-            <div>
-              <dt>Latest release</dt>
-              <dd>{PRODUCT.release.tag}</dd>
-            </div>
-            <div>
-              <dt>Released</dt>
-              <dd>{PRODUCT.release.date}</dd>
-            </div>
-            <div>
-              <dt>License</dt>
-              <dd>{PRODUCT.release.license}</dd>
-            </div>
-          </dl>
-          <div className="home-open-links">
-            <TextLink href={BRAND.links.github}>Source on GitHub</TextLink>
-            <TextLink href="/changelog/">Release notes</TextLink>
-            <TextLink href="/support/">Commercial support</TextLink>
-            <TextLink href={BRAND.links.sponsor}>Sponsor development</TextLink>
+          <div className="home-faq-list">
+            {FAQ.map(([q, a], i) => (
+              <details key={q} open={i === 0}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 10. Final CTA */}
-      <FinalCTA />
+      {/* 11. Final call to action */}
+      <HomeFinalCta />
     </div>
   );
 }

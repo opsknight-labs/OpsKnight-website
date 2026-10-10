@@ -10,7 +10,7 @@
 /* ── Shared interior typography, rhythm, and meaningful navigation ── */
 .site-page:not(.site-page--home) {
   --editorial-ink: #151d28;
-  --editorial-paper: #f7f6f2;
+  --editorial-paper: #f8fafc;
   --editorial-hairline: #cdd0d0;
   --editorial-muted: #475569;
 }
@@ -101,48 +101,11 @@
   line-height: 1.75;
 }
 .site-page:not(.site-page--home) .site-white { background-color: #fff; }
-.site-page:not(.site-page--home) .site-light-alt { background-color: #f4f3ef; }
+.site-page:not(.site-page--home) .site-light-alt { background-color: #f8fafc; }
 
 /* ── Typographic hero variants, rather than cloning the same SaaS banner ── */
-.site-page--product .interior-hero { background: #111821; }
 .site-page--product-index .interior-hero h1 { max-width: 930px; }
 .site-page--product-detail .interior-hero h1 { max-width: 1000px; }
-.site-page--integrations .interior-hero { background: #141b23; }
-.site-page--deploy .interior-hero { background: #14202a; }
-.site-page--security .interior-hero { background: #10181b; }
-.site-page--about .interior-hero { background: #211b1c; }
-.site-page--community .interior-hero { background: #182127; }
-.site-page--support .interior-hero,
-.site-page--contact .interior-hero { background: #18232e; }
-.site-page--compare .interior-hero,
-.site-page--solutions .interior-hero,
-.site-page--changelog .interior-hero,
-.site-page--brand .interior-hero,
-.site-page--legal-index .interior-hero {
-  background: #eeeae1 !important;
-  color: #161e28 !important;
-  border-bottom-color: #d5d0c7;
-}
-.site-page--compare .interior-hero h1,
-.site-page--solutions .interior-hero h1,
-.site-page--changelog .interior-hero h1,
-.site-page--brand .interior-hero h1,
-.site-page--legal-index .interior-hero h1 { color: #151d28; }
-.site-page--compare .interior-hero .site-description,
-.site-page--solutions .interior-hero .site-description,
-.site-page--changelog .interior-hero .site-description,
-.site-page--brand .interior-hero .site-description,
-.site-page--legal-index .interior-hero .site-description { color: #3e4b5a; }
-.site-page--compare .interior-hero .site-eyebrow,
-.site-page--solutions .interior-hero .site-eyebrow,
-.site-page--changelog .interior-hero .site-eyebrow,
-.site-page--brand .interior-hero .site-eyebrow,
-.site-page--legal-index .interior-hero .site-eyebrow { color: #8f2830; }
-.site-page--compare .interior-hero .breadcrumb,
-.site-page--solutions .interior-hero .breadcrumb,
-.site-page--changelog .interior-hero .breadcrumb,
-.site-page--brand .interior-hero .breadcrumb,
-.site-page--legal-index .interior-hero .breadcrumb { color: #526071; }
 .site-page--compare-index .interior-hero h1 { max-width: 1030px; }
 .site-page--brand .interior-hero h1 {
   max-width: 900px;
@@ -201,7 +164,7 @@
 .site-page--product-index .pillar-card:hover h3 { color: #9d1e27; }
 
 /* ── Product detail: actual product evidence, then operational notes ── */
-.site-page--product-detail .product-value-section { background: #faf9f6; }
+.site-page--product-detail .product-value-section { background: #f8fafc; }
 .site-page--product-detail .product-value-proof .product-shot {
   border-radius: 2px;
   box-shadow: 0 16px 42px #14213316;
@@ -232,7 +195,7 @@
 .site-page--integrations .integration-item:hover {
   transform: none;
   box-shadow: none;
-  background: #f8f7f4;
+  background: #f8fafc;
 }
 .site-page--integrations .integration-utility-grid article,
 .site-page--integrations .integration-contract-grid article {
@@ -261,7 +224,7 @@
 .site-page--deploy :is(.deploy-quickstart-grid,.deploy-method-grid,.deploy-foundations-grid) article {
   border-top: 3px solid #26394c;
 }
-.site-page--deploy .deploy-quickstart-grid article { background: #fafaf8; }
+.site-page--deploy .deploy-quickstart-grid article { background: #f8fafc; }
 .site-page--deploy :is(.deploy-quickstart-grid,.deploy-method-grid) h3 {
   font-size: clamp(20px, 2vw, 25px);
 }
@@ -308,7 +271,7 @@
   border-radius: 0;
   background: transparent;
 }
-.site-page--compare-index .site-section.border-b { background: #faf9f6; }
+.site-page--compare-index .site-section.border-b { background: #f8fafc; }
 .site-page--compare-index .site-section > .site-container > .mt-12.rounded-\[14px\] {
   border-radius: 2px;
 }
@@ -317,7 +280,7 @@
   border-radius: 3px;
   box-shadow: none;
 }
-.site-page--compare-detail .site-section .bg-red-50\/40 { background: #f5ece9; }
+.site-page--compare-detail .site-section .bg-red-50\/40 { background: #fdf2f2; }
 
 /* ── Solutions: editorial issue-to-outcome pathways ── */
 .site-page--solutions-index .solutions-discovery-grid { gap: 0 34px; }
@@ -393,7 +356,7 @@
   box-shadow: none;
   padding: clamp(25px, 4vw, 50px);
 }
-.site-page--about .manifesto-card.saas { background: #f2f0eb; }
+.site-page--about .manifesto-card.saas { background: #f1f5f9; }
 .site-page--about .manifesto-card.sovereign { background: #172331; }
 .site-page--about .manifesto-badge {
   border-radius: 0;
@@ -409,7 +372,7 @@
 .site-page--about .about-fit-card { border-radius: 2px; }
 
 /* ── Release history: chronological publication, compact and readable ── */
-.site-page--changelog .changelog-section { background: #f8f7f4; }
+.site-page--changelog .changelog-section { background: #f8fafc; }
 .site-page--changelog .release-article { border-bottom-color: #c4c9cc; }
 .site-page--changelog .changelog-filters { border-radius: 2px; }
 .site-page--changelog .release-heading h2 { letter-spacing: -.048em; }
@@ -436,7 +399,7 @@
   border-top: 3px solid #26384b;
   border-radius: 0;
   box-shadow: none;
-  background: #f4f3ee;
+  background: #f1f5f9;
 }
 .site-page--support .ops-email-console,
 .site-page--contact .ops-email-console {
@@ -482,7 +445,7 @@
 .site-page--legal-document .legal-copy section { scroll-margin-top: 115px; }
 .site-page--legal-document .legal-copy p { font-size: 15px; line-height: 1.83; }
 .site-page--legal-document .legal-meta { border-top: 2px solid #334155; }
-.site-page--legal-document .legal-document-hero { background: #f0ede7; }
+.site-page--legal-document .legal-document-hero { background: #f1f5f9; }
 
 /* ── Brand: material reference, not another feature catalog ── */
 .site-page--brand .brand-logo-stage { border-radius: 2px; }
@@ -589,7 +552,7 @@
 
 /* ── Documentation: practical technical publication, never an illustration ── */
 .docs-editorial-shell {
-  background: #f7f7f4;
+  background: #f8fafc;
 }
 .docs-editorial-shell > header {
   background: #111923;
@@ -713,30 +676,6 @@
 }
 
 
-/* Final cascade: route palettes must beat the shared dark hero contract. */
-.site-page.site-page--integrations .interior-hero { background: #141b23; }
-.site-page.site-page--deploy .interior-hero { background: #14202a; }
-.site-page.site-page--security .interior-hero { background: #10181b; }
-.site-page.site-page--about .interior-hero { background: #211b1c; }
-.site-page.site-page--community .interior-hero { background: #182127; }
-.site-page.site-page--support .interior-hero,
-.site-page.site-page--contact .interior-hero { background: #18232e; }
-.site-page.site-page--compare .interior-hero .site-description,
-.site-page.site-page--solutions .interior-hero .site-description,
-.site-page.site-page--changelog .interior-hero .site-description,
-.site-page.site-page--brand .interior-hero .site-description,
-.site-page.site-page--legal-index .interior-hero .site-description {
-  color: #3e4b5a;
-}
-.site-page.site-page--compare .interior-hero .site-eyebrow,
-.site-page.site-page--solutions .interior-hero .site-eyebrow,
-.site-page.site-page--changelog .interior-hero .site-eyebrow,
-.site-page.site-page--brand .interior-hero .site-eyebrow,
-.site-page.site-page--legal-index .interior-hero .site-eyebrow {
-  color: #8f2830;
-}
-
-
 /* Correspondence label contrast on the now-lightweight email surface. */
 .site-page--support .ops-console-pill,
 .site-page--contact .ops-console-pill,
@@ -776,19 +715,122 @@
 .site-page--changelog .release-nav > span { color: #46515e; }
 
 
-/* Interior hero contrast certification: the same section uses both ink-on-paper
-   and paper-on-ink across routes; resolve colors by surface, not by .site-dark. */
-.site-page.site-page--legal-index .interior-hero .site-description,
-.site-page.site-page--solutions .interior-hero .site-description,
-.site-page.site-page--compare .interior-hero .site-description,
-.site-page.site-page--brand .interior-hero .site-description,
-.site-page.site-page--changelog .interior-hero .site-description {
-  color: #344152 !important;
+/* Every interior hero sits on slate. */
+.site-page:not(.site-page--home) .interior-hero .site-description { color: #cbd5e1 !important; }
+
+
+/* ── Interior refresh: the homepage's slate, response line and closing ── */
+.site-page:not(.site-page--home) .interior-hero {
+  --ih-track: linear-gradient(90deg, #f8717133, #fbbf2433 55%, #34d39933) bottom / 100% 1px no-repeat;
+  border-bottom: 0;
+  background:
+    var(--ih-track),
+    radial-gradient(ellipse 50% 90% at 100% 0%, #1e293b8c, transparent 70%),
+    #0b0f18;
 }
-.site-page.site-page--support .interior-hero .site-description,
-.site-page.site-page--community .interior-hero .site-description,
-.site-page.site-page--contact .interior-hero .site-description,
-.site-page.site-page--security .interior-hero .site-description,
-.site-page.site-page--about .interior-hero .site-description {
-  color: #e0e9f3 !important;
+/* Faint dot field on the empty side of the headline. */
+.site-page:not(.site-page--home) .interior-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, #94a3b82e 1px, transparent 0);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(90deg, transparent 38%, #000 88%);
+}
+/* The homepage pulse, red to amber to green, runs along the hero's edge. */
+.site-page:not(.site-page--home) .interior-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #f87171 0 38%, #fbbf24 52%, #34d399 70%);
+  mask: linear-gradient(90deg, transparent, #000 80%, transparent) -240px 0 / 240px 100% no-repeat;
+}
+.site-page:not(.site-page--home) .interior-hero .site-eyebrow .signal-dot { background: #f87171; }
+.site-page:not(.site-page--home) .site-action { border-radius: 8px; }
+.site-page:not(.site-page--home) .interior-hero .site-action { min-height: 48px; }
+.site-page:not(.site-page--home) .site-section.site-dark { background-color: #0b0f18; }
+
+/* Closing: same dots and voice as the homepage, at interior density. */
+.final-cta {
+  border-top: 1px solid #1e293b;
+  background:
+    radial-gradient(ellipse 45% 100% at 85% 100%, #1e293b80, transparent 70%),
+    #0b0f18;
+}
+.final-cta-line { display: flex; align-items: center; margin-bottom: 18px; }
+.final-cta h2 { text-wrap: balance; }
+.final-cta-line i { position: relative; width: 7px; height: 7px; border-radius: 50%; }
+.final-cta-line i:nth-child(1) { background: #f87171; }
+.final-cta-line i:nth-child(2) { background: #fbbf24; }
+.final-cta-line i:nth-child(3) { background: #34d399; }
+.final-cta-line i + i { margin-left: 36px; }
+.final-cta-line i + i::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: calc(100% + 5px);
+  width: 26px;
+  height: 1px;
+  background: #334155;
+}
+.final-cta .site-action { min-height: 46px; border-radius: 8px; }
+.final-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.final-cta-ghost:hover { border-color: #475569; background: #111827; }
+.final-cta-ghost:focus-visible { outline: 2px solid #f69e9d; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-page:not(.site-page--home) .interior-hero::after {
+    animation: ih-pulse 7s 900ms cubic-bezier(.45, 0, .55, 1) infinite;
+  }
+  .site-page:not(.site-page--home) .interior-hero :is(.site-eyebrow, .breadcrumb) {
+    animation: editorial-enter 480ms cubic-bezier(.2, .7, .3, 1) both;
+  }
+  .site-page:not(.site-page--home) .interior-hero .site-actions {
+    animation: editorial-enter 680ms cubic-bezier(.2, .7, .3, 1) 130ms both;
+  }
+  @supports (animation-timeline: view()) {
+    .site-page:not(.site-page--home) .site-section .section-intro,
+    .final-cta-copy {
+      animation: editorial-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+@keyframes ih-pulse {
+  from { mask-position: -240px 0; }
+  70%, to { mask-position: calc(100% + 240px) 0; }
+}
+/* Movement only: fading would leave below-the-fold copy under contrast. */
+@keyframes editorial-rise {
+  from { translate: 0 22px; }
+  to { translate: 0 0; }
+}
+@media (max-width: 800px) {
+  .site-page:not(.site-page--home) .interior-hero::before { mask-image: linear-gradient(90deg, transparent 20%, #000); opacity: .6; }
+  .final-cta-ghost { flex: 1 1 auto; justify-content: center; }
+}
+@media (max-width: 599px) {
+  .site-page:not(.site-page--home) .interior-hero .site-actions > *,
+  .final-cta .site-actions > * { flex: 1 1 100%; justify-content: center; gap: 14px; }
 }

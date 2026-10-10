@@ -35,7 +35,7 @@ export default function Changelog() {
           <div className="site-actions">
             <Action href={"#"+PRODUCT.release.tag}>Latest release</Action>
             <Action href={BRAND.links.releases} secondary>
-              GitHub Releases ↗
+              GitHub Releases
             </Action>
           </div>
         </div>

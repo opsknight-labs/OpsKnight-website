@@ -12,7 +12,6 @@ import {
   HeartHandshake,
   Scale,
   Database,
-  ArrowUpRight,
 } from "lucide-react";
 
 const pageMetadata: Metadata = {
@@ -47,7 +46,7 @@ export default function About() {
           <div className="site-actions">
             <Action href="/deploy/">Deploy OpsKnight</Action>
             <Action href={BRAND.links.github} secondary>
-              Explore the source <ArrowUpRight size={14} />
+              Explore the source
             </Action>
           </div>
         </div>

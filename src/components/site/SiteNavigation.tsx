@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   ChevronDown,
   Github,
+  Heart,
   Search,
 } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -358,25 +359,42 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="site-container">
         <div className="footer-top">
-          <div>
-            <Link className="site-wordmark" href="/">
+          <div className="footer-brand">
+            <Link className="site-wordmark" href="/" aria-label="OpsKnight home">
+              <Image src="/brand/opsknight-mark.webp" width={26} height={26} alt="" />
               OpsKnight
-              <span className="signal-dot" />
             </Link>
-            <p>Incident operations you control.</p>
+            <p>Incident operations you control. Open source and self-hosted.</p>
+            <div className="footer-cta">
+              <a href={BRAND.links.github} target="_blank" rel="noopener noreferrer">
+                <Github size={15} aria-hidden="true" /> Star on GitHub
+              </a>
+              <a href={BRAND.links.sponsor} target="_blank" rel="noopener noreferrer" className="footer-sponsor">
+                <Heart size={15} aria-hidden="true" /> Sponsor
+              </a>
+            </div>
+            <a
+              className="footer-live-status"
+              href={BRAND.links.status}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="live-dot" /> Live status page
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </a>
           </div>
 
-          <div className="footer-links">
+          <nav className="footer-links" aria-label="Footer">
             <div>
-              <span>PRODUCT</span>
+              <span>Product</span>
               <Link href="/product/incidents/">Incidents</Link>
               <Link href="/product/on-call/">On-call</Link>
               <Link href="/product/paging/">Paging</Link>
               <Link href="/product/chatops/">ChatOps</Link>
-              <Link href="/product/status-pages/">Status</Link>
+              <Link href="/product/status-pages/">Status pages</Link>
             </div>
             <div>
-              <span>EXPLORE</span>
+              <span>Explore</span>
               <Link href="/integrations/">Integrations</Link>
               <Link href="/compare/">Compare</Link>
               <Link href="/deploy/">Deploy</Link>
@@ -384,7 +402,7 @@ export function SiteFooter() {
               <Link href="/changelog/">What’s New</Link>
             </div>
             <div>
-              <span>RESOURCES</span>
+              <span>Resources</span>
               <Link href={BRAND.links.docs}>Documentation</Link>
               <Link href="/support/">Support & Services</Link>
               <Link href="/community/">Community</Link>
@@ -392,14 +410,14 @@ export function SiteFooter() {
               <Link href="/brand/">Brand</Link>
             </div>
             <div>
-              <span>PROJECT</span>
+              <span>Project</span>
               <Link href={BRAND.links.github}>GitHub</Link>
               <Link href={BRAND.links.contributing}>Contributing</Link>
               <Link href={BRAND.links.sponsor}>Sponsor</Link>
               <Link href="/about/">About</Link>
             </div>
             <div>
-              <span>LEGAL</span>
+              <span>Legal</span>
               <Link href="/legal/">Legal & policies</Link>
               <Link href="/privacy/">Privacy</Link>
               <Link href="/terms/">Terms</Link>
@@ -407,25 +425,18 @@ export function SiteFooter() {
               <Link href={BRAND.links.trademarks}>Trademarks</Link>
               <Link href={BRAND.links.securityPolicy}>Security policy</Link>
             </div>
-          </div>
+          </nav>
         </div>
 
         <div className="footer-bottom">
-          <a
-            className="footer-live-status"
-            href={BRAND.links.status}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="live-dot" /> Live status
-          </a>
           <span>
-            v{PRODUCT.release.version} · {PRODUCT.release.license} · Self-hosted
+            © {new Date().getFullYear()} OpsKnight · v{PRODUCT.release.version} · {PRODUCT.release.license}
           </span>
           <div>
             <Link href="/privacy/">Privacy</Link>
             <Link href="/terms/">Terms</Link>
             <Link href={BRAND.links.license}>License</Link>
+            <a href="#main-content">Back to top ↑</a>
           </div>
         </div>
       </div>

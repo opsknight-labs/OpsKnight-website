@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Github } from "lucide-react";
 import { PRODUCT, productImage, productProof } from "@/lib/product";
 import { BRAND } from "@/lib/brand";
 export function Action({
@@ -93,9 +93,11 @@ export function FinalCTA() {
     <section className="site-dark final-cta">
       <div className="site-container final-cta-grid">
         <div className="final-cta-copy">
-          <p className="site-eyebrow">
-            <span className="signal-dot" /> TAKE CONTROL
-          </p>
+          <span className="final-cta-line" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
           <h2>Your incidents should belong to you.</h2>
           <p>Run OpsKnight on infrastructure you control.</p>
           <p className="site-proof">{productProof}</p>
@@ -103,9 +105,15 @@ export function FinalCTA() {
         <div className="final-cta-actions">
           <div className="site-actions">
             <Action href="/deploy/">Install OpsKnight</Action>
-            <Action href={BRAND.links.github} secondary>
-              View GitHub
-            </Action>
+            <a
+              className="final-cta-ghost"
+              href={BRAND.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github size={15} aria-hidden="true" />
+              Star on GitHub
+            </a>
           </div>
         </div>
       </div>

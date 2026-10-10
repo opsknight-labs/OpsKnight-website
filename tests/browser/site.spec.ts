@@ -374,7 +374,7 @@ test("reduced motion and product boundaries", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   expect(
     await page
-      .locator(".hero-intro h1")
+      .locator(".hc-title")
       .evaluate((e) => getComputedStyle(e).animationName),
   ).toBe("none");
   await page.goto("/product/status-pages/");
