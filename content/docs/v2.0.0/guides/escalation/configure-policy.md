@@ -1,9 +1,14 @@
 ---
 title: Configure an escalation policy
+order: 3
 description: Build, attach, and test ordered incident notification steps.
-type: how-to
+type: tutorial
 product_area: escalation
 audience: [administrator]
+reader:
+  status: READER_COMPLETE
+  task: Build, attach, and test a complete escalation policy.
+  evidence: [docs/v2.0.0/assets/escalation-policies.png, docs/v2.0.0/assets/escalation-policy-detail.png]
 keywords: [escalation policy, change escalation, responder tiers, escalation delay]
 verification:
   level: source
@@ -41,6 +46,8 @@ Verify responder preferences and destinations too. Selecting SMS cannot deliver 
 A policy can be saved without steps, but it cannot page until a valid step exists.
 
 ## 2. Add the first step
+
+![Escalation policy detail with ordered responder steps](/docs/v2.0.0/assets/escalation-policy-detail.png)
 
 Under **Steps**, choose **Add Escalation Step** and set:
 
@@ -90,4 +97,3 @@ Targets resolve at execution time. Matching steps run in displayed order, and pa
 **Conditional step is skipped:** compare the incident's actual priority, urgency, and support-hours state with every condition.
 
 **Policy cannot be deleted:** reassign or remove it from every linked service first; OpsKnight identifies the blocking services.
-

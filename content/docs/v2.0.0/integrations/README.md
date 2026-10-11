@@ -2,7 +2,7 @@
 title: Integrations
 order: 4
 description: Connect monitoring, cloud, communication, issue-tracking, uptime, and webhook systems.
-type: integration
+type: concept
 product_area: integrations
 audience: [administrator, operator]
 verification:
@@ -12,6 +12,8 @@ verification:
 ---
 
 # Integrations
+
+![Integration settings in the production application](/docs/v2.0.0/assets/integration-settings.png)
 
 The machine-readable `integrations/catalog.yaml` includes inbound alert adapters,
 Slack, Microsoft Teams, Jira, outbound webhooks, notification delivery, OIDC,

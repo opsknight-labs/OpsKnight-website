@@ -1,9 +1,13 @@
 ---
 title: Configure incident custom fields
 description: Create, validate, display, edit, and safely remove organization-specific incident fields.
-type: how-to
+type: tutorial
 product_area: administration
 audience: [administrator]
+reader:
+  status: READER_COMPLETE
+  task: Create, validate, edit, use, and delete incident custom fields.
+  evidence: [docs/v2.0.0/assets/custom-fields.png]
 verification:
   level: source
   verified_at: 2026-09-29
@@ -19,6 +23,8 @@ verification:
 ---
 
 # Configure incident custom fields
+
+![Custom-field administration showing configured field types and controls](/docs/v2.0.0/assets/custom-fields.png)
 
 Custom fields add structured, organization-specific metadata to incidents—for example environment, customer impact, change URL, or incident commander email. Administrators define fields; permitted responders enter values during incident creation or on the incident detail page.
 
