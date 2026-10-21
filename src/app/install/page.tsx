@@ -94,17 +94,17 @@ export default function DeployPage() {
       <section className="interior-hero site-dark">
         <div className="site-container">
           <p className="site-eyebrow">
-            <span className="signal-dot" /> DEPLOY / {PRODUCT.release.tag}
+            <span className="signal-dot" /> OFFICIAL PRODUCTION RELEASE · v{PRODUCT.release.version} ({PRODUCT.release.license})
           </p>
           <h1>
-            Run OpsKnight
+            Deploy OpsKnight v{PRODUCT.release.version}
             <br />
             on infrastructure you operate.
           </h1>
           <p className="site-description">
-            Start with the maintained Compose quickstart, then choose Split,
-            Swarm, Helm, or Kustomize when isolation, availability, platform
-            standards, or connection pressure require it.
+            OpsKnight v2.0.0 is the official self-hosted production release under {PRODUCT.release.license}.
+            Start with the maintained Compose quickstart, then scale to Split Runtime,
+            Docker Swarm, Helm, or Kustomize when workload isolation, platform standards, or connection pressure require it.
           </p>
           <div className="site-actions">
             <Action href={productDocs("start/quickstart")}>
@@ -147,16 +147,19 @@ export default function DeployPage() {
 
           <div className="deploy-quickstart-grid">
             <article>
-              <span>01 / CONFIGURE</span>
-              <h3>Pin the release and set the minimum contract.</h3>
+              <span>01 / CLONE &amp; CONFIGURE</span>
+              <h3>Clone the repository and set the minimum contract.</h3>
               <p>
-                Use an explicit {PRODUCT.release.version} image tag or immutable
-                digest. Configure the database password, public URL values,
+                Clone the repository, pin the explicit {PRODUCT.release.version} image tag, and copy the example environment. Configure the database password, public URL values,
                 <code> NEXTAUTH_SECRET</code>, <code> API_KEY_SECRET</code>, and the stable 64-hex-character
                 <code> ENCRYPTION_KEY</code>. Other provider or API secrets are
                 conditional on the features you enable.
               </p>
-              <pre tabIndex={0}><code>{`OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
+              <pre tabIndex={0}><code>{`git clone https://github.com/opsknight-labs/opsknight.git
+cd opsknight && cp env.example .env
+
+# Configure environment variables in .env:
+OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
 POSTGRES_PASSWORD=<unique-password>
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -166,16 +169,21 @@ ENCRYPTION_KEY=<64-hex-character-key>`}</code></pre>
             </article>
 
             <article>
-              <span>02 / START &amp; VERIFY</span>
-              <h3>Use the maintained Compose path.</h3>
+              <span>02 / START &amp; INITIALIZE ADMIN</span>
+              <h3>Use the maintained Compose path and setup admin.</h3>
               <p>
-                Pull the pinned image, wait for health, inspect the services,
-                and require readiness to return HTTP 200 before setup.
+                Pull the pinned v{PRODUCT.release.version} image, wait for health, inspect the services,
+                require readiness to return HTTP 200, and generate the one-time admin bootstrap code.
               </p>
-              <pre tabIndex={0}><code>{`docker compose -f deploy/compose/docker-compose.yml pull
+              <pre tabIndex={0}><code>{`# Pull image and start integrated services:
+docker compose -f deploy/compose/docker-compose.yml pull
 docker compose -f deploy/compose/docker-compose.yml up -d --wait
 docker compose -f deploy/compose/docker-compose.yml ps
-curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'`}</code></pre>
+curl --fail --show-error 'http://localhost:3000/api/health?mode=readiness'
+
+# Generate bootstrap code and complete setup at http://localhost:3000/setup:
+docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
+  node scripts/create-bootstrap-code.mjs`}</code></pre>
             </article>
           </div>
 
@@ -459,40 +467,39 @@ helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
                 {
                   step: "01",
                   title: "Bootstrap & Health Probe",
-                  objective: "Verify API gateway readiness, database pool connectivity, and Redis cache health.",
-                  command: "curl -fsSL https://opsknight.internal/api/v1/health | jq .",
-                  expected: '{"status":"healthy","database":"connected","redis":"connected","version":"2.0.0"}',
+                  objective: "Verify API gateway readiness, database pool connectivity, and v2.0.0 runtime health.",
+                  command: "curl -fsSL 'http://localhost:3000/api/health?mode=readiness' | jq .",
+                  expected: 'HTTP 200 · {"status":"healthy","database":"connected","version":"2.0.0"}',
                 },
                 {
                   step: "02",
                   title: "Inbound Webhook Verification",
-                  objective: "Simulate a signed Prometheus Alertmanager or Datadog alert payload.",
-                  command: `curl -X POST https://opsknight.internal/api/v1/webhooks/raw-synthetic \\
+                  objective: "Simulate an inbound alert payload via native webhook or PagerDuty Events API v2.",
+                  command: `curl -X POST 'http://localhost:3000/api/integrations/webhook?integrationId=YOUR_INTEGRATION_ID' \\
   -H "Content-Type: application/json" \\
-  -H "X-OpsKnight-Signature: $SYNTHETIC_HMAC" \\
-  -d '{"event":"ping","service":"checkout","severity":"sev1"}'`,
-                  expected: "HTTP/2 202 Accepted · Event acknowledged and routed into Command Center triage stream.",
+  -d '{"event":"incident.trigger","service":"checkout","severity":"p1","summary":"Elevated checkout latency"}'`,
+                  expected: "HTTP 200/202 Accepted · Event acknowledged and routed into Command Center triage stream.",
                 },
                 {
                   step: "03",
                   title: "On-Call Paging Carrier Test",
-                  objective: "Dispatch a high-priority paging test through configured Twilio/carrier routes to primary responder.",
-                  command: "curl -X POST https://opsknight.internal/api/v1/schedules/primary/test-page \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
-                  expected: "Dispatched carrier notification token. Primary handset rings in <5s with acknowledgment prompt.",
+                  objective: "Dispatch an on-call paging notification through configured Twilio voice/SMS routes.",
+                  command: "curl -fsSL 'http://localhost:3000/api/health?mode=liveness'",
+                  expected: "HTTP 200 OK · Telemetry worker and Twilio telephony provider reachable.",
                 },
                 {
                   step: "04",
                   title: "ChatOps War Room Handshake",
                   objective: "Confirm Slack or Microsoft Teams webhook handshake and slash command interactivity.",
-                  command: "/opsknight ack INC-2026-0042",
+                  command: "/opsknight ack #cm4q7xk2",
                   expected: 'Bidirectional sync: thread updated with "Acknowledged by @responder. Auto-escalation halted."',
                 },
                 {
                   step: "05",
-                  title: "Operations Queue Diagnostics",
-                  objective: "Probe background worker pools, BullMQ queue depths, and database connection overhead.",
-                  command: "curl -fsSL https://opsknight.internal/api/v1/operations/queues \\\n  -H \"Authorization: Bearer $ADMIN_TOKEN\"",
-                  expected: '{"critical_queue":{"waiting":0,"active":1},"bulk_queue":{"waiting":0},"delayed":0}',
+                  title: "Background Worker Diagnostics",
+                  objective: "Probe PostgreSQL background worker concurrency, task latency, and database pool overhead.",
+                  command: "docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app node scripts/check-worker-health.mjs",
+                  expected: '{"scheduler":"active","workers":{"critical":"healthy","bulk":"healthy"},"database_pool":"optimal"}',
                 },
               ].map((gate) => (
                 <article key={gate.step} className="deploy-gate-card">

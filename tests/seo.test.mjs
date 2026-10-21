@@ -55,3 +55,32 @@ test("structured data in root layout includes comprehensive SoftwareApplication 
   assert.ok(layoutSrc.includes("Docker, Kubernetes"), "SoftwareApplication must list supported operating systems");
   assert.ok(layoutSrc.includes("url: `${baseUrl}/`"), "Structured data URLs must use canonical trailing slash");
 });
+
+test("dedicated SEO target pages exist with canonical trailing slashes, FAQs, and Breadcrumbs", () => {
+  const pages = [
+    {
+      file: "src/app/compare/opsgenie-alternative-2027/page.tsx",
+      canonical: "/compare/opsgenie-alternative-2027/",
+      expectedText: "Opsgenie alternative",
+    },
+    {
+      file: "src/app/compare/open-source-pagerduty-alternative/page.tsx",
+      canonical: "/compare/open-source-pagerduty-alternative/",
+      expectedText: "open-source PagerDuty alternative",
+    },
+    {
+      file: "src/app/solutions/self-hosted-on-call-management/page.tsx",
+      canonical: "/solutions/self-hosted-on-call-management/",
+      expectedText: "self-hosted on-call management",
+    },
+  ];
+
+  for (const page of pages) {
+    assert.ok(fs.existsSync(page.file), `${page.file} must exist`);
+    const src = fs.readFileSync(page.file, "utf8");
+    assert.ok(src.includes(`canonical: "${page.canonical}"`), `${page.file} must declare canonical ${page.canonical}`);
+    assert.ok(src.includes("FAQPage"), `${page.file} must include FAQPage structured data`);
+    assert.ok(src.includes("BreadcrumbSchema"), `${page.file} must include BreadcrumbSchema`);
+    assert.ok(src.toLowerCase().includes(page.expectedText.toLowerCase()), `${page.file} must target "${page.expectedText}"`);
+  }
+});
