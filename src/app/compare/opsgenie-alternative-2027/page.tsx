@@ -104,7 +104,7 @@ const featureComparison = [
   {
     feature: "DTMF Voice Call Acknowledgment",
     opsgenie: "Press-key to acknowledge during live phone page",
-    opsknight: "Press 1 to acknowledge, 2 to resolve via Twilio Voice",
+    opsknight: "Press 1 to acknowledge via Twilio Voice",
     winner: "parity",
   },
   {
