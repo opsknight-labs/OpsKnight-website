@@ -333,6 +333,18 @@ export default async function CompareCompetitorPage({
       {c.slug === "pagerduty" && (
         <section className="site-section">
           <div className="site-container">
+            <div className="mb-6 p-4 rounded-xl border border-red-200 bg-red-50/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold text-slate-900">Looking for a complete open-source replacement?</p>
+                <p className="text-xs text-slate-600 mt-0.5">Explore our comprehensive guide on replacing PagerDuty with self-hosted OpsKnight (zero per-seat fees).</p>
+              </div>
+              <Link
+                href="/compare/open-source-pagerduty-alternative/"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#d21a1b] text-white text-xs font-semibold hover:bg-[#b41516] transition-all shrink-0"
+              >
+                Open-Source Guide <ArrowLeft size={13} className="rotate-180" />
+              </Link>
+            </div>
             <div className="max-w-2xl mb-8">
               <span className="text-xs font-bold uppercase tracking-wider text-[#d21a1b]">
                 Migration Accelerator
@@ -354,6 +366,18 @@ export default async function CompareCompetitorPage({
       {c.slug === "opsgenie" && (
         <section className="site-section">
           <div className="site-container">
+            <div className="mb-6 p-4 rounded-xl border border-amber-200 bg-amber-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold text-amber-950">Preparing for the April 5, 2027 standalone Opsgenie EOL?</p>
+                <p className="text-xs text-amber-800/80 mt-0.5">Read our dedicated Opsgenie 2027 Alternative guide with phased migration milestones and schedule mapping.</p>
+              </div>
+              <Link
+                href="/compare/opsgenie-alternative-2027/"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-700 text-white text-xs font-semibold hover:bg-amber-800 transition-all shrink-0"
+              >
+                2027 Migration Guide <ArrowLeft size={13} className="rotate-180" />
+              </Link>
+            </div>
             <div className="max-w-2xl mb-8">
               <span className="text-xs font-bold uppercase tracking-wider text-[#d21a1b]">
                 Migration Accelerator

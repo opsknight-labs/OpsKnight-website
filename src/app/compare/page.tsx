@@ -79,6 +79,63 @@ export default function ComparePage() {
         </div>
       </section>
 
+      {/* Featured Migration & Alternative Guides */}
+      <section className="site-section site-light-alt border-b border-slate-200">
+        <div className="site-container">
+          <div className="mb-6">
+            <p className="site-eyebrow">
+              <span className="signal-dot" /> DEDICATED ALTERNATIVE GUIDES
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">Targeted migration &amp; replacement deep-dives</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Link
+              href="/compare/opsgenie-alternative-2027/"
+              className="group p-5 rounded-[14px] border border-amber-200 bg-amber-50/40 hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-bold text-base text-slate-900 group-hover:text-amber-800 transition-colors">
+                    Opsgenie Alternative 2027
+                  </span>
+                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 bg-amber-100/80 rounded-full text-amber-800">
+                    EOL April 5, 2027
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 mb-4">
+                  Step-by-step roadmap to transition on-call rotations, routing rules, and alert webhooks to self-hosted OpsKnight before standalone Opsgenie sunsets.
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-800 group-hover:underline">
+                Read Opsgenie 2027 Migration Guide <ArrowRight size={14} />
+              </div>
+            </Link>
+
+            <Link
+              href="/compare/open-source-pagerduty-alternative/"
+              className="group p-5 rounded-[14px] border border-red-200 bg-red-50/30 hover:border-[#d21a1b] hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-bold text-base text-slate-900 group-hover:text-[#d21a1b] transition-colors">
+                    Open-Source PagerDuty Alternative
+                  </span>
+                  <span className="text-[11px] font-mono font-medium px-2.5 py-1 bg-red-100 rounded-full text-[#d21a1b]">
+                    AGPL-3.0 · Zero Seat Fees
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 mb-4">
+                  Drop-in PagerDuty Events API v2 ingestion, multi-tier escalation policies, and voice phone paging on your own private infrastructure.
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d21a1b] group-hover:underline">
+                Explore Open-Source PagerDuty Alternative <ArrowRight size={14} />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 3. Master Capability Matrix */}
       <section className="site-section">
         <div className="site-container">

@@ -68,6 +68,24 @@ export default function Solutions() {
               </article>
             ))}
           </div>
+
+          {/* Dedicated Spotlight Guide */}
+          <div className="mt-8 p-6 rounded-[16px] border border-red-200 bg-red-50/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-mono font-bold text-[#d21a1b] uppercase tracking-wider block mb-1">
+                Featured Operational Guide
+              </span>
+              <h3 className="text-lg font-bold text-slate-900">
+                Self-Hosted On-Call Management Architecture
+              </h3>
+              <p className="text-xs text-slate-600 mt-1 max-w-2xl leading-relaxed">
+                Learn how to operate on-call rotations, multi-stage escalation policies, and voice phone paging entirely within your private infrastructure with zero per-seat fees.
+              </p>
+            </div>
+            <TextLink href="/solutions/self-hosted-on-call-management/">
+              Explore On-Call Architecture
+            </TextLink>
+          </div>
         </div>
       </section>
 
