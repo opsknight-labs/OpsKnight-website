@@ -43,7 +43,7 @@ const faqs = [
   {
     question: "How does phone and SMS paging compare to PagerDuty?",
     answer:
-      "OpsKnight connects directly to your own configured Twilio account for voice telephony and SMS dispatch. Responders hear synthesized incident summaries and can press 1 on their keypad (DTMF) to acknowledge or 2 to resolve immediately. Because you connect your own Twilio account, you pay transparent carrier telecom rates directly with zero software vendor markup.",
+      "OpsKnight connects directly to your own configured Twilio account for voice telephony and SMS dispatch. Responders hear synthesized incident summaries and can press 1 on their keypad (DTMF) to acknowledge immediately. Because you connect your own Twilio account, you pay transparent carrier telecom rates directly with zero software vendor markup.",
   },
   {
     question: "How does Single Sign-On (SSO) and SCIM provisioning compare?",
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: "What mobile experience does OpsKnight offer for on-call responders?",
     answer:
-      "OpsKnight features an installable Progressive Web Application (PWA) with responsive design, push notifications, and fast touch interactions. Responders can acknowledge, escalate, or resolve incidents directly from their mobile browser or installed PWA icon without downloading proprietary vendor app store binaries.",
+      "OpsKnight features an installable Progressive Web Application (PWA) with responsive design, push notifications, and fast touch interactions. Responders can view details, acknowledge, and resolve incidents directly from their mobile browser or installed PWA icon without downloading proprietary vendor app store binaries.",
   },
 ];
 
@@ -102,7 +102,7 @@ const comparisonData = [
   {
     feature: "Phone Paging with DTMF Acknowledge",
     pagerduty: "Bundled voice minutes with tier limits",
-    opsknight: "Direct Twilio Voice with DTMF keypad ack/resolve at carrier rates",
+    opsknight: "Direct Twilio Voice with single-key DTMF keypad acknowledgment (press 1) at carrier rates",
     highlight: true,
   },
   {
