@@ -49,7 +49,7 @@ const faqs = [
   {
     question: "How does telephone and SMS delivery operate without a vendor subscription?",
     answer:
-      "OpsKnight integrates directly with your own Twilio account. During an incident, OpsKnight makes automated phone calls to responders with synthesized incident summaries. Responders can press 1 on their dialpad to acknowledge or 2 to resolve immediately. You pay standard telecom rates directly to Twilio with zero vendor markups.",
+      "OpsKnight integrates directly with your own Twilio account. During an incident, OpsKnight makes automated phone calls to responders with synthesized incident summaries. Responders can press 1 on their dialpad to acknowledge immediately. You pay standard telecom rates directly to Twilio with zero vendor markups.",
   },
   {
     question: "What infrastructure is required to self-host OpsKnight?",
