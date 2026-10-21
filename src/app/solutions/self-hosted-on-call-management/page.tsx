@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "What is self-hosted on-call management and why do teams choose it?",
     answer:
-      "Self-hosted on-call management means running your scheduling, escalation policies, and paging platform on infrastructure you operate (such as your own VPC, bare-metal servers, or Kubernetes cluster) rather than relying on a third-party multi-tenant SaaS vendor. Teams choose it for strict data sovereignty, compliance with regulatory standards (SOC2, HIPAA, ISO27001), air-gapped network requirements, and immunity from public SaaS outages.",
+      "Self-hosted on-call management means running your scheduling, escalation policies, and incident triage engine on infrastructure you operate (such as your own VPC, bare-metal servers, or Kubernetes cluster) rather than relying on a third-party multi-tenant SaaS vendor. Teams choose it for operational data custody, adherence to organizational governance standards (such as SOC 2 and ISO 27001 evidence requirements), air-gapped network compatibility, and independence from third-party SaaS management consoles.",
   },
   {
     question: "How do rotation schedules and shift overrides work in OpsKnight?",
@@ -91,8 +91,8 @@ const capabilities = [
   },
   {
     icon: Lock,
-    title: "Sovereign Data Custody",
-    desc: "Keep user phone numbers, schedule calendars, and incident payloads inside your own PostgreSQL database.",
+    title: "Operational Data Custody",
+    desc: "Keep user phone numbers, schedule calendars, and incident payloads inside your own PostgreSQL database, with outbound pages dispatched through chosen provider trust boundaries.",
   },
 ];
 

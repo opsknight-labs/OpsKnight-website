@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "Why should teams evaluate OpsKnight instead of moving to Jira Service Management (JSM)?",
     answer:
-      "While Atlassian directs existing Opsgenie users toward Jira Service Management (JSM) Cloud, many engineering and platform teams prefer not to tie their on-call rotations to an expensive, ticketing-centric Cloud suite with per-agent seat pricing. OpsKnight gives teams 100% control over their operational data, runs on self-hosted Docker Compose or Kubernetes, charges zero seat fees, and is published under the inspectable AGPL-3.0 license.",
+      "Atlassian offers an automated migration assistant to help eligible Opsgenie customers transition into Jira Service Management (JSM) Cloud. For teams standardized on Jira ticketing, that automated path is convenient. However, many engineering and platform teams prefer not to tie their real-time on-call rotations to an ITSM ticketing suite with per-agent seat pricing. OpsKnight gives teams full custody over their operational database, runs on self-hosted Docker Compose or Kubernetes, charges zero software seat fees under AGPL-3.0, and provides dedicated on-call and incident response tooling without ticketing overhead.",
   },
   {
     question: "How does OpsKnight handle on-call schedules and escalations compared to Opsgenie?",
@@ -114,10 +114,16 @@ const featureComparison = [
     winner: "opsknight",
   },
   {
-    feature: "Data Residency & Security",
+    feature: "Operational Data Custody",
     opsgenie: "Alert payloads stored in multi-tenant Atlassian Cloud",
-    opsknight: "100% on-premises / private PostgreSQL database",
+    opsknight: "Private PostgreSQL DB; outbound notifications route through chosen provider boundaries",
     winner: "opsknight",
+  },
+  {
+    feature: "Migration Path Provided",
+    opsgenie: "Atlassian automated migration tool into JSM Cloud",
+    opsknight: "Standard schedule/policy mapping and webhook repointing",
+    winner: "parity",
   },
   {
     feature: "ChatOps Collaboration",
@@ -237,32 +243,31 @@ export default function OpsgenieAlternative2027Page() {
                 <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-slate-200 text-slate-700 mb-3">
                   Option A: Vendor Cloud Path
                 </span>
-                <h3 className="text-lg font-bold text-slate-900">Migrate to Jira Service Management Cloud</h3>
+                <h3 className="text-lg font-bold text-slate-900">Migrate to Jira Service Management (JSM) Cloud</h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  Atlassian directs Opsgenie customers to rebuild their rotations inside JSM Cloud. While this keeps you
-                  within the Atlassian umbrella, it introduces notable trade-offs:
+                  Atlassian provides an automated migration assistant to help eligible customers transition supported Opsgenie configurations into JSM Cloud. For organizations already invested in Jira, this automated path migrates teams and schedules directly, with distinct trade-offs to evaluate:
                 </p>
                 <ul className="mt-4 space-y-2.5 text-xs text-slate-700">
                   <li className="flex items-start gap-2">
-                    <X size={15} className="text-red-500 shrink-0 mt-0.5" />
-                    <span><strong>High per-agent seat costs</strong> that scale aggressively with team size</span>
+                    <Check size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong>Automated migration assistant</strong> transfers supported schedules and services</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <X size={15} className="text-red-500 shrink-0 mt-0.5" />
-                    <span><strong>Ticketing tool overhead</strong> forced onto real-time on-call responders</span>
+                    <span><strong>Per-agent seat licensing</strong> that scales as more responders join rotations</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <X size={15} className="text-red-500 shrink-0 mt-0.5" />
-                    <span><strong>Zero self-hosted deployment option</strong>; all data remains in vendor cloud</span>
+                    <span><strong>ITSM ticketing suite scope</strong> rather than a dedicated on-call response tool</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <X size={15} className="text-red-500 shrink-0 mt-0.5" />
-                    <span><strong>Ongoing dependency</strong> on vendor pricing changes and product pivots</span>
+                    <span><strong>Multi-tenant vendor cloud hosting</strong> without a self-hosted on-premises option</span>
                   </li>
                 </ul>
               </div>
               <div className="mt-6 pt-4 border-t border-slate-200">
-                <span className="text-[11px] text-slate-600">Best for: Organizations fully standardized on Atlassian Cloud suite.</span>
+                <span className="text-[11px] text-slate-600">Best for: Teams standardized on Atlassian Cloud willing to consolidate on JSM.</span>
               </div>
             </div>
 
@@ -272,7 +277,7 @@ export default function OpsgenieAlternative2027Page() {
                 <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-red-100 text-[#d21a1b] mb-3">
                   Option B: The OpsKnight Path (Recommended)
                 </span>
-                <h3 className="text-lg font-bold text-slate-900">Self-Hosted On-Call with OpsKnight</h3>
+                <h3 className="text-lg font-bold text-slate-900">Dedicated Self-Hosted On-Call with OpsKnight</h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
                   Retain dedicated, purpose-built on-call rotations and incident management on your own terms.
                   OpsKnight is built specifically for SRE and platform teams who demand operational autonomy:
@@ -280,19 +285,19 @@ export default function OpsgenieAlternative2027Page() {
                 <ul className="mt-4 space-y-2.5 text-xs text-slate-800">
                   <li className="flex items-start gap-2">
                     <Check size={15} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Zero per-user licensing fees</strong> under the perpetual AGPL-3.0 license</span>
+                    <span><strong>Zero per-user software fees</strong> under the inspectable AGPL-3.0 license</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={15} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Complete data custody:</strong> alerts and responder records live in your PostgreSQL</span>
+                    <span><strong>Core database custody:</strong> alerts, schedules, and user records live in your PostgreSQL</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={15} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Independent reliability:</strong> on-call system survives public SaaS disruptions</span>
+                    <span><strong>Autonomous control plane:</strong> event triage runs locally, independent of SaaS consoles</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={15} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Direct Twilio voice telephony:</strong> press-key phone paging without markup</span>
+                    <span><strong>Direct Twilio voice telephony:</strong> press-key phone paging at carrier cost</span>
                   </li>
                 </ul>
               </div>

@@ -33,22 +33,22 @@ const faqs = [
   {
     question: "How does OpsKnight provide compatibility with PagerDuty?",
     answer:
-      "OpsKnight exposes a PagerDuty Events API v2-compatible endpoint at /api/integrations/pagerduty/v2/enqueue. Any monitoring tool, script, or third-party system configured to send PagerDuty triggers, acknowledgments, or resolutions can simply repoint its webhook URL and routing key to OpsKnight without code changes.",
+      "OpsKnight provides an Events API v2 ingestion adapter at /api/integrations/pagerduty/v2/enqueue. Inbound monitoring tools (such as Datadog, Prometheus Alertmanager, Grafana, or AWS CloudWatch) configured to dispatch PagerDuty v2 triggers, acknowledgments, and resolutions can route alerts to OpsKnight by updating the webhook target URL and routing key. Administrative REST APIs and vendor-specific workflows must be configured natively in OpsKnight. Teams should validate routing-key mapping and deduplication in staging before repointing production.",
   },
   {
     question: "Why choose an open-source alternative over PagerDuty SaaS?",
     answer:
-      "Organizations choose OpsKnight for three primary reasons: 1) Cost predictability: PagerDuty charges steep per-user monthly seat fees that penalize putting every engineer on call. OpsKnight has zero seat fees under AGPL-3.0. 2) Data sovereignty: Your alert payloads, server names, stack traces, and responder details remain inside your private VPC/network. 3) Resiliency: An internal incident platform stays operational even when public SaaS providers experience outages.",
+      "Organizations choose OpsKnight for three primary reasons: 1) Predictable cost structure: While PagerDuty offers a Free tier for up to 5 users, expanding on-call coverage across engineering incurs per-user seat fees (typically $21 - $41/user/mo billed annually) or platform packaging. OpsKnight has zero software seat fees under AGPL-3.0. 2) Operational data custody: Your incident records, escalation schedules, and server metadata remain in your PostgreSQL database. 3) Operational autonomy: Your core scheduling and triage pipeline runs on your infrastructure, independent of third-party SaaS management consoles.",
   },
   {
     question: "How does phone and SMS paging compare to PagerDuty?",
     answer:
-      "OpsKnight connects directly to your Twilio account to deliver voice phone calls and SMS notifications. During a phone page, responders hear incident details and can press 1 on their keypad (DTMF) to acknowledge or 2 to resolve immediately. Because you connect your own Twilio credentials, you pay transparent carrier rates without vendor markups.",
+      "OpsKnight connects directly to your own configured Twilio account for voice telephony and SMS dispatch. Responders hear synthesized incident summaries and can press 1 on their keypad (DTMF) to acknowledge or 2 to resolve immediately. Because you connect your own Twilio account, you pay transparent carrier telecom rates directly with zero software vendor markup.",
   },
   {
-    question: "Can OpsKnight handle complex multi-tier escalation policies?",
+    question: "How does Single Sign-On (SSO) and SCIM provisioning compare?",
     answer:
-      "Yes. OpsKnight provides granular escalation policies where each step specifies a wait duration (e.g., 0 min, 5 min, 15 min), target schedules or individual responders, fallback conditions, and allowed notification channels. If an incident remains unacknowledged, it advances automatically until an on-call responder claims it.",
+      "PagerDuty documents SCIM provisioning across all plans (including Free) and SAML SSO on its Professional and Enterprise tiers. OpsKnight provides built-in OpenID Connect (OIDC) supporting Okta, Azure AD / Entra ID, Keycloak, and Google Workspace, along with SCIM 2.0 user and team synchronization directly in the open-source AGPL-3.0 release without licensing tier restrictions.",
   },
   {
     question: "How do you achieve high availability with a self-hosted deployment?",
@@ -70,21 +70,21 @@ const comparisonData = [
     highlight: true,
   },
   {
-    feature: "Pricing Model",
-    pagerduty: "Per-user/month tiers ($21 - $41+ / user / mo)",
-    opsknight: "Free perpetual license; zero per-seat fees",
+    feature: "Pricing & Commercial Packaging",
+    pagerduty: "Free (up to 5 users); paid per-user tiers ($21 - $41/mo) or platform packages",
+    opsknight: "Open-source AGPL-3.0; zero software seat fees (operator pays hosting & telecom)",
     highlight: true,
   },
   {
-    feature: "Data Custody & Residence",
-    pagerduty: "Multi-tenant cloud outside your perimeter",
-    opsknight: "Private VPC / Bare Metal / Sovereign DB",
+    feature: "Operational Data Custody",
+    pagerduty: "Stored in vendor multi-tenant cloud",
+    opsknight: "Private PostgreSQL DB; outbound alerts route through chosen provider boundaries",
     highlight: true,
   },
   {
-    feature: "PagerDuty Events API v2 Ingestion",
+    feature: "Events API v2 Ingestion",
     pagerduty: "Native proprietary endpoint",
-    opsknight: "Drop-in compatible /api/integrations/pagerduty/v2/enqueue",
+    opsknight: "Compatible ingestion adapter (/api/integrations/pagerduty/v2/enqueue)",
     highlight: true,
   },
   {
@@ -101,8 +101,8 @@ const comparisonData = [
   },
   {
     feature: "Phone Paging with DTMF Acknowledge",
-    pagerduty: "Bundled voice minutes with tier restrictions",
-    opsknight: "Direct Twilio Voice with DTMF keypad ack/resolve",
+    pagerduty: "Bundled voice minutes with tier limits",
+    opsknight: "Direct Twilio Voice with DTMF keypad ack/resolve at carrier rates",
     highlight: true,
   },
   {
@@ -112,13 +112,13 @@ const comparisonData = [
     highlight: false,
   },
   {
-    feature: "Enterprise SSO & SCIM",
-    pagerduty: "Gated behind highest enterprise pricing tiers",
-    opsknight: "Built-in OIDC (Okta, Azure, Google) and SCIM 2.0",
-    highlight: true,
+    feature: "Identity & Provisioning",
+    pagerduty: "SCIM on all plans; SAML SSO on Professional & Enterprise tiers",
+    opsknight: "Built-in OIDC (Okta, Azure, Google) and SCIM 2.0 in the open-source release",
+    highlight: false,
   },
   {
-    feature: "ChatOps War Rooms",
+    feature: "ChatOps Collaboration",
     pagerduty: "Slack and Microsoft Teams integrations",
     opsknight: "Slack & Microsoft Teams incident channels & cards",
     highlight: false,
@@ -209,10 +209,10 @@ export default function OpenSourcePagerDutyAlternativePage() {
               <div className="rounded-full bg-red-50 p-2.5 text-[#d21a1b] w-fit mb-4">
                 <DollarSign size={20} />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Zero Per-User Seat Taxes</h3>
+              <h3 className="text-base font-bold text-slate-900">Predictable Cost Structure</h3>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                PagerDuty pricing penalizes adding secondary on-call responders or cross-functional stakeholders.
-                With OpsKnight under AGPL-3.0, onboard your entire engineering organization with zero license fees.
+                PagerDuty offers a 5-user Free tier, but scaling across engineering incurs per-user seat fees ($21 - $41+/user/mo) or platform tiers.
+                OpsKnight AGPL-3.0 charges zero software seat fees—you pay only standard cloud hosting and direct carrier telecom.
               </p>
             </div>
 
@@ -220,10 +220,10 @@ export default function OpenSourcePagerDutyAlternativePage() {
               <div className="rounded-full bg-red-50 p-2.5 text-[#d21a1b] w-fit mb-4">
                 <Zap size={20} />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Events API v2 Compatibility</h3>
+              <h3 className="text-base font-bold text-slate-900">Events API v2 Ingestion</h3>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                OpsKnight exposes a drop-in compatible PagerDuty Events API v2 webhook. Repoint existing Datadog,
-                Prometheus, Grafana, or CloudWatch alerts by updating the target endpoint and routing key.
+                OpsKnight provides a compatible Events API v2 ingestion adapter for monitoring tools. Repoint Datadog,
+                Prometheus Alertmanager, or Grafana alerts by updating the endpoint and routing key (validate behavior in staging first).
               </p>
             </div>
 
@@ -231,10 +231,10 @@ export default function OpenSourcePagerDutyAlternativePage() {
               <div className="rounded-full bg-red-50 p-2.5 text-[#d21a1b] w-fit mb-4">
                 <Lock size={20} />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Complete Data Sovereignty</h3>
+              <h3 className="text-base font-bold text-slate-900">Core Operational Data Custody</h3>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                Stop transmitting sensitive error payloads, internal hostnames, and customer identifiers to third-party
-                multi-tenant clouds. Your incident database remains 100% within your private infrastructure.
+                Incident logs, rotation calendars, escalation policies, and responder directories live in your private PostgreSQL instance.
+                Outbound voice calls and ChatOps route through your configured Twilio, Slack, or Teams trust boundaries.
               </p>
             </div>
           </div>
@@ -349,6 +349,72 @@ export default function OpenSourcePagerDutyAlternativePage() {
             </p>
           </div>
           <PagerDutyMigrationHelper />
+        </div>
+      </section>
+
+      {/* Practical Migration Checklist & Transparent Cost Model */}
+      <section className="site-section site-white">
+        <div className="site-container">
+          <div className="max-w-3xl mb-8">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#d21a1b]">
+              Practical Adoption Pathway
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
+              4-Step Transition Checklist &amp; Transparent Cost Model
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              A structured roadmap to validate OpsKnight in staging and trigger your first successful test alert.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+              <h3 className="text-sm font-bold text-slate-900 mb-3">Transition Checklist</h3>
+              <ol className="space-y-2.5 text-xs text-slate-700">
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-[#d21a1b]">1.</span>
+                  <span><strong>Audit Existing Senders:</strong> Inventory Datadog, Prometheus, Grafana, and custom webhook sources currently routing to PagerDuty.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-[#d21a1b]">2.</span>
+                  <span><strong>Staging Validation:</strong> Repoint a pilot monitoring service to <code>/api/integrations/pagerduty/v2/enqueue</code> and verify trigger/ack/resolve events.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-[#d21a1b]">3.</span>
+                  <span><strong>Telephony Verification:</strong> Connect your Twilio credentials and execute a live phone call test to verify DTMF keypad acknowledgment.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold text-[#d21a1b]">4.</span>
+                  <span><strong>Cutover &amp; Decommission:</strong> Migrate production alert routes, verify ChatOps channels, and decommission legacy subscriptions.</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+              <h3 className="text-sm font-bold text-slate-900 mb-3">Transparent Cost Breakdown</h3>
+              <div className="space-y-2 text-xs text-slate-700">
+                <div className="flex justify-between pb-1.5 border-b border-slate-200">
+                  <span className="font-medium text-slate-900">OpsKnight Software License</span>
+                  <span className="font-mono text-emerald-600 font-bold">$0 (AGPL-3.0)</span>
+                </div>
+                <div className="flex justify-between pb-1.5 border-b border-slate-200">
+                  <span className="font-medium text-slate-900">Infrastructure (Cloud VM or K8s)</span>
+                  <span className="text-slate-600">Standard compute (~$10–$25/mo or existing cluster)</span>
+                </div>
+                <div className="flex justify-between pb-1.5 border-b border-slate-200">
+                  <span className="font-medium text-slate-900">Voice Telephony (Direct Twilio)</span>
+                  <span className="text-slate-600">Standard carrier rates (~$0.013/min voice, ~$0.0079/SMS US)</span>
+                </div>
+                <div className="flex justify-between pt-1">
+                  <span className="font-medium text-slate-900">Software Seat Fees</span>
+                  <span className="font-mono text-emerald-600 font-bold">$0 / user</span>
+                </div>
+              </div>
+              <p className="mt-3 text-[11px] text-slate-500 leading-relaxed">
+                Zero software license markup. All carrier telecom and infrastructure costs are billed directly by your own cloud/telecom providers.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
