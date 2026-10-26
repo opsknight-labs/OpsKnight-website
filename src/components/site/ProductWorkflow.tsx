@@ -190,6 +190,46 @@ const flows: Record<
         "Mobile response keeps the same installation identity and incident state as the desktop experience; browser and OS behavior still affect notification delivery.",
     },
   ],
+  runbooks: [
+    {
+      label: "Author",
+      stages: ["Define steps", "Parameter validation", "Sandboxed execution", "Publish version"],
+      detail:
+        "Author reusable workflows with explicit step types, parameter qualification, and execution bounds. Publish an immutable version before binding to services.",
+    },
+    {
+      label: "Bind & Trigger",
+      stages: ["Service link", "Alert condition", "Target agent pool", "Input mapping"],
+      detail:
+        "Bind published runbooks to services and escalation policies. Condition triggers ensure runbooks only execute when specific alert contexts match.",
+    },
+    {
+      label: "Execute",
+      stages: ["Responder preview", "Approval gate", "Agent dispatch", "Audit trail"],
+      detail:
+        "Interactive preview lets responders inspect step outputs in real time, with confirmation gates before any mutating action.",
+    },
+  ],
+  "service-automation": [
+    {
+      label: "Rules & Routing",
+      stages: ["Incoming payload", "Context extraction", "First-match rule", "Action dispatch"],
+      detail:
+        "Evaluate incoming alert payloads against ordered service rules with first-match evaluation and immutable context capture.",
+    },
+    {
+      label: "Shadow Simulation",
+      stages: ["Staged policy", "Shadow evaluation", "Aggregate metrics", "Verify outcomes"],
+      detail:
+        "Simulate new automation rules against production traffic in shadow mode without triggering live actions or notifications.",
+    },
+    {
+      label: "Verified Recovery",
+      stages: ["Automated execution", "Verify outcome", "Auto-resolve incident", "Audit log"],
+      detail:
+        "Unattended-write authorization and verified recovery resolution automatically resolve incidents when all steps succeed.",
+    },
+  ],
 };
 type ProductConcept = {
   eyebrow: string;
@@ -252,6 +292,18 @@ const concepts: Record<string, ProductConcept> = {
     headline: "Split only the responsibility that needs independent scale or failure isolation.",
     nodes: ["Web", "Scheduler", "Critical", "General", "Bulk", "Status projector"],
     detail: ["PgBouncer", "PostgreSQL", "Health + Prometheus"],
+  },
+  runbooks: {
+    eyebrow: "REMEDIATION WORKFLOW",
+    headline: "Sandboxed agent pools, immutable versions, and responder confirmation gates.",
+    nodes: ["Draft workflow", "Publish version", "Agent qualification", "Responder preview", "Execution audit"],
+    detail: ["Sandboxed execution", "Approval gates", "Worker evidence"],
+  },
+  "service-automation": {
+    eyebrow: "AUTOMATION ENGINE",
+    headline: "First-match rule evaluation, payload mapping, and verified auto-recovery.",
+    nodes: ["Payload context", "Rule evaluation", "Shadow simulation", "Action dispatch", "Verified resolution"],
+    detail: ["First-match rules", "Unattended authorization", "Audit trail"],
   },
 };
 

@@ -5466,7 +5466,9 @@ html {
   background: linear-gradient(145deg,#0d1522,#111d2d);
 }
 .product-concept-security .product-concept-nodes,
-.product-concept-on-call .product-concept-nodes {
+.product-concept-on-call .product-concept-nodes,
+.product-concept-runbooks .product-concept-nodes,
+.product-concept-service-automation .product-concept-nodes {
   grid-template-columns: repeat(5,minmax(100px,1fr));
 }
 .product-concept-operations .product-concept-nodes,
@@ -5485,6 +5487,8 @@ html {
   .product-concept-paging .product-concept-nodes,
   .product-concept-security .product-concept-nodes,
   .product-concept-on-call .product-concept-nodes,
+  .product-concept-runbooks .product-concept-nodes,
+  .product-concept-service-automation .product-concept-nodes,
   .product-concept-analytics .product-concept-nodes {
     grid-template-columns: repeat(2,minmax(0,1fr));
   }
@@ -5498,6 +5502,8 @@ html {
   .product-concept-paging .product-concept-nodes,
   .product-concept-security .product-concept-nodes,
   .product-concept-on-call .product-concept-nodes,
+  .product-concept-runbooks .product-concept-nodes,
+  .product-concept-service-automation .product-concept-nodes,
   .product-concept-analytics .product-concept-nodes {
     grid-template-columns: 1fr;
   }

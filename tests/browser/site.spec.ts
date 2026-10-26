@@ -338,6 +338,8 @@ test("every product page exposes the four evaluation layers", async ({ page }) =
     "/product/mobile/",
     "/product/security/",
     "/product/operations/",
+    "/product/runbooks/",
+    "/product/service-automation/",
   ]) {
     await page.goto(route);
     await expect(page.getByText("WHAT IT SOLVES", { exact: true })).toBeVisible();
@@ -356,6 +358,8 @@ test("every product page exposes the four evaluation layers", async ({ page }) =
     ["mobile", 5],
     ["security", 5],
     ["operations", 6],
+    ["runbooks", 5],
+    ["service-automation", 5],
   ] as const;
   for (const [slug, nodes] of visualConcepts) {
     await page.goto(`/product/${slug}/`);
@@ -605,6 +609,8 @@ test("tier c: route-family responsive certification across dynamic families, det
     "mobile",
     "security",
     "operations",
+    "runbooks",
+    "service-automation",
   ].map((s) => `/product/${s}/`);
 
   const solutionRoutes = [
