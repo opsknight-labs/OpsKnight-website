@@ -412,7 +412,7 @@
       "description": "Execute verified remediation workflows through secure agent pools with parameter validation, live streaming and confirmation gates.",
       "capability": "runbooks",
       "docs": "concepts/runbooks",
-      "screenshot": null,
+      "screenshot": "runbooks.png",
       "features": [
         "Parameter validation & qualification",
         "Interactive step preview & streaming",
@@ -449,40 +449,40 @@
     {
       "slug": "service-automation",
       "label": "Service automation",
-      "headline": "Event-driven routing and automatic incident recovery.",
-      "description": "Evaluate incoming alerts with first-match rules, test safely in shadow simulation, and resolve incidents automatically upon verified recovery.",
-      "capability": "runbooks",
-      "docs": "concepts/runbooks",
-      "screenshot": null,
+      "headline": "Alert normalization, routing rules, and automated triage.",
+      "description": "Evaluate incoming alerts with deterministic first-match rules, test safely in shadow simulation, and hand off remediation to authorized Runbooks.",
+      "capability": "services_and_teams",
+      "docs": "concepts/services",
+      "screenshot": "service-automation.png",
       "features": [
-        "First-match rule evaluation",
-        "Shadow mode simulation",
-        "Verified auto-recovery resolution"
+        "First-match alert routing rules",
+        "Context enrichment and normalization",
+        "Shadow mode rule simulation"
       ],
       "story": [
         {
           "title": "First-match rules with response context.",
-          "body": "Incoming alerts match ordered service automation rules with deterministic first-match semantics. Decisions capture immutable, checksum-verified context.",
-          "docs": "concepts/runbooks"
+          "body": "Incoming alerts match ordered service automation rules with deterministic first-match semantics. Decisions capture immutable, checksum-verified normalization context before routing.",
+          "docs": "concepts/services"
+        },
+        {
+          "title": "Alert normalization and payload enrichment.",
+          "body": "Extract critical metadata, normalize severity across disparate monitoring providers, and enrich incidents with tier and diagnostic context before paging responders.",
+          "docs": "concepts/services"
         },
         {
           "title": "Shadow simulation before live activation.",
-          "body": "Evaluate new rules against live production alert traffic in shadow mode. Inspect aggregate metrics and simulated decisions before activating rules.",
-          "docs": "guides/runbooks/author"
+          "body": "Evaluate new routing and triage rules against live production alert traffic in shadow mode. Inspect aggregate metrics and simulated decisions before activating rules.",
+          "docs": "guides/services/manage-service"
         },
         {
-          "title": "Unattended-write authorization.",
-          "body": "Automatic write actions execute unattended only when an administrator explicitly authorizes the pinned rule version and verified recovery is enabled.",
-          "docs": "operate/deploy/runbook-qualification"
+          "title": "Draft versioning and published immutability.",
+          "body": "Draft rules in safety. Publishing requires administrative privilege and creates an immutable, cryptographically hashed rule version with rollback support.",
+          "docs": "reference/api/v2"
         },
         {
-          "title": "Automatic incident recovery and resolution.",
-          "body": "When all steps of an authorized automated runbook verify clean recovery, the incident resolves automatically through the lifecycle with escalation cancelled.",
-          "docs": "guides/runbooks/respond"
-        },
-        {
-          "title": "End-to-end response timeline visibility.",
-          "body": "View routing decisions, paging activity, remediation execution, verification checks, and resolution outcomes in a unified chronological activity feed.",
+          "title": "Remediation handoff to automated runbooks.",
+          "body": "When triage requires automated intervention, service rules cleanly hand off to pinned, authorized Runbooks for isolated execution through private agents.",
           "docs": "concepts/runbooks"
         }
       ]

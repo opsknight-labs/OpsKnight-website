@@ -63,7 +63,7 @@ export default function ProductOverviewPage() {
           </p>
           <h1>The incident operations platform you control.</h1>
           <p className="site-description">
-            From the first alert to continuous learning. Ten core capabilities
+            From the first alert to continuous learning. Twelve core capabilities
             engineered to run securely on infrastructure you own and govern.
           </p>
           <div className="site-actions">
