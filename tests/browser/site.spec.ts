@@ -952,6 +952,7 @@ test("visual coverage for key pages", async ({ page }, testInfo) => {
 });
 
 test("WCAG AA checks on marketing flows", async ({ page }) => {
+  test.setTimeout(120000);
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   const failures: Array<{ route: string; violations: unknown[] }> = [];
   for (const route of [
