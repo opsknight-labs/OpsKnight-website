@@ -9,7 +9,7 @@ function fixture(mutator) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "opsknight-contract-"));
   for (const dir of [
     "content/product",
-    "content/docs/v2.0.0",
+    "content/docs",
     "src/generated",
     "scripts",
     "public/product",

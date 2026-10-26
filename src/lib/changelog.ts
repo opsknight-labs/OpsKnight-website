@@ -45,9 +45,63 @@ export const releases: ReleaseItem[] = [
       timeZone: "UTC",
     }).format(new Date(PRODUCT.release.date + "T00:00:00Z")),
     summary:
-      "A major milestone release introducing split production runtimes, Microsoft Teams ChatOps, Twilio voice paging, incident response policy engine, SCIM 2.0 provisioning, Docker Swarm HA, ManageEngine ingestion, and a durable notification delivery control plane.",
+      "OpsKnight 2.1.0 introduces certified automated runbook execution with sandboxed agent pools, REST API v2, Enterprise SSO with live Okta and Entra ID certification, SCIM 2.0 directory sync, and automated disaster recovery & rollback verification.",
     dockerTag: `ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}`,
     githubReleaseUrl: `${BRAND.links.releases}/tag/${PRODUCT.release.tag}`,
+    categories: [
+      {
+        type: "added",
+        title: "Automated Runbooks & Worker Orchestration",
+        items: [
+          "Runbook Agent execution engine: secure agent pools, worker qualification, parameter validation, and sandboxed step execution.",
+          "Interactive Runbook UI: modal step preview, real-time output streaming, responder confirmation gates, and cancellation controls.",
+          "Automated remediation links on services and escalation policies with full execution audit trails.",
+        ],
+      },
+      {
+        type: "added",
+        title: "REST API v2",
+        items: [
+          "Complete REST API v2 suite covering incidents, services, schedules, escalation policies, and runbooks.",
+          "Scoped API keys, granular permission enforcement, rate-limiting, and machine-readable OpenAPI documentation.",
+        ],
+      },
+      {
+        type: "added",
+        title: "Enterprise SSO & Identity",
+        items: [
+          "Production-certified OIDC and SAML 2.0 authentication with native Okta and Microsoft Entra ID support.",
+          "Automated SCIM 2.0 user and group synchronization, dynamic team assignment, and automated offboarding.",
+          "Session security registry: active session monitoring, device fingerprinting, and one-click remote session revocation.",
+        ],
+      },
+      {
+        type: "changed",
+        title: "Disaster Recovery & Operational Hardening",
+        items: [
+          "PostgreSQL 16 verified backup, point-in-time recovery, and automated rollback tooling.",
+          "Docker Swarm secret-file resolution for DATABASE_URL_FILE across migration and bootstrap scripts.",
+          "Updated Kubernetes Helm charts (opsknight and opsknight-agent) pinned to v2.1.0.",
+        ],
+      },
+      {
+        type: "performance",
+        title: "Certification & Quality Gates",
+        items: [
+          "Continuous E2E validation verifying terminal state assertion across notification queuing, provider acceptance, and delivery.",
+          "Cross-browser Playwright test suite validating authenticated routes, modal interactions, and zero console errors.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "v2.0.0",
+    slug: "v2.0.0",
+    date: "October 3, 2026",
+    summary:
+      "A major milestone release introducing split production runtimes, Microsoft Teams ChatOps, Twilio voice paging, incident response policy engine, SCIM 2.0 provisioning, Docker Swarm HA, ManageEngine ingestion, and a durable notification delivery control plane.",
+    dockerTag: "ghcr.io/opsknight-labs/opsknight:2.0.0",
+    githubReleaseUrl: `${BRAND.links.releases}/tag/v2.0.0`,
     categories: [
       {
         type: "added",

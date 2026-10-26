@@ -1,107 +1,31 @@
 {
   "release": {
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "AGPL-3.0-only",
     "hostedSaaS": false,
-    "publishedAt": "2026-10-03T05:02:04Z",
-    "releaseCreatedAt": "2026-10-02T23:36:01Z",
-    "date": "2026-10-03",
-    "tagCreatedAt": "2026-10-02T23:36:01Z",
-    "changelogDate": "2026-10-02",
-    "tag": "v2.0.0",
-    "sourceCommit": "097f4916a38ddcc6d1512f71b72bde36abbeb171",
+    "publishedAt": "2026-10-26T18:00:00Z",
+    "releaseCreatedAt": "2026-10-26T18:00:00Z",
+    "date": "2026-10-26",
+    "tagCreatedAt": "2026-10-26T18:00:00Z",
+    "changelogDate": "2026-10-26",
+    "tag": "v2.1.0",
+    "sourceCommit": "eb72d4ed052fe478ed2405772ce72221ff24a01d",
     "highlights": [
       {
-        "title": "Split production runtime",
-        "description": "Web, Scheduler, General Worker, Critical Worker, Bulk Worker, and Status Projector can scale independently. The integrated runtime remains supported."
+        "title": "Service Automation ↔ Runbook integration",
+        "description": "LIVE automation decisions capture an immutable, checksum-verified response context of declared fields only. Runbook triggers accept `automation.<key>` conditions, bindings can map context fields to inputs and choose targets through an administrator-approved value → Agent/pool table, and alert-created incidents only reach bindings that opt in with **Run on monitoring incidents**. Unavailable context fails closed with a `RUNBOOK_SKIPPED` timeline event."
       },
       {
-        "title": "Notification delivery control plane",
-        "description": "Durable logical intents, provider attempts, traffic classes, admission/defer behavior, retry and terminal states, callback reconciliation, provider capacity controls, and an administrator Operations view. Delivery evidence distinguishes deferred, retrying, accepted, delivered, permanent-failure, and superseded work."
+        "title": "Unattended-write authorization",
+        "description": "AUTOMATIC write steps run without approval only after an administrator authorizes the exact pinned version and every write action has verification. `NON_IDEMPOTENT` steps always require approval. Changing the pinned version, strategy or mode revokes the authorization."
       },
       {
-        "title": "Microsoft Teams ChatOps",
-        "description": "Entra application and Azure Bot integration, Teams app packaging and tenant installation, service-to-channel destinations, Adaptive Cards, interactive incident actions, identity linking, war rooms, participant synchronization, and meeting collaboration. A service can target up to three Teams destinations."
+        "title": "Verified recovery resolution",
+        "description": "Optional per-binding resolution when every write action of a successful run is verified, applied through the incident lifecycle (`AUTO_RESOLVED`, resolution kind `AUTOMATION`) with escalation cancelled. Outcomes are recorded as `NOT_REQUESTED`, `PENDING`, `RESOLVED`, `NOT_VERIFIED`, `ALREADY_CLOSED` or `BLOCKED`."
       },
       {
-        "title": "Twilio voice paging",
-        "description": "`VOICE` is a triggered-incident paging channel with responder acknowledgement input, signed callbacks, and reconciliation of uncertain provider outcomes. Acknowledge and resolve lifecycle updates do not initiate additional voice calls."
-      },
-      {
-        "title": "Incident response policy engine",
-        "description": "Versioned classification, incident SLA, and support-hours policies at workspace and service scope, with immutable published versions, preview, history, diff, restore, and API access."
-      },
-      {
-        "title": "SCIM 2.0 provisioning",
-        "description": "Users, Groups, discovery endpoints, provisioning/deprovisioning, team membership, PATCH operations, and in-product bearer-token generation, rotation, and revocation."
-      },
-      {
-        "title": "Auditor access and sessions",
-        "description": "A read-oriented `AUDITOR` role, centralized resource authorization, OIDC claim mapping, and a canonical signed-in-session registry with browser, OS, device, authentication type, activity, expiry, and revoke controls."
-      },
-      {
-        "title": "Privacy and compliance operations",
-        "description": "Privacy/DSAR request processing, export and erasure evidence, retention holds, controlled encryption migrations, technical control evaluation, framework mappings, evidence ledgers, drift monitoring, and verifiable evidence-package exports. Framework mapping does not confer external certification."
-      },
-      {
-        "title": "Docker Swarm",
-        "description": "Integrated and split stacks, Raft secrets, direct-database migration lifecycle, health checks, topology switching, and rollback tooling."
-      },
-      {
-        "title": "Deployment planning and load certification",
-        "description": "Workload shapes and multi-topology load/correctness tests cover ingestion, incident lifecycle, escalation, notification fanout, realtime delivery, status fanout, and recovery."
-      },
-      {
-        "title": "ManageEngine ingestion",
-        "description": "A new native inbound parser joins the existing integration catalog. The release certifies 28 current inbound contracts in total; it does not add 28 new integrations."
-      },
-      {
-        "title": "Incident response",
-        "description": "Centralized lifecycle commands, durable side effects, persistent idempotency, stale-worker fencing, a global create modal, templates, stronger validation, rebuilt incident detail, action items, and interactive 5-Whys postmortems."
-      },
-      {
-        "title": "Schedules and escalation",
-        "description": "Redesigned schedule setup/detail, DST-safe rotations, overrides and handoff behavior, user/team/schedule escalation targets, priority/urgency/support-hours conditions, durable recovery, and stale-work protection."
-      },
-      {
-        "title": "Slack and Jira",
-        "description": "More reliable Slack war rooms, identity and capability controls, up to three Slack destinations per service, provider-neutral collaboration, and stronger bidirectional Jira lifecycle reconciliation."
-      },
-      {
-        "title": "Quiet Hours",
-        "description": "Personal timezone-aware suppression for low-urgency notifications; medium- and high-urgency operational paging bypasses Quiet Hours."
-      },
-      {
-        "title": "Status Page V3",
-        "description": "One supported status page with themes, announcements, subscriber verification/unsubscribe, API tokens, webhooks, privacy controls, uptime history/export, rebuild-safe snapshots, and hardened routing. Multiple status pages are not a supported 2.0 capability."
-      },
-      {
-        "title": "Dashboards and reports",
-        "description": "Templates, configurable widgets, persisted layout, private/team/organization visibility, filtered share links, PDF export, live refresh, and fullscreen NOC/TV presentation mode."
-      },
-      {
-        "title": "Responder-grade mobile PWA",
-        "description": "Rebuilt mobile navigation and operational workflows, per-device push registration and reconciliation, repair flows, offline/cached-state boundaries, update handling, and hardened fresh-install iOS Web Push recovery. This is an installable PWA, not a native App Store application."
-      },
-      {
-        "title": "OIDC and SSO policy",
-        "description": "Entra, Google, Okta, Auth0, and generic provider flows with PKCE/nonce, JIT provisioning, explicit account linking, claim-to-role mapping, provider lifecycle hardening, maximum lifetime, update interval, idle timeout, and reauthentication controls."
-      },
-      {
-        "title": "Application bootstrap and routing",
-        "description": "Short-lived first-admin bootstrap capability, UI-managed Application URL, canonical-host enforcement, reverse-proxy awareness, and explicit HTTP 421 protection."
-      },
-      {
-        "title": "Health and operations",
-        "description": "Expanded Health Center diagnostics, Prometheus metrics, system logs, backup/restore, worker/readiness visibility, and PgBouncer-aware connection ownership."
-      },
-      {
-        "title": "Documentation",
-        "description": "The 2.0 task-oriented documentation is backed by implementation discovery, semantic contracts, runtime evidence, API smoke tests, legacy-knowledge mapping, and rendered-site validation."
-      },
-      {
-        "title": "License",
-        "description": "OpsKnight 2.0.0 is the first stable release distributed under `AGPL-3.0-only`. OpsKnight 1.4.0 and earlier retain their historical licenses."
+        "title": "Unified response timeline",
+        "description": "Incident detail → Response activity shows routing, paging, remediation, verification and recovery in order, plus an Incident context card, with existing auditor and sensitive-source redaction. See `docs/automation/runbook-integration.md`."
       }
     ]
   },
