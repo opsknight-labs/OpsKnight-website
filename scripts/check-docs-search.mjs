@@ -2,7 +2,8 @@
 import { readFileSync } from "node:fs";
 import Fuse from "fuse.js";
 
-const indexPath = process.env.DOCS_SEARCH_INDEX || "out/api/docs/v2.0.0/search";
+const releaseVersion = JSON.parse(readFileSync("content/product/release.json", "utf8")).version;
+const indexPath = process.env.DOCS_SEARCH_INDEX || `out/api/docs/v${releaseVersion}/search`;
 const { results } = JSON.parse(readFileSync(indexPath, "utf8"));
 const fuse = new Fuse(results, {
   keys: [
