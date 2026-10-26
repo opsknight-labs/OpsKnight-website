@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/opsknight-labs/OpsKnight",
   "tag": "v2.1.0",
-  "commit": "eb72d4ed052fe478ed2405772ce72221ff24a01d",
+  "commit": "f9f772a1fb43798bf45400c8e2ec7a0a823fa43f",
   "sha256": {
     "versions.json": "39777979742da1d9e02747016ab55fe8e70442ca664dd7f453e2ca760a936817",
     "capabilities.yaml": "01266e4db63c46740e7c3ce6b0aeae57a470c026e0795af4138db066bf2abfb7",

@@ -9,7 +9,7 @@
     "tagCreatedAt": "2026-10-26T18:00:00Z",
     "changelogDate": "2026-10-26",
     "tag": "v2.1.0",
-    "sourceCommit": "eb72d4ed052fe478ed2405772ce72221ff24a01d",
+    "sourceCommit": "f9f772a1fb43798bf45400c8e2ec7a0a823fa43f",
     "highlights": [
       {
         "title": "Service Automation ↔ Runbook integration",
