@@ -45,24 +45,24 @@ export const releases: ReleaseItem[] = [
       timeZone: "UTC",
     }).format(new Date(PRODUCT.release.date + "T00:00:00Z")),
     summary:
-      "OpsKnight 2.1.0 introduces certified automated runbook execution with sandboxed agent pools, REST API v2, Enterprise SSO with live Okta and Entra ID certification, SCIM 2.0 directory sync, and automated disaster recovery & rollback verification.",
+      "OpsKnight 2.1.0 introduces automated runbook execution (Beta) with sandboxed agent pools, Service Automation (Beta), REST API v2, enterprise OIDC single sign-on (compatible with Microsoft Entra ID, Okta, Google Workspace, and Keycloak), SCIM 2.0 directory sync, and verified PostgreSQL 16 disaster recovery.",
     dockerTag: `ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}`,
     githubReleaseUrl: `${BRAND.links.releases}/tag/${PRODUCT.release.tag}`,
     categories: [
       {
         type: "added",
-        title: "Automated Runbooks & Worker Orchestration",
+        title: "Automated Runbooks & Service Automation (Beta)",
         items: [
-          "Runbook Agent execution engine: secure agent pools, worker qualification, parameter validation, and sandboxed step execution.",
+          "Runbook Agent execution engine (Beta): secure agent pools, worker qualification, parameter validation, and sandboxed step execution.",
           "Interactive Runbook UI: modal step preview, real-time output streaming, responder confirmation gates, and cancellation controls.",
-          "Automated remediation links on services and escalation policies with full execution audit trails.",
+          "Service Automation (Beta): rules engine with first-match evaluation, payload mapping, shadow simulation, unattended-write authorization, and automated remediation links with full audit trails.",
         ],
       },
       {
         type: "added",
         title: "REST API v2",
         items: [
-          "Complete REST API v2 suite covering incidents, services, schedules, escalation policies, and runbooks.",
+          "Documented REST API v2 endpoints for incident lifecycle, services, on-call schedules, and runbook trigger operations with scoped API keys and token authentication.",
           "Scoped API keys, granular permission enforcement, rate-limiting, and machine-readable OpenAPI documentation.",
         ],
       },
@@ -70,7 +70,7 @@ export const releases: ReleaseItem[] = [
         type: "added",
         title: "Enterprise SSO & Identity",
         items: [
-          "Production-certified OIDC and SAML 2.0 authentication with native Okta and Microsoft Entra ID support.",
+          "Enterprise OpenID Connect (OIDC) authentication supporting Microsoft Entra ID, Okta, Google Workspace, and generic OIDC/Keycloak providers (SAML is not supported; SSO is OIDC-only).",
           "Automated SCIM 2.0 user and group synchronization, dynamic team assignment, and automated offboarding.",
           "Session security registry: active session monitoring, device fingerprinting, and one-click remote session revocation.",
         ],

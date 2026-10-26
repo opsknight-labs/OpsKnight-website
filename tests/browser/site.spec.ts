@@ -280,16 +280,17 @@ test("changelog restores release filters and version navigation", async ({ page 
   await expect(page.getByRole("tab", { name: "All", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Changes", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Performance", exact: true })).toBeVisible();
-  await expect(page.locator(".release-article").first()).toContainText("v2.0.0");
+  await expect(page.locator(".release-article").first()).toContainText("v2.1.0");
   await expect(page.locator(".release-command").first()).toContainText("docker pull");
   await page.getByRole("tab", { name: "Security", exact: true }).click();
   await expect(page.locator(".release-article").first()).toBeVisible();
   await expect(page.locator(".change-kind-security").first()).toBeVisible();
   await page.getByRole("tab", { name: "Changes", exact: true }).click();
-  await expect(page.locator(".release-article").first()).toContainText("2.0 Release Boundaries");
-  await expect(page.locator(".release-article").first()).toContainText("One supported status page");
+  const v2Article = page.locator(".release-article").filter({ hasText: "v2.0.0" });
+  await expect(v2Article).toContainText("2.0 Release Boundaries");
+  await expect(v2Article).toContainText("One supported status page");
   await page.getByRole("tab", { name: "Performance", exact: true }).click();
-  await expect(page.locator(".release-article").first()).toContainText("Performance & Scale");
+  await expect(page.locator(".release-article").filter({ hasText: "v2.0.0" })).toContainText("Performance & Scale");
   await expect(page.locator(".change-kind-performance").first()).toBeVisible();
 });
 test("solution journeys use the canonical deployment path", async ({ page }) => {
