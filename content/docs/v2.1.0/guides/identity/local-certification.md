@@ -189,7 +189,7 @@ console shows an error; production remains unchanged and the unsaved draft canno
 be tested or activated. This screenshot was captured on the upgraded Linux/Kind
 application after the server rejected that request:
 
-![Rejected staging request with the unchanged SSO Optional policy](../../assets/enterprise-staging-validation-failure.png)
+![Rejected staging request with the unchanged SSO Optional policy](/docs/v2.1.0/assets/enterprise-staging-validation-failure.png)
 
 Correct the draft, save and validate it, then complete real administrator sign-in
 and independent recovery drills before activating a revision. A local error screen
@@ -518,9 +518,9 @@ drills remain deployment acceptance checks.
 These captures use the disposable local certification administrator. Callback URLs
 are examples from that fixture. No generated recovery password is shown.
 
-![Provider workspace on desktop](../../assets/authentication-provider-workspace-desktop.png)
+![Provider workspace on desktop](/docs/v2.1.0/assets/authentication-provider-workspace-desktop.png)
 
-![Provider workspace on mobile](../../assets/authentication-provider-workspace-mobile.png)
+![Provider workspace on mobile](/docs/v2.1.0/assets/authentication-provider-workspace-mobile.png)
 
 When Docker is unavailable, certification can use a separately installed PostgreSQL
 bin directory with `--postgres-bin /path/to/postgresql/bin`. The harness creates and
@@ -591,9 +591,9 @@ prefixed with `[OpsKnight]`.
 
 Local synthetic mobile/light and desktop/dark previews:
 
-![Emergency access security email](../../assets/authentication-security-email-mobile.png)
+![Emergency access security email](/docs/v2.1.0/assets/authentication-security-email-mobile.png)
 
-![SSO invitation email](../../assets/authentication-invitation-email-desktop-dark.png)
+![SSO invitation email](/docs/v2.1.0/assets/authentication-invitation-email-desktop-dark.png)
 
 Local Chromium rendering checks layout and dark-mode styling. Actual Outlook, Gmail
 and other mail-client rendering still depends on each client's HTML/CSS support.

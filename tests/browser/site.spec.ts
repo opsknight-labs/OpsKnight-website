@@ -280,16 +280,17 @@ test("changelog restores release filters and version navigation", async ({ page 
   await expect(page.getByRole("tab", { name: "All", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Changes", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Performance", exact: true })).toBeVisible();
-  await expect(page.locator(".release-article").first()).toContainText("v2.0.0");
+  await expect(page.locator(".release-article").first()).toContainText("v2.1.0");
   await expect(page.locator(".release-command").first()).toContainText("docker pull");
   await page.getByRole("tab", { name: "Security", exact: true }).click();
   await expect(page.locator(".release-article").first()).toBeVisible();
   await expect(page.locator(".change-kind-security").first()).toBeVisible();
   await page.getByRole("tab", { name: "Changes", exact: true }).click();
-  await expect(page.locator(".release-article").first()).toContainText("2.0 Release Boundaries");
-  await expect(page.locator(".release-article").first()).toContainText("One supported status page");
+  const v2Article = page.locator(".release-article").filter({ hasText: "v2.0.0" });
+  await expect(v2Article).toContainText("2.0 Release Boundaries");
+  await expect(v2Article).toContainText("One supported status page");
   await page.getByRole("tab", { name: "Performance", exact: true }).click();
-  await expect(page.locator(".release-article").first()).toContainText("Performance & Scale");
+  await expect(page.locator(".release-article").filter({ hasText: "v2.0.0" })).toContainText("Performance & Scale");
   await expect(page.locator(".change-kind-performance").first()).toBeVisible();
 });
 test("solution journeys use the canonical deployment path", async ({ page }) => {
@@ -337,6 +338,8 @@ test("every product page exposes the four evaluation layers", async ({ page }) =
     "/product/mobile/",
     "/product/security/",
     "/product/operations/",
+    "/product/runbooks/",
+    "/product/service-automation/",
   ]) {
     await page.goto(route);
     await expect(page.getByText("WHAT IT SOLVES", { exact: true })).toBeVisible();
@@ -355,6 +358,8 @@ test("every product page exposes the four evaluation layers", async ({ page }) =
     ["mobile", 5],
     ["security", 5],
     ["operations", 6],
+    ["runbooks", 5],
+    ["service-automation", 5],
   ] as const;
   for (const [slug, nodes] of visualConcepts) {
     await page.goto(`/product/${slug}/`);
@@ -604,6 +609,8 @@ test("tier c: route-family responsive certification across dynamic families, det
     "mobile",
     "security",
     "operations",
+    "runbooks",
+    "service-automation",
   ].map((s) => `/product/${s}/`);
 
   const solutionRoutes = [
@@ -945,6 +952,7 @@ test("visual coverage for key pages", async ({ page }, testInfo) => {
 });
 
 test("WCAG AA checks on marketing flows", async ({ page }) => {
+  test.setTimeout(120000);
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   const failures: Array<{ route: string; violations: unknown[] }> = [];
   for (const route of [

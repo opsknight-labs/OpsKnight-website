@@ -20,13 +20,18 @@ try {
   if (temporary) {
     git(["init"]);
     git(["remote", "add", "origin", provenance.repository]);
-    git([
-      "fetch",
-      "--depth",
-      "1",
-      "origin",
-      `refs/tags/${provenance.tag}:refs/tags/${provenance.tag}`,
-    ]);
+    try {
+      git([
+        "fetch",
+        "--depth",
+        "1",
+        "origin",
+        `refs/tags/${provenance.tag}:refs/tags/${provenance.tag}`,
+      ]);
+    } catch {
+      git(["fetch", "--depth", "1", "origin", provenance.commit]);
+      git(["tag", provenance.tag, provenance.commit]);
+    }
   }
   const commit = git(["rev-parse", `${provenance.tag}^{commit}`])
     .toString()

@@ -404,6 +404,88 @@
           "docs": "operate/reliability/scaling"
         }
       ]
+    },
+    {
+      "slug": "runbooks",
+      "label": "Runbooks",
+      "headline": "Safe remediation with sandboxed Runbooks.",
+      "description": "Execute verified remediation workflows through secure agent pools with parameter validation, live streaming and confirmation gates.",
+      "capability": "runbooks",
+      "docs": "concepts/runbooks",
+      "screenshot": "runbooks.png",
+      "features": [
+        "Parameter validation & qualification",
+        "Interactive step preview & streaming",
+        "Sandboxed outbound execution"
+      ],
+      "story": [
+        {
+          "title": "Remediation workflows, built for safety.",
+          "body": "Author reusable workflows with explicit step types, required parameters, and execution bounds. Responders review exact plans before running actions.",
+          "docs": "guides/runbooks/author"
+        },
+        {
+          "title": "Interactive preview and confirmation gates.",
+          "body": "Preview every execution step before dispatch. Interactive confirmation gates ensure non-idempotent and mutating actions require explicit responder approval.",
+          "docs": "guides/runbooks/respond"
+        },
+        {
+          "title": "Outbound agents with scoped execution pools.",
+          "body": "Runbook agents execute in private infrastructure, qualify worker capabilities locally, and communicate outbound-only over secure mutual-TLS connections.",
+          "docs": "guides/runbooks/agents-pools-secrets"
+        },
+        {
+          "title": "Scoped secrets and parameter isolation.",
+          "body": "Secrets and credentials stay scoped to specific worker pools. Environment variables and parameter bindings prevent accidental secret leakage.",
+          "docs": "operate/deploy/agent-operations"
+        },
+        {
+          "title": "Immutable audit trails for every execution.",
+          "body": "Every runbook execution records step inputs, terminal status, output logs, responder confirmations, and timeline activity for compliance.",
+          "docs": "troubleshooting/runbooks/README"
+        }
+      ]
+    },
+    {
+      "slug": "service-automation",
+      "label": "Service automation",
+      "headline": "Alert normalization, routing rules, and automated triage.",
+      "description": "Evaluate incoming alerts with deterministic first-match rules, test safely in shadow simulation, and hand off remediation to authorized Runbooks.",
+      "capability": "services_and_teams",
+      "docs": "concepts/services",
+      "screenshot": "service-automation.png",
+      "features": [
+        "First-match alert routing rules",
+        "Context enrichment and normalization",
+        "Shadow mode rule simulation"
+      ],
+      "story": [
+        {
+          "title": "First-match rules with response context.",
+          "body": "Incoming alerts match ordered service automation rules with deterministic first-match semantics. Decisions capture immutable, checksum-verified normalization context before routing.",
+          "docs": "concepts/services"
+        },
+        {
+          "title": "Alert normalization and payload enrichment.",
+          "body": "Extract critical metadata, normalize severity across disparate monitoring providers, and enrich incidents with tier and diagnostic context before paging responders.",
+          "docs": "concepts/services"
+        },
+        {
+          "title": "Shadow simulation before live activation.",
+          "body": "Evaluate new routing and triage rules against live production alert traffic in shadow mode. Inspect aggregate metrics and simulated decisions before activating rules.",
+          "docs": "guides/services/manage-service"
+        },
+        {
+          "title": "Draft versioning and published immutability.",
+          "body": "Draft rules in safety. Publishing requires administrative privilege and creates an immutable, cryptographically hashed rule version with rollback support.",
+          "docs": "reference/api/v2"
+        },
+        {
+          "title": "Remediation handoff to automated runbooks.",
+          "body": "When triage requires automated intervention, service rules cleanly hand off to pinned, authorized Runbooks for isolated execution through private agents.",
+          "docs": "concepts/runbooks"
+        }
+      ]
     }
   ],
   "lifecycle": [

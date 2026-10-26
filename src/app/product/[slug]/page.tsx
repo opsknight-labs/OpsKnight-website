@@ -30,6 +30,8 @@ const productSeoTitles: Record<string, string> = {
   mobile: "Mobile Incident Response & PWA Alert Acknowledgement",
   security: "Security, OIDC Identity & Audit Architecture",
   operations: "Runtime Operations, Worker Topology & Health",
+  runbooks: "Self-Hosted Runbook Automation & Sandboxed Agent Remediation",
+  "service-automation": "Service Automation & Event-Driven Incident Recovery",
 };
 
 export async function generateMetadata({
@@ -73,6 +75,12 @@ export default async function ProductPage({
   if (slug === "mobile")
     boundary =
       "Mobile is an installable progressive web app (PWA). Device and browser notification behavior is documented in the mobile guides.";
+  if (slug === "runbooks")
+    boundary =
+      "Runbooks is Beta in OpsKnight v2.1.0. Qualify agent pools, parameter validation, and worker qualification before enabling automatic writes.";
+  if (slug === "service-automation")
+    boundary =
+      "Service Automation is Beta in OpsKnight v2.1.0. Automatic rules save paused by default; test first-match rules and shadow simulation before enabling automated resolution.";
 
   const productionChecks: Record<string, string[]> = {
     incidents: [
@@ -124,6 +132,16 @@ export default async function ProductPage({
       "Budget PostgreSQL connections before adding worker or web replicas.",
       "Test backup, restore, and the documented upgrade path before production changes.",
       "Run a synthetic incident after topology or recovery changes before declaring the platform healthy.",
+    ],
+    runbooks: [
+      "Author and publish immutable workflow versions with parameter validation.",
+      "Qualify private agent pools and verify mutual-TLS worker communication.",
+      "Exercise interactive previews, confirmation gates, and audit trails before enabling writes.",
+    ],
+    "service-automation": [
+      "Test first-match rules against payload mappings and verify context capture.",
+      "Evaluate rules in shadow mode to observe simulated decisions against live traffic.",
+      "Require administrator unattended-write authorization before enabling verified recovery.",
     ],
   };
   const checks = productionChecks[slug] ?? [];

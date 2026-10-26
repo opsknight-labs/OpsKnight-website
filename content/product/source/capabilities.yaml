@@ -1,6 +1,18 @@
 catalog: current
 authority_order: [runtime, tests, source, historical_docs]
 capabilities:
+  runbooks:
+    title: Author and execute safe incident Runbooks
+    product_area: runbooks
+    status: documented
+    required: { concepts: true, guides: true, reference: true, tests: true, evidence: true }
+    concepts: [concepts/runbooks.md]
+    guides: [guides/runbooks/README.md, guides/runbooks/author.md, guides/runbooks/respond.md, guides/runbooks/agents-pools-secrets.md, operate/deploy/agent-operations.md, troubleshooting/runbooks/README.md]
+    reference: [reference/runbooks.md]
+    tests: [tests/e2e/runbooks-ui.spec.ts, tests/integration/runbook-execution-safety.test.ts, tests/lib/runbooks/documentation-examples.test.ts]
+    sources: [src/lib/runbooks, src/app/(app)/runbooks, agent/]
+    evidence: [tests/e2e/runbooks-ui.spec.ts, tests/integration/runbook-execution-safety.test.ts]
+    roles: [responder, administrator, operator]
   incident_lifecycle:
     title: Manage the incident lifecycle
     product_area: incidents

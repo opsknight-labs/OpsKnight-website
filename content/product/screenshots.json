@@ -68,6 +68,20 @@
       "route": "/status/northstar-systems",
       "authenticated": false,
       "publicProof": "https://status.opsknight.com"
+    },
+    "runbooks": {
+      "width": 1280,
+      "height": 811,
+      "sha256": "04b47f8758429a0d86547fe417aea122afdb7bf2bc09fdd3e3c02729b00065c7",
+      "fixture": "Production Certification",
+      "route": "/runbooks"
+    },
+    "service-automation": {
+      "width": 1440,
+      "height": 911,
+      "sha256": "7c5625b4b23b270fed477b8e27b8c9e338700bf7ddfc3f2d113142ee86fdf241",
+      "fixture": "Production Certification",
+      "route": "/services/[id]"
     }
   },
   "capturePipeline": "OpsKnight v2.0.0 docs evidence journey",

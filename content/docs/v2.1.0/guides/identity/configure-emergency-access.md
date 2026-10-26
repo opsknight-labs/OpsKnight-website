@@ -23,7 +23,7 @@ Use the canonical public HTTPS origin. Hold two separately controlled identities
 
 For hardware identities, the server stores public keys only. For password identities, it stores only a salted scrypt hash; the generated 256-bit password is returned once to the freshly authenticated custodian. With privacy-preserving attestation, it cannot cryptographically prove that two registrations represent different physical keys or different custodians. The custody confirmation is an operator obligation: use distinct independently held hardware, and test each in a separate browser session. Changing the public RP hostname requires deliberate re-enrollment; existing credentials are bound to that RP.
 
-![Emergency identity and hardware-key enrollment](../../assets/enterprise-emergency-access.png)
+![Emergency identity and hardware-key enrollment](/docs/v2.1.0/assets/enterprise-emergency-access.png)
 
 ## Enroll and drill
 

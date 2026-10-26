@@ -102,7 +102,7 @@ export default function DeployPage() {
             on infrastructure you operate.
           </h1>
           <p className="site-description">
-            OpsKnight v2.0.0 is the official self-hosted production release under {PRODUCT.release.license}.
+            OpsKnight v{PRODUCT.release.version} is the official self-hosted production release under {PRODUCT.release.license}.
             Start with the maintained Compose quickstart, then scale to Split Runtime,
             Docker Swarm, Helm, or Kustomize when workload isolation, platform standards, or connection pressure require it.
           </p>
@@ -159,7 +159,7 @@ export default function DeployPage() {
 cd opsknight && cp env.example .env
 
 # Configure environment variables in .env:
-OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:2.0.0
+OPSKNIGHT_IMAGE=ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}
 POSTGRES_PASSWORD=<unique-password>
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -268,7 +268,7 @@ docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
             eyebrow="SUPPORTED TOPOLOGIES"
             title="Pick the operating model that matches your platform."
           >
-            The v2.0.0 deployment guide does not publish a certified
+            The v{PRODUCT.release.version} deployment guide does not publish a certified
             requests-per-second threshold for choosing between these paths.
           </SectionIntro>
 
@@ -335,10 +335,10 @@ docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
                 <code> docker stack deploy</code> bypasses those gates.
               </p>
               <pre tabIndex={0}><code>{`# Split mode (default; requires explicit release image)
-export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.0.0"
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.1.0"
 ./deploy/swarm/scripts/deploy.sh
 
-# Integrated mode (defaults to 2.0.0 image)
+# Integrated mode (defaults to 2.1.0 image)
 SWARM_RUNTIME_MODE=integrated ./deploy/swarm/scripts/deploy.sh`}</code></pre>
               <TextLink href={productDocs("operate/deploy/swarm/install")}>
                 Swarm installation guide
@@ -467,9 +467,9 @@ helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
                 {
                   step: "01",
                   title: "Bootstrap & Health Probe",
-                  objective: "Verify API gateway readiness, database pool connectivity, and v2.0.0 runtime health.",
+                  objective: "Verify API gateway readiness, database pool connectivity, and v2.1.0 runtime health.",
                   command: "curl -fsSL 'http://localhost:3000/api/health?mode=readiness' | jq .",
-                  expected: 'HTTP 200 · {"status":"healthy","database":"connected","version":"2.0.0"}',
+                  expected: 'HTTP 200 · {"status":"healthy","database":"connected","version":"2.1.0"}',
                 },
                 {
                   step: "02",

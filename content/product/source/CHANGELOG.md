@@ -7,7 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-No changes yet.
+## [2.1.0] - 2026-10-26
+
+OpsKnight 2.1 is an enterprise release introducing Service Automation with Runbook integration, unattended-write authorization, verified automatic recovery resolution, PostgreSQL 16 disaster recovery tooling, and enterprise SSO and SCIM 2.0 lifecycle management.
+
+### Added
+
+- **Service Automation ↔ Runbook integration:** LIVE automation decisions capture an immutable, checksum-verified response context of declared fields only. Runbook triggers accept `automation.<key>` conditions, bindings can map context fields to inputs and choose targets through an administrator-approved value → Agent/pool table, and alert-created incidents only reach bindings that opt in with **Run on monitoring incidents**. Unavailable context fails closed with a `RUNBOOK_SKIPPED` timeline event.
+- **Unattended-write authorization:** AUTOMATIC write steps run without approval only after an administrator authorizes the exact pinned version and every write action has verification. `NON_IDEMPOTENT` steps always require approval. Changing the pinned version, strategy or mode revokes the authorization.
+- **Verified recovery resolution:** Optional per-binding resolution when every write action of a successful run is verified, applied through the incident lifecycle (`AUTO_RESOLVED`, resolution kind `AUTOMATION`) with escalation cancelled. Outcomes are recorded as `NOT_REQUESTED`, `PENDING`, `RESOLVED`, `NOT_VERIFIED`, `ALREADY_CLOSED` or `BLOCKED`.
+- **Unified response timeline:** Incident detail → Response activity shows routing, paging, remediation, verification and recovery in order, plus an Incident context card, with existing auditor and sensitive-source redaction. See `docs/automation/runbook-integration.md`.
+
+### Changed
+
+- Existing AUTOMATIC runbook bindings are not backfilled with unattended-write authorization: their write steps wait for responder approval until an administrator authorizes the pinned version. Agent selectors can no longer reference automation context; use the approved target table. Paging remains independent of remediation.
+
+### Runbook engine remediation
+
+- Restricted service Runbook data to authorized Runbooks views, replaced the full catalog payload with metadata and authorized selected-version fetches, and made deep readiness checks explicit.
+- Automatic rules now save paused and activate separately with fresh policy evidence and explicit match-all trigger confirmation. Agent partitions fail readiness while preserving liveness; secret-dependent preflight checks report uncertainty. Watchdog reconciliation reuses the lock connection for minimum-pool deployments.
+
+- Fixed pinned-version/input drift during rule creation, bounded service rule readiness with cursor pagination, and coordinated watchdog recovery with idempotent jobs.
+- Historical version comparison supports older versions; invalid selectors return inline errors and disable saving. Worker health now discloses expected redundancy, and rule cards group secondary controls under Manage rule.
+
+- Independent service automation rules with a guided paused-first setup, typed selectors, explicit automatic version pins, configuration validation, signed Agent policy checks, and single-use execution previews.
+- Rule history and origin links, credential-masked version comparison, truthful configured/historical counts, and scoped inventory failure handling.
+- Separate Agent startup/liveness/readiness probes, bounded reconnect, single-flight heartbeats, durable identity handling and node-affine Swarm state.
+- Shared durable worker health and a scheduler reconciliation watchdog, with Prometheus worker/queue/uncertain-outcome/spool alerts.
+- Verified release manifests and immutable image selection; setup no longer advertises missing artifacts or puts enrollment tokens in copied commands.
+- Additive heartbeat/policy-check migrations and a rule-model migration preserving historical IDs. Independent duplicate rules prevent blindly recreating the old uniqueness constraint during rollback.
+- Updated 2.1 operator guides and opt-in real HTTPS Compose/Kind deployment tests. Local candidate evidence is separate from published release, native-host and production capacity certification.
 
 ## [2.0.0] - 2026-10-02
 

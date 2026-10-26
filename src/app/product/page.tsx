@@ -19,12 +19,14 @@ import {
   Smartphone,
   ShieldCheck,
   Cpu,
+  Terminal,
+  Zap,
 } from "lucide-react";
 
 export const metadata = siteMetadata({
   title: "Product Overview — OpsKnight",
   description:
-    "Explore the complete OpsKnight platform: incident command, on-call schedules, multi-channel paging, ChatOps, status pages, postmortems, and self-hosted operations.",
+    "Explore the complete OpsKnight platform: incident command, on-call schedules, multi-channel paging, ChatOps, status pages, postmortems, Runbooks, Service Automation, and self-hosted operations.",
   alternates: { canonical: "/product/" },
   openGraph: { url: "/product/" },
 });
@@ -40,6 +42,8 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   mobile: Smartphone,
   security: ShieldCheck,
   operations: Cpu,
+  runbooks: Terminal,
+  "service-automation": Zap,
 };
 
 export default function ProductOverviewPage() {
@@ -59,7 +63,7 @@ export default function ProductOverviewPage() {
           </p>
           <h1>The incident operations platform you control.</h1>
           <p className="site-description">
-            From the first alert to continuous learning. Ten core capabilities
+            From the first alert to continuous learning. Twelve core capabilities
             engineered to run securely on infrastructure you own and govern.
           </p>
           <div className="site-actions">
@@ -75,7 +79,7 @@ export default function ProductOverviewPage() {
         <div className="site-container">
           <SectionIntro
             eyebrow="CAPABILITIES"
-            title="Ten components, one integrated engine."
+            title="Core components, one integrated engine."
           >
             Deploy everything in an integrated container or scale independent
             worker roles for high-throughput operational demands.
