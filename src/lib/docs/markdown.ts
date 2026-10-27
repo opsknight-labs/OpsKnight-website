@@ -6,6 +6,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeStringify from "rehype-stringify";
+import GithubSlugger from "github-slugger";
 import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 
@@ -302,22 +303,31 @@ export async function renderMarkdown(markdown: string, options: RenderOptions = 
   return String(file);
 }
 
+function mdastNodeText(node: Node | undefined): string {
+  if (!node) return "";
+  const n = node as { type?: string; value?: string; children?: Node[] };
+  if (n.type === "text" || n.type === "inlineCode") {
+    return String(n.value ?? "");
+  }
+  if (Array.isArray(n.children)) {
+    return n.children.map(mdastNodeText).join("");
+  }
+  return "";
+}
+
 export function extractHeadings(markdown: string) {
-  const lines = markdown.split("\n");
+  const tree = unified().use(remarkParse).parse(markdown);
+  const slugger = new GithubSlugger();
   const headings: { depth: number; text: string; id: string }[] = [];
 
-  for (const line of lines) {
-    const match = /^(#{2,3})\s+(.*)/.exec(line.trim());
-    if (!match) continue;
-    const depth = match[1].length;
-    const text = match[2].trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-");
-    headings.push({ depth, text, id });
-  }
+  visit(tree, "heading", (node: Node) => {
+    const headingNode = node as unknown as { depth: number };
+    const text = mdastNodeText(node);
+    const id = slugger.slug(text);
+    if (headingNode.depth === 2 || headingNode.depth === 3) {
+      headings.push({ depth: headingNode.depth, text, id });
+    }
+  });
 
   return headings;
 }
