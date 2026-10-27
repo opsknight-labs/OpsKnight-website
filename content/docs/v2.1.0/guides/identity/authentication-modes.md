@@ -21,9 +21,7 @@ For administrators and deployment operators. Personal password, linked identity 
 
 Apply migrations, keep all replicas on the same PostgreSQL database and preserve the encryption key. Set a canonical public HTTPS origin. Register both production `/api/auth/callback/oidc` and staged `/api/auth/oidc/test/callback` redirect URIs at the IdP. Read [Configure OIDC](configure-oidc/) for provider-specific boundaries.
 
-![Authentication console on desktop](/docs/v2.1.0/assets/enterprise-authentication-desktop.png)
-
-![Authentication console on a mobile viewport](/docs/v2.1.0/assets/enterprise-authentication-mobile.png)
+![Authentication console on a mobile viewport](../../assets/enterprise-authentication-mobile.png)
 
 ## Select the policy
 
