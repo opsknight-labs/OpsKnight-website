@@ -113,3 +113,12 @@ test("headings inside code blocks are ignored and do not affect slug counts", as
   assert.equal(headings[0].id, "real-heading");
   assert.ok(html.includes(`id="real-heading"`));
 });
+
+test("nested relative image paths resolve to base assets path", async () => {
+  const markdown = "![Screenshot](../../assets/authentication-provider-workspace-desktop.png)";
+  const html = await renderMarkdown(markdown, { imageBasePath: "/docs/v2.1.0" });
+  assert.ok(
+    html.includes('src="/docs/v2.1.0/assets/authentication-provider-workspace-desktop.png"'),
+    `Expected html to rewrite ../../assets to /docs/v2.1.0/assets, got: ${html}`,
+  );
+});

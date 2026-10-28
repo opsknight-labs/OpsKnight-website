@@ -74,9 +74,11 @@ function rehypeDocImagePaths(options: RenderOptions) {
       if (node.tagName !== "img") return;
       const src = node.properties?.src;
       if (typeof src !== "string") return;
-      if (!src.startsWith("./assets/") && !src.startsWith("../assets/")) return;
-      const normalized = src.replace(/^\.{1,2}\//, "");
-      node.properties = { ...node.properties, src: `${basePath}/${normalized}` };
+      if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) return;
+      if (src.includes("assets/")) {
+        const imgBase = path.basename(src);
+        node.properties = { ...node.properties, src: `${basePath}/assets/${imgBase}` };
+      }
     });
   };
 }
