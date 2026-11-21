@@ -28,6 +28,7 @@ const productSeoTitles: Record<string, string> = {
   analytics: "Incident Analytics & MTTA/MTTR Reliability Metrics",
   postmortems: "Blameless Postmortems & 5-Whys Incident Reviews",
   mobile: "Mobile Incident Response & PWA Alert Acknowledgement",
+  mcp: "MCP Server for Incident Management: Claude, ChatGPT & Cursor",
   security: "Security, OIDC Identity & Audit Architecture",
   operations: "Runtime Operations, Worker Topology & Health",
   runbooks: "Self-Hosted Runbook Automation & Sandboxed Agent Remediation",
@@ -77,10 +78,13 @@ export default async function ProductPage({
       "Mobile is an installable progressive web app (PWA). Device and browser notification behavior is documented in the mobile guides.";
   if (slug === "runbooks")
     boundary =
-      "Runbooks is Beta in OpsKnight v2.1.0. Qualify agent pools, parameter validation, and worker qualification before enabling automatic writes.";
+      "Runbooks is Beta. Qualify agent pools, parameter validation, and worker qualification before enabling automatic writes.";
+  if (slug === "mcp")
+    boundary =
+      "MCP access is off until an administrator turns it on, and changes stay off until they are allowed. Each client's tested status and limits are listed in its setup guide.";
   if (slug === "service-automation")
     boundary =
-      "Service Automation is Beta in OpsKnight v2.1.0. Automatic rules save paused by default; test first-match rules and shadow simulation before enabling automated resolution.";
+      "Automatic rules save paused by default; test first-match rules and shadow simulation before enabling automated resolution.";
 
   const productionChecks: Record<string, string[]> = {
     incidents: [
@@ -137,6 +141,11 @@ export default async function ProductPage({
       "Author and publish immutable workflow versions with parameter validation.",
       "Qualify private agent pools and verify mutual-TLS worker communication.",
       "Exercise interactive previews, confirmation gates, and audit trails before enabling writes.",
+    ],
+    mcp: [
+      "Turn on AI assistant access with read-only defaults and connect one assistant from a test account.",
+      "Confirm a Responder's assistant cannot read or do more than that Responder can.",
+      "Allow reviewed changes, then prepare and approve one configuration change and check the audit entry.",
     ],
     "service-automation": [
       "Test first-match rules against payload mappings and verify context capture.",
@@ -318,7 +327,7 @@ export default async function ProductPage({
             <h2>Validate the boundary, not just the happy path.</h2>
             <p className="site-description">
               Use a test service and representative provider configuration before
-              treating {p.label.toLowerCase()} as production incident infrastructure.
+              treating {slug === "mcp" ? p.label : p.label.toLowerCase()} as production incident infrastructure.
             </p>
             {boundary && <p className="site-boundary">{boundary}</p>}
           </div>
@@ -351,7 +360,7 @@ export default async function ProductPage({
             <strong>Setup, authorization, limits, and troubleshooting.</strong>
           </div>
           <TextLink href={productDocs(p.docs)}>
-            Explore {p.label.toLowerCase()} documentation
+            Explore {slug === "mcp" ? p.label : p.label.toLowerCase()} documentation
           </TextLink>
         </div>
       </section>

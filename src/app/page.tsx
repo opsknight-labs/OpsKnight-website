@@ -11,6 +11,7 @@ import { HomeArchitecture } from "@/components/site/HomeArchitecture";
 import { HomeHero } from "@/components/site/HomeHero";
 import { HomeInstall } from "@/components/site/HomeInstall";
 import { HomeFinalCta } from "@/components/site/HomeFinalCta";
+import { HomeMcp } from "@/components/site/HomeMcp";
 import {
   SectionIntro,
   TextLink,
@@ -52,6 +53,7 @@ docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
 const HOME_CHAPTERS = [
   { id: "signal", label: "Signal" },
   { id: "incident-loop", label: "Response" },
+  { id: "mcp", label: "AI assistants" },
   { id: "product-proof", label: "Product" },
   { id: "capabilities", label: "Capabilities" },
   { id: "architecture", label: "Architecture" },
@@ -100,6 +102,10 @@ const FAQ = [
     `${PRODUCT.inboundIntegrationCount} release-tested inbound alert sources, plus Slack, Microsoft Teams and Jira. A generic webhook covers internal systems without a dedicated adapter.`,
   ],
   [
+    "Can AI assistants use OpsKnight?",
+    "Yes. OpsKnight is an MCP server. Each person connects their own assistant and signs in with their OpsKnight account; changes stay off until an administrator allows them, and configuration changes and runbook runs wait for human review.",
+  ],
+  [
     "Where is my incident data stored?",
     "In your own PostgreSQL database. Integration secrets and notification credentials are envelope-encrypted with AES-256-GCM at rest.",
   ],
@@ -136,6 +142,9 @@ export default function Home() {
           <IncidentLoop />
         </div>
       </section>
+
+      {/* 3b. New in 2.2: AI assistants over MCP */}
+      <HomeMcp />
 
       {/* 4. Real Product Proof — Screenshots lead the product evidence */}
       <section id="product-proof" className="site-section site-dark product-proof-section home-chapter">

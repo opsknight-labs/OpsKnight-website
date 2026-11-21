@@ -1,31 +1,71 @@
 {
   "release": {
-    "version": "2.1.0",
+    "version": "2.2.0",
     "license": "AGPL-3.0-only",
     "hostedSaaS": false,
-    "publishedAt": "2026-10-26T18:00:00Z",
-    "releaseCreatedAt": "2026-10-26T18:00:00Z",
-    "date": "2026-10-26",
-    "tagCreatedAt": "2026-10-26T18:00:00Z",
-    "changelogDate": "2026-10-26",
-    "tag": "v2.1.0",
-    "sourceCommit": "f9f772a1fb43798bf45400c8e2ec7a0a823fa43f",
+    "publishedAt": "2026-11-21T18:00:00Z",
+    "releaseCreatedAt": "2026-11-21T18:00:00Z",
+    "date": "2026-11-21",
+    "tagCreatedAt": "2026-11-21T18:00:00Z",
+    "changelogDate": "2026-11-20",
+    "tag": "v2.2.0",
+    "sourceCommit": "1ad968970e2454e02a296d05ac057edf16ca5ae2",
     "highlights": [
       {
-        "title": "Service Automation ↔ Runbook integration",
-        "description": "LIVE automation decisions capture an immutable, checksum-verified response context of declared fields only. Runbook triggers accept `automation.<key>` conditions, bindings can map context fields to inputs and choose targets through an administrator-approved value → Agent/pool table, and alert-created incidents only reach bindings that opt in with **Run on monitoring incidents**. Unavailable context fails closed with a `RUNBOOK_SKIPPED` timeline event."
+        "title": "SCIM group roles",
+        "description": "administrators map a provisioned group to Admin, Responder, Auditor or User through a preview-and-apply workflow. Mappings survive group renames, overlapping grants follow the established role precedence, and role changes, session/MCP revocation and audit events commit atomically. Existing SCIM accounts keep their roles until a mapping adopts them, and the last active administrator is never removed."
       },
       {
-        "title": "Unattended-write authorization",
-        "description": "AUTOMATIC write steps run without approval only after an administrator authorizes the exact pinned version and every write action has verification. `NON_IDEMPOTENT` steps always require approval. Changing the pinned version, strategy or mode revokes the authorization."
+        "title": "Analytics rebuilt on one exact metrics module",
+        "description": "every Analytics figure comes from one central, streaming module instead of a 100-row sample for tenants with more than 500 incidents, and after-hours figures respect the business time zone."
       },
       {
-        "title": "Verified recovery resolution",
-        "description": "Optional per-binding resolution when every write action of a successful run is verified, applied through the incident lifecycle (`AUTO_RESOLVED`, resolution kind `AUTOMATION`) with escalation cancelled. Outcomes are recorded as `NOT_REQUESTED`, `PENDING`, `RESOLVED`, `NOT_VERIFIED`, `ALREADY_CLOSED` or `BLOCKED`."
+        "title": "AI assistants (MCP)",
+        "description": "a native MCP server at `<App URL>/mcp` with per-person OAuth sign-in (PKCE, automatic registration or client metadata documents), serving revision 2026-07-28 and 2025-06-18 / 2025-11-25 clients statelessly. Includes `whoami`, `read_operation`, `execute_plan`, curated incident, on-call, service, automation, runbook, report and status-page tools, six prompts, structured tool errors with `requestId`, human-approved configuration changes (`operation_prepare`, `operation_get_approval`, `operation_commit_approved`) and runbook runs (`runbook_prepare_execution`, `runbook_get_approval`, `runbook_execute_approved`). The server reports the running release as its version. See `docs/v2.2.0/guides/mcp/`."
       },
       {
-        "title": "Unified response timeline",
-        "description": "Incident detail → Response activity shows routing, paging, remediation, verification and recovery in order, plus an Incident context card, with existing auditor and sensitive-source redaction. See `docs/automation/runbook-integration.md`."
+        "title": "MCP device sign-in",
+        "description": "(OAuth 2.0 device authorization grant, RFC 8628) for CLIs, SSH sessions and headless servers: `POST /oauth/mcp/device_authorization`, the `/oauth/mcp/device` verification page (explicit code confirmation, the same consent with a \"started this sign-in yourself\" warning, lockout after five wrong codes) and the `urn:ietf:params:oauth:grant-type:device_code` token grant with `slow_down` pacing and single-use issuance. Off by default (**Device sign-in** in the access policy; turning it on needs a recent sign-in) and limited to clients registered for the grant. Adds the `mcp.device.*` audit events and the `pending`, `denied` and `expired` OAuth metric outcomes."
+      },
+      {
+        "title": "Single sign-on setup in four guided steps",
+        "description": "(Connect provider, Who can sign in, Roles & teams, Test & activate) with per-provider checklists, plain-language help, one-click \"save and test\", draft recovery after a reload, and a warning before the two-hour fresh sign-in window closes. Emergency recovery is required only for SSO Required."
+      },
+      {
+        "title": "Specific sign-in messages",
+        "description": "instead of \"Access denied\", each with a reference ID tied to the server log and login audit; people are told why a session ended."
+      },
+      {
+        "title": "Administrator test diagnostics",
+        "description": "a failed test names the cause, shows the claims received (never tokens) and links to the fix; provider errors such as `access_denied` are explained."
+      },
+      {
+        "title": "Role rules v2",
+        "description": "case-insensitive values, nested and namespaced claim paths, highest-role or first-match precedence, a default role, and an option to refuse people no rule matches. Rule values are suggested from real sign-ins and a sandbox checks unsaved rules."
+      },
+      {
+        "title": "Group-to-team rules",
+        "description": "for single sign-on, which only ever remove memberships they created."
+      },
+      {
+        "title": "Linking at scale",
+        "description": "bulk approval (before or after turning SSO on), automatic connection for verified company emails (Entra needs `xms_edov`; never for administrators), and access requests that notify administrators."
+      },
+      {
+        "title": "Interface",
+        "description": "dark mode works in every browser (readable error text, light status pages on custom domains, print stylesheet, native date fields), layouts fit laptop screens, the settings pages are redesigned, Grafana alerts from ClickHouse datasources are readable, list pages (Incidents, Services, Users) use compact filter cards with search applied 300 ms after typing stops, and real avatars appear wherever a user is named."
+      },
+      {
+        "title": "Service automation",
+        "description": "the automation settings again offer the diagnostic field-value preview opt-in, the diagnostic cleanup status with retry, and the readiness policy, which the unified automation UI had dropped; the activation review now applies the configured readiness policy."
+      },
+      {
+        "title": "Analytics numbers change on purpose",
+        "description": "large installations see exact per-service, SLA, on-call and MTBF figures instead of sampled ones, and after-hours figures change for non-UTC business time zones. Ranges longer than your retention are clipped with a notice (for example \"3 years\" shows 2 years on default retention)."
+      },
+      {
+        "title": "SCIM role mapping is opt-in",
+        "description": "a new `scimRoleMappingAdopted` marker defaults to false, so no SCIM account changes role until an administrator applies a group mapping."
       }
     ]
   },
@@ -518,6 +558,52 @@
             "docs": "concepts/runbooks"
           }
         ]
+      },
+      {
+        "slug": "mcp",
+        "label": "AI assistants (MCP)",
+        "headline": "Your incident platform, inside the assistant you already use.",
+        "description": "OpsKnight is a Model Context Protocol server. Connect Claude, ChatGPT, Cursor, VS Code or any MCP client with per-person sign-in, scoped permissions and human-reviewed changes.",
+        "capability": "mcp_assistants",
+        "docs": "guides/mcp/README",
+        "screenshot": null,
+        "features": [
+          "Per-person OAuth sign-in",
+          "Read incidents, on-call and services",
+          "Reviewed, audited changes"
+        ],
+        "story": [
+          {
+            "title": "Each person connects their own assistant.",
+            "body": "People sign in with their OpsKnight account, including single sign-on, and approve what the assistant may do. Assistants act with that person's current permissions, never more, and role or team changes apply on the next request.",
+            "docs": "guides/mcp/self-hosted-setup"
+          },
+          {
+            "title": "Ask about incidents, on-call and services.",
+            "body": "Catch up on what paged you, investigate an incident with its context and similar past incidents, find who is on call and who is next, check a service's health and recent changes, or draft a postmortem from the timeline.",
+            "docs": "guides/mcp/what-to-ask"
+          },
+          {
+            "title": "Changes are off until an administrator allows them.",
+            "body": "Routine incident changes such as acknowledge, assign, note and resolve then run within the person's own permissions. Configuration changes and runbook runs are prepared, frozen and wait for a human reviewer before they apply.",
+            "docs": "guides/mcp/self-hosted-setup"
+          },
+          {
+            "title": "Know what reaches the AI vendor.",
+            "body": "Reviewed fields only, secrets always removed, and a request log that never stores arguments or results. Consent, revocations, approvals, committed changes and sensitive reads land in the audit log.",
+            "docs": "guides/mcp/security-and-data"
+          },
+          {
+            "title": "Works with remote and local clients.",
+            "body": "Remote clients connect over OAuth with automatic registration. CLIs and headless servers can use device sign-in, and clients that cannot reach a remote server use the opsknight-mcp stdio bridge.",
+            "docs": "guides/mcp/stdio-bridge"
+          },
+          {
+            "title": "Build your own agent.",
+            "body": "Connect your own code with the MCP SDK: page through results, retry safely with idempotency keys and drive the approval loop.",
+            "docs": "guides/mcp/build-an-agent"
+          }
+        ]
       }
     ],
     "lifecycle": [
@@ -880,6 +966,7 @@
       "method": "POST",
       "actions": [
         "trigger",
+        "acknowledge",
         "resolve"
       ],
       "authentication": [
@@ -1411,6 +1498,7 @@
       "signature": "conditional-when-secret-configured",
       "signatureProvider": "grafana",
       "signatureHeaders": [
+        "x-grafana-alerting-signature",
         "x-grafana-signature"
       ],
       "correlation": "adapter EventPayload.dedup_key",

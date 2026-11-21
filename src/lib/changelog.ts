@@ -45,9 +45,66 @@ export const releases: ReleaseItem[] = [
       timeZone: "UTC",
     }).format(new Date(PRODUCT.release.date + "T00:00:00Z")),
     summary:
-      "OpsKnight 2.1.0 introduces automated runbook execution (Beta) with sandboxed agent pools, Service Automation (Beta), REST API v2, enterprise OIDC single sign-on (compatible with Microsoft Entra ID, Okta, Google Workspace, and Keycloak), SCIM 2.0 directory sync, and verified PostgreSQL 16 disaster recovery.",
+      "OpsKnight 2.2.0 makes your incident platform an MCP server: connect Claude, ChatGPT, Cursor, VS Code or any MCP assistant with per-person OAuth sign-in, scoped permissions and human-reviewed changes. It also ships SCIM group roles, guided single sign-on setup, exact Analytics, durable event ingestion and a deep-audit sweep of 194 user-impacting fixes.",
     dockerTag: `ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}`,
     githubReleaseUrl: `${BRAND.links.releases}/tag/${PRODUCT.release.tag}`,
+    categories: [
+      {
+        type: "added",
+        title: "AI assistants (MCP)",
+        items: [
+          "Native MCP server at <App URL>/mcp with per-person OAuth sign-in (PKCE, automatic client registration or client metadata documents). Assistants act with the signed-in person's current permissions, never more.",
+          "Reviewed changes: changes are off until an administrator allows them. Routine incident changes run within the person's own permissions; configuration changes and runbook runs wait for a human reviewer, and every decision is audited.",
+          "Read tools and guided prompts for incidents, services, on-call (oncall_my_shifts, oncall_catch_up), postmortems and service changes.",
+          "Device sign-in (RFC 8628) for CLIs, SSH sessions and headless servers, plus the opsknight-mcp stdio bridge and optional personal access tokens.",
+          "Tested setup guides for Claude, Claude Code, ChatGPT, Cursor, VS Code, Codex CLI, Gemini CLI and Windsurf; connection, assistant and usage pages for administrators; MCP_FORCE_DISABLED emergency stop.",
+        ],
+      },
+      {
+        type: "added",
+        title: "Identity & access",
+        items: [
+          "SCIM group roles: map a provisioned group to Admin, Responder, Auditor or User through a preview-and-apply workflow (opt-in).",
+          "Single sign-on setup in four guided steps with per-provider checklists, administrator test diagnostics and specific sign-in messages with reference IDs.",
+          "Role rules v2, group-to-team rules, bulk account linking and an activation preview of whose role and teams change.",
+        ],
+      },
+      {
+        type: "changed",
+        title: "Platform",
+        items: [
+          "Analytics rebuilt on one exact metrics module: no more sampling on large tenants, and after-hours figures respect the business time zone.",
+          "Durable event ingestion: POST /api/events returns HTTP 202 with a receiptId once the event is durably accepted, inspectable at /api/events/receipts/{receiptId}.",
+          "Per-service automation rules (Services → Automations). An organisation-wide workflow builder is planned for the next release.",
+          "Interface pass: dark mode in every browser, layouts that fit laptop screens, redesigned settings pages and accessibility fixes.",
+          "Outgoing service webhooks require HTTPS by default. Upgrading from 2.1.2 applies 68 database migrations; allow a maintenance window.",
+        ],
+      },
+      {
+        type: "fixed",
+        title: "Fixes",
+        items: [
+          "Deep-audit bug sweep: 194 user-impacting fixes, including all 13 critical findings.",
+          "Account-wide failed sign-in limit is enforced atomically across replicas.",
+        ],
+      },
+      {
+        type: "security",
+        title: "Security",
+        items: [
+          "Next.js upgraded to 16.4.6 for seven published advisories (GHSA-mfr8-8qww-v76h and others).",
+        ],
+      },
+    ],
+  },
+  {
+    version: "v2.1.0",
+    slug: "v2.1.0",
+    date: "October 26, 2026",
+    summary:
+      "OpsKnight 2.1.0 introduces automated runbook execution (Beta) with sandboxed agent pools, Service Automation (Beta), REST API v2, enterprise OIDC single sign-on (compatible with Microsoft Entra ID, Okta, Google Workspace, and Keycloak), SCIM 2.0 directory sync, and verified PostgreSQL 16 disaster recovery.",
+    dockerTag: "ghcr.io/opsknight-labs/opsknight:2.1.0",
+    githubReleaseUrl: `${BRAND.links.releases}/tag/v2.1.0`,
     categories: [
       {
         type: "added",
