@@ -93,7 +93,11 @@ const m = read("source/CHANGELOG.md").match(
 );
 assert(m, "Release date missing");
 const highlights = [...m[2].matchAll(/^- \*\*([^*]+)\*\*:? ([^\n]+)/gm)].map(
-  (x) => ({ title: x[1].replace(/:$/, ""), description: x[2] }),
+  (x) => ({
+    title: x[1].replace(/:$/, ""),
+    // Drop a leading PR reference such as "(#989): ".
+    description: x[2].replace(/^\(#[^)]*\):? */, ""),
+  }),
 );
 const files = [];
 function walk(d) {

@@ -335,10 +335,10 @@ docker compose -f deploy/compose/docker-compose.yml exec -T opsknight-app \\
                 <code> docker stack deploy</code> bypasses those gates.
               </p>
               <pre tabIndex={0}><code>{`# Split mode (default; requires explicit release image)
-export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:2.1.0"
+export OPSKNIGHT_IMAGE="ghcr.io/opsknight-labs/opsknight:${PRODUCT.release.version}"
 ./deploy/swarm/scripts/deploy.sh
 
-# Integrated mode (defaults to 2.1.0 image)
+# Integrated mode (defaults to ${PRODUCT.release.version} image)
 SWARM_RUNTIME_MODE=integrated ./deploy/swarm/scripts/deploy.sh`}</code></pre>
               <TextLink href={productDocs("operate/deploy/swarm/install")}>
                 Swarm installation guide
@@ -467,9 +467,9 @@ helm upgrade --install opsknight deploy/kubernetes/helm/opsknight \\
                 {
                   step: "01",
                   title: "Bootstrap & Health Probe",
-                  objective: "Verify API gateway readiness, database pool connectivity, and v2.1.0 runtime health.",
+                  objective: `Verify API gateway readiness, database pool connectivity, and v${PRODUCT.release.version} runtime health.`,
                   command: "curl -fsSL 'http://localhost:3000/api/health?mode=readiness' | jq .",
-                  expected: 'HTTP 200 · {"status":"healthy","database":"connected","version":"2.1.0"}',
+                  expected: `HTTP 200 · {"status":"healthy","database":"connected","version":"${PRODUCT.release.version}"}`,
                 },
                 {
                   step: "02",

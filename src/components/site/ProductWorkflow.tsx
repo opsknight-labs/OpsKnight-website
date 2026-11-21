@@ -229,6 +229,26 @@ const flows: Record<
       detail:
         "Unattended-write authorization and verified recovery resolution automatically resolve incidents when all steps succeed.",
     },
+  ],  // From docs/v2.2.0/guides/mcp/self-hosted-setup.md.
+  mcp: [
+    {
+      label: "Connect",
+      stages: ["Add server URL", "Sign in to OpsKnight", "Approve permissions", "Connected"],
+      detail:
+        "Each person adds the MCP server URL to their assistant, signs in with their own OpsKnight account and approves what the assistant may do.",
+    },
+    {
+      label: "Read",
+      stages: ["Ask a question", "Tool call", "Person's permissions", "Answer"],
+      detail:
+        "Reads run with the signed-in person's current permissions, so an assistant never sees more than that person can.",
+    },
+    {
+      label: "Reviewed change",
+      stages: ["Prepare request", "Frozen for review", "Human approves", "Commit and audit"],
+      detail:
+        "With changes allowed, configuration changes and runbook runs are prepared, wait for a reviewer, then apply within the commit window and are audited.",
+    },
   ],
 };
 type ProductConcept = {
@@ -304,6 +324,11 @@ const concepts: Record<string, ProductConcept> = {
     headline: "First-match rule evaluation, payload mapping, and verified auto-recovery.",
     nodes: ["Payload context", "Rule evaluation", "Shadow simulation", "Action dispatch", "Verified resolution"],
     detail: ["First-match rules", "Unattended authorization", "Audit trail"],
+  },  mcp: {
+    eyebrow: "MCP SERVER",
+    headline: "Assistants act as the person who connected them, and changes wait for review.",
+    nodes: ["Assistant", "OAuth sign-in", "Person's permissions", "Review", "Audit log"],
+    detail: ["Per-person sign-in", "Changes off by default", "Audited"],
   },
 };
 

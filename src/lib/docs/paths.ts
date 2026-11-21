@@ -8,7 +8,8 @@ export function withTrailingSlash(path: string) {
   if (!path || path.startsWith("#") || /^[a-z]+:/i.test(path)) return path;
   const [withoutHash, hash] = path.split("#");
   const [pathname, search] = withoutHash.split("?");
-  if (/\.[a-z0-9]+$/i.test(pathname)) return path;
+  // Extensions start with a letter, so version slugs like "upgrade-to-2.2.0" still get a slash.
+  if (/\.[a-z][a-z0-9]*$/i.test(pathname)) return path;
   const slashed = pathname.endsWith("/") ? pathname : `${pathname}/`;
   return `${slashed}${search ? `?${search}` : ""}${hash ? `#${hash}` : ""}`;
 }
