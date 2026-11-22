@@ -38,7 +38,7 @@ const mobileResources = [
 const productGroups = [
   {
     label: "RESPOND",
-    slugs: ["incidents", "on-call", "paging", "runbooks"],
+    slugs: ["incidents", "on-call", "paging", "runbooks", "mcp"],
   },
   {
     label: "COORDINATE",

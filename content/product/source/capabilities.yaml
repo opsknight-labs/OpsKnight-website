@@ -31,7 +31,7 @@ capabilities:
     status: documented
     required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
     concepts: [concepts/services.md, concepts/teams.md]
-    guides: [guides/services/README.md, guides/services/manage-service.md, guides/teams/README.md, guides/teams/manage-team.md]
+    guides: [guides/services/README.md, guides/services/manage-service.md, guides/services/maintenance-windows.md, guides/teams/README.md, guides/teams/manage-team.md]
     reference: [reference/api/README.md]
     tests: [tests/lib/authorization-filters.test.ts]
     sources: [src/app/(app)/services, src/app/(app)/teams]
@@ -127,7 +127,7 @@ capabilities:
     status: documented
     required: { concepts: true, guides: true, reference: true, tests: true, evidence: false }
     concepts: [concepts/authentication.md]
-    guides: [guides/identity/configure-oidc.md]
+    guides: [guides/identity/configure-oidc.md, guides/identity/map-roles-and-teams.md, guides/identity/link-existing-accounts.md, guides/identity/test-and-enforce-sso.md, troubleshooting/login/oidc-access.md]
     reference: [reference/configuration/README.md]
     tests: [tests/lib/oidc-provider.test.ts, tests/lib/oidc-validation-provider-matrix.test.ts]
     sources: [src/lib/oidc.ts, src/app/api/auth/oidc]
@@ -177,8 +177,8 @@ capabilities:
     concepts: [concepts/analytics.md]
     guides: [guides/analytics/README.md, guides/analytics/use-analytics.md, guides/reports/README.md, guides/reports/create-dashboard.md, guides/reports/read-dashboard.md, guides/reports/manage-dashboard.md, guides/reports/troubleshooting.md]
     reference: [reference/api/README.md, reference/metrics.md]
-    tests: [tests/unit/analytics-panels.test.ts, tests/api/reports-metrics-response.test.ts]
-    sources: [src/app/(app)/analytics, src/app/(app)/reports, src/app/api/dashboards, src/components/reports, src/lib/reports]
+    tests: [tests/lib/analytics-metrics.test.ts, tests/integration/analytics-queries.test.ts, tests/api/reports-metrics-response.test.ts]
+    sources: [src/app/(app)/insights, src/app/(app)/reports, src/app/api/dashboards, src/components/reports, src/lib/reports]
     evidence: [generated/docs-evidence/current/analytics/reports.png, generated/docs-evidence/current/analytics/dashboard-template.png, generated/docs-evidence/current/analytics/dashboard-saved.png]
     roles: [responder, administrator]
   postmortems:
@@ -271,9 +271,51 @@ capabilities:
     status: documented
     required: { concepts: false, guides: true, reference: true, tests: true, evidence: false }
     concepts: []
-    guides: [start/migrate-from-v1.md, operate/upgrades/upgrade.md, operate/upgrades/rollback.md]
+    guides: [start/migrate-from-v1.md, operate/upgrades/upgrade.md, operate/upgrades/upgrade-to-2.2.0.md, operate/upgrades/rollback.md]
     reference: [reference/configuration/README.md]
     tests: [tests/unit/migration-recovery.test.ts]
     sources: [prisma/migrations, scripts/validate-migrations.cjs]
     evidence: []
     roles: [operator, administrator]
+  mcp_assistants:
+    title: Connect AI assistants over MCP with per-person sign-in and reviewed changes
+    product_area: mcp
+    status: documented
+    required: { concepts: true, guides: true, reference: true, tests: true, evidence: true }
+    concepts: [guides/mcp/README.md, guides/mcp/security-and-data.md]
+    guides:
+      [
+        guides/mcp/self-hosted-setup.md,
+        guides/mcp/what-to-ask.md,
+        guides/mcp/build-an-agent.md,
+        guides/mcp/troubleshooting.md,
+      ]
+    reference:
+      [
+        reference/mcp/README.md,
+        reference/mcp/permissions.md,
+        reference/mcp/catalog.md,
+        reference/mcp/tools.md,
+      ]
+    tests:
+      [
+        tests/mcp/docs-reference.test.ts,
+        tests/mcp/admin-ui-copy.test.ts,
+        tests/components/mcp-connect-guide.test.tsx,
+      ]
+    sources:
+      [
+        src/app/mcp,
+        src/lib/mcp,
+        src/app/oauth/mcp,
+        src/app/(app)/settings/integrations/mcp,
+        src/components/settings/mcp,
+      ]
+    evidence:
+      [
+        tests/e2e/mcp.spec.ts,
+        tests/e2e/mcp-approval.spec.ts,
+        scripts/mcp/conformance-baseline.yml,
+        scripts/mcp/certify-replicas.ts,
+      ]
+    roles: [responder, administrator, developer]

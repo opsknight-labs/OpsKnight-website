@@ -132,8 +132,12 @@ test("homepage product evidence is inspectable by touch and keyboard", async ({ 
 
   const region = page.getByRole("region", { name: /Product screenshot/i });
   await region.scrollIntoViewIfNeeded();
-  const fits = await region.evaluate((element) => element.scrollWidth <= element.clientWidth + 1);
-  expect(fits, "product screenshot should fit its frame at every screen size").toBe(true);
+  // Poll: the screenshot scales in as it enters the viewport, so the first frame can overhang by a few pixels.
+  await expect
+    .poll(() => region.evaluate((element) => element.scrollWidth <= element.clientWidth + 1), {
+      message: "product screenshot should fit its frame at every screen size",
+    })
+    .toBe(true);
   if (testInfo.project.name === "mobile") {
     await expect(page.getByText(/Tap Inspect for the full-resolution view/)).toBeVisible();
   }
@@ -280,7 +284,7 @@ test("changelog restores release filters and version navigation", async ({ page 
   await expect(page.getByRole("tab", { name: "All", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Changes", exact: true })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Performance", exact: true })).toBeVisible();
-  await expect(page.locator(".release-article").first()).toContainText("v2.1.0");
+  await expect(page.locator(".release-article").first()).toContainText("v2.2.0");
   await expect(page.locator(".release-command").first()).toContainText("docker pull");
   await page.getByRole("tab", { name: "Security", exact: true }).click();
   await expect(page.locator(".release-article").first()).toBeVisible();

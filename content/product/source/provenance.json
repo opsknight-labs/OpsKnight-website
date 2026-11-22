@@ -1,12 +1,12 @@
 {
   "repository": "https://github.com/opsknight-labs/OpsKnight",
-  "tag": "v2.1.0",
-  "commit": "f9f772a1fb43798bf45400c8e2ec7a0a823fa43f",
+  "tag": "v2.2.0",
+  "commit": "1ad968970e2454e02a296d05ac057edf16ca5ae2",
   "sha256": {
-    "versions.json": "39777979742da1d9e02747016ab55fe8e70442ca664dd7f453e2ca760a936817",
-    "capabilities.yaml": "01266e4db63c46740e7c3ce6b0aeae57a470c026e0795af4138db066bf2abfb7",
-    "catalog.yaml": "e8fe7f34903345d0b5b7f055e2b043510534920313f7f25a762054a429797c2d",
-    "CHANGELOG.md": "821429e877a77c38917ff5e8aca59dcae2d8dffa2c8cfcbf4474fecdb14ed942",
+    "versions.json": "15ff8f9c9fe023fc91b279ff20ed2f6e74f5c860d5316a87d735720bda4cbd91",
+    "capabilities.yaml": "8adf9ce8e524f08ac4d42ace9cbfde5bf373c621920ab4efb61403109582fbf7",
+    "catalog.yaml": "1596aff2e2a83af71bbcf945e30587e0e15dfd7220d4b97080bf4050b4047c07",
+    "CHANGELOG.md": "26ce93919be7e761fd888e3380c34463f610b7ce9d7a95730648e1f1d1d9c1be",
     "LICENSE": "11da8a17b2242560ddf34b556d962fe0fda352e78561f32fabec37bd5017ffb4",
     "notification-priority.source.txt": "18271222cce64885a05df2975f47e28610600cbc04dcb2fed6e9807de9d6b876"
   }

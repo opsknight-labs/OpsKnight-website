@@ -2120,7 +2120,7 @@
   color: #e2e8f0;
   font: 500 13px/1.85 var(--font-jetbrains-mono), monospace;
 }
-.site-page--home .home-install pre .is-comment { color: #64748b; }
+.site-page--home .home-install pre .is-comment { color: #8b9ab0; }
 .site-page--home .home-install-next {
   margin: 0;
   padding: 0 22px 18px;
@@ -3215,4 +3215,67 @@
 @media (prefers-reduced-motion: reduce) {
   .site-page--home .site-hero--center * { animation: none !important; }
   .site-page--home .hc-line-pulse { display: none; }
+}
+
+/* ---- 2.2 MCP section ---------------------------------------------------- */
+.site-page--home .home-mcp .home-mcp-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+.site-page--home .home-mcp .section-intro { margin-bottom: 0; }
+.site-page--home .home-mcp-asks {
+  display: grid;
+  gap: 10px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.site-page--home .home-mcp-asks li {
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  color: var(--text-secondary-strong);
+  background: var(--surface-white);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.site-page--home .home-mcp-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 28px;
+}
+.site-page--home .home-mcp .home-install-next strong { color: #e2e8f0; font-weight: 600; }
+.site-page--home .home-mcp-safety {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  margin: clamp(56px, 7vw, 96px) 0 0;
+  padding-top: 40px;
+  border-top: 1px solid var(--border-light);
+}
+.site-page--home .home-mcp-safety dt {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+.site-page--home .home-mcp-safety dd {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+@media (max-width: 1099px) {
+  .site-page--home .home-mcp .home-mcp-grid { grid-template-columns: 1fr; }
+  .site-page--home .home-mcp-safety { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 599px) {
+  .site-page--home .home-mcp-safety { grid-template-columns: 1fr; gap: 24px; }
+  .site-page--home .home-mcp .home-install pre { padding: 16px; font-size: 12px; }
 }

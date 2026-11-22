@@ -486,6 +486,52 @@
           "docs": "concepts/runbooks"
         }
       ]
+    },
+    {
+      "slug": "mcp",
+      "label": "AI assistants (MCP)",
+      "headline": "Your incident platform, inside the assistant you already use.",
+      "description": "OpsKnight is a Model Context Protocol server. Connect Claude, ChatGPT, Cursor, VS Code or any MCP client with per-person sign-in, scoped permissions and human-reviewed changes.",
+      "capability": "mcp_assistants",
+      "docs": "guides/mcp/README",
+      "screenshot": null,
+      "features": [
+        "Per-person OAuth sign-in",
+        "Read incidents, on-call and services",
+        "Reviewed, audited changes"
+      ],
+      "story": [
+        {
+          "title": "Each person connects their own assistant.",
+          "body": "People sign in with their OpsKnight account, including single sign-on, and approve what the assistant may do. Assistants act with that person's current permissions, never more, and role or team changes apply on the next request.",
+          "docs": "guides/mcp/self-hosted-setup"
+        },
+        {
+          "title": "Ask about incidents, on-call and services.",
+          "body": "Catch up on what paged you, investigate an incident with its context and similar past incidents, find who is on call and who is next, check a service's health and recent changes, or draft a postmortem from the timeline.",
+          "docs": "guides/mcp/what-to-ask"
+        },
+        {
+          "title": "Changes are off until an administrator allows them.",
+          "body": "Routine incident changes such as acknowledge, assign, note and resolve then run within the person's own permissions. Configuration changes and runbook runs are prepared, frozen and wait for a human reviewer before they apply.",
+          "docs": "guides/mcp/self-hosted-setup"
+        },
+        {
+          "title": "Know what reaches the AI vendor.",
+          "body": "Reviewed fields only, secrets always removed, and a request log that never stores arguments or results. Consent, revocations, approvals, committed changes and sensitive reads land in the audit log.",
+          "docs": "guides/mcp/security-and-data"
+        },
+        {
+          "title": "Works with remote and local clients.",
+          "body": "Remote clients connect over OAuth with automatic registration. CLIs and headless servers can use device sign-in, and clients that cannot reach a remote server use the opsknight-mcp stdio bridge.",
+          "docs": "guides/mcp/stdio-bridge"
+        },
+        {
+          "title": "Build your own agent.",
+          "body": "Connect your own code with the MCP SDK: page through results, retry safely with idempotency keys and drive the approval loop.",
+          "docs": "guides/mcp/build-an-agent"
+        }
+      ]
     }
   ],
   "lifecycle": [
